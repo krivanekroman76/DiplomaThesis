@@ -1,24 +1,20 @@
 import os
+import shutil
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import customtkinter as ctk
 import platform
 import subprocess
 
-#import file-handle.py
-#import deezer.py
-#import demucs.py
-#import open-umix.py
-
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
-def open_audio_file(path):
+def open_file(path):
     if platform.system() == "Windows":
         os.startfile(path)
-    elif platform.system() == "Darwin":  # macOS
+    elif platform.system() == "Darwin":
         subprocess.call(("open", path))
-    else:  # Linux and others
+    else:
         subprocess.call(("xdg-open", path))
 
 class SeparationApp(ctk.CTk):
@@ -26,166 +22,270 @@ class SeparationApp(ctk.CTk):
         super().__init__()
 
         self.title("Audio Separation Tool")
-        self.geometry("1100x600")
+        self.geometry("1200x700")
 
-        # Configure main window grid: 1 row, 2 columns
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_columnconfigure(1, weight=1)
-        self.grid_rowconfigure(0, weight=1)
+        # Default folders
+        self.input_folder = os.path.abspath("input")
+        self.output_folders = {
+            "vocals": os.path.abspath("output/vocals"),
+            "instrumentals": os.path.abspath("output/instrumentals"),
+            "transcriptions": os.path.abspath("output/text")
+        }
+        # Ensure folders exist
+        os.makedirs(self.input_folder, exist_ok=True)
+        for folder in self.output_folders.values():
+            os.makedirs(folder, exist_ok=True)
 
-        # Data storage
+        # Data lists
         self.songs = []
         self.vocals = []
         self.instrumentals = []
         self.transcriptions = []
 
-        # --- Input widget/frame ---
-        self.input_frame = ctk.CTkFrame(self, corner_radius=10)
-        self.input_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
-        self.input_frame.grid_rowconfigure(1, weight=1)  # Songs list expands
-        self.input_frame.grid_columnconfigure(0, weight=1)
+        # Create tab view for 2 pages
+        self.tabview = ctk.CTkTabview(self, width=1100, height=650)
+        self.tabview.pack(padx=10, pady=10, fill="both", expand=True)
 
-        # Songs label
-        self.songs_label = ctk.CTkLabel(self.input_frame, text="Songs", font=ctk.CTkFont(size=18, weight="bold"))
-        self.songs_label.grid(row=0, column=0, pady=(10,5), sticky="w", padx=10)
+        self.tabview.add("Input")
+        self.tabview.add("Output")
 
-        # Songs listbox
-        self.songs_listbox = tk.Listbox(self.input_frame, activestyle='dotbox')
-        self.songs_listbox.grid(row=1, column=0, sticky="nsew", padx=10)
+        self.create_input_tab()
+        self.create_output_tab()
+
+        # Load initial songs and outputs
+        self.load_songs()
+        self.load_outputs()
+
+    def create_input_tab(self):
+        tab = self.tabview.tab("Input")
+        tab.grid_columnconfigure(0, weight=1)
+        tab.grid_columnconfigure(1, weight=0)
+        tab.grid_rowconfigure(1, weight=1)
+
+        # Songs list
+        self.songs_listbox = tk.Listbox(tab)
+        self.songs_listbox.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
         self.songs_listbox.bind("<Double-Button-1>", self.open_selected_song)
 
-        # Add song button
-        self.add_song_button = ctk.CTkButton(self.input_frame, text="Add Song", command=self.add_song)
-        self.add_song_button.grid(row=2, column=0, pady=10, padx=10, sticky="ew")
+        # Buttons frame under songs list
+        btn_frame = ctk.CTkFrame(tab)
+        btn_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=(0,10))
+        btn_frame.grid_columnconfigure((0,1), weight=1)
 
-        # Separation menu label
-        self.sep_label = ctk.CTkLabel(self.input_frame, text="Separation Menu", font=ctk.CTkFont(size=18, weight="bold"))
-        self.sep_label.grid(row=3, column=0, pady=(20,10), sticky="w", padx=10)
+        self.add_song_button = ctk.CTkButton(btn_frame, text="Add Song", command=self.add_song)
+        self.add_song_button.grid(row=0, column=0, sticky="ew", padx=5)
 
-        # AI tool radio buttons
+        self.change_input_folder_button = ctk.CTkButton(btn_frame, text="Change Folder", command=self.change_input_folder)
+        self.change_input_folder_button.grid(row=0, column=1, sticky="ew", padx=5)
+
+        # Separation menu frame (right side)
+        sep_frame = ctk.CTkFrame(tab, width=300)
+        sep_frame.grid(row=1, column=1, rowspan=2, sticky="nsew", padx=10, pady=10)
+        sep_frame.grid_columnconfigure(0, weight=1)
+
+        sep_label = ctk.CTkLabel(sep_frame, text="Separation Menu", font=ctk.CTkFont(size=20, weight="bold"))
+        sep_label.grid(row=0, column=0, pady=(10,20))
+
         self.ai_tool_var = tk.StringVar(value="Spleeter")
-        self.radio_spleeter = ctk.CTkRadioButton(self.input_frame, text="Spleeter", variable=self.ai_tool_var, value="Spleeter")
-        self.radio_demucs = ctk.CTkRadioButton(self.input_frame, text="Demucs", variable=self.ai_tool_var, value="Demucs")
-        self.radio_openunmix = ctk.CTkRadioButton(self.input_frame, text="OpenUnmix", variable=self.ai_tool_var, value="OpenUnmix")
+        self.radio_spleeter = ctk.CTkRadioButton(sep_frame, text="Spleeter", variable=self.ai_tool_var, value="Spleeter")
+        self.radio_demucs = ctk.CTkRadioButton(sep_frame, text="Demucs", variable=self.ai_tool_var, value="Demucs")
+        self.radio_openunmix = ctk.CTkRadioButton(sep_frame, text="OpenUnmix", variable=self.ai_tool_var, value="OpenUnmix")
 
-        self.radio_spleeter.grid(row=4, column=0, sticky="w", padx=20, pady=5)
-        self.radio_demucs.grid(row=5, column=0, sticky="w", padx=20, pady=5)
-        self.radio_openunmix.grid(row=6, column=0, sticky="w", padx=20, pady=5)
+        self.radio_spleeter.grid(row=1, column=0, sticky="w", padx=20, pady=5)
+        self.radio_demucs.grid(row=2, column=0, sticky="w", padx=20, pady=5)
+        self.radio_openunmix.grid(row=3, column=0, sticky="w", padx=20, pady=5)
 
-        # Transcription checkbox
         self.transcript_var = tk.BooleanVar(value=False)
-        self.transcript_checkbox = ctk.CTkCheckBox(self.input_frame, text="Transcribe vocals", variable=self.transcript_var)
-        self.transcript_checkbox.grid(row=7, column=0, sticky="w", padx=20, pady=10)
+        self.transcript_checkbox = ctk.CTkCheckBox(sep_frame, text="Transcribe vocals", variable=self.transcript_var)
+        self.transcript_checkbox.grid(row=4, column=0, sticky="w", padx=20, pady=10)
 
-        # Separate button
-        self.separate_button = ctk.CTkButton(self.input_frame, text="Separate", command=self.separate_audio)
-        self.separate_button.grid(row=8, column=0, sticky="ew", padx=20, pady=(10,20))
+        self.separate_button = ctk.CTkButton(sep_frame, text="Separate", command=self.separate_audio)
+        self.separate_button.grid(row=5, column=0, sticky="ew", padx=20, pady=(20,10))
 
-        # --- Output widget/frame ---
-        self.output_frame = ctk.CTkFrame(self, corner_radius=10)
-        self.output_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
-        self.output_frame.grid_rowconfigure(1, weight=1)  # Transcriptions list expands vertically
-        self.output_frame.grid_rowconfigure(3, weight=1)  # Vocals list expands vertically
-        self.output_frame.grid_rowconfigure(5, weight=1)  # Instrumentals list expands vertically
-        self.output_frame.grid_columnconfigure(0, weight=1)
+    def create_output_tab(self):
+        tab = self.tabview.tab("Output")
+        tab.grid_columnconfigure(0, weight=1)
+        tab.grid_rowconfigure((1,3,5), weight=1)
 
-        # Transcriptions label and listbox
-        self.trans_label = ctk.CTkLabel(self.output_frame, text="Transcriptions", font=ctk.CTkFont(size=18, weight="bold"))
-        self.trans_label.grid(row=0, column=0, pady=(10,5), sticky="w", padx=10)
+        # Transcriptions section
+        trans_label = ctk.CTkLabel(tab, text="Transcriptions", font=ctk.CTkFont(size=18, weight="bold"))
+        trans_label.grid(row=0, column=0, sticky="w", padx=10, pady=(10,5))
 
-        self.trans_listbox = tk.Listbox(self.output_frame)
-        self.trans_listbox.grid(row=1, column=0, sticky="nsew", padx=10)
+        trans_btn = ctk.CTkButton(tab, text="Change Folder", command=lambda: self.change_output_folder("transcriptions"))
+        trans_btn.grid(row=0, column=1, sticky="e", padx=10, pady=(10,5))
+
+        self.trans_listbox = tk.Listbox(tab)
+        self.trans_listbox.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10)
         self.trans_listbox.bind("<Double-Button-1>", self.open_selected_transcription)
 
-        # Vocals label and listbox
-        self.vocals_label = ctk.CTkLabel(self.output_frame, text="Vocals", font=ctk.CTkFont(size=18, weight="bold"))
-        self.vocals_label.grid(row=2, column=0, pady=(20,5), sticky="w", padx=10)
+        # Vocals section
+        vocals_label = ctk.CTkLabel(tab, text="Vocals", font=ctk.CTkFont(size=18, weight="bold"))
+        vocals_label.grid(row=2, column=0, sticky="w", padx=10, pady=(20,5))
 
-        self.vocals_listbox = tk.Listbox(self.output_frame)
-        self.vocals_listbox.grid(row=3, column=0, sticky="nsew", padx=10)
+        vocals_btn = ctk.CTkButton(tab, text="Change Folder", command=lambda: self.change_output_folder("vocals"))
+        vocals_btn.grid(row=2, column=1, sticky="e", padx=10, pady=(20,5))
+
+        self.vocals_listbox = tk.Listbox(tab)
+        self.vocals_listbox.grid(row=3, column=0, columnspan=2, sticky="nsew", padx=10)
         self.vocals_listbox.bind("<Double-Button-1>", self.open_selected_vocal)
 
-        # Instrumentals label and listbox
-        self.instr_label = ctk.CTkLabel(self.output_frame, text="Instrumentals", font=ctk.CTkFont(size=18, weight="bold"))
-        self.instr_label.grid(row=4, column=0, pady=(20,5), sticky="w", padx=10)
+        # Instrumentals section
+        instr_label = ctk.CTkLabel(tab, text="Instrumentals", font=ctk.CTkFont(size=18, weight="bold"))
+        instr_label.grid(row=4, column=0, sticky="w", padx=10, pady=(20,5))
 
-        self.instr_listbox = tk.Listbox(self.output_frame)
-        self.instr_listbox.grid(row=5, column=0, sticky="nsew", padx=10)
+        instr_btn = ctk.CTkButton(tab, text="Change Folder", command=lambda: self.change_output_folder("instrumentals"))
+        instr_btn.grid(row=4, column=1, sticky="e", padx=10, pady=(20,5))
+
+        self.instr_listbox = tk.Listbox(tab)
+        self.instr_listbox.grid(row=5, column=0, columnspan=2, sticky="nsew", padx=10)
         self.instr_listbox.bind("<Double-Button-1>", self.open_selected_instrumental)
+
+    def load_songs(self):
+        self.songs_listbox.delete(0, tk.END)
+        self.songs.clear()
+        if not os.path.isdir(self.input_folder):
+            return
+        for f in sorted(os.listdir(self.input_folder)):
+            if f.lower().endswith(('.mp3', '.wav', '.flac', '.m4a')):
+                full_path = os.path.join(self.input_folder, f)
+                self.songs.append({'path': full_path, 'name': f})
+                self.songs_listbox.insert(tk.END, f)
+
+    def load_outputs(self):
+        # Clear and load vocals
+        self.vocals_listbox.delete(0, tk.END)
+        self.vocals.clear()
+        vocals_dir = self.output_folders["vocals"]
+        if os.path.isdir(vocals_dir):
+            for f in sorted(os.listdir(vocals_dir)):
+                if f.lower().endswith(('.mp3', '.wav', '.flac', '.m4a')):
+                    full_path = os.path.join(vocals_dir, f)
+                    self.vocals.append({'path': full_path, 'name': f})
+                    self.vocals_listbox.insert(tk.END, f)
+
+        # Clear and load instrumentals
+        self.instr_listbox.delete(0, tk.END)
+        self.instrumentals.clear()
+        instr_dir = self.output_folders["instrumentals"]
+        if os.path.isdir(instr_dir):
+            for f in sorted(os.listdir(instr_dir)):
+                if f.lower().endswith(('.mp3', '.wav', '.flac', '.m4a')):
+                    full_path = os.path.join(instr_dir, f)
+                    self.instrumentals.append({'path': full_path, 'name': f})
+                    self.instr_listbox.insert(tk.END, f)
+
+        # Clear and load transcriptions
+        self.trans_listbox.delete(0, tk.END)
+        self.transcriptions.clear()
+        trans_dir = self.output_folders["transcriptions"]
+        if os.path.isdir(trans_dir):
+            for f in sorted(os.listdir(trans_dir)):
+                if f.lower().endswith(('.txt', '.lrc')):
+                    full_path = os.path.join(trans_dir, f)
+                    self.transcriptions.append({'path': full_path, 'name': f})
+                    self.trans_listbox.insert(tk.END, f)
 
     def add_song(self):
         filetypes = [("Audio files", "*.mp3 *.wav *.flac *.m4a"), ("All files", "*.*")]
-        paths = filedialog.askopenfilenames(title="Select audio files", filetypes=filetypes)
+        paths = filedialog.askopenfilenames(title="Select audio files to add", filetypes=filetypes)
+        if not paths:
+            return
         for path in paths:
-            name = os.path.basename(path)
-            if not any(song['path'] == path for song in self.songs):
-                self.songs.append({'path': path, 'name': name})
-                self.songs_listbox.insert(tk.END, name)
+            try:
+                dest = os.path.join(self.input_folder, os.path.basename(path))
+                if not os.path.exists(dest):
+                    shutil.copy2(path, dest)
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to copy {path}:\n{e}")
+        self.load_songs()
+
+    def change_input_folder(self):
+        folder = filedialog.askdirectory(title="Select Input Folder")
+        if folder:
+            self.input_folder = folder
+            self.load_songs()
+
+    def change_output_folder(self, filetype):
+        folder = filedialog.askdirectory(title=f"Select {filetype.capitalize()} Output Folder")
+        if folder:
+            self.output_folders[filetype] = folder
+            self.load_outputs()
 
     def open_selected_song(self, event=None):
-        selection = self.songs_listbox.curselection()
-        if not selection:
+        sel = self.songs_listbox.curselection()
+        if not sel:
             return
-        index = selection[0]
-        path = self.songs[index]['path']
-        open_audio_file(path)
+        idx = sel[0]
+        open_file(self.songs[idx]['path'])
 
     def open_selected_vocal(self, event=None):
-        selection = self.vocals_listbox.curselection()
-        if not selection:
+        sel = self.vocals_listbox.curselection()
+        if not sel:
             return
-        index = selection[0]
-        path = self.vocals[index]['path']
-        open_audio_file(path)
+        idx = sel[0]
+        open_file(self.vocals[idx]['path'])
 
     def open_selected_instrumental(self, event=None):
-        selection = self.instr_listbox.curselection()
-        if not selection:
+        sel = self.instr_listbox.curselection()
+        if not sel:
             return
-        index = selection[0]
-        path = self.instrumentals[index]['path']
-        open_audio_file(path)
+        idx = sel[0]
+        open_file(self.instrumentals[idx]['path'])
 
     def open_selected_transcription(self, event=None):
-        selection = self.trans_listbox.curselection()
-        if not selection:
+        sel = self.trans_listbox.curselection()
+        if not sel:
             return
-        index = selection[0]
-        transcription_name = self.transcriptions[index]['name']
-        messagebox.showinfo("Transcription", f"Transcription file:\n{transcription_name}\n\n(Opening not implemented)")
+        idx = sel[0]
+        open_file(self.transcriptions[idx]['path'])
 
     def separate_audio(self):
-        selection = self.songs_listbox.curselection()
-        if not selection:
+        sel = self.songs_listbox.curselection()
+        if not sel:
             messagebox.showwarning("No selection", "Please select a song to separate.")
             return
-        index = selection[0]
-        song = self.songs[index]
+        idx = sel[0]
+        song = self.songs[idx]
 
         ai_tool = self.ai_tool_var.get()
         do_transcribe = self.transcript_var.get()
 
-        # Simulate separation output paths
-        base, ext = os.path.splitext(song['path'])
-        vocal_path = base + "_vocals" + ext
-        instr_path = base + "_instrumental" + ext
+        # Determine suffixes for AI tool
+        suffix_map = {
+            "Spleeter": "_S",
+            "Demucs": "_D",
+            "OpenUnmix": "_O"
+        }
+        ai_suffix = suffix_map.get(ai_tool, "_S")
 
-        vocal_entry = {'path': vocal_path, 'name': os.path.basename(vocal_path)}
-        instr_entry = {'path': instr_path, 'name': os.path.basename(instr_path)}
+        # Prepare output folders
+        vocals_folder = self.output_folders["vocals"]
+        instr_folder = self.output_folders["instrumentals"]
+        trans_folder = self.output_folders["transcriptions"]
 
-        if vocal_entry not in self.vocals:
-            self.vocals.append(vocal_entry)
-            self.vocals_listbox.insert(tk.END, vocal_entry['name'])
-        if instr_entry not in self.instrumentals:
-            self.instrumentals.append(instr_entry)
-            self.instr_listbox.insert(tk.END, instr_entry['name'])
+        # Call the appropriate separation function
+        try:
+            if ai_tool == "Spleeter":
+                from Spleeter import separate_S
+                vocals_files, instr_files, transcription_files = separate_S(
+                    song['path'], vocals_folder, instr_folder, trans_folder, do_transcribe, ai_suffix)
+            elif ai_tool == "Demucs":
+                from demucs import separate_D
+                vocals_files, instr_files, transcription_files = separate_D(
+                    song['path'], vocals_folder, instr_folder, trans_folder, do_transcribe, ai_suffix)
+            elif ai_tool == "OpenUnmix":
+                from open_umix import separate_O
+                vocals_files, instr_files, transcription_files = separate_O(
+                    song['path'], vocals_folder, instr_folder, trans_folder, do_transcribe, ai_suffix)
+            else:
+                messagebox.showerror("Error", f"Unknown AI tool: {ai_tool}")
+                return
+        except Exception as e:
+            messagebox.showerror("Separation Error", f"Error during separation:\n{e}")
+            return
 
-        if do_transcribe:
-            transcription_path = base + "_transcription.txt"
-            transcription_entry = {'path': transcription_path, 'name': os.path.basename(transcription_path)}
-            if transcription_entry not in self.transcriptions:
-                self.transcriptions.append(transcription_entry)
-                self.trans_listbox.insert(tk.END, transcription_entry['name'])
+        # Update output lists
+        self.load_outputs()
 
         msg = f"Separated '{song['name']}' using {ai_tool}."
         if do_transcribe:

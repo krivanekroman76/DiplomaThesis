@@ -5,9 +5,13 @@ from tkinter import filedialog, messagebox
 import customtkinter as ctk
 import platform
 import subprocess
-# import demucs.separate
- # import shlex
- # from openunmix.predict import separate as separate_u
+import shlex  # For safe command splitting
+import tempfile  # For temporary directories
+from demucs.separate import main as demucs_main  # For Demucs (fallback if needed)
+# Import separator classes (adjust path if separators/ is not in same dir)
+import separators.spleeter_separator as spleeter
+import separators.demucs_separator as demucs
+import separators.openunmix_separator as openunmix
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
@@ -38,6 +42,11 @@ class SeparationApp(ctk.CTk):
         os.makedirs(self.input_folder, exist_ok=True)
         for folder in self.output_folders.values():
             os.makedirs(folder, exist_ok=True)
+        
+        # Instantiate separator objects (ADD THIS BLOCK)
+        self.spleeter_sep = spleeter.SpleeterSeparator()
+        self.demucs_sep = demucs.DemucsSeparator()
+        self.openunmix_sep = openunmix.OpenUnmixSeparator()
 
         # Data lists
         self.songs = []
@@ -45,33 +54,121 @@ class SeparationApp(ctk.CTk):
         self.instrumentals = []
         self.transcriptions = []
 
-        # Create tab view for 2 pages
-        self.tabview = ctk.CTkTabview(self, width=1100, height=650)
-        self.tabview.pack(padx=10, pady=10, fill="both", expand=True)
+        # Main container
+        main_frame = ctk.CTkFrame(self)
+        main_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
-        self.tabview.add("Input")
-        self.tabview.add("Output")
+        # Sidebar
+        self.sidebar = ctk.CTkFrame(main_frame, width=200, corner_radius=0)
+        self.sidebar.grid(row=0, column=0, sticky="ns", rowspan=2)
+        self.sidebar.grid_propagate(False)
+        self.sidebar.grid_columnconfigure(0, weight=1)
+        # Configure rows for top-aligned navigation and bottom-aligned settings
+        self.sidebar.grid_rowconfigure(2, weight=1)  # Spacer row to push settings down
 
+        # Navigation buttons in sidebar (top-aligned)
+        self.input_button = ctk.CTkButton(
+            self.sidebar, 
+            text="Input", 
+            command=self.show_input,
+            width=180
+        )
+        self.input_button.grid(row=0, column=0, padx=20, pady=(20, 10), sticky="ew")
+
+        self.output_button = ctk.CTkButton(
+            self.sidebar, 
+            text="Output", 
+            command=self.show_output,
+            width=180
+        )
+        self.output_button.grid(row=1, column=0, padx=20, pady=10, sticky="ew")
+
+        # Spacer row (expands to push settings to bottom)
+        # (No widget here, just the configuration above)
+
+        # Appearance mode selection (bottom-aligned)
+        self.appearance_mode_label = ctk.CTkLabel(self.sidebar, text="Appearance Mode:", anchor="w")
+        self.appearance_mode_label.grid(row=3, column=0, padx=20, pady=(20, 0), sticky="w")
+
+        self.appearance_mode_optionemenu = ctk.CTkOptionMenu(
+            self.sidebar, 
+            values=["Light", "Dark", "System"],
+            command=self.change_appearance_mode_event,
+            width=160
+        )
+        self.appearance_mode_optionemenu.grid(row=4, column=0, padx=20, pady=(10, 10), sticky="ew")
+        self.appearance_mode_optionemenu.set("Dark")
+
+        # UI Scaling (Zoom) selection (bottom-aligned)
+        self.scaling_label = ctk.CTkLabel(self.sidebar, text="UI Scaling:", anchor="w")
+        self.scaling_label.grid(row=5, column=0, padx=20, pady=(10, 0), sticky="w")
+
+        self.scaling_optionemenu = ctk.CTkOptionMenu(
+            self.sidebar, 
+            values=["80%", "90%", "100%", "110%", "120%"],
+            command=self.change_scaling_event,
+            width=160
+        )
+        self.scaling_optionemenu.grid(row=6, column=0, padx=20, pady=(10, 20), sticky="ew")
+        self.scaling_optionemenu.set("100%")
+
+        # Content frame
+        self.content_frame = ctk.CTkFrame(main_frame)
+        self.content_frame.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
+        main_frame.grid_columnconfigure(1, weight=1)
+        main_frame.grid_rowconfigure(0, weight=1)
+        self.content_frame.grid_rowconfigure(0, weight=1)
+        self.content_frame.grid_columnconfigure(0, weight=1)
+
+        # Input and output frames
+        self.input_frame = ctk.CTkFrame(self.content_frame)
+        self.output_frame = ctk.CTkFrame(self.content_frame)
+
+        # Create tab contents
         self.create_input_tab()
         self.create_output_tab()
+
+        # Initially show input
+        self.show_input()
 
         # Load initial songs and outputs
         self.load_songs()
         self.load_outputs()
 
+    def show_input(self):
+        self.input_frame.grid(row=0, column=0, sticky="nsew")
+        self.output_frame.grid_forget()
+        # Optional: Highlight active button
+        self.input_button.configure(fg_color=("#DCE4EE", "#1f538d"))
+        self.output_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+
+    def show_output(self):
+        self.output_frame.grid(row=0, column=0, sticky="nsew")
+        self.input_frame.grid_forget()
+        # Optional: Highlight active button
+        self.output_button.configure(fg_color=("#DCE4EE", "#1f538d"))
+        self.input_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+
+    def change_appearance_mode_event(self, new_appearance_mode: str):
+        ctk.set_appearance_mode(new_appearance_mode)
+
+    def change_scaling_event(self, new_scaling: str):
+        new_scaling_float = int(new_scaling.replace("%", "")) / 100
+        ctk.set_widget_scaling(new_scaling_float)
+
     def create_input_tab(self):
-        tab = self.tabview.tab("Input")
-        tab.grid_columnconfigure(0, weight=1)
-        tab.grid_columnconfigure(1, weight=0)
-        tab.grid_rowconfigure(1, weight=1)
+        frame = self.input_frame
+        frame.grid_columnconfigure(0, weight=1)
+        frame.grid_columnconfigure(1, weight=0)
+        frame.grid_rowconfigure(1, weight=1)
 
         # Songs list
-        self.songs_listbox = tk.Listbox(tab)
+        self.songs_listbox = tk.Listbox(frame)
         self.songs_listbox.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
         self.songs_listbox.bind("<Double-Button-1>", self.open_selected_song)
 
         # Buttons frame under songs list
-        btn_frame = ctk.CTkFrame(tab)
+        btn_frame = ctk.CTkFrame(frame)
         btn_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=(0,10))
         btn_frame.grid_columnconfigure((0,1), weight=1)
 
@@ -82,7 +179,7 @@ class SeparationApp(ctk.CTk):
         self.change_input_folder_button.grid(row=0, column=1, sticky="ew", padx=5)
 
         # Separation menu frame (right side)
-        sep_frame = ctk.CTkFrame(tab, width=300)
+        sep_frame = ctk.CTkFrame(frame, width=300)
         sep_frame.grid(row=1, column=1, rowspan=2, sticky="nsew", padx=10, pady=10)
         sep_frame.grid_columnconfigure(0, weight=1)
 
@@ -106,40 +203,40 @@ class SeparationApp(ctk.CTk):
         self.separate_button.grid(row=5, column=0, sticky="ew", padx=20, pady=(20,10))
 
     def create_output_tab(self):
-        tab = self.tabview.tab("Output")
-        tab.grid_columnconfigure(0, weight=1)
-        tab.grid_rowconfigure((1,3,5), weight=1)
+        frame = self.output_frame
+        frame.grid_columnconfigure(0, weight=1)
+        frame.grid_rowconfigure((1,3,5), weight=1)
 
         # Transcriptions section
-        trans_label = ctk.CTkLabel(tab, text="Transcriptions", font=ctk.CTkFont(size=18, weight="bold"))
+        trans_label = ctk.CTkLabel(frame, text="Transcriptions", font=ctk.CTkFont(size=18, weight="bold"))
         trans_label.grid(row=0, column=0, sticky="w", padx=10, pady=(10,5))
 
-        trans_btn = ctk.CTkButton(tab, text="Change Folder", command=lambda: self.change_output_folder("transcriptions"))
+        trans_btn = ctk.CTkButton(frame, text="Change Folder", command=lambda: self.change_output_folder("transcriptions"))
         trans_btn.grid(row=0, column=1, sticky="e", padx=10, pady=(10,5))
 
-        self.trans_listbox = tk.Listbox(tab)
+        self.trans_listbox = tk.Listbox(frame)
         self.trans_listbox.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10)
         self.trans_listbox.bind("<Double-Button-1>", self.open_selected_transcription)
 
         # Vocals section
-        vocals_label = ctk.CTkLabel(tab, text="Vocals", font=ctk.CTkFont(size=18, weight="bold"))
+        vocals_label = ctk.CTkLabel(frame, text="Vocals", font=ctk.CTkFont(size=18, weight="bold"))
         vocals_label.grid(row=2, column=0, sticky="w", padx=10, pady=(20,5))
 
-        vocals_btn = ctk.CTkButton(tab, text="Change Folder", command=lambda: self.change_output_folder("vocals"))
+        vocals_btn = ctk.CTkButton(frame, text="Change Folder", command=lambda: self.change_output_folder("vocals"))
         vocals_btn.grid(row=2, column=1, sticky="e", padx=10, pady=(20,5))
 
-        self.vocals_listbox = tk.Listbox(tab)
+        self.vocals_listbox = tk.Listbox(frame)
         self.vocals_listbox.grid(row=3, column=0, columnspan=2, sticky="nsew", padx=10)
         self.vocals_listbox.bind("<Double-Button-1>", self.open_selected_vocal)
 
         # Instrumentals section
-        instr_label = ctk.CTkLabel(tab, text="Instrumentals", font=ctk.CTkFont(size=18, weight="bold"))
+        instr_label = ctk.CTkLabel(frame, text="Instrumentals", font=ctk.CTkFont(size=18, weight="bold"))
         instr_label.grid(row=4, column=0, sticky="w", padx=10, pady=(20,5))
 
-        instr_btn = ctk.CTkButton(tab, text="Change Folder", command=lambda: self.change_output_folder("instrumentals"))
+        instr_btn = ctk.CTkButton(frame, text="Change Folder", command=lambda: self.change_output_folder("instrumentals"))
         instr_btn.grid(row=4, column=1, sticky="e", padx=10, pady=(20,5))
 
-        self.instr_listbox = tk.Listbox(tab)
+        self.instr_listbox = tk.Listbox(frame)
         self.instr_listbox.grid(row=5, column=0, columnspan=2, sticky="nsew", padx=10)
         self.instr_listbox.bind("<Double-Button-1>", self.open_selected_instrumental)
 
@@ -249,16 +346,14 @@ class SeparationApp(ctk.CTk):
             return
         idx = sel[0]
         song = self.songs[idx]
+        input_path = song['path']
+        song_name = os.path.splitext(os.path.basename(song['name']))[0]
 
         ai_tool = self.ai_tool_var.get()
         do_transcribe = self.transcript_var.get()
 
-        # Determine suffixes for AI tool
-        suffix_map = {
-            "Spleeter": "_S",
-            "Demucs": "_D",
-            "OpenUnmix": "_O"
-        }
+        # Suffix for uniqueness
+        suffix_map = {"Spleeter": "_S", "Demucs": "_D", "OpenUnmix": "_O"}
         ai_suffix = suffix_map.get(ai_tool, "_S")
 
         # Prepare output folders
@@ -266,35 +361,38 @@ class SeparationApp(ctk.CTk):
         instr_folder = self.output_folders["instrumentals"]
         trans_folder = self.output_folders["transcriptions"]
 
-        # Call the appropriate separation function
-        try:
-            if ai_tool == "Spleeter":
-                pass
-                #spleeter separate -p spleeter:2stems -o output input_song
-            elif ai_tool == "Demucs":
-                pass
-                 #demucs.separate.main(["--mp3", "--two-stems", "vocals", "-n", "mdx_extra", input_song])
-                #demucs.separate.main(shlex.split('--mp3 --two-stems vocals -n mdx_extra input_song'))
-            elif ai_tool == "OpenUnmix":
-                pass
-                #separator = openunmix.umxl(...)
-                 #estimates = separate_u(input_song, ...)
-            else:
-                messagebox.showerror("Error", f"Unknown AI tool: {ai_tool}")
-                return
-        except Exception as e:
-            messagebox.showerror("Separation Error", f"Error during separation:\n{e}")
+        # Delegate to separator
+        success = False
+        if ai_tool == "Spleeter":
+            success = self.spleeter_sep.separate(input_path, song_name, ai_suffix, vocals_folder, instr_folder)
+        elif ai_tool == "Demucs":
+            success = self.demucs_sep.separate(input_path, song_name, ai_suffix, vocals_folder, instr_folder)
+        elif ai_tool == "OpenUnmix":
+            success = self.openunmix_sep.separate(input_path, song_name, ai_suffix, vocals_folder, instr_folder)
+        else:
+            messagebox.showerror("Error", f"Unknown AI tool: {ai_tool}")
             return
+
+        if not success:
+            messagebox.showerror("Separation Error", f"{ai_tool} failed. Check console for details.")
+            return
+
+        # Handle transcription (placeholder)
+        if do_transcribe:
+            trans_path = os.path.join(trans_folder, f"{song_name}{ai_suffix}_transcription.txt")
+            with open(trans_path, "w") as f:
+                f.write(f"Transcription for {song_name} (using {ai_tool}):\n")
+                f.write("Note: Implement actual transcription (e.g., with Whisper) here.\n")
+                f.write("Placeholder: Lyrics not available yet.")
 
         # Update output lists
         self.load_outputs()
 
         msg = f"Separated '{song['name']}' using {ai_tool}."
         if do_transcribe:
-            msg += "\nTranscription generated."
+            msg += "\nTranscription generated (placeholder)."
         messagebox.showinfo("Separation done", msg)
 
 if __name__ == "__main__":
     app = SeparationApp()
     app.mainloop()
-

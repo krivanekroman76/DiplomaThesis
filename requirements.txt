@@ -1,0 +1,9 @@
+spleeter
+demucs
+openunmix
+customtkinter
+numpy<2
+tensorflow==2.12.0
+librosa  # For OpenUnmix audio handling
+soundfile  # For audio I/O in separators
+torchaudio

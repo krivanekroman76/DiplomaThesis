@@ -8,14 +8,14 @@ from pydub import AudioSegment  # For format conversion and resampling
 
 class SpleeterSeparator:
     def __init__(self):
-        self.model = 'spleeter:2stems'  # Fixed to 2 stems as per your request
+        self.model = 'spleeter:2stems' 
         try:
             self.separator = Separator(self.model)
             print("Spleeter initialized successfully (direct API)")
         except Exception as e:
             print(f"Spleeter init warning: {e} (will use CLI)")
 
-    def separate(self, input_path, song_name, ai_suffix, vocals_folder, instr_folder, model="4stems", fmt="wav", sr=44100, bitrate=192, high_quality=False):
+    def separate(self, input_path, song_name, vocals_folder, instr_folder, fmt="wav", sr=44100, bitrate=192):
         try:
             # Check if input exists
             if not os.path.exists(input_path):
@@ -59,6 +59,7 @@ class SpleeterSeparator:
                 audio_instr = audio_instr.set_frame_rate(sr)  # Resample to specified sr
 
                 # Define destination paths with the specified format
+                ai_suffix = "_S"
                 vocals_dest = os.path.join(vocals_folder, f"{song_name}{ai_suffix}_vocals.{fmt}")
                 instr_dest = os.path.join(instr_folder, f"{song_name}{ai_suffix}_instrumental.{fmt}")
 

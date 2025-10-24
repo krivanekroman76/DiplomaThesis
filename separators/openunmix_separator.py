@@ -46,7 +46,7 @@ class OpenUnmixSeparator:
         
         return estimate
 
-    def separate(self, input_path, song_name, ai_suffix, vocals_folder, instr_folder, model, fmt, sr, bitrate, high_quality):
+    def separate(self, input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate):
         try:
             # Check if input exists
             if not os.path.exists(input_path):
@@ -93,6 +93,7 @@ class OpenUnmixSeparator:
                 sf.write(instr_temp_path, instr_estimate, original_sr)
                 
                 # Convert to user-defined format using pydub
+                ai_suffix = "_O"
                 vocals_dest = os.path.join(vocals_folder, f"{song_name}{ai_suffix}_vocals.{fmt}")
                 instr_dest = os.path.join(instr_folder, f"{song_name}{ai_suffix}_instrumental.{fmt}")
                 

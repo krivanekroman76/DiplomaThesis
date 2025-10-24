@@ -246,16 +246,18 @@ class SeparationApp(ctk.CTk):
         self.radio_openunmix.grid(row=3, column=0, sticky="w", padx=20, pady=5)
 
         # Model selection (dynamic per tool)
-        model_label = ctk.CTkLabel(sep_frame, text="Model:", anchor="w")
-        model_label.grid(row=4, column=0, sticky="w", padx=20, pady=(10,0))
-
-        self.model_var = tk.StringVar(value="2stems")  # Default for Spleeter
-        self.model_menu = ctk.CTkOptionMenu(sep_frame, variable=self.model_var, width=200)
+        self.model_label = ctk.CTkLabel(sep_frame, text="Model:", anchor="w")
+        self.model_label.grid(row=4, column=0, sticky="w", padx=20, pady=(10,0))
+        self.model_var = tk.StringVar(value="umxl")  # Default for OpenUnmix
+        self.model_menu = ctk.CTkOptionMenu(
+            sep_frame, variable=self.model_var, values=["umxl", "umxhq", "umx", "umxse"], width=200
+        )
         self.model_menu.grid(row=5, column=0, sticky="ew", padx=20, pady=5)
+        #self.model_menu.grid_remove()  # Hide initially
 
         # Output format
-        format_label = ctk.CTkLabel(sep_frame, text="Output Format:", anchor="w")
-        format_label.grid(row=6, column=0, sticky="w", padx=20, pady=(10,0))
+        self.format_label = ctk.CTkLabel(sep_frame, text="Output Format:", anchor="w")
+        self.format_label.grid(row=6, column=0, sticky="w", padx=20, pady=(10,0))
 
         self.format_var = tk.StringVar(value="wav")
         self.format_menu = ctk.CTkOptionMenu(
@@ -263,17 +265,31 @@ class SeparationApp(ctk.CTk):
         )
         self.format_menu.grid(row=7, column=0, sticky="ew", padx=20, pady=5)
 
-        # Conditional: SR for wav/flac
+        # wav/flac output variables setting
         self.sr_frame = ctk.CTkFrame(sep_frame)
+        self.sr_frame.grid(row=12, column=0, sticky="ew", padx=20, pady=5)
+
+        # Channel selection
+        self.channel_label = ctk.CTkLabel(self.sr_frame, text="Channels:", anchor="w")
+        self.channel_label.grid(row=0, column=0, sticky="w", padx=20, pady=(10,0))
+        self.channel_var = tk.StringVar(value="Stereo")  # Default to Stereo
+        self.channel_menu = ctk.CTkOptionMenu(self.sr_frame, variable=self.channel_var, values=["Mono", "Stereo"])
+        self.channel_menu.grid(row=1, column=0, sticky="ew", padx=20, pady=5)
+
         self.sr_label = ctk.CTkLabel(self.sr_frame, text="Sample Rate (Hz):", anchor="w")
+        self.sr_label.grid(row=8, column=0, padx=(20,5), pady=5, sticky="w")
         self.sr_var = tk.StringVar(value="44100")
         self.sr_entry = ctk.CTkEntry(self.sr_frame, textvariable=self.sr_var, width=150, placeholder_text="44100")
-        self.sr_label.grid(row=0, column=0, padx=(20,5), pady=5, sticky="w")
-        self.sr_entry.grid(row=0, column=1, padx=5, pady=5, sticky="w")
-        self.sr_frame.grid(row=8, column=0, sticky="ew", padx=20, pady=5)
-        self.sr_frame.grid_remove()  # Hidden initially
+        self.sr_entry.grid(row=9, column=0, padx=20, pady=5, sticky="ew")
+        
+        # Bit depth input
+        self.bit_depth_label = ctk.CTkLabel(self.sr_frame, text="Bit Depth:", anchor="w")
+        self.bit_depth_label.grid(row=10, column=0, sticky="w", padx=20, pady=(10,0))
+        self.bit_depth_var = tk.StringVar(value="16")  # Default to 16-bit
+        self.bit_depth_entry = ctk.CTkEntry(self.sr_frame, textvariable=self.bit_depth_var, width=150, placeholder_text="16")
+        self.bit_depth_entry.grid(row=11, column=0, sticky="ew", padx=20, pady=5)
 
-        # Conditional: Bitrate for mp3
+        # Mp3 output variables setting
         self.bitrate_frame = ctk.CTkFrame(sep_frame)
         self.bitrate_label = ctk.CTkLabel(self.bitrate_frame, text="Bitrate (kbps):", anchor="w")
         self.bitrate_var = tk.StringVar(value="192")
@@ -281,19 +297,13 @@ class SeparationApp(ctk.CTk):
         self.bitrate_label.grid(row=0, column=0, padx=(20,5), pady=5, sticky="w")
         self.bitrate_entry.grid(row=0, column=1, padx=5, pady=5, sticky="w")
         self.bitrate_frame.grid(row=8, column=0, sticky="ew", padx=20, pady=5)
-        self.bitrate_frame.grid_remove()  # Hidden initially
-
-        # High Quality checkbox
-        self.high_quality_var = tk.BooleanVar(value=False)
-        self.high_quality_checkbox = ctk.CTkCheckBox(sep_frame, text="High Quality (slower)", variable=self.high_quality_var)
-        self.high_quality_checkbox.grid(row=9, column=0, sticky="w", padx=20, pady=10)
 
         self.transcript_var = tk.BooleanVar(value=False)
         self.transcript_checkbox = ctk.CTkCheckBox(sep_frame, text="Transcribe vocals", variable=self.transcript_var)
-        self.transcript_checkbox.grid(row=10, column=0, sticky="w", padx=20, pady=10)
+        self.transcript_checkbox.grid(row=13, column=0, sticky="w", padx=20, pady=10)
 
         self.separate_button = ctk.CTkButton(sep_frame, text="Separate", command=self.separate_audio)
-        self.separate_button.grid(row=11, column=0, sticky="ew", padx=20, pady=(20,10))
+        self.separate_button.grid(row=14, column=0, sticky="ew", padx=20, pady=(20,10))
 
         # Initial tool change to set defaults
         self.on_tool_change()
@@ -301,14 +311,15 @@ class SeparationApp(ctk.CTk):
     def on_tool_change(self):
         tool = self.ai_tool_var.get()
         if tool == "Spleeter":
-            self.model_menu.configure(values=["2stems", "4stems", "5stems"])
-            self.model_var.set("2stems")
+            self.model_menu.grid_remove()  # Hide model selection for Spleeter
         elif tool == "Demucs":
+            self.model_menu.grid()  # Show model selection
             self.model_menu.configure(values=["mdx", "mdx_extra", "htdemucs"])
-            self.model_var.set("mdx")
+            self.model_var.set("mdx") # Set default model
         elif tool == "OpenUnmix":
-            self.model_menu.configure(values=["2stems", "4stems"])
-            self.model_var.set("2stems")
+            self.model_menu.grid()
+            self.model_menu.configure(values=["umxl", "umxhq", "umx", "umxse"])
+            self.model_var.set("umxl")
         self.on_format_change()  # Refresh format options
 
     def on_format_change(self, *args):
@@ -473,11 +484,6 @@ class SeparationApp(ctk.CTk):
         fmt = self.format_var.get()
         sr = int(self.sr_var.get()) if fmt in ["wav", "flac"] else None
         bitrate = int(self.bitrate_var.get()) if fmt == "mp3" else None
-        high_quality = self.high_quality_var.get()
-
-        # Suffix for uniqueness
-        suffix_map = {"Spleeter": "_S", "Demucs": "_D", "OpenUnmix": "_O"}
-        ai_suffix = suffix_map.get(ai_tool, "_S")
 
         # Prepare output folders
         vocals_folder = self.output_folders["vocals"]
@@ -486,11 +492,11 @@ class SeparationApp(ctk.CTk):
 
         # Start threaded separation with progress
         self.status_queue = queue.Queue()
-        thread = threading.Thread(target=self.separate_in_thread, args=(input_path, song_name, ai_suffix, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, high_quality, do_transcribe, song))
+        thread = threading.Thread(target=self.separate_in_thread, args=(input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, song))
         thread.daemon = True
         thread.start()
 
-    def separate_in_thread(self, input_path, song_name, ai_suffix, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, high_quality, do_transcribe, song):
+    def separate_in_thread(self, input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, song):
         progress = ProgressWindow(self, f"Separating with {ai_tool}...")
         try:
             self.status_queue.put("Loading model...")
@@ -499,11 +505,11 @@ class SeparationApp(ctk.CTk):
             # Delegate to separator with new params
             success = False
             if ai_tool == "Spleeter":
-                 success = self.spleeter_sep.separate(input_path, song_name, ai_suffix, vocals_folder, instr_folder, model, fmt, sr, bitrate, high_quality)
+                 success = self.spleeter_sep.separate(input_path, song_name, vocals_folder, instr_folder, fmt, sr, bitrate)
             elif ai_tool == "Demucs":
-                success = self.demucs_sep.separate(input_path, song_name, ai_suffix, vocals_folder, instr_folder, model, fmt, sr, bitrate, high_quality)
+                success = self.demucs_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate)
             elif ai_tool == "OpenUnmix":
-                success = self.openunmix_sep.separate(input_path, song_name, ai_suffix, vocals_folder, instr_folder, model, fmt, sr, bitrate, high_quality)
+                success = self.openunmix_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate)
             else:
                 raise ValueError(f"Unknown AI tool: {ai_tool}")
 
@@ -518,7 +524,7 @@ class SeparationApp(ctk.CTk):
             if success:
                 # Handle transcription (placeholder)
                 if do_transcribe:
-                    trans_path = os.path.join(trans_folder, f"{song_name}{ai_suffix}_transcription.txt")
+                    trans_path = os.path.join(trans_folder, f"{song_name}{ai_tool}_transcription.txt")
                     with open(trans_path, "w") as f:
                         f.write(f"Transcription for {song_name} (using {ai_tool}):\n")
                         f.write("Note: Implement actual transcription (e.g., with Whisper) here.\n")

@@ -12,14 +12,11 @@ class DemucsSeparator:
         except ImportError as e:
             raise ImportError(f"Demucs not installed properly: {e}. Run 'pip install demucs'.")
 
-    def separate(self, input_path: str, song_name: str, suffix: str, vocals_dir: str, instr_dir: str, model="mdx", fmt="wav", sr=44100, bitrate=192, high_quality=False):
+    def separate(self, input_path: str, song_name: str, vocals_dir: str, instr_dir: str, model="mdx", fmt="wav", sr=44100, bitrate=192):
         try:
             if not os.path.exists(input_path):
                 raise FileNotFoundError(f"Input file not found: {input_path}")
             print(f"Demucs: Processing input: {input_path}")
-
-            if high_quality:
-                model = "htdemucs"  # High-quality model
 
             args = [
                 "--two-stems=vocals",
@@ -41,18 +38,16 @@ class DemucsSeparator:
 
             os.makedirs(vocals_dir, exist_ok=True)
             os.makedirs(instr_dir, exist_ok=True)
+            ai_suffix = "_D"
 
-            vocals_dest_wav = os.path.join(vocals_dir, f"{song_name}{suffix}_vocals.wav")
-            instr_dest_wav = os.path.join(instr_dir, f"{song_name}{suffix}_instrumental.wav")
+            vocals_dest_wav = os.path.join(vocals_dir, f"{song_name}{ai_suffix}_vocals.wav")
+            instr_dest_wav = os.path.join(instr_dir, f"{song_name}{ai_suffix}_instrumental.wav")
             shutil.move(vocals_src, vocals_dest_wav)
             shutil.move(instr_src, instr_dest_wav)
-
+            
             if fmt != "wav":
-                vocals_dest = os.path.join(vocals_dir, f"{song_name}{suffix}_vocals.{fmt}")
-                instr_dest = os.path.join(instr_dir, f"{song_name}{suffix}_instrumental.{fmt}")
-
-                if high_quality:
-                    bitrate = int(bitrate * 1.5)
+                vocals_dest = os.path.join(vocals_dir, f"{song_name}{ai_suffix}_vocals.{fmt}")
+                instr_dest = os.path.join(instr_dir, f"{song_name}{ai_suffix}_instrumental.{fmt}")
 
                 audio_vocals = AudioSegment.from_wav(vocals_dest_wav)
                 audio_instr = AudioSegment.from_wav(instr_dest_wav)

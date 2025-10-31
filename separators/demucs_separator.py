@@ -1,8 +1,9 @@
 import os
 import shutil
 import sys
+import tempfile
 from demucs.separate import main as demucs_main
-from pydub import AudioSegment  # For format conversion
+from pydub import AudioSegment  # For fallback WAV resampling if needed
 
 class DemucsSeparator:
     def __init__(self):
@@ -12,61 +13,98 @@ class DemucsSeparator:
         except ImportError as e:
             raise ImportError(f"Demucs not installed properly: {e}. Run 'pip install demucs'.")
 
-    def separate(self, input_path: str, song_name: str, vocals_dir: str, instr_dir: str, model="mdx", fmt="wav", sr=44100, bitrate=192):
+    def _get_unique_filename(self, base_path):
+        """Generate a unique filename by appending _1, _2, etc., if the file exists."""
+        if not os.path.exists(base_path):
+            return base_path
+        base, ext = os.path.splitext(base_path)
+        counter = 1
+        while True:
+            new_path = f"{base}_{counter}{ext}"
+            if not os.path.exists(new_path):
+                return new_path
+            counter += 1
+
+    def separate( self, input_path: str, song_name: str, vocals_dir: str, instr_dir: str, model="mdx", fmt="wav", sr=44100, bitrate=192, int24=False, float32=False, mp3_preset=2, shifts=1):
         try:
             if not os.path.exists(input_path):
                 raise FileNotFoundError(f"Input file not found: {input_path}")
             print(f"Demucs: Processing input: {input_path}")
 
-            args = [
-                "--two-stems=vocals",
-                "-n", model,
-                input_path
-            ]
-            print(f"Demucs: Running with args: {args}")
+            # Validate fmt and mutually exclusive bit depth options
+            supported_fmts = ["wav", "mp3", "flac"]
+            if fmt not in supported_fmts:
+                raise ValueError(f"Unsupported format '{fmt}'. Supported: {supported_fmts}")
+            if int24 and float32:
+                raise ValueError("Cannot specify both --int24 and --float32. Choose one.")
 
-            demucs_main(args)
-            print(f"Demucs: Separation completed for {song_name}")
+            # Create temp dir for processing
+            with tempfile.TemporaryDirectory() as temp_dir:
+                # Prepare Demucs arguments
+                args = [
+                    "--two-stems=vocals",
+                    "-n", model,
+                    "--out", temp_dir,  # Output to temp dir
+                    "--shifts", str(shifts),
+                ]
+                # Map fmt to Demucs format flags
+                if fmt == "flac":
+                    args.append("--flac")
+                elif fmt == "mp3":
+                    args.append("--mp3")
+                    args.extend(["--mp3-bitrate", str(bitrate)])
+                    args.extend(["--mp3-preset", str(mp3_preset)])
+                elif fmt == "wav":
+                    if int24:
+                        args.append("--int24")
+                    elif float32:
+                        args.append("--float32")
 
-            model_dir = f"separated/{model}"
-            output_subdir = os.path.join(model_dir, song_name)
-            vocals_src = os.path.join(output_subdir, "vocals.wav")
-            instr_src = os.path.join(output_subdir, "no_vocals.wav")
+                args.append(input_path)
 
-            if not os.path.exists(vocals_src) or not os.path.exists(instr_src):
-                raise FileNotFoundError(f"Demucs output files not found in {output_subdir}")
+                print(f"Demucs: Running with args: {args}")
 
-            os.makedirs(vocals_dir, exist_ok=True)
-            os.makedirs(instr_dir, exist_ok=True)
-            ai_suffix = "_D"
+                demucs_main(args)
+                print(f"Demucs: Separation completed for {song_name}")
 
-            vocals_dest_wav = os.path.join(vocals_dir, f"{song_name}{ai_suffix}_vocals.wav")
-            instr_dest_wav = os.path.join(instr_dir, f"{song_name}{ai_suffix}_instrumental.wav")
-            shutil.move(vocals_src, vocals_dest_wav)
-            shutil.move(instr_src, instr_dest_wav)
-            
-            if fmt != "wav":
-                vocals_dest = os.path.join(vocals_dir, f"{song_name}{ai_suffix}_vocals.{fmt}")
-                instr_dest = os.path.join(instr_dir, f"{song_name}{ai_suffix}_instrumental.{fmt}")
+                # Demucs outputs to a subfolder like "temp_dir/mdx/song_name/"
+                model_dir = os.path.join(temp_dir, model)
+                output_subdir = os.path.join(model_dir, song_name)
+                vocals_src = os.path.join(output_subdir, f"vocals.{fmt}")
+                instr_src = os.path.join(output_subdir, f"no_vocals.{fmt}")
 
-                audio_vocals = AudioSegment.from_wav(vocals_dest_wav)
-                audio_instr = AudioSegment.from_wav(instr_dest_wav)
+                if not os.path.exists(vocals_src) or not os.path.exists(instr_src):
+                    raise FileNotFoundError(f"Demucs output files not found in {output_subdir}")
 
-                if fmt == "mp3":
-                    audio_vocals.export(vocals_dest, format="mp3", bitrate=f"{bitrate}k")
-                    audio_instr.export(instr_dest, format="mp3", bitrate=f"{bitrate}k")
-                elif fmt == "flac":
-                    audio_vocals.set_frame_rate(sr).export(vocals_dest, format="flac")
-                    audio_instr.set_frame_rate(sr).export(instr_dest, format="flac")
+                # Ensure final folders exist
+                os.makedirs(vocals_dir, exist_ok=True)
+                os.makedirs(instr_dir, exist_ok=True)
+                ai_suffix = "_D"
 
-                os.remove(vocals_dest_wav)
-                os.remove(instr_dest_wav)
+                # Generate unique destination paths
+                base_vocals_dest = os.path.join(vocals_dir, f"{song_name}{ai_suffix}_vocals.{fmt}")
+                base_instr_dest = os.path.join(instr_dir, f"{song_name}{ai_suffix}_instrumental.{fmt}")
 
-            print(f"Demucs separation successful for {song_name} in {fmt} format")
-            return True
+                vocals_dest = self._get_unique_filename(base_vocals_dest)
+                instr_dest = self._get_unique_filename(base_instr_dest)
+
+                # If output is WAV and resampling is needed, use pydub; otherwise, move directly
+                if fmt == "wav" and sr != 44100:  # Assuming Demucs outputs at 44.1kHz
+                    audio_vocals = AudioSegment.from_wav(vocals_src)
+                    audio_vocals = audio_vocals.set_frame_rate(sr)
+                    audio_vocals.export(vocals_dest, format="wav")
+
+                    audio_instr = AudioSegment.from_wav(instr_src)
+                    audio_instr = audio_instr.set_frame_rate(sr)
+                    audio_instr.export(instr_dest, format="wav")
+                else:
+                    # Move files directly (Demucs handled format/bitrate/bit depth)
+                    shutil.move(vocals_src, vocals_dest)
+                    shutil.move(instr_src, instr_dest)
+
+                print(f"Demucs separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
+                return True
 
         except Exception as e:
             print(f"Demucs separation error: {str(e)}", file=sys.stderr)
-            if os.path.exists("separated"):
-                shutil.rmtree("separated", ignore_errors=True)
             return False

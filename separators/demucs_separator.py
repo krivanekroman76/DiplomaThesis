@@ -25,7 +25,7 @@ class DemucsSeparator:
                 return new_path
             counter += 1
 
-    def separate( self, input_path: str, song_name: str, vocals_dir: str, instr_dir: str, model="mdx", fmt="wav", sr=44100, bitrate=192, int24=False, float32=False, mp3_preset=2, shifts=1):
+    def separate( self, input_path: str, song_name: str, vocals_dir: str, instr_dir: str, model="mdx", fmt="wav", sr=44100, bitrate="128k", bit_depth=True, mp3_preset=2, shifts=1):
         try:
             if not os.path.exists(input_path):
                 raise FileNotFoundError(f"Input file not found: {input_path}")
@@ -35,8 +35,12 @@ class DemucsSeparator:
             supported_fmts = ["wav", "mp3", "flac"]
             if fmt not in supported_fmts:
                 raise ValueError(f"Unsupported format '{fmt}'. Supported: {supported_fmts}")
-            if int24 and float32:
-                raise ValueError("Cannot specify both --int24 and --float32. Choose one.")
+            if bit_depth:
+                int24 = True
+                float32 = False
+            else:
+                int24 = True
+                float32 = False
 
             # Create temp dir for processing
             with tempfile.TemporaryDirectory() as temp_dir:

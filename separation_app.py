@@ -5,16 +5,15 @@ from tkinter import filedialog, messagebox
 import customtkinter as ctk
 import platform
 import subprocess
-import shlex  # For safe command splitting
-import tempfile  # For temporary directories
 import threading
 import queue
-from demucs.separate import main as demucs_main  # For Demucs (fallback if needed)
 
-# Import separator classes (adjust path if separators/ is not in same dir)
+# Separation classes in separators directory
 import separators.spleeter_separator as spleeter
 import separators.demucs_separator as demucs
 import separators.openunmix_separator as openunmix
+# AI transcription tool from OpenAI
+import whisper
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
@@ -101,6 +100,7 @@ class SeparationApp(ctk.CTk):
         # Data lists
         self.songs = []
         self.folders = []
+        self.all_items = []  # New: Tracks all listbox items (folders and songs)
         self.vocals = []
         self.instrumentals = []
         self.transcriptions = []
@@ -118,50 +118,50 @@ class SeparationApp(ctk.CTk):
         self.sidebar.grid_rowconfigure(2, weight=1)  # Spacer row to push settings down
 
         # Navigation buttons in sidebar (top-aligned)
-        self.input_button = ctk.CTkButton(
+        input_button = ctk.CTkButton(
             self.sidebar, 
             text="Input", 
             command=self.show_input,
             width=180
         )
-        self.input_button.grid(row=0, column=0, padx=20, pady=(20, 10), sticky="ew")
+        input_button.grid(row=0, column=0, padx=20, pady=(20, 10), sticky="ew")
 
-        self.output_button = ctk.CTkButton(
+        output_button = ctk.CTkButton(
             self.sidebar, 
             text="Output", 
             command=self.show_output,
             width=180
         )
-        self.output_button.grid(row=1, column=0, padx=20, pady=10, sticky="ew")
+        output_button.grid(row=1, column=0, padx=20, pady=10, sticky="ew")
 
         # Spacer row (expands to push settings to bottom)
         # (No widget here, just the configuration above)
 
         # Appearance mode selection (bottom-aligned)
-        self.appearance_mode_label = ctk.CTkLabel(self.sidebar, text="Appearance Mode:", anchor="w")
-        self.appearance_mode_label.grid(row=3, column=0, padx=20, pady=(20, 0), sticky="w")
+        appearance_mode_label = ctk.CTkLabel(self.sidebar, text="Appearance Mode:", anchor="w")
+        appearance_mode_label.grid(row=3, column=0, padx=20, pady=(20, 0), sticky="w")
 
-        self.appearance_mode_optionemenu = ctk.CTkOptionMenu(
+        appearance_mode_optionemenu = ctk.CTkOptionMenu(
             self.sidebar, 
             values=["Light", "Dark", "System"],
             command=self.change_appearance_mode_event,
             width=160
         )
-        self.appearance_mode_optionemenu.grid(row=4, column=0, padx=20, pady=(10, 10), sticky="ew")
-        self.appearance_mode_optionemenu.set("Dark")
+        appearance_mode_optionemenu.grid(row=4, column=0, padx=20, pady=(10, 10), sticky="ew")
+        appearance_mode_optionemenu.set("Dark")
 
         # UI Scaling (Zoom) selection (bottom-aligned)
-        self.scaling_label = ctk.CTkLabel(self.sidebar, text="UI Scaling:", anchor="w")
-        self.scaling_label.grid(row=5, column=0, padx=20, pady=(10, 0), sticky="w")
+        scaling_label = ctk.CTkLabel(self.sidebar, text="UI Scaling:", anchor="w")
+        scaling_label.grid(row=5, column=0, padx=20, pady=(10, 0), sticky="w")
 
-        self.scaling_optionemenu = ctk.CTkOptionMenu(
+        scaling_optionemenu = ctk.CTkOptionMenu(
             self.sidebar, 
             values=["80%", "90%", "100%", "110%", "120%"],
             command=self.change_scaling_event,
             width=160
         )
-        self.scaling_optionemenu.grid(row=6, column=0, padx=20, pady=(10, 20), sticky="ew")
-        self.scaling_optionemenu.set("100%")
+        scaling_optionemenu.grid(row=6, column=0, padx=20, pady=(10, 20), sticky="ew")
+        scaling_optionemenu.set("100%")
 
         # Content frame
         self.content_frame = ctk.CTkFrame(main_frame)
@@ -186,12 +186,14 @@ class SeparationApp(ctk.CTk):
         self.load_input()
         self.load_outputs()
 
+        # Buttons in input tab
+        self.input_button = input_button
+        self.output_button = output_button
+    
     def show_input(self):
         self.input_frame.grid(row=0, column=0, sticky="nsew")
         self.output_frame.grid_forget()
-        # Optional: Highlight active button
-        self.input_button.configure(fg_color=("#DCE4EE", "#1f538d"))
-        self.output_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+
 
     def show_output(self):
         self.output_frame.grid(row=0, column=0, sticky="nsew")
@@ -297,16 +299,16 @@ class SeparationApp(ctk.CTk):
         self.sr_entry = ctk.CTkEntry(self.wav_flac_frame, textvariable=self.sr_var, width=150, placeholder_text="44100")
         self.sr_entry.grid(row=3, column=0, sticky="ew", padx=20, pady=5)
 
-        # Bit depth checkboxes (for Demucs WAV)
-        self.bit_depth_check_frame = ctk.CTkFrame(self.wav_flac_frame)
-        self.bit_depth_check_frame.grid(row=6, column=0, sticky="ew", padx=20, pady=5)
-        self.bit_depth_check_frame.grid_remove()
-        self.int24_var = tk.BooleanVar(value=False)
-        self.int24_checkbox = ctk.CTkCheckBox(self.bit_depth_check_frame, text="24-bit WAV", variable=self.int24_var)
-        self.int24_checkbox.grid(row=0, column=0, sticky="w", padx=20, pady=5)
-        self.float32_var = tk.BooleanVar(value=False)
-        self.float32_checkbox = ctk.CTkCheckBox(self.bit_depth_check_frame, text="Float32 WAV", variable=self.float32_var)
-        self.float32_checkbox.grid(row=1, column=0, sticky="w", padx=20, pady=5)
+        # Bit depth radiobuttons (for Demucs WAV)
+        self.bit_depth_frame = ctk.CTkFrame(self.wav_flac_frame)
+        self.bit_depth_frame.grid(row=4, column=0, sticky="ew", padx=20, pady=5)
+        self.bit_depth_frame.grid_remove()
+
+        self.bit_depth_var = tk.StringVar(value="int24")
+        self.int24_radiobutton = ctk.CTkRadioButton(self.bit_depth_frame, text="24-bit", variable=self.bit_depth_var, value="int24")
+        self.int24_radiobutton.grid(row=0, column=0, sticky="w", padx=20, pady=5)
+        self.float32_radiobutton = ctk.CTkRadioButton(self.bit_depth_frame, text="Float32 (bigger)", variable=self.bit_depth_var, value="float32")
+        self.float32_radiobutton.grid(row=1, column=0, sticky="w", padx=20, pady=5)
 
         # MP3 options
         self.mp3_frame = ctk.CTkFrame(sep_scrollable)
@@ -375,13 +377,13 @@ class SeparationApp(ctk.CTk):
             self.wav_flac_frame.grid()  # Show WAV/FLAC options
             self.mp3_frame.grid_remove()  # Hide MP3 options
             if tool == "Demucs" and fmt == "wav":
-                self.bit_depth_check_frame.grid()  # Show bit depth checkboxes for Demucs WAV
+                self.bit_depth_frame.grid()  # Show bit depth for Demucs WAV
             else:
-                self.bit_depth_check_frame.grid_remove()  # Hide bit depth checkboxes
+                self.bit_depth_frame.grid_remove()  # Hide bit depth
         elif fmt == "mp3":
             self.wav_flac_frame.grid_remove()  # Hide WAV/FLAC options
             self.mp3_frame.grid()  # Show MP3 options
-            self.bit_depth_check_frame.grid_remove()  # Ensure bit depth is hidden
+            self.bit_depth_frame.grid_remove()  # Ensure bit depth is hidden
         # Shifts is handled separately based on tool
         if tool == "Demucs":
             self.mp3_preset_label.grid()
@@ -436,6 +438,7 @@ class SeparationApp(ctk.CTk):
         self.songs_listbox.delete(0, tk.END)
         self.folders.clear()
         self.songs.clear()
+        self.all_items.clear()  # Clear all items
         if not os.path.isdir(self.input_folder):
             return
 
@@ -443,10 +446,13 @@ class SeparationApp(ctk.CTk):
         for item in items:
             full_path = os.path.join(self.input_folder, item)
             if os.path.isdir(full_path):
+                self.all_items.append(('folder', full_path))
                 self.folders.append(full_path)
                 self.songs_listbox.insert(tk.END, f"[Folder] {item}")
             elif item.lower().endswith(('.mp3', '.wav', '.flac', '.m4a')):
-                self.songs.append({'path': full_path, 'name': item})
+                song_data = {'path': full_path, 'name': item}
+                self.all_items.append(('song', song_data))
+                self.songs.append(song_data)
                 self.songs_listbox.insert(tk.END, item)
 
         # Update path bar
@@ -505,17 +511,15 @@ class SeparationApp(ctk.CTk):
             if not sel:
                 return
             idx = sel[0]
-            item_text = self.songs_listbox.get(idx)
+            item_type, item_data = self.all_items[idx]
 
-            if item_text.startswith("[Folder]"):
-                folder_name = item_text[8:].strip()  # Remove [Folder]
-                folder_path = os.path.join(self.input_folder, folder_name)
+            if item_type == 'folder':
+                folder_path = item_data
                 if os.path.isdir(folder_path):
                     self.input_folder = folder_path
                     self.load_input()
-            else:
-                # It's a file, open it (like the old open_selected_song)
-                open_file(self.songs[idx]['path'])
+            elif item_type == 'song':
+                open_file(item_data['path'])
 
     def add_song(self):
         filetypes = [("Audio files", "*.mp3 *.wav *.flac *.m4a"), ("All files", "*.*")]
@@ -577,7 +581,12 @@ class SeparationApp(ctk.CTk):
             messagebox.showwarning("No selection", "Please select a song to separate.")
             return
         idx = sel[0]
-        song = self.songs[idx]
+        item_type, item_data = self.all_items[idx]
+        if item_type != 'song':
+            messagebox.showwarning("Invalid selection", "Please select a song to separate, not a folder.")
+            return
+
+        song = item_data
         input_path = song['path']
         song_name = os.path.splitext(os.path.basename(song['name']))[0]
 
@@ -587,10 +596,9 @@ class SeparationApp(ctk.CTk):
         fmt = self.format_var.get()
         sr = int(self.sr_var.get()) if fmt in ["wav", "flac"] else None
         bitrate = int(self.bitrate_var.get()) if fmt == "mp3" else None
-        int24_B = self.int24_var.get()
-        float32_B = self.float32_var.get()
-        mp3_preset = int(self.mp3_preset_slider.get())
-        shifts = int(self.shifts_var.get())
+        bit_depth = self.bit_depth_var.get() if fmt == "wav" and ai_tool == "Demucs" else None
+        mp3_preset = int(self.mp3_preset_slider.get()) if fmt == "mp3" and ai_tool == "Demucs" else None
+        shifts = int(self.shifts_var.get()) if ai_tool == "Demucs" else None
         
         # Prepare output folders
         vocals_folder = self.output_folders["vocals"]
@@ -603,6 +611,24 @@ class SeparationApp(ctk.CTk):
         thread.daemon = True
         thread.start()
 
+    def transcribe_vocals(self, vocals_file_path, trans_path):
+        try:
+            model = whisper.load_model("base")  # Choose model: "tiny", "base", "small", "medium" (bigger = more accurate but slower)
+            result = model.transcribe(vocals_file_path, verbose=False)
+            # result["text"] is the transcript
+
+            with open(trans_path, "w") as f:
+                f.write(f"Transcription:\n{result['text']}\n\n")
+                # Optional: Add timestamps if needed
+                if "segments" in result:
+                    f.write("Timestamps:\n")
+                    for seg in result["segments"]:
+                        f.write(f"{seg['start']:.2f}s - {seg['end']:.2f}s: {seg['text']}\n")
+            return True
+        except Exception as e:
+            print(f"Transcription error: {e}")
+            return False
+    
     def separate_in_thread(self, input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, song):
         progress = ProgressWindow(self, f"Separating with {ai_tool}...")
         try:
@@ -614,7 +640,7 @@ class SeparationApp(ctk.CTk):
             if ai_tool == "Spleeter":
                  success = self.spleeter_sep.separate(input_path, song_name, vocals_folder, instr_folder, fmt, sr, bitrate)
             elif ai_tool == "Demucs":
-                success = self.demucs_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate, int24_B, float32_B, mp3_preset, shifts)
+                success = self.demucs_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate, bit_depth, mp3_preset, shifts)
             elif ai_tool == "OpenUnmix":
                 success = self.openunmix_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate)
             else:
@@ -628,23 +654,23 @@ class SeparationApp(ctk.CTk):
             self.status_queue.put("Saving files...")
             progress.update_status("Saving files...")
 
-            if success:
-                # Handle transcription (placeholder)
-                if do_transcribe:
+            if success and do_transcribe:
+                # Find vocals file (assuming .wav as primary)
+                vocals_files = [f for f in os.listdir(vocals_folder) if f.startswith(song_name) and f.lower().endswith('.wav')]
+                if vocals_files:
+                    vocals_file = os.path.join(vocals_folder, vocals_files[0])
                     trans_path = os.path.join(trans_folder, f"{song_name}{ai_tool}_transcription.txt")
-                    with open(trans_path, "w") as f:
-                        f.write(f"Transcription for {song_name} (using {ai_tool}):\n")
-                        f.write("Note: Implement actual transcription (e.g., with Whisper) here.\n")
-                        f.write("Placeholder: Lyrics not available yet.")
+                    if self.transcribe_vocals(vocals_file, trans_path):
+                        self.after(0, lambda: messagebox.showinfo("Transcription done", "Transcription generated for vocals."))
+                    else:
+                        self.after(0, lambda: messagebox.showerror("Transcription Error", "Transcription failed. Check console."))
+                else:
+                    self.after(0, lambda: messagebox.showerror("Transcription Error", "Vocals file not found for transcription."))
 
-                # Update UI on main thread
-                self.after(0, self.load_outputs)
-                self.after(0, lambda: messagebox.showinfo("Separation done", f"Separated '{song['name']}' using {ai_tool}." + ("\nTranscription generated (placeholder)." if do_transcribe else "")))
-                self.status_queue.put("Success")
-            else:
-                self.after(0, lambda: messagebox.showerror("Separation Error", f"{ai_tool} failed. Check console for details."))
-                self.status_queue.put("Error")
-
+            # Update UI on main thread
+            self.after(0, self.load_outputs)
+            self.after(0, lambda: messagebox.showinfo("Separation done", f"Separated '{song['name']}' using {ai_tool}." + (" (Transcription pending)" if do_transcribe else "")))
+            self.status_queue.put("Success")
         except Exception as e:
             print(f"Thread error: {e}")
             self.status_queue.put("Error")

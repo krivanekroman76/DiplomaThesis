@@ -304,10 +304,10 @@ class SeparationApp(ctk.CTk):
         self.bit_depth_frame.grid(row=4, column=0, sticky="ew", padx=20, pady=5)
         self.bit_depth_frame.grid_remove()
 
-        self.bit_depth_var = tk.StringVar(value="int24")
-        self.int24_radiobutton = ctk.CTkRadioButton(self.bit_depth_frame, text="24-bit", variable=self.bit_depth_var, value="int24")
+        self.bit_depth_var = tk.BooleanVar(value=True)
+        self.int24_radiobutton = ctk.CTkRadioButton(self.bit_depth_frame, text="24-bit", variable=self.bit_depth_var, value=True)
         self.int24_radiobutton.grid(row=0, column=0, sticky="w", padx=20, pady=5)
-        self.float32_radiobutton = ctk.CTkRadioButton(self.bit_depth_frame, text="Float32 (bigger)", variable=self.bit_depth_var, value="float32")
+        self.float32_radiobutton = ctk.CTkRadioButton(self.bit_depth_frame, text="Float32 (bigger)", variable=self.bit_depth_var, value=False)
         self.float32_radiobutton.grid(row=1, column=0, sticky="w", padx=20, pady=5)
 
         # MP3 options
@@ -607,7 +607,7 @@ class SeparationApp(ctk.CTk):
 
         # Start threaded separation with progress
         self.status_queue = queue.Queue()
-        thread = threading.Thread(target=self.separate_in_thread, args=(input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, song))
+        thread = threading.Thread(target=self.separate_in_thread, args=(input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, song, bit_depth, mp3_preset, shifts))
         thread.daemon = True
         thread.start()
 
@@ -629,7 +629,7 @@ class SeparationApp(ctk.CTk):
             print(f"Transcription error: {e}")
             return False
     
-    def separate_in_thread(self, input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, song):
+    def separate_in_thread(self, input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, song, bit_depth, mp3_preset, shifts):
         progress = ProgressWindow(self, f"Separating with {ai_tool}...")
         try:
             self.status_queue.put("Loading model...")
@@ -640,6 +640,7 @@ class SeparationApp(ctk.CTk):
             if ai_tool == "Spleeter":
                  success = self.spleeter_sep.separate(input_path, song_name, vocals_folder, instr_folder, fmt, sr, bitrate)
             elif ai_tool == "Demucs":
+                #separate( self, input_path: str, song_name: str, vocals_dir: str, instr_dir: str, model="mdx", fmt="wav", sr=44100, bitrate="128k", bit_depth=True, mp3_preset=2, shifts=1)
                 success = self.demucs_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate, bit_depth, mp3_preset, shifts)
             elif ai_tool == "OpenUnmix":
                 success = self.openunmix_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate)

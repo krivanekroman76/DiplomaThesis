@@ -7,6 +7,7 @@ import soundfile as sf
 import numpy as np
 from pydub import AudioSegment  # For format conversion
 from openunmix import predict  # High-level API
+import separators.whisper_transcription as whisper_trans
 
 class OpenUnmixSeparator:
     def __init__(self):
@@ -18,6 +19,7 @@ class OpenUnmixSeparator:
         except Exception as e:
             print(f"OpenUnmix init error: {e}")
             print("OpenUnmix: Check: pip install openunmix-pytorch")
+        self.whisper_trans = whisper_trans.WhisperTranscription()
 
     def _get_unique_filename(self, base_path):
         """Generate a unique filename by appending _1, _2, etc., if the file exists."""
@@ -31,7 +33,7 @@ class OpenUnmixSeparator:
                 return new_path
             counter += 1
 
-    def separate(self, input_path, song_name, vocals_folder, instr_folder, model="umxl", fmt="wav", sr=44100, bitrate=192):
+    def separate(self, input_path, song_name, vocals_folder, instr_folder, model="umxl", fmt="wav", sr=44100, bitrate=192, do_transcribe=False, trans_folder=None, trans_model="base"):
         try:
             # Check if input exists
             if not os.path.exists(input_path):
@@ -84,11 +86,10 @@ class OpenUnmixSeparator:
                 # Ensure final folders exist
                 os.makedirs(vocals_folder, exist_ok=True)
                 os.makedirs(instr_folder, exist_ok=True)
-                ai_suffix = "_O"
 
                 # Generate unique destination paths
-                base_vocals_dest = os.path.join(vocals_folder, f"{song_name}{ai_suffix}_vocals.{fmt}")
-                base_instr_dest = os.path.join(instr_folder, f"{song_name}{ai_suffix}_instrumental.{fmt}")
+                base_vocals_dest = os.path.join(vocals_folder, f"{song_name}_0_vocals.{fmt}")
+                base_instr_dest = os.path.join(instr_folder, f"{song_name}_O_instrumental.{fmt}")
 
                 vocals_dest = self._get_unique_filename(base_vocals_dest)
                 instr_dest = self._get_unique_filename(base_instr_dest)
@@ -107,6 +108,14 @@ class OpenUnmixSeparator:
                     audio_instr.export(instr_dest, format="wav")
                 
                 print(f"OpenUnmix separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
+
+                if do_transcribe and trans_folder:
+                    trans_path = os.path.join(trans_folder, f"{song_name}_O_transcription.txt")
+                    if self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model):
+                        print(f"OpenUnmix: Transcription completed for {song_name}.")
+                    else:
+                        print(f"OpenUnmix: Transcription failed for {song_name}.")
+
                 return True
 
         except Exception as e:

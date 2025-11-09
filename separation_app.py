@@ -12,8 +12,6 @@ import queue
 import separators.spleeter_separator as spleeter
 import separators.demucs_separator as demucs
 import separators.openunmix_separator as openunmix
-# AI transcription tool from OpenAI
-import whisper
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
@@ -216,7 +214,7 @@ class SeparationApp(ctk.CTk):
         frame.grid_rowconfigure(0, weight=0)
         frame.grid_rowconfigure(1, weight=1)
 
-        # Path bar frame (new: at the top)
+        # Path bar frame
         path_frame = ctk.CTkFrame(frame)
         path_frame.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
         path_frame.grid_columnconfigure(1, weight=1)
@@ -238,20 +236,20 @@ class SeparationApp(ctk.CTk):
         self.add_song_button = ctk.CTkButton(path_frame, text="Add Song", command=self.add_song)
         self.add_song_button.grid(row=2, column=3, sticky="ew", padx=5)
 
-        # Songs/Folders list (updated: shows folders too)
+        # Songs/Folders list
         self.songs_listbox = tk.Listbox(frame)
         self.songs_listbox.grid(row=1, column=0, sticky="nsew", padx=10, pady=(0,10))
         self.songs_listbox.bind("<Double-Button-1>", self.on_listbox_double_click)
 
-        # Separation menu frame (now scrollable to prevent cutoff)
-        sep_scrollable = ctk.CTkScrollableFrame(frame, width=350, height=600)  # Fixed width, height for consistency; adjust as needed
+        # Separation menu frame 
+        sep_scrollable = ctk.CTkScrollableFrame(frame, width=350, height=600) 
         sep_scrollable.grid(row=0, column=1, rowspan=4, sticky="nsew", padx=10, pady=10)
         sep_scrollable.grid_columnconfigure(0, weight=1)
 
         sep_label = ctk.CTkLabel(sep_scrollable, text="Separation Menu", font=ctk.CTkFont(size=20, weight="bold"))
         sep_label.grid(row=0, column=0, pady=(10,20))
 
-        # AI Tool selection (fixed position)
+        # AI Tool selection
         self.ai_tool_var = tk.StringVar(value="Spleeter")
         self.radio_spleeter = ctk.CTkRadioButton(sep_scrollable, text="Spleeter", variable=self.ai_tool_var, value="Spleeter", command=self.on_tool_change)
         self.radio_demucs = ctk.CTkRadioButton(sep_scrollable, text="Demucs", variable=self.ai_tool_var, value="Demucs", command=self.on_tool_change)
@@ -261,7 +259,7 @@ class SeparationApp(ctk.CTk):
         self.radio_demucs.grid(row=2, column=0, sticky="w", padx=20, pady=5)
         self.radio_openunmix.grid(row=3, column=0, sticky="w", padx=20, pady=5)
 
-        # Model selection (fixed label position, content changes)
+        # Model selection
         self.model_label = ctk.CTkLabel(sep_scrollable, text="Model:", anchor="w")
         self.model_label.grid(row=4, column=0, sticky="w", padx=20, pady=(10,0))
         self.model_var = tk.StringVar(value="umxl")  # Default for OpenUnmix
@@ -270,7 +268,7 @@ class SeparationApp(ctk.CTk):
         )
         self.model_menu.grid(row=5, column=0, sticky="ew", padx=20, pady=5)
 
-        # Output format (fixed label position, content changes)
+        # Output format
         self.format_label = ctk.CTkLabel(sep_scrollable, text="Output Format:", anchor="w")
         self.format_label.grid(row=6, column=0, sticky="w", padx=20, pady=(10,0))
         self.format_var = tk.StringVar(value="wav")
@@ -279,7 +277,7 @@ class SeparationApp(ctk.CTk):
         )
         self.format_menu.grid(row=7, column=0, sticky="ew", padx=20, pady=5)
 
-        # Conditional frames for format-specific options (fixed positions)
+        # Conditional frames for format-specific options
         # WAV/FLAC options
         self.wav_flac_frame = ctk.CTkFrame(sep_scrollable)
         self.wav_flac_frame.grid(row=8, column=0, sticky="ew", padx=20, pady=5)
@@ -341,14 +339,28 @@ class SeparationApp(ctk.CTk):
         self.shifts_entry = ctk.CTkEntry(self.shifts_frame, textvariable=self.shifts_var, width=150, placeholder_text="1")
         self.shifts_entry.grid(row=1, column=0, sticky="ew", padx=20, pady=5)
 
-        # Transcription checkbox (fixed position)
+        # Transcription checkbox
         self.transcript_var = tk.BooleanVar(value=False)
-        self.transcript_checkbox = ctk.CTkCheckBox(sep_scrollable, text="Transcribe vocals", variable=self.transcript_var)
+        self.transcript_checkbox = ctk.CTkCheckBox(sep_scrollable, text="Transcribe vocals", variable=self.transcript_var, command=self.on_tool_change)
         self.transcript_checkbox.grid(row=11, column=0, sticky="w", padx=20, pady=10)
 
-        # Separate button (fixed at bottom, always visible due to scrolling)
+        self.transcription_frame = ctk.CTkFrame(sep_scrollable)
+        self.transcription_frame.grid(row=12, column=0, sticky="ew", padx=20, pady=5)
+        self.transcription_frame.grid_remove()  # Hide initially
+        
+        # Model selection
+        self.tarns_model_label = ctk.CTkLabel(self.transcription_frame, text="Model:", anchor="w")
+        self.tarns_model_label.grid(row=1, column=0, sticky="w", padx=20, pady=(10,0))
+        self.transcript_model = tk.StringVar(value="tiny")
+        self.transcript_model_menu = ctk.CTkOptionMenu(
+            self.transcription_frame, variable=self.transcript_model, values=["large", "medium", "small", "tiny", "base", "turbo", "large-v1", "large-v2", "large-v3", "large-v3-turbo"], width=200
+        )
+        self.transcript_model_menu.grid(row=13, column=0, sticky="ew", padx=20, pady=5)
+        self.transcript_model_menu.grid_remove()
+
+        # Separate button
         self.separate_button = ctk.CTkButton(sep_scrollable, text="Separate", command=self.separate_audio)
-        self.separate_button.grid(row=12, column=0, sticky="ew", padx=20, pady=(20,10))
+        self.separate_button.grid(row=14, column=0, sticky="ew", padx=20, pady=(20,10))
 
         # Initial tool change to set defaults
         self.on_tool_change()
@@ -358,6 +370,7 @@ class SeparationApp(ctk.CTk):
 
     def on_tool_change(self):
         tool = self.ai_tool_var.get()
+        trans_tool = self.transcript_var.get()
         if tool == "Spleeter":
             self.model_menu.grid_remove()  # Hide model selection for Spleeter
         elif tool == "Demucs":
@@ -368,6 +381,14 @@ class SeparationApp(ctk.CTk):
             self.model_menu.grid()
             self.model_menu.configure(values=["umxl", "umxhq", "umx", "umxse"])
             self.model_var.set("umxl")
+        #Transcription model selection
+        if trans_tool:
+            self.transcription_frame.grid()
+            self.transcript_model_menu.grid()
+        else:
+            self.transcription_frame.grid_remove()
+            self.transcript_model_menu.grid_remove()
+
         self.on_format_change()  # Refresh format options
 
     def on_format_change(self, *args):
@@ -395,7 +416,7 @@ class SeparationApp(ctk.CTk):
             self.mp3_preset_slider.grid_remove()
             self.mp3_preset_value_label.grid_remove()
             self.shifts_frame.grid_remove()  # Hide shifts for other tools
-            
+        
     def create_output_tab(self):
         frame = self.output_frame
         frame.grid_columnconfigure(0, weight=1)
@@ -592,6 +613,7 @@ class SeparationApp(ctk.CTk):
 
         ai_tool = self.ai_tool_var.get()
         do_transcribe = self.transcript_var.get()
+        whisper_model = self.transcript_model.get()
         model = self.model_var.get()
         fmt = self.format_var.get()
         sr = int(self.sr_var.get()) if fmt in ["wav", "flac"] else None
@@ -607,43 +629,29 @@ class SeparationApp(ctk.CTk):
 
         # Start threaded separation with progress
         self.status_queue = queue.Queue()
-        thread = threading.Thread(target=self.separate_in_thread, args=(input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, song, bit_depth, mp3_preset, shifts))
+        thread = threading.Thread(target=self.separate_in_thread, args=(input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, whisper_model, song, bit_depth, mp3_preset, shifts))
         thread.daemon = True
         thread.start()
-
-    def transcribe_vocals(self, vocals_file_path, trans_path):
-        try:
-            model = whisper.load_model("base")  # Choose model: "tiny", "base", "small", "medium" (bigger = more accurate but slower)
-            result = model.transcribe(vocals_file_path, verbose=False)
-            # result["text"] is the transcript
-
-            with open(trans_path, "w") as f:
-                f.write(f"Transcription:\n{result['text']}\n\n")
-                # Optional: Add timestamps if needed
-                if "segments" in result:
-                    f.write("Timestamps:\n")
-                    for seg in result["segments"]:
-                        f.write(f"{seg['start']:.2f}s - {seg['end']:.2f}s: {seg['text']}\n")
-            return True
-        except Exception as e:
-            print(f"Transcription error: {e}")
-            return False
     
-    def separate_in_thread(self, input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, song, bit_depth, mp3_preset, shifts):
+    def separate_in_thread(self, input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, whisper_model, song, bit_depth, mp3_preset, shifts):
         progress = ProgressWindow(self, f"Separating with {ai_tool}...")
         try:
             self.status_queue.put("Loading model...")
-            progress.update_status("Loading model...")
+            progress.update_status("Loading model")
 
-            # Delegate to separator with new params
             success = False
             if ai_tool == "Spleeter":
-                 success = self.spleeter_sep.separate(input_path, song_name, vocals_folder, instr_folder, fmt, sr, bitrate)
+                self.status_queue.put("Separating using Spleeter...")
+                progress.update_status("Separating using Spleeter")
+                success = self.spleeter_sep.separate(input_path, song_name, vocals_folder, instr_folder, fmt, sr, bitrate, do_transcribe, trans_folder, whisper_model)
             elif ai_tool == "Demucs":
-                #separate( self, input_path: str, song_name: str, vocals_dir: str, instr_dir: str, model="mdx", fmt="wav", sr=44100, bitrate="128k", bit_depth=True, mp3_preset=2, shifts=1)
-                success = self.demucs_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate, bit_depth, mp3_preset, shifts)
+                self.status_queue.put("Separating using Demucs...")
+                progress.update_status("Separating using Demucs")
+                success = self.demucs_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate, bit_depth, mp3_preset, shifts, do_transcribe, trans_folder, whisper_model)
             elif ai_tool == "OpenUnmix":
-                success = self.openunmix_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate)
+                self.status_queue.put("Separating using OpenUnmix...")
+                progress.update_status("Separating using OpenUnmix")
+                success = self.openunmix_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate, do_transcribe, trans_folder, whisper_model)
             else:
                 raise ValueError(f"Unknown AI tool: {ai_tool}")
 
@@ -653,25 +661,15 @@ class SeparationApp(ctk.CTk):
                 return
 
             self.status_queue.put("Saving files...")
-            progress.update_status("Saving files...")
-
-            if success and do_transcribe:
-                # Find vocals file (assuming .wav as primary)
-                vocals_files = [f for f in os.listdir(vocals_folder) if f.startswith(song_name) and f.lower().endswith('.wav')]
-                if vocals_files:
-                    vocals_file = os.path.join(vocals_folder, vocals_files[0])
-                    trans_path = os.path.join(trans_folder, f"{song_name}{ai_tool}_transcription.txt")
-                    if self.transcribe_vocals(vocals_file, trans_path):
-                        self.after(0, lambda: messagebox.showinfo("Transcription done", "Transcription generated for vocals."))
-                    else:
-                        self.after(0, lambda: messagebox.showerror("Transcription Error", "Transcription failed. Check console."))
-                else:
-                    self.after(0, lambda: messagebox.showerror("Transcription Error", "Vocals file not found for transcription."))
+            progress.update_status("Saving files")
 
             # Update UI on main thread
             self.after(0, self.load_outputs)
-            self.after(0, lambda: messagebox.showinfo("Separation done", f"Separated '{song['name']}' using {ai_tool}." + (" (Transcription pending)" if do_transcribe else "")))
+            self.after(0, lambda: messagebox.showinfo("Separation done", f"Separated '{song['name']}' using {ai_tool}."))
             self.status_queue.put("Success")
+            progress.update_status("Separation done")
+            return
+        
         except Exception as e:
             print(f"Thread error: {e}")
             self.status_queue.put("Error")

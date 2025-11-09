@@ -4,6 +4,7 @@ import sys
 import tempfile
 from demucs.separate import main as demucs_main
 from pydub import AudioSegment  # For fallback WAV resampling if needed
+import separators.whisper_transcription as whisper_trans
 
 class DemucsSeparator:
     def __init__(self):
@@ -12,6 +13,7 @@ class DemucsSeparator:
             print("Demucs initialized successfully")
         except ImportError as e:
             raise ImportError(f"Demucs not installed properly: {e}. Run 'pip install demucs'.")
+        self.whisper_trans = whisper_trans.WhisperTranscription()
 
     def _get_unique_filename(self, base_path):
         """Generate a unique filename by appending _1, _2, etc., if the file exists."""
@@ -25,7 +27,7 @@ class DemucsSeparator:
                 return new_path
             counter += 1
 
-    def separate( self, input_path: str, song_name: str, vocals_dir: str, instr_dir: str, model="mdx", fmt="wav", sr=44100, bitrate="128k", bit_depth=True, mp3_preset=2, shifts=1):
+    def separate(self, input_path: str, song_name: str, vocals_dir: str, instr_dir: str, model="mdx", fmt="wav", sr=44100, bitrate="128k", bit_depth=True, mp3_preset=2, shifts=1, do_transcribe=False, trans_folder=None, trans_model="base"):  # Updated signature
         try:
             if not os.path.exists(input_path):
                 raise FileNotFoundError(f"Input file not found: {input_path}")
@@ -83,30 +85,36 @@ class DemucsSeparator:
                 # Ensure final folders exist
                 os.makedirs(vocals_dir, exist_ok=True)
                 os.makedirs(instr_dir, exist_ok=True)
-                ai_suffix = "_D"
 
                 # Generate unique destination paths
-                base_vocals_dest = os.path.join(vocals_dir, f"{song_name}{ai_suffix}_vocals.{fmt}")
-                base_instr_dest = os.path.join(instr_dir, f"{song_name}{ai_suffix}_instrumental.{fmt}")
+                base_vocals_dest = os.path.join(vocals_dir, f"{song_name}_D_vocals.{fmt}")
+                base_instr_dest = os.path.join(instr_dir, f"{song_name}_D_instrumental.{fmt}")
 
                 vocals_dest = self._get_unique_filename(base_vocals_dest)
                 instr_dest = self._get_unique_filename(base_instr_dest)
 
-                # If output is WAV and resampling is needed, use pydub; otherwise, move directly
-                if fmt == "wav" and sr != 44100:  # Assuming Demucs outputs at 44.1kHz
+                # If output is WAV or FLAC and resampling is needed, use pydub; otherwise, move directly
+                if (fmt == "wav" or fmt == "flac") and sr != 44100:  # Assuming Demucs outputs at 44.1kHz
                     audio_vocals = AudioSegment.from_wav(vocals_src)
                     audio_vocals = audio_vocals.set_frame_rate(sr)
-                    audio_vocals.export(vocals_dest, format="wav")
+                    audio_vocals.export(vocals_dest, format=fmt)
 
                     audio_instr = AudioSegment.from_wav(instr_src)
                     audio_instr = audio_instr.set_frame_rate(sr)
-                    audio_instr.export(instr_dest, format="wav")
+                    audio_instr.export(instr_dest, format=fmt)
                 else:
                     # Move files directly (Demucs handled format/bitrate/bit depth)
                     shutil.move(vocals_src, vocals_dest)
                     shutil.move(instr_src, instr_dest)
 
                 print(f"Demucs separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
+                # New: Handle transcription if requested
+                if do_transcribe and trans_folder:
+                    trans_path = os.path.join(trans_folder, f"{song_name}_D_transcription.txt")
+                    if self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model):
+                        print(f"Demucs: Transcription completed for {song_name}.")
+                    else:
+                        print(f"Demucs: Transcription failed for {song_name}.")
                 return True
 
         except Exception as e:

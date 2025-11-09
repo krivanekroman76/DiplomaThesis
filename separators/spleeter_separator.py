@@ -4,8 +4,8 @@ import shlex
 import tempfile
 import shutil
 from spleeter.separator import Separator
-from spleeter.audio.adapter import AudioAdapter
 from spleeter.audio import Codec
+import separators.whisper_transcription as whisper_trans 
 
 class SpleeterSeparator:
     def __init__(self):
@@ -15,6 +15,7 @@ class SpleeterSeparator:
             print("Spleeter initialized successfully (direct API)")
         except Exception as e:
             print(f"Spleeter init warning: {e} (will use CLI)")
+        self.whisper_trans = whisper_trans.WhisperTranscription()
 
     def _get_unique_filename(self, base_path):
         """Generate a unique filename by appending _1, _2, etc., if the file exists."""
@@ -28,21 +29,21 @@ class SpleeterSeparator:
                 return new_path
             counter += 1
 
-    def separate(self, input_path, song_name, vocals_folder, instr_folder, fmt="wav", sr=44100, bitrate="128k",):
+    def separate(self, input_path, song_name, vocals_folder, instr_folder, fmt="wav", sr=44100, bitrate="128k", do_transcribe=False, trans_folder=None, trans_model="base"):
         try:
             # Check if input exists
             if not os.path.exists(input_path):
                 print(f"Spleeter: Input file not found: {input_path}")
                 return False
 
-            # Map fmt to Codec enum
-            codec_map = {
-                "wav": Codec.WAV,
-                "mp3": Codec.MP3,
-                "flac": Codec.FLAC
-            }
-            codec = codec_map.get(fmt.lower(), Codec.WAV)  # Default to WAV if invalid
-
+            if fmt == "flac":
+                codec = Codec.FLAC
+            elif fmt == "mp3":
+                codec = Codec.MP3
+            else:
+                codec = Codec.WAV
+            print(f"Debug: Codec value: {codec}, type: {type(codec)}")  # Debug: Confirm it's a ENUM
+    
             # Create temp dir for processing
             with tempfile.TemporaryDirectory() as temp_dir:
                 # Try direct API first with all parameters
@@ -79,9 +80,8 @@ class SpleeterSeparator:
                 os.makedirs(instr_folder, exist_ok=True)
 
                 # Generate unique destination paths
-                ai_suffix = "_S"
-                base_vocals_dest = os.path.join(vocals_folder, f"{song_name}{ai_suffix}_vocals.{fmt}")
-                base_instr_dest = os.path.join(instr_folder, f"{song_name}{ai_suffix}_instrumental.{fmt}")
+                base_vocals_dest = os.path.join(vocals_folder, f"{song_name}_S_vocals.{fmt}")
+                base_instr_dest = os.path.join(instr_folder, f"{song_name}_S_instrumental.{fmt}")
 
                 vocals_dest = self._get_unique_filename(base_vocals_dest)
                 instr_dest = self._get_unique_filename(base_instr_dest)
@@ -91,6 +91,15 @@ class SpleeterSeparator:
                 shutil.move(instr_src, instr_dest)
 
                 print(f"Spleeter separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
+                
+                # New: Handle transcription if requested
+                if do_transcribe and trans_folder:
+                    trans_path = os.path.join(trans_folder, f"{song_name}_S_transcription.txt")
+                    if self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model):
+                        print(f"Spleeter: Transcription completed for {song_name}.")
+                    else:
+                        print(f"Spleeter: Transcription failed for {song_name}.")
+                
                 return True
 
         except subprocess.CalledProcessError as e:

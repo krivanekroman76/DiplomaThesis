@@ -7,6 +7,8 @@ import platform
 import subprocess
 import threading
 import queue
+import json 
+from pkg_resources import resource_filename
 
 # Separation classes in separators directory
 import separators.spleeter_separator as spleeter
@@ -78,13 +80,10 @@ class SeparationApp(ctk.CTk):
         self.title("Audio Separation Tool")
         self.geometry("1200x700")
 
-        # Default folders
-        self.input_folder = os.path.abspath("input")
-        self.output_folders = {
-            "vocals": os.path.abspath("output/vocals"),
-            "instrumentals": os.path.abspath("output/instrumentals"),
-            "transcriptions": os.path.abspath("output/text")
-        }
+        # Load settings from file
+        self.settings_file = "settings.json"
+        self.load_settings()
+        
         # Ensure folders exist
         os.makedirs(self.input_folder, exist_ok=True)
         for folder in self.output_folders.values():
@@ -98,7 +97,7 @@ class SeparationApp(ctk.CTk):
         # Data lists
         self.songs = []
         self.folders = []
-        self.all_items = []  # New: Tracks all listbox items (folders and songs)
+        self.all_items = []  # Tracks all listbox items (folders and songs)
         self.vocals = []
         self.instrumentals = []
         self.transcriptions = []
@@ -113,7 +112,7 @@ class SeparationApp(ctk.CTk):
         self.sidebar.grid_propagate(False)
         self.sidebar.grid_columnconfigure(0, weight=1)
         # Configure rows for top-aligned navigation and bottom-aligned settings
-        self.sidebar.grid_rowconfigure(2, weight=1)  # Spacer row to push settings down
+        self.sidebar.grid_rowconfigure(3, weight=1)  # Spacer row to push settings down
 
         # Navigation buttons in sidebar (top-aligned)
         input_button = ctk.CTkButton(
@@ -132,12 +131,17 @@ class SeparationApp(ctk.CTk):
         )
         output_button.grid(row=1, column=0, padx=20, pady=10, sticky="ew")
 
-        # Spacer row (expands to push settings to bottom)
-        # (No widget here, just the configuration above)
+        settings_button = ctk.CTkButton(
+            self.sidebar, 
+            text="Settings", 
+            command=self.show_settings,
+            width=180
+        )
+        settings_button.grid(row=2, column=0, padx=20, pady=10, sticky="ew")
 
         # Appearance mode selection (bottom-aligned)
         appearance_mode_label = ctk.CTkLabel(self.sidebar, text="Appearance Mode:", anchor="w")
-        appearance_mode_label.grid(row=3, column=0, padx=20, pady=(20, 0), sticky="w")
+        appearance_mode_label.grid(row=4, column=0, padx=20, pady=(20, 0), sticky="w")
 
         appearance_mode_optionemenu = ctk.CTkOptionMenu(
             self.sidebar, 
@@ -145,12 +149,12 @@ class SeparationApp(ctk.CTk):
             command=self.change_appearance_mode_event,
             width=160
         )
-        appearance_mode_optionemenu.grid(row=4, column=0, padx=20, pady=(10, 10), sticky="ew")
+        appearance_mode_optionemenu.grid(row=5, column=0, padx=20, pady=(10, 10), sticky="ew")
         appearance_mode_optionemenu.set("Dark")
 
         # UI Scaling (Zoom) selection (bottom-aligned)
         scaling_label = ctk.CTkLabel(self.sidebar, text="UI Scaling:", anchor="w")
-        scaling_label.grid(row=5, column=0, padx=20, pady=(10, 0), sticky="w")
+        scaling_label.grid(row=6, column=0, padx=20, pady=(10, 0), sticky="w")
 
         scaling_optionemenu = ctk.CTkOptionMenu(
             self.sidebar, 
@@ -158,7 +162,7 @@ class SeparationApp(ctk.CTk):
             command=self.change_scaling_event,
             width=160
         )
-        scaling_optionemenu.grid(row=6, column=0, padx=20, pady=(10, 20), sticky="ew")
+        scaling_optionemenu.grid(row=7, column=0, padx=20, pady=(10, 20), sticky="ew")
         scaling_optionemenu.set("100%")
 
         # Content frame
@@ -169,13 +173,15 @@ class SeparationApp(ctk.CTk):
         self.content_frame.grid_rowconfigure(0, weight=1)
         self.content_frame.grid_columnconfigure(0, weight=1)
 
-        # Input and output frames
+        # Input, output, and settings frames
         self.input_frame = ctk.CTkFrame(self.content_frame)
         self.output_frame = ctk.CTkFrame(self.content_frame)
+        self.settings_frame = ctk.CTkFrame(self.content_frame)
 
         # Create tab contents
         self.create_input_tab()
         self.create_output_tab()
+        self.create_settings_tab() 
 
         # Initially show input
         self.show_input()
@@ -187,18 +193,72 @@ class SeparationApp(ctk.CTk):
         # Buttons in input tab
         self.input_button = input_button
         self.output_button = output_button
+        self.settings_button = settings_button
+
+    def load_settings(self):
+        """Load default folders from settings.json, with fallbacks."""
+        defaults = {
+            "input_folder": "/input",
+            "vocals_folder": "output/vocals",
+            "instrumentals_folder": "output/instrumentals",
+            "transcriptions_folder": "output/text"
+        }
+        if os.path.exists(self.settings_file):
+            try:
+                with open(self.settings_file, "r") as f:
+                    data = json.load(f)
+                self.input_folder = data.get("input_folder", defaults["input_folder"])
+                self.output_folders = {
+                    "vocals": data.get("vocals_folder", defaults["vocals_folder"]),
+                    "instrumentals": data.get("instrumentals_folder", defaults["instrumentals_folder"]),
+                    "transcriptions": data.get("transcriptions_folder", defaults["transcriptions_folder"])
+                }
+            except (json.JSONDecodeError, KeyError):
+                print("Warning: Invalid settings.json, using defaults.")
+                self.input_folder = defaults["input_folder"]
+                self.output_folders = {k: v for k, v in defaults.items() if k != "input_folder"}
+        else:
+            self.input_folder = defaults["input_folder"]
+            self.output_folders = {k: v for k, v in defaults.items() if k != "input_folder"}
+        # Save defaults if file doesn't exist
+        self.save_settings()
     
+    def save_settings(self):
+        """Save current folders to settings.json."""
+        data = {
+            "input_folder": self.input_folder,
+            "vocals_folder": self.output_folders["vocals"],
+            "instrumentals_folder": self.output_folders["instrumentals"],
+            "transcriptions_folder": self.output_folders["transcriptions"]
+        }
+        try:
+            with open(self.settings_file, "w") as f:
+                json.dump(data, f, indent=4)
+        except Exception as e:
+            print(f"Error saving settings: {e}")
+
     def show_input(self):
         self.input_frame.grid(row=0, column=0, sticky="nsew")
         self.output_frame.grid_forget()
-
+        self.settings_frame.grid_forget()
 
     def show_output(self):
         self.output_frame.grid(row=0, column=0, sticky="nsew")
         self.input_frame.grid_forget()
-        # Optional: Highlight active button
+        self.settings_frame.grid_forget()
+        # Highlight active button
         self.output_button.configure(fg_color=("#DCE4EE", "#1f538d"))
         self.input_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+        self.settings_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+    
+    def show_settings(self):
+        self.settings_frame.grid(row=0, column=0, sticky="nsew")
+        self.input_frame.grid_forget()
+        self.output_frame.grid_forget()
+        # Highlight active button
+        self.settings_button.configure(fg_color=("#DCE4EE", "#1f538d"))
+        self.input_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+        self.output_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         ctk.set_appearance_mode(new_appearance_mode)
@@ -478,40 +538,15 @@ class SeparationApp(ctk.CTk):
 
         # Update path bar
         self.path_var.set(self.input_folder)
-
-    def load_outputs(self):
-        # Clear and load vocals
-        self.vocals_listbox.delete(0, tk.END)
-        self.vocals.clear()
-        vocals_dir = self.output_folders["vocals"]
-        if os.path.isdir(vocals_dir):
-            for f in sorted(os.listdir(vocals_dir)):
-                if f.lower().endswith(('.mp3', '.wav', '.flac', '.m4a')):
-                    full_path = os.path.join(vocals_dir, f)
-                    self.vocals.append({'path': full_path, 'name': f})
-                    self.vocals_listbox.insert(tk.END, f)
-
-        # Clear and load instrumentals
-        self.instr_listbox.delete(0, tk.END)
-        self.instrumentals.clear()
-        instr_dir = self.output_folders["instrumentals"]
-        if os.path.isdir(instr_dir):
-            for f in sorted(os.listdir(instr_dir)):
-                if f.lower().endswith(('.mp3', '.wav', '.flac', '.m4a')):
-                    full_path = os.path.join(instr_dir, f)
-                    self.instrumentals.append({'path': full_path, 'name': f})
-                    self.instr_listbox.insert(tk.END, f)
-
-        # Clear and load transcriptions
-        self.trans_listbox.delete(0, tk.END)
-        self.transcriptions.clear()
-        trans_dir = self.output_folders["transcriptions"]
-        if os.path.isdir(trans_dir):
-            for f in sorted(os.listdir(trans_dir)):
-                if f.lower().endswith(('.txt', '.lrc')):
-                    full_path = os.path.join(trans_dir, f)
-                    self.transcriptions.append({'path': full_path, 'name': f})
-                    self.trans_listbox.insert(tk.END, f)
+    
+    def change_input_folder(self):
+        folder = filedialog.askdirectory(title="Select Input Folder")
+        if folder:
+            self.input_folder = folder
+            self.load_input()
+            # Prompt to save as default
+            if messagebox.askyesno("Save as Default", "Save this folder as the new default input folder?"):
+                self.save_settings()
 
     def go_back(self):
         parent = os.path.dirname(self.input_folder)
@@ -556,17 +591,126 @@ class SeparationApp(ctk.CTk):
                 messagebox.showerror("Error", f"Failed to copy {path}:\n{e}")
         self.load_input()
 
-    def change_input_folder(self):
-        folder = filedialog.askdirectory(title="Select Input Folder")
-        if folder:
-            self.input_folder = folder
-            self.load_input()
+    def load_outputs(self):
+        # Clear and load vocals
+        self.vocals_listbox.delete(0, tk.END)
+        self.vocals.clear()
+        vocals_dir = self.output_folders["vocals"]
+        if os.path.isdir(vocals_dir):
+            for f in sorted(os.listdir(vocals_dir)):
+                if f.lower().endswith(('.mp3', '.wav', '.flac', '.m4a')):
+                    full_path = os.path.join(vocals_dir, f)
+                    self.vocals.append({'path': full_path, 'name': f})
+                    self.vocals_listbox.insert(tk.END, f)
+
+        # Clear and load instrumentals
+        self.instr_listbox.delete(0, tk.END)
+        self.instrumentals.clear()
+        instr_dir = self.output_folders["instrumentals"]
+        if os.path.isdir(instr_dir):
+            for f in sorted(os.listdir(instr_dir)):
+                if f.lower().endswith(('.mp3', '.wav', '.flac', '.m4a')):
+                    full_path = os.path.join(instr_dir, f)
+                    self.instrumentals.append({'path': full_path, 'name': f})
+                    self.instr_listbox.insert(tk.END, f)
+
+        # Clear and load transcriptions
+        self.trans_listbox.delete(0, tk.END)
+        self.transcriptions.clear()
+        trans_dir = self.output_folders["transcriptions"]
+        if os.path.isdir(trans_dir):
+            for f in sorted(os.listdir(trans_dir)):
+                if f.lower().endswith(('.txt', '.lrc')):
+                    full_path = os.path.join(trans_dir, f)
+                    self.transcriptions.append({'path': full_path, 'name': f})
+                    self.trans_listbox.insert(tk.END, f)
 
     def change_output_folder(self, filetype):
         folder = filedialog.askdirectory(title=f"Select {filetype.capitalize()} Output Folder")
         if folder:
             self.output_folders[filetype] = folder
             self.load_outputs()
+            # Prompt to save as default
+            if messagebox.askyesno("Save as Default", f"Save this folder as the new default {filetype} folder?"):
+                self.save_settings()
+                
+    def create_settings_tab(self):
+        frame = self.settings_frame
+        frame.grid_columnconfigure(0, weight=1)
+        frame.grid_rowconfigure(0, weight=1)
+
+        settings_label = ctk.CTkLabel(frame, text="Default Folders Settings", font=ctk.CTkFont(size=20, weight="bold"))
+        settings_label.grid(row=0, column=0, pady=(20, 20))
+
+        # Input folder
+        input_label = ctk.CTkLabel(frame, text="Input Folder:", anchor="w")
+        input_label.grid(row=1, column=0, sticky="w", padx=20, pady=(10, 0))
+        self.settings_input_var = tk.StringVar(value=self.input_folder)
+        input_entry = ctk.CTkEntry(frame, textvariable=self.settings_input_var, width=400)
+        input_entry.grid(row=2, column=0, sticky="ew", padx=20, pady=5)
+
+        # Vocals folder
+        vocals_label = ctk.CTkLabel(frame, text="Vocals Folder:", anchor="w")
+        vocals_label.grid(row=3, column=0, sticky="w", padx=20, pady=(10, 0))
+        self.settings_vocals_var = tk.StringVar(value=self.output_folders["vocals"])
+        vocals_entry = ctk.CTkEntry(frame, textvariable=self.settings_vocals_var, width=400)
+        vocals_entry.grid(row=4, column=0, sticky="ew", padx=20, pady=5)
+
+        # Instrumentals folder
+        instr_label = ctk.CTkLabel(frame, text="Instrumentals Folder:", anchor="w")
+        instr_label.grid(row=5, column=0, sticky="w", padx=20, pady=(10, 0))
+        self.settings_instr_var = tk.StringVar(value=self.output_folders["instrumentals"])
+        instr_entry = ctk.CTkEntry(frame, textvariable=self.settings_instr_var, width=400)
+        instr_entry.grid(row=6, column=0, sticky="ew", padx=20, pady=5)
+
+        # Transcriptions folder
+        trans_label = ctk.CTkLabel(frame, text="Transcriptions Folder:", anchor="w")
+        trans_label.grid(row=7, column=0, sticky="w", padx=20, pady=(10, 0))
+        self.settings_trans_var = tk.StringVar(value=self.output_folders["transcriptions"])
+        trans_entry = ctk.CTkEntry(frame, textvariable=self.settings_trans_var, width=400)
+        trans_entry.grid(row=8, column=0, sticky="ew", padx=20, pady=5)
+
+        # Buttons
+        button_frame = ctk.CTkFrame(frame)
+        button_frame.grid(row=9, column=0, pady=(20, 20))
+        save_btn = ctk.CTkButton(button_frame, text="Save Changes", command=self.save_settings_changes)
+        save_btn.grid(row=0, column=0, padx=10)
+        restore_btn = ctk.CTkButton(button_frame, text="Restore Defaults", command=self.restore_defaults)
+        restore_btn.grid(row=0, column=1, padx=10)
+
+    def save_settings_changes(self):
+        self.input_folder = self.settings_input_var.get()
+        self.output_folders["vocals"] = self.settings_vocals_var.get()
+        self.output_folders["instrumentals"] = self.settings_instr_var.get()
+        self.output_folders["transcriptions"] = self.settings_trans_var.get()
+        self.save_settings()
+        os.makedirs(self.input_folder, exist_ok=True)
+        for folder in self.output_folders.values():
+            os.makedirs(folder, exist_ok=True)
+        self.load_input()
+        self.load_outputs()
+        messagebox.showinfo("Settings Saved", "Default folders updated and saved.")
+
+    def restore_defaults(self):
+        defaults = {
+            "input_folder": "input",
+            "vocals_folder": "output/vocals",
+            "instrumentals_folder": "output/instrumentals",
+            "transcriptions_folder": "output/text"
+        }
+        self.input_folder = defaults["input_folder"]
+        self.output_folders = {k: v for k, v in defaults.items() if k != "input_folder"}
+        self.save_settings()
+        self.settings_input_var.set(self.input_folder)
+        self.settings_vocals_var.set(self.output_folders["vocals"])
+        self.settings_instr_var.set(self.output_folders["instrumentals"])
+        self.settings_trans_var.set(self.output_folders["transcriptions"])
+        os.makedirs(self.input_folder, exist_ok=True)
+        for folder in self.output_folders.values():
+            os.makedirs(folder, exist_ok=True)
+        self.load_input()
+        self.load_outputs()
+        messagebox.showinfo("Defaults Restored", "Folders reset to defaults.")
 
     def open_selected_song(self, event=None):
         sel = self.songs_listbox.curselection()

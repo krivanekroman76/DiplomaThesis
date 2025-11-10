@@ -1,0 +1,6 @@
+{
+    "input_folder": "input",
+    "vocals_folder": "output/vocals",
+    "instrumentals_folder": "output/instrumentals",
+    "transcriptions_folder": "output/text"
+}

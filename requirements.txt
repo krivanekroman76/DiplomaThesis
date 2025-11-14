@@ -1,10 +1,14 @@
+numpy<2
+tensorflow==2.12.0  # AI models training and handling
+librosa             # For OpenUnmix audio handling
+soundfile           # For audio I/O in separators
+torch               # wav2vec2 transcription tool dependency
+torchaudio
+museval
+transformers        # wav2vec2 transcription tool
+stt                 # conqui transcription tool
+openai-whisper      # Whisper transcription tool
+customtkinter       # GUI
 spleeter
 demucs
 openunmix
-customtkinter
-numpy<2
-tensorflow==2.12.0
-librosa  # For OpenUnmix audio handling
-soundfile  # For audio I/O in separators
-torchaudio
-openai-whisper

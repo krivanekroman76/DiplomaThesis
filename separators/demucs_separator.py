@@ -4,7 +4,10 @@ import sys
 import tempfile
 from demucs.separate import main as demucs_main
 from pydub import AudioSegment  # For fallback WAV resampling if needed
+# Transcription tools
 import separators.whisper_transcription as whisper_trans
+#import separators.wav2vec2_transcription as wav2vec2_trans 
+#import separators.coqui_transcription as coqui_trans 
 
 class DemucsSeparator:
     def __init__(self):
@@ -14,6 +17,8 @@ class DemucsSeparator:
         except ImportError as e:
             raise ImportError(f"Demucs not installed properly: {e}. Run 'pip install demucs'.")
         self.whisper_trans = whisper_trans.WhisperTranscription()
+        #self.wav2vec2_trans = wav2vec2_trans.Wav2Vec2Transcription() 
+        #self.coqui_trans = coqui_trans.CoquiTranscription()
 
     def _get_unique_filename(self, base_path):
         """Generate a unique filename by appending _1, _2, etc., if the file exists."""
@@ -27,7 +32,22 @@ class DemucsSeparator:
                 return new_path
             counter += 1
 
-    def separate(self, input_path: str, song_name: str, vocals_dir: str, instr_dir: str, model="mdx", fmt="wav", sr=44100, bitrate="128k", bit_depth=True, mp3_preset=2, shifts=1, do_transcribe=False, trans_folder=None, trans_model="base"):  # Updated signature
+    def separate(self, 
+                input_path: str, 
+                song_name: str, 
+                vocals_dir: str, 
+                instr_dir: str,
+                trans_folder: str, 
+                model="mdx", 
+                fmt="wav", 
+                sr=44100, 
+                bitrate="128k", 
+                bit_depth=True, 
+                mp3_preset=2, 
+                shifts=1, 
+                do_transcribe=False,
+                trans_tool="whisper", 
+                trans_model="tiny"):
         try:
             if not os.path.exists(input_path):
                 raise FileNotFoundError(f"Input file not found: {input_path}")
@@ -108,13 +128,24 @@ class DemucsSeparator:
                     shutil.move(instr_src, instr_dest)
 
                 print(f"Demucs separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
-                # New: Handle transcription if requested
-                if do_transcribe and trans_folder:
+                
+                if do_transcribe:
                     trans_path = os.path.join(trans_folder, f"{song_name}_D_transcription.txt")
-                    if self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model):
-                        print(f"Demucs: Transcription completed for {song_name}.")
+                    if trans_tool == "whisper":
+                        success_trans = self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model)
+                    elif trans_tool == "wav2vec2":
+                        print("Placeholder for wav2vec2 transcription tool")
+                        #success_trans = self.wav2vec2_trans.transcribe(vocals_dest, trans_path, trans_model)
+                    elif trans_tool == "coqui":
+                        print("Placeholder for coqui transcription tool")
+                        #success_trans = self.coqui_trans.transcribe(vocals_dest, trans_path, trans_model)
                     else:
-                        print(f"Demucs: Transcription failed for {song_name}.")
+                        print(f"Demucs: Unknown transcription tool '{trans_tool}'.")
+                        success_trans = False
+                    if success_trans:
+                        print(f"Demucs: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
+                    else:
+                        print(f"Demucs: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                 return True
 
         except Exception as e:

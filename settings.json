@@ -1,0 +1,38 @@
+{
+    "input_folder": "input",
+    "vocals_folder": "output/vocals",
+    "instrumentals_folder": "output/instrumentals",
+    "transcriptions_folder": "output/text",
+    "enable_evaluation": true,
+    "separator_models": {
+        "Spleeter": [],
+        "Demucs": [
+            "mdx",
+            "mdx_extra",
+            "htdemucs"
+        ],
+        "OpenUnmix": [
+            "umxl",
+            "umxhq",
+            "umx",
+            "umxse"
+        ]
+    },
+    "transcription_models": {
+        "whisper": [
+            "large",
+            "medium",
+            "small",
+            "tiny",
+            "base",
+            "turbo"
+        ],
+        "wav2vec2": [
+            "facebook/wav2vec2-base-960h",
+            "facebook/wav2vec2-large-960h"
+        ],
+        "coqui": [
+            "model.pbmm"
+        ]
+    }
+}

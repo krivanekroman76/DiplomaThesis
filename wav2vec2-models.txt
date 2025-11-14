@@ -1,0 +1,5 @@
+bert-base-ner
+bert-large-uncased-whole-word-masking-squad-0001
+bert-small-uncased-whole-word-masking-squad-0001
+bert-small-uncased-whole-word-masking-squad-0002
+mozilla-deepspeech-0.8.2

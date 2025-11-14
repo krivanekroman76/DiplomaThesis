@@ -5,7 +5,10 @@ import tempfile
 import shutil
 from spleeter.separator import Separator
 from spleeter.audio import Codec
+# Transcription tools
 import separators.whisper_transcription as whisper_trans 
+#import separators.wav2vec2_transcription as wav2vec2_trans 
+#import separators.coqui_transcription as coqui_trans 
 
 class SpleeterSeparator:
     def __init__(self):
@@ -16,6 +19,8 @@ class SpleeterSeparator:
         except Exception as e:
             print(f"Spleeter init warning: {e} (will use CLI)")
         self.whisper_trans = whisper_trans.WhisperTranscription()
+        #self.wav2vec2_trans = wav2vec2_trans.Wav2Vec2Transcription() 
+        #self.coqui_trans = coqui_trans.CoquiTranscription()
 
     def _get_unique_filename(self, base_path):
         """Generate a unique filename by appending _1, _2, etc., if the file exists."""
@@ -29,7 +34,18 @@ class SpleeterSeparator:
                 return new_path
             counter += 1
 
-    def separate(self, input_path, song_name, vocals_folder, instr_folder, fmt="wav", sr=44100, bitrate="128k", do_transcribe=False, trans_folder=None, trans_model="base"):
+    def separate(self, 
+                input_path: str, 
+                song_name: str, 
+                vocals_folder: str, 
+                instr_folder: str,
+                trans_folder: str, 
+                fmt="wav", 
+                sr=44100, 
+                bitrate="128k", 
+                do_transcribe=False,  
+                trans_tool="whisper", 
+                trans_model="tiny"):
         try:
             # Check if input exists
             if not os.path.exists(input_path):
@@ -92,13 +108,23 @@ class SpleeterSeparator:
 
                 print(f"Spleeter separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
                 
-                # New: Handle transcription if requested
-                if do_transcribe and trans_folder:
-                    trans_path = os.path.join(trans_folder, f"{song_name}_S_transcription.txt")
-                    if self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model):
-                        print(f"Spleeter: Transcription completed for {song_name}.")
-                    else:
-                        print(f"Spleeter: Transcription failed for {song_name}.")
+            if do_transcribe:
+                trans_path = os.path.join(trans_folder, f"{song_name}_S_transcription.txt")
+                if trans_tool == "whisper":
+                    success_trans = self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model)
+                elif trans_tool == "wav2vec2":
+                    print("Placeholder for wav2vec2 transcription tool")
+                    #success_trans = self.wav2vec2_trans.transcribe(vocals_dest, trans_path, trans_model)
+                elif trans_tool == "coqui":
+                    print("Placeholder for coqui transcription tool")
+                    #success_trans = self.coqui_trans.transcribe(vocals_dest, trans_path, trans_model)
+                else:
+                    print(f"Spleeter: Unknown transcription tool '{trans_tool}'.")
+                    success_trans = False
+                if success_trans:
+                    print(f"Spleeter: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
+                else:
+                    print(f"Spleeter: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                 
                 return True
 

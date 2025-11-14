@@ -9,7 +9,10 @@ import threading
 import queue
 import json 
 from pkg_resources import resource_filename
+<<<<<<< HEAD
 import museval 
+=======
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
 
 # Separation classes in separators directory
 import separators.spleeter_separator as spleeter
@@ -132,6 +135,7 @@ class SeparationApp(ctk.CTk):
         )
         output_button.grid(row=1, column=0, padx=20, pady=10, sticky="ew")
 
+<<<<<<< HEAD
         self.evaluation_button = ctk.CTkButton(
             self.sidebar, 
             text="Evaluation", 
@@ -141,17 +145,27 @@ class SeparationApp(ctk.CTk):
         self.evaluation_button.grid(row=2, column=0, padx=20, pady=10, sticky="ew")
         self.evaluation_button.grid_remove()  # Hide initially
 
+=======
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         settings_button = ctk.CTkButton(
             self.sidebar, 
             text="Settings", 
             command=self.show_settings,
             width=180
         )
+<<<<<<< HEAD
         settings_button.grid(row=4, column=0, padx=20, pady=10, sticky="ew")
 
         # Appearance mode selection (bottom-aligned)
         appearance_mode_label = ctk.CTkLabel(self.sidebar, text="Appearance Mode:", anchor="w")
         appearance_mode_label.grid(row=5, column=0, padx=20, pady=(20, 0), sticky="w")
+=======
+        settings_button.grid(row=2, column=0, padx=20, pady=10, sticky="ew")
+
+        # Appearance mode selection (bottom-aligned)
+        appearance_mode_label = ctk.CTkLabel(self.sidebar, text="Appearance Mode:", anchor="w")
+        appearance_mode_label.grid(row=4, column=0, padx=20, pady=(20, 0), sticky="w")
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
 
         appearance_mode_optionemenu = ctk.CTkOptionMenu(
             self.sidebar, 
@@ -159,12 +173,20 @@ class SeparationApp(ctk.CTk):
             command=self.change_appearance_mode_event,
             width=160
         )
+<<<<<<< HEAD
         appearance_mode_optionemenu.grid(row=6, column=0, padx=20, pady=(10, 10), sticky="ew")
+=======
+        appearance_mode_optionemenu.grid(row=5, column=0, padx=20, pady=(10, 10), sticky="ew")
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         appearance_mode_optionemenu.set("Dark")
 
         # UI Scaling (Zoom) selection (bottom-aligned)
         scaling_label = ctk.CTkLabel(self.sidebar, text="UI Scaling:", anchor="w")
+<<<<<<< HEAD
         scaling_label.grid(row=7, column=0, padx=20, pady=(10, 0), sticky="w")
+=======
+        scaling_label.grid(row=6, column=0, padx=20, pady=(10, 0), sticky="w")
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
 
         scaling_optionemenu = ctk.CTkOptionMenu(
             self.sidebar, 
@@ -172,7 +194,11 @@ class SeparationApp(ctk.CTk):
             command=self.change_scaling_event,
             width=160
         )
+<<<<<<< HEAD
         scaling_optionemenu.grid(row=8, column=0, padx=20, pady=(10, 20), sticky="ew")
+=======
+        scaling_optionemenu.grid(row=7, column=0, padx=20, pady=(10, 20), sticky="ew")
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         scaling_optionemenu.set("100%")
 
         # Content frame
@@ -187,13 +213,19 @@ class SeparationApp(ctk.CTk):
         self.input_frame = ctk.CTkFrame(self.content_frame)
         self.output_frame = ctk.CTkFrame(self.content_frame)
         self.settings_frame = ctk.CTkFrame(self.content_frame)
+<<<<<<< HEAD
         self.evaluation_frame = ctk.CTkFrame(self.content_frame) 
+=======
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
 
         # Create tab contents
         self.create_input_tab()
         self.create_output_tab()
         self.create_settings_tab() 
+<<<<<<< HEAD
         self.create_evaluation_tab()
+=======
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
 
         # Initially show input
         self.show_input()
@@ -205,6 +237,7 @@ class SeparationApp(ctk.CTk):
         # Buttons in input tab
         self.input_button = input_button
         self.output_button = output_button
+<<<<<<< HEAD
         self.toggle_evaluation()
         self.settings_button = settings_button
 
@@ -225,6 +258,17 @@ class SeparationApp(ctk.CTk):
                 "wav2vec2": ["facebook/wav2vec2-base-960h", "facebook/wav2vec2-large-960h"],
                 "coqui": ["model.pbmm"]
             }
+=======
+        self.settings_button = settings_button
+
+    def load_settings(self):
+        """Load default folders from settings.json, with fallbacks."""
+        defaults = {
+            "input_folder": "/input",
+            "vocals_folder": "output/vocals",
+            "instrumentals_folder": "output/instrumentals",
+            "transcriptions_folder": "output/text"
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         }
         if os.path.exists(self.settings_file):
             try:
@@ -236,6 +280,7 @@ class SeparationApp(ctk.CTk):
                     "instrumentals": data.get("instrumentals_folder", defaults["instrumentals_folder"]),
                     "transcriptions": data.get("transcriptions_folder", defaults["transcriptions_folder"])
                 }
+<<<<<<< HEAD
                 self.enable_evaluation = data.get("enable_evaluation", defaults["enable_evaluation"])
                 self.separator_models = data.get("separator_models", defaults["separator_models"])
                 self.transcription_models = data.get("transcription_models", defaults["transcription_models"])
@@ -259,20 +304,41 @@ class SeparationApp(ctk.CTk):
         
     def save_settings(self):
         """Save current folders, models, and settings to settings.json."""
+=======
+            except (json.JSONDecodeError, KeyError):
+                print("Warning: Invalid settings.json, using defaults.")
+                self.input_folder = defaults["input_folder"]
+                self.output_folders = {k: v for k, v in defaults.items() if k != "input_folder"}
+        else:
+            self.input_folder = defaults["input_folder"]
+            self.output_folders = {k: v for k, v in defaults.items() if k != "input_folder"}
+        # Save defaults if file doesn't exist
+        self.save_settings()
+    
+    def save_settings(self):
+        """Save current folders to settings.json."""
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         data = {
             "input_folder": self.input_folder,
             "vocals_folder": self.output_folders["vocals"],
             "instrumentals_folder": self.output_folders["instrumentals"],
+<<<<<<< HEAD
             "transcriptions_folder": self.output_folders["transcriptions"],
             "enable_evaluation": self.enable_evaluation,
             "separator_models": self.separator_models,
             "transcription_models": self.transcription_models
+=======
+            "transcriptions_folder": self.output_folders["transcriptions"]
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         }
         try:
             with open(self.settings_file, "w") as f:
                 json.dump(data, f, indent=4)
+<<<<<<< HEAD
             self.toggle_evaluation()
             print(f"Settings saved to {self.settings_file}")
+=======
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         except Exception as e:
             print(f"Error saving settings: {e}")
 
@@ -280,16 +346,23 @@ class SeparationApp(ctk.CTk):
         self.input_frame.grid(row=0, column=0, sticky="nsew")
         self.output_frame.grid_forget()
         self.settings_frame.grid_forget()
+<<<<<<< HEAD
         self.evaluation_frame.grid_forget()
+=======
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
 
     def show_output(self):
         self.output_frame.grid(row=0, column=0, sticky="nsew")
         self.input_frame.grid_forget()
+<<<<<<< HEAD
         self.evaluation_frame.grid_forget()
+=======
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         self.settings_frame.grid_forget()
         # Highlight active button
         self.output_button.configure(fg_color=("#DCE4EE", "#1f538d"))
         self.input_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+<<<<<<< HEAD
         self.evaluation_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
         self.settings_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
 
@@ -304,16 +377,26 @@ class SeparationApp(ctk.CTk):
         self.output_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
         self.settings_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
 
+=======
+        self.settings_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+    
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
     def show_settings(self):
         self.settings_frame.grid(row=0, column=0, sticky="nsew")
         self.input_frame.grid_forget()
         self.output_frame.grid_forget()
+<<<<<<< HEAD
         self.evaluation_frame.grid_forget()
+=======
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         # Highlight active button
         self.settings_button.configure(fg_color=("#DCE4EE", "#1f538d"))
         self.input_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
         self.output_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+<<<<<<< HEAD
         self.evaluation_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+=======
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         ctk.set_appearance_mode(new_appearance_mode)
@@ -739,36 +822,61 @@ class SeparationApp(ctk.CTk):
                 
     def create_settings_tab(self):
         frame = self.settings_frame
+<<<<<<< HEAD
         frame.grid_columnconfigure((0, 1), weight=1)
         
         # Folder label
         settings_label = ctk.CTkLabel(frame, text="Default Folders Settings", font=ctk.CTkFont(size=20, weight="bold"))
         settings_label.grid(row=0, column=0, pady=(20, 20))
+=======
+        frame.grid_columnconfigure(0, weight=1)
+        frame.grid_rowconfigure(0, weight=1)
+
+        settings_label = ctk.CTkLabel(frame, text="Default Folders Settings", font=ctk.CTkFont(size=20, weight="bold"))
+        settings_label.grid(row=0, column=0, pady=(20, 20))
+
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         # Input folder
         input_label = ctk.CTkLabel(frame, text="Input Folder:", anchor="w")
         input_label.grid(row=1, column=0, sticky="w", padx=20, pady=(10, 0))
         self.settings_input_var = tk.StringVar(value=self.input_folder)
         input_entry = ctk.CTkEntry(frame, textvariable=self.settings_input_var, width=400)
         input_entry.grid(row=2, column=0, sticky="ew", padx=20, pady=5)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         # Vocals folder
         vocals_label = ctk.CTkLabel(frame, text="Vocals Folder:", anchor="w")
         vocals_label.grid(row=3, column=0, sticky="w", padx=20, pady=(10, 0))
         self.settings_vocals_var = tk.StringVar(value=self.output_folders["vocals"])
         vocals_entry = ctk.CTkEntry(frame, textvariable=self.settings_vocals_var, width=400)
         vocals_entry.grid(row=4, column=0, sticky="ew", padx=20, pady=5)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         # Instrumentals folder
         instr_label = ctk.CTkLabel(frame, text="Instrumentals Folder:", anchor="w")
         instr_label.grid(row=5, column=0, sticky="w", padx=20, pady=(10, 0))
         self.settings_instr_var = tk.StringVar(value=self.output_folders["instrumentals"])
         instr_entry = ctk.CTkEntry(frame, textvariable=self.settings_instr_var, width=400)
         instr_entry.grid(row=6, column=0, sticky="ew", padx=20, pady=5)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         # Transcriptions folder
         trans_label = ctk.CTkLabel(frame, text="Transcriptions Folder:", anchor="w")
         trans_label.grid(row=7, column=0, sticky="w", padx=20, pady=(10, 0))
         self.settings_trans_var = tk.StringVar(value=self.output_folders["transcriptions"])
         trans_entry = ctk.CTkEntry(frame, textvariable=self.settings_trans_var, width=400)
         trans_entry.grid(row=8, column=0, sticky="ew", padx=20, pady=5)
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         # Buttons
         button_frame = ctk.CTkFrame(frame)
         button_frame.grid(row=9, column=0, pady=(20, 20))
@@ -777,6 +885,7 @@ class SeparationApp(ctk.CTk):
         restore_btn = ctk.CTkButton(button_frame, text="Restore Defaults", command=self.restore_defaults)
         restore_btn.grid(row=0, column=1, padx=10)
 
+<<<<<<< HEAD
         # Models label in second column
         model_label = ctk.CTkLabel(frame, text="Model Dropdown Menu Settings", font=ctk.CTkFont(size=20, weight="bold"))
         model_label.grid(row=0, column=1, pady=(20, 20))
@@ -815,11 +924,14 @@ class SeparationApp(ctk.CTk):
         eval_checkbox = ctk.CTkCheckBox(frame, text="Enable Evaluation Tab", variable=self.enable_eval_var)
         eval_checkbox.grid(row=11, column=1, sticky="w", padx=20, pady=5)
 
+=======
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
     def save_settings_changes(self):
         self.input_folder = self.settings_input_var.get()
         self.output_folders["vocals"] = self.settings_vocals_var.get()
         self.output_folders["instrumentals"] = self.settings_instr_var.get()
         self.output_folders["transcriptions"] = self.settings_trans_var.get()
+<<<<<<< HEAD
         try:
             self.separator_models["Demucs"] = json.loads(self.demucs_models_text.get("0.0", "end"))
             self.separator_models["OpenUnmix"] = json.loads(self.openunmix_models_text.get("0.0", "end"))
@@ -829,22 +941,29 @@ class SeparationApp(ctk.CTk):
         except json.JSONDecodeError:
             messagebox.showerror("Error", "Invalid JSON in model fields.")
             return
+=======
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         self.save_settings()
         os.makedirs(self.input_folder, exist_ok=True)
         for folder in self.output_folders.values():
             os.makedirs(folder, exist_ok=True)
         self.load_input()
         self.load_outputs()
+<<<<<<< HEAD
         # Refresh model dropdowns in the input tab to reflect new settings
         self.on_tool_change()
         self.on_trans_tool_change()
         messagebox.showinfo("Settings Saved", "Default folders and models updated and saved.")
+=======
+        messagebox.showinfo("Settings Saved", "Default folders updated and saved.")
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
 
     def restore_defaults(self):
         defaults = {
             "input_folder": "input",
             "vocals_folder": "output/vocals",
             "instrumentals_folder": "output/instrumentals",
+<<<<<<< HEAD
             "transcriptions_folder": "output/text",
             "enable_evaluation": False,
             "separator_models": {
@@ -873,10 +992,18 @@ class SeparationApp(ctk.CTk):
         self.save_settings()
         
         # Update UI variables
+=======
+            "transcriptions_folder": "output/text"
+        }
+        self.input_folder = defaults["input_folder"]
+        self.output_folders = {k: v for k, v in defaults.items() if k != "input_folder"}
+        self.save_settings()
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
         self.settings_input_var.set(self.input_folder)
         self.settings_vocals_var.set(self.output_folders["vocals"])
         self.settings_instr_var.set(self.output_folders["instrumentals"])
         self.settings_trans_var.set(self.output_folders["transcriptions"])
+<<<<<<< HEAD
         self.enable_eval_var.set(self.enable_evaluation)
         
         # Update model textboxes
@@ -963,6 +1090,14 @@ class SeparationApp(ctk.CTk):
         self.results_text.delete("0.0", "end")
         for tool, metrics in results.items():
             self.results_text.insert("end", f"{tool}: SDR={metrics['SDR']:.2f}, SIR={metrics['SIR']:.2f}, SAR={metrics['SAR']:.2f}\n")
+=======
+        os.makedirs(self.input_folder, exist_ok=True)
+        for folder in self.output_folders.values():
+            os.makedirs(folder, exist_ok=True)
+        self.load_input()
+        self.load_outputs()
+        messagebox.showinfo("Defaults Restored", "Folders reset to defaults.")
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
 
     def open_selected_song(self, event=None):
         sel = self.songs_listbox.curselection()

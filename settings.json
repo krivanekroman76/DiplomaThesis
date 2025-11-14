@@ -2,6 +2,7 @@
     "input_folder": "input",
     "vocals_folder": "output/vocals",
     "instrumentals_folder": "output/instrumentals",
+<<<<<<< HEAD
     "transcriptions_folder": "output/text",
     "enable_evaluation": true,
     "separator_models": {
@@ -35,4 +36,7 @@
             "model.pbmm"
         ]
     }
+=======
+    "transcriptions_folder": "output/text"
+>>>>>>> 92d0912b5e9008ba592c2475dd2727cd6f93247a
 }

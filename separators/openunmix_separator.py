@@ -64,7 +64,7 @@ class OpenUnmixSeparator:
             # Handle mono: Duplicate to stereo
             if audio.ndim == 1:
                 audio = np.stack([audio, audio], axis=-1)
-            print(f"OpenUnmix: Fixed audio shape: {audio.shape}")
+                print(f"OpenUnmix: Fixed audio shape: {audio.shape}")
 
             with tempfile.TemporaryDirectory() as temp_dir:
                 # Perform separation using predict.separate (simplified as per example)

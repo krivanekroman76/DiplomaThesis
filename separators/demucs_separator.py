@@ -61,8 +61,8 @@ class DemucsSeparator:
                 int24 = True
                 float32 = False
             else:
-                int24 = True
                 float32 = False
+                int24 = True
 
             # Create temp dir for processing
             with tempfile.TemporaryDirectory() as temp_dir:

@@ -4,6 +4,7 @@ librosa             # For OpenUnmix audio handling
 soundfile           # For audio I/O in separators
 torch               # wav2vec2 transcription tool dependency
 torchaudio
+musedb
 museval
 transformers        # wav2vec2 transcription tool
 stt                 # conqui transcription tool

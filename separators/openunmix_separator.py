@@ -47,7 +47,7 @@ class OpenUnmixSeparator:
                 model="umxl", 
                 fmt="wav", 
                 sr=44100, 
-                bitrate=192, 
+                bitrate="192k", 
                 do_transcribe=False, 
                 trans_tool="whisper", 
                 trans_model="tiny"):
@@ -67,7 +67,7 @@ class OpenUnmixSeparator:
                 print(f"OpenUnmix: Fixed audio shape: {audio.shape}")
 
             with tempfile.TemporaryDirectory() as temp_dir:
-                # Perform separation using predict.separate (simplified as per example)
+                # Perform separation using predict.separate
                 estimates = predict.separate(
                     audio=torch.as_tensor(audio).float(),
                     rate=original_sr,
@@ -115,8 +115,8 @@ class OpenUnmixSeparator:
                 audio_vocals = AudioSegment.from_wav(vocals_temp_path)
                 audio_instr = AudioSegment.from_wav(instr_temp_path)
                 if fmt == "mp3":
-                    audio_vocals.export(vocals_dest, format="mp3", bitrate=f"{bitrate}k")
-                    audio_instr.export(instr_dest, format="mp3", bitrate=f"{bitrate}k")
+                    audio_vocals.export(vocals_dest, format="mp3", bitrate=bitrate)
+                    audio_instr.export(instr_dest, format="mp3", bitrate=bitrate)
                 elif fmt == "flac":
                     audio_vocals.export(vocals_dest, format="flac")
                     audio_instr.export(instr_dest, format="flac")
@@ -128,6 +128,7 @@ class OpenUnmixSeparator:
 
                 if do_transcribe:
                     trans_path = os.path.join(trans_folder, f"{song_name}_D_transcription.txt")
+                    success_trans = False
                     if trans_tool == "whisper":
                         success_trans = self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model)
                     elif trans_tool == "wav2vec2":
@@ -138,7 +139,7 @@ class OpenUnmixSeparator:
                         #success_trans = self.coqui_trans.transcribe(vocals_dest, trans_path, trans_model)
                     else:
                         print(f"OpenUnmix: Unknown transcription tool '{trans_tool}'.")
-                        success_trans = False
+                    #    
                     if success_trans:
                         print(f"OpenUnmix: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                     else:

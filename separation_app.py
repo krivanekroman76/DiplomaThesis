@@ -1,5 +1,8 @@
+import warnings
+warnings.simplefilter('ignore')
 import os
 import shutil
+import tempfile
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import customtkinter as ctk
@@ -7,7 +10,8 @@ import platform
 import subprocess
 import threading
 import queue
-import json 
+import json
+import csv 
 import musdb
 import museval 
 
@@ -976,7 +980,7 @@ class SeparationApp(ctk.CTk):
         # Run Evaluation Button
         run_btn = ctk.CTkButton(frame, text="Run Batch Evaluation", command=self.run_batch_evaluation)
         run_btn.grid(row=7, column=0, pady=(20, 20))
-        
+
         # Results Display
         results_label = ctk.CTkLabel(frame, text="Results (Averaged SDR/SIR/SAR):", anchor="w")
         results_label.grid(row=8, column=0, sticky="w", padx=20, pady=(10, 0))
@@ -1023,100 +1027,125 @@ class SeparationApp(ctk.CTk):
         print("Called: evaluate_in_thread()")
         # Progress window update
         progress = ProgressWindow(self, "Running Batch Evaluation...")
-    
-        # Collect audio files
-        supported_exts = ('.mp3', '.wav', '.flac')
-        audio_files = [f for f in os.listdir(dataset_path) if f.lower().endswith(supported_exts) and os.path.isfile(os.path.join(dataset_path, f))]
-        print(f"Audio files found: {audio_files}")
+
+        # Option: Use MUSDB18 instead of custom dataset
+        use_musdb = True  # Set to True if you want to evaluate on MUSDB18
+        if use_musdb:
+            mus = musdb.DB(download=True)  # Instantiate MUSDB18 (downloads if needed)
+            audio_files = [track.name for track in mus]  # List of track names
+            dataset_path = None  # Not needed for MUSDB
+        else:
+            supported_exts = ('.mp3', '.wav', '.flac')
+            audio_files = [f for f in os.listdir(dataset_path) if f.lower().endswith(supported_exts) and os.path.isfile(os.path.join(dataset_path, f))]
+        
         if not audio_files:
             progress.close(success=False)
             self.after(0, lambda: messagebox.showwarning("No Files", "No supported audio files found."))
             return
-    
+
         fmt = self.fmt_val.get()
-        sr = int(self.sr_val.get()) if fmt in ["wav", "flac"] else None
-        bitrate = int(self.bitrate_val.get()) if fmt == "mp3" else None
-    
+        sr = int(self.sr_val.get()) if fmt in ["wav", "flac"] else 44100
+        bitrate = self.bitrate_val.get() if fmt == "mp3" else "192k"
+
         results = {}
         for tool in selected_tools:
-            results[tool] = {"SDR": [], "SIR": [], "SAR": []}
+            results[tool] = {"SDR": [], "ISR": [], "SIR": [], "SAR": []}
             print(f"Results for {tool} ready.")
         
-        for i, audio_file in enumerate(audio_files[:5]):  # Limit to 5 for demo; remove [:5] for full run
-            print(f"Processing: {i}, file: {audio_file}")
-            mixture_path = os.path.join(dataset_path, audio_file)
-            
-            # Assume GT files: e.g., for "song.mp3", look for "song_vocals.wav" and "song_accompaniment.wav"
-            base_name = os.path.splitext(audio_file)[0]  # e.g., "song" from "song.mp3"
-            gt_vocals = os.path.join(dataset_path, f"{base_name}_vocals.wav")
-            gt_instr = os.path.join(dataset_path, f"{base_name}_accompaniment.wav")
-            
-            has_gt = os.path.exists(gt_vocals) and os.path.exists(gt_instr)
-            if not has_gt:
-                print(f"No ground truth found for {audio_file}. Skipping metrics.")
-            
-            progress.update_status(f"Processing {audio_file} ({i+1}/{len(audio_files)})")
-            
-            for tool in selected_tools:
-                # Run separation (output to temp with unique names)
-                temp_vocals = f"/tmp/{tool}_{base_name}_vocals.wav"
-                temp_instr = f"/tmp/{tool}_{base_name}_instr.wav"
+        with tempfile.TemporaryDirectory() as temp_dir:  # Cross-platform temp dir
+            for i, audio_file in enumerate(audio_files[:5]):  # Limit to 5 for demo; remove [:5] for full run
+                print(f"Processing: {i}, file: {audio_file}")
                 
-                # Parse tool and model (same as before)
-                if tool == "Spleeter":
-                    success = self.spleeter_sep.separate(mixture_path, base_name, "/tmp", "/tmp", "/tmp", fmt, sr, bitrate, False)
-                elif "Demucs" in tool:
-                    model = tool.split("-")[1]
-                    success = self.demucs_sep.separate(mixture_path, base_name, "/tmp", "/tmp", "/tmp", model, fmt, sr, bitrate, True, 2, 1, False)
-                elif "OpenUnmix" in tool:
-                    model = tool.split("-")[1]
-                    success = self.openunmix_sep.separate(mixture_path, base_name, "/tmp", "/tmp", "/tmp", model, fmt, sr, 128000, False)
-                
-                if success:
-                    print(f"Separation done for {tool} on {audio_file}.")
-                    if has_gt:
-                        try:
-                            sdr, sir, sar = museval.evaluate([temp_vocals, temp_instr], [gt_vocals, gt_instr])
-                            results[tool]["SDR"].append(sdr.mean())
-                            results[tool]["SIR"].append(sir.mean())
-                            results[tool]["SAR"].append(sar.mean())
-                        except Exception as e:
-                            print(f"Metrics error for {tool} on {audio_file}: {e}")
-                    else:
-                        print(f"No metrics computed for {tool} on {audio_file} (no GT).")
+                if use_musdb:
+                    track = mus.tracks[i]  # Get MUSDB track
+                    mixture_path = track.path  # Path to mixture
+                    gt_vocals = track.targets['vocals'].audio  # NumPy array for vocals
+                    gt_instr = track.targets['accompaniment'].audio  # NumPy array for accompaniment
+                    base_name = track.name
+                    has_gt = True  # MUSDB always has GT
                 else:
-                    print(f"Separation failed for {tool} on {audio_file}.")
+                    mixture_path = os.path.join(dataset_path, audio_file)
+                    base_name = os.path.splitext(audio_file)[0]
+                    gt_vocals = os.path.join(dataset_path, f"{base_name}_vocals.wav")
+                    gt_instr = os.path.join(dataset_path, f"{base_name}_accompaniment.wav")
+                    has_gt = os.path.exists(gt_vocals) and os.path.exists(gt_instr)
+                
+                progress.update_status(f"Processing {audio_file} ({i+1}/{len(audio_files)})")
+                
+                for tool in selected_tools:
+                    # Unique temp paths
+                    temp_vocals = os.path.join(temp_dir, f"{tool}_{base_name}_vocals.wav")
+                    temp_instr = os.path.join(temp_dir, f"{tool}_{base_name}_instr.wav")
+                    
+                    success = False
+                    try:
+                        if tool == "Spleeter":
+                            # Assuming fixed signature: (input_path, song_name, vocals_folder, instr_folder, fmt, sr, bitrate, do_transcribe, trans_folder, trans_tool, trans_model)
+                            success, _, _ = self.spleeter_sep.separate(mixture_path, base_name, temp_dir, temp_dir, fmt, sr, bitrate, False, temp_dir, "whisper", "tiny")
+                        elif "Demucs" in tool:
+                            model = tool.split("-")[1]  # e.g., "htdemucs"
+                            # Assuming fixed signature: (input_path, song_name, vocals_folder, instr_folder, trans_folder, model, fmt, sr, bitrate, bit_depth, mp3_preset, shifts, do_transcribe, trans_tool, trans_model)
+                            # Note: Add defaults for bit_depth, mp3_preset, shifts if not set
+                            success, _, _ = self.demucs_sep.separate(mixture_path, base_name, temp_dir, temp_dir, temp_dir, model, fmt, sr, bitrate, None, None, 1, False, "whisper", "tiny")
+                        elif "OpenUnmix" in tool:
+                            model = tool.split("-")[1]  # e.g., "umxl"
+                            # Assuming fixed signature: (input_path, song_name, vocals_folder, instr_folder, trans_folder, model, fmt, sr, bitrate, do_transcribe, trans_tool, trans_model)
+                            success, _, _ = self.openunmix_sep.separate(mixture_path, base_name, temp_dir, temp_dir, temp_dir, model, fmt, sr, bitrate, False, "whisper", "tiny")
+                    except Exception as e:
+                        print(f"Separation error for {tool} on {audio_file}: {e}")
+                    
+                    if success and os.path.exists(temp_vocals) and os.path.exists(temp_instr):
+                        print(f"Separation done for {tool} on {audio_file}.")
+                        if has_gt:
+                            try:
+                                # museval.evaluate expects file paths for estimates and arrays/files for GT
+                                sdr, isr, sir, sar = museval.evaluate([temp_vocals, temp_instr], [gt_vocals, gt_instr])
+                                results[tool]["SDR"].append(float(sdr.mean()))
+                                results[tool]["ISR"].append(float(isr.mean()))
+                                results[tool]["SIR"].append(float(sir.mean()))
+                                results[tool]["SAR"].append(float(sar.mean()))
+                            except Exception as e:
+                                print(f"Metrics error for {tool} on {audio_file}: {e}")
+                        else:
+                            print(f"No metrics computed for {tool} on {audio_file} (no GT).")
+                    else:
+                        print(f"Separation failed for {tool} on {audio_file}.")
         
-        # Aggregate results (only for tools/files with GT)
+        # Aggregate results
         summary = {}
         for tool, metrics in results.items():
             if metrics["SDR"]:  # Only if metrics were computed
                 summary[tool] = {
                     "Avg SDR": sum(metrics["SDR"]) / len(metrics["SDR"]),
+                    "Avg ISR": sum(metrics["ISR"]) / len(metrics["ISR"]),
                     "Avg SIR": sum(metrics["SIR"]) / len(metrics["SIR"]),
                     "Avg SAR": sum(metrics["SAR"]) / len(metrics["SAR"])
                 }
         
-        # Display (update to handle cases with no metrics)
-        self.results_text.forget()
-        self.results_text.grid()
+        # Store summary for export
+        self.summary_results = summary
+        
+        # Display results
+        self.results_text.delete(1.0, tk.END)  # Clear previous
         if summary:
             for tool, avg in summary.items():
-                self.results_text.insert("end", f"{tool}: SDR={avg['Avg SDR']:.2f}, SIR={avg['Avg SIR']:.2f}, SAR={avg['Avg SAR']:.2f}\n")
+                self.results_text.insert("end", f"{tool}: SDR={avg['Avg SDR']:.2f}, ISR={avg['Avg ISR']:.2f}, SIR={avg['Avg SIR']:.2f}, SAR={avg['Avg SAR']:.2f}\n")
         else:
             self.results_text.insert("end", "No metrics computed (no ground truth files found).\n")
         
         progress.close(success=True)
         self.after(0, lambda: messagebox.showinfo("Evaluation Complete", "Batch evaluation finished. Check results."))
-  
+
     def export_results(self):
-        # Export summary to CSV
-        import csv
+        if not hasattr(self, 'summary_results') or not self.summary_results:
+            messagebox.showerror("Error", "No results to export. Run evaluation first.")
+            return
+        
         with open("evaluation_results.csv", "w", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow(["Tool", "Avg SDR", "Avg SIR", "Avg SAR"])
-            # Parse from results_text or store in a var
-            # For simplicity, assume you add a self.summary_results var in evaluate_in_thread
+            writer.writerow(["Tool", "Avg SDR", "Avg ISR", "Avg SIR", "Avg SAR"])
+            for tool, avg in self.summary_results.items():
+                writer.writerow([tool, avg["Avg SDR"], avg["Avg ISR"], avg["Avg SIR"], avg["Avg SAR"]])
         messagebox.showinfo("Exported", "Results exported to evaluation_results.csv")
 
     def open_selected_song(self, event=None):
@@ -1164,11 +1193,12 @@ class SeparationApp(ctk.CTk):
 
         ai_tool = self.ai_tool_var.get()
         do_transcribe = self.transcript_var.get()
-        whisper_model = self.transcript_model.get()
+        transcription_tool = self.trans_tool_var.get()
+        transcription_model = self.transcript_model.get()
         model = self.model_var.get()
         fmt = self.format_var.get()
-        sr = int(self.sr_var.get()) if fmt in ["wav", "flac"] else None
-        bitrate = int(self.bitrate_var.get()) if fmt == "mp3" else None
+        sr = int(self.sr_var.get()) if fmt in ["wav", "flac"] else 44100
+        bitrate = self.bitrate_var.get() if fmt == "mp3" else "192k"
         bit_depth = self.bit_depth_var.get() if fmt == "wav" and ai_tool == "Demucs" else None
         mp3_preset = int(self.mp3_preset_slider.get()) if fmt == "mp3" and ai_tool == "Demucs" else None
         shifts = int(self.shifts_var.get()) if ai_tool == "Demucs" else None
@@ -1180,11 +1210,11 @@ class SeparationApp(ctk.CTk):
 
         # Start threaded separation with progress
         self.status_queue = queue.Queue()
-        thread = threading.Thread(target=self.separate_in_thread, args=(input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, whisper_model, song, bit_depth, mp3_preset, shifts))
+        thread = threading.Thread(target=self.separate_in_thread, args=(input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, transcription_tool, transcription_model, song, bit_depth, mp3_preset, shifts))
         thread.daemon = True
         thread.start()
     
-    def separate_in_thread(self, input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, whisper_model, song, bit_depth, mp3_preset, shifts):
+    def separate_in_thread(self, input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, transcription_tool, transcription_model, song, bit_depth, mp3_preset, shifts):
         progress = ProgressWindow(self, f"Separating with {ai_tool}...")
         try:
             self.status_queue.put("Loading model...")
@@ -1194,15 +1224,15 @@ class SeparationApp(ctk.CTk):
             if ai_tool == "Spleeter":
                 self.status_queue.put("Separating using Spleeter...")
                 progress.update_status("Separating using Spleeter")
-                success = self.spleeter_sep.separate(input_path, song_name, vocals_folder, instr_folder, fmt, sr, bitrate, do_transcribe, trans_folder, whisper_model)
+                success = self.spleeter_sep.separate(input_path, song_name, vocals_folder, instr_folder, fmt, sr, bitrate, do_transcribe, trans_folder, transcription_tool, transcription_model)
             elif ai_tool == "Demucs":
                 self.status_queue.put("Separating using Demucs...")
                 progress.update_status("Separating using Demucs")
-                success = self.demucs_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate, bit_depth, mp3_preset, shifts, do_transcribe, trans_folder, whisper_model)
+                success = self.demucs_sep.separate(input_path, song_name, vocals_folder, instr_folder, trans_folder, model, fmt, sr, bitrate, bit_depth, mp3_preset, shifts, do_transcribe, transcription_tool, transcription_model)
             elif ai_tool == "OpenUnmix":
                 self.status_queue.put("Separating using OpenUnmix...")
                 progress.update_status("Separating using OpenUnmix")
-                success = self.openunmix_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate, do_transcribe, trans_folder, whisper_model)
+                success = self.openunmix_sep.separate(input_path, song_name, vocals_folder, instr_folder, trans_folder, model, fmt, sr, bitrate, do_transcribe, transcription_tool, transcription_model)
             else:
                 raise ValueError(f"Unknown AI tool: {ai_tool}")
 

@@ -131,6 +131,7 @@ class DemucsSeparator:
                 
                 if do_transcribe:
                     trans_path = os.path.join(trans_folder, f"{song_name}_D_transcription.txt")
+                    success_trans = False
                     if trans_tool == "whisper":
                         success_trans = self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model)
                     elif trans_tool == "wav2vec2":
@@ -141,7 +142,7 @@ class DemucsSeparator:
                         #success_trans = self.coqui_trans.transcribe(vocals_dest, trans_path, trans_model)
                     else:
                         print(f"Demucs: Unknown transcription tool '{trans_tool}'.")
-                        success_trans = False
+                        
                     if success_trans:
                         print(f"Demucs: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                     else:

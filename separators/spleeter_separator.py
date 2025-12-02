@@ -110,6 +110,7 @@ class SpleeterSeparator:
                 
             if do_transcribe:
                 trans_path = os.path.join(trans_folder, f"{song_name}_S_transcription.txt")
+                success_trans = False
                 if trans_tool == "whisper":
                     success_trans = self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model)
                 elif trans_tool == "wav2vec2":
@@ -120,13 +121,13 @@ class SpleeterSeparator:
                     #success_trans = self.coqui_trans.transcribe(vocals_dest, trans_path, trans_model)
                 else:
                     print(f"Spleeter: Unknown transcription tool '{trans_tool}'.")
-                    success_trans = False
+                    
                 if success_trans:
                     print(f"Spleeter: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                 else:
                     print(f"Spleeter: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                 
-                return True
+            return True
 
         except subprocess.CalledProcessError as e:
             print(f"Spleeter subprocess failed: {e.stderr}")

@@ -40,6 +40,7 @@ class SpleeterSeparator:
                 vocals_folder: str, 
                 instr_folder: str,
                 trans_folder: str, 
+                tool: str,  # NEW: Added tool parameter
                 fmt="wav", 
                 sr=44100, 
                 bitrate="128k", 
@@ -50,7 +51,7 @@ class SpleeterSeparator:
             # Check if input exists
             if not os.path.exists(input_path):
                 print(f"Spleeter: Input file not found: {input_path}")
-                return False
+                return False, None, None
 
             if fmt == "flac":
                 codec = Codec.FLAC
@@ -58,7 +59,7 @@ class SpleeterSeparator:
                 codec = Codec.MP3
             else:
                 codec = Codec.WAV
-            print(f"Debug: Codec value: {codec}, type: {type(codec)}")  # Debug: Confirm it's a ENUM
+            print(f"Debug: Codec value: {codec}, type: {type(codec)}")  # Debug: Confirm it's an enum
     
             # Create temp dir for processing
             with tempfile.TemporaryDirectory() as temp_dir:
@@ -80,24 +81,24 @@ class SpleeterSeparator:
                     result = subprocess.run(cmd, capture_output=True, text=True, check=True)
                     if result.returncode != 0:
                         print(f"Spleeter CLI error: {result.stderr}")
-                        return False
+                        return False, None, None
 
                 # Find and move output files from temp_dir to final folders
-                # Assuming filename_format creates files like "song_name/vocals.wav" in temp_dir
-                vocals_src = os.path.join(temp_dir, f"{song_name}/vocals.{fmt}")
-                instr_src = os.path.join(temp_dir, f"{song_name}/accompaniment.{fmt}")
+                # FIXED: Spleeter creates subfolders like "song_name.stem/"
+                vocals_src = os.path.join(temp_dir, f"{song_name}.stem/vocals.{fmt}")
+                instr_src = os.path.join(temp_dir, f"{song_name}.stem/accompaniment.{fmt}")
 
                 if not os.path.exists(vocals_src) or not os.path.exists(instr_src):
                     print(f"Spleeter: Output files not found in {temp_dir}. Check filename_format.")
-                    return False
+                    return False, None, None
 
                 # Ensure final folders exist
                 os.makedirs(vocals_folder, exist_ok=True)
                 os.makedirs(instr_folder, exist_ok=True)
 
-                # Generate unique destination paths
-                base_vocals_dest = os.path.join(vocals_folder, f"{song_name}_S_vocals.{fmt}")
-                base_instr_dest = os.path.join(instr_folder, f"{song_name}_S_instrumental.{fmt}")
+                # FIXED: Use tool in filename to match evaluation's temp_vocals/temp_instr
+                base_vocals_dest = os.path.join(vocals_folder, f"{tool}_{song_name}_vocals.{fmt}")
+                base_instr_dest = os.path.join(instr_folder, f"{tool}_{song_name}_instrumental.{fmt}")
 
                 vocals_dest = self._get_unique_filename(base_vocals_dest)
                 instr_dest = self._get_unique_filename(base_instr_dest)
@@ -127,11 +128,11 @@ class SpleeterSeparator:
                 else:
                     print(f"Spleeter: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                 
-            return True
+            return True, vocals_dest, instr_dest  # FIXED: Return paths
 
         except subprocess.CalledProcessError as e:
             print(f"Spleeter subprocess failed: {e.stderr}")
-            return False
+            return False, None, None
         except Exception as e:
             print(f"Spleeter general error: {e}")
-            return False
+            return False, None, None

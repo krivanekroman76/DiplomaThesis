@@ -1,8 +1,7 @@
 import warnings
-warnings.simplefilter('ignore')
+warnings.simplefilter('ignore') #Hide unnecesary warnings
 import os
 import shutil
-import tempfile
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import customtkinter as ctk
@@ -11,9 +10,6 @@ import subprocess
 import threading
 import queue
 import json
-import csv 
-import musdb
-import museval 
 
 # Separation classes in separators directory
 import separators.spleeter_separator as spleeter
@@ -135,15 +131,6 @@ class SeparationApp(ctk.CTk):
         )
         output_button.grid(row=1, column=0, padx=20, pady=10, sticky="ew")
 
-        self.evaluation_button = ctk.CTkButton(
-            self.sidebar, 
-            text="Evaluation", 
-            command=self.show_evaluation,
-            width=180
-        )
-        self.evaluation_button.grid(row=2, column=0, padx=20, pady=10, sticky="ew")
-        self.evaluation_button.grid_remove()  # Hide initially
-
         settings_button = ctk.CTkButton(
             self.sidebar, 
             text="Settings", 
@@ -190,13 +177,11 @@ class SeparationApp(ctk.CTk):
         self.input_frame = ctk.CTkFrame(self.content_frame)
         self.output_frame = ctk.CTkFrame(self.content_frame)
         self.settings_frame = ctk.CTkFrame(self.content_frame)
-        self.evaluation_frame = ctk.CTkFrame(self.content_frame) 
 
         # Create tab contents
         self.create_input_tab()
         self.create_output_tab()
         self.create_settings_tab() 
-        self.create_evaluation_tab()
 
         # Initially show input
         self.show_input()
@@ -208,7 +193,6 @@ class SeparationApp(ctk.CTk):
         # Buttons in input tab
         self.input_button = input_button
         self.output_button = output_button
-        self.toggle_evaluation()
         self.settings_button = settings_button
 
     def load_settings(self):
@@ -217,7 +201,6 @@ class SeparationApp(ctk.CTk):
             "vocals_folder": "output/vocals",
             "instrumentals_folder": "output/instrumentals",
             "transcriptions_folder": "output/text",
-            "enable_evaluation": False,
             "separator_models": {
                 "Spleeter": [],
                 "Demucs": ["mdx", "mdx_extra", "htdemucs"],
@@ -239,7 +222,6 @@ class SeparationApp(ctk.CTk):
                     "instrumentals": data.get("instrumentals_folder", defaults["instrumentals_folder"]),
                     "transcriptions": data.get("transcriptions_folder", defaults["transcriptions_folder"])
                 }
-                self.enable_evaluation = data.get("enable_evaluation", defaults["enable_evaluation"])
                 self.separator_models = data.get("separator_models", defaults["separator_models"])
                 self.transcription_models = data.get("transcription_models", defaults["transcription_models"])
             except (json.JSONDecodeError, KeyError):
@@ -255,7 +237,6 @@ class SeparationApp(ctk.CTk):
             "instrumentals": defaults["instrumentals_folder"],
             "transcriptions": defaults["transcriptions_folder"]
         }
-        self.enable_evaluation = defaults["enable_evaluation"]
         self.separator_models = defaults["separator_models"]
         self.transcription_models = defaults["transcription_models"]
         self.save_settings()
@@ -269,14 +250,12 @@ class SeparationApp(ctk.CTk):
             "vocals_folder": self.output_folders["vocals"],
             "instrumentals_folder": self.output_folders["instrumentals"],
             "transcriptions_folder": self.output_folders["transcriptions"],
-            "enable_evaluation": self.enable_evaluation,
             "separator_models": self.separator_models,
             "transcription_models": self.transcription_models
         }
         try:
             with open(self.settings_file, "w") as f:
                 json.dump(data, f, indent=4)
-            self.toggle_evaluation()
             print(f"Settings saved to {self.settings_file}")
         except Exception as e:
             print(f"Error saving settings: {e}")
@@ -285,40 +264,24 @@ class SeparationApp(ctk.CTk):
         self.input_frame.grid(row=0, column=0, sticky="nsew")
         self.output_frame.grid_forget()
         self.settings_frame.grid_forget()
-        self.evaluation_frame.grid_forget()
 
     def show_output(self):
         self.output_frame.grid(row=0, column=0, sticky="nsew")
         self.input_frame.grid_forget()
-        self.evaluation_frame.grid_forget()
         self.settings_frame.grid_forget()
         # Highlight active button
         self.output_button.configure(fg_color=("#DCE4EE", "#1f538d"))
         self.input_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
-        self.evaluation_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
-        self.settings_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
-
-    def show_evaluation(self):
-        self.evaluation_frame.grid(row=0, column=0, sticky="nsew")
-        self.input_frame.grid_forget()
-        self.output_frame.grid_forget()
-        self.settings_frame.grid_forget()
-        # Highlight active button
-        self.evaluation_button.configure(fg_color=("#DCE4EE", "#1f538d"))
-        self.input_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
-        self.output_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
         self.settings_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
 
     def show_settings(self):
         self.settings_frame.grid(row=0, column=0, sticky="nsew")
         self.input_frame.grid_forget()
         self.output_frame.grid_forget()
-        self.evaluation_frame.grid_forget()
         # Highlight active button
         self.settings_button.configure(fg_color=("#DCE4EE", "#1f538d"))
         self.input_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
         self.output_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
-        self.evaluation_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         ctk.set_appearance_mode(new_appearance_mode)
@@ -815,17 +778,12 @@ class SeparationApp(ctk.CTk):
         self.coqui_models_text = ctk.CTkTextbox(frame, width=400, height=50)
         self.coqui_models_text.grid(row=10, column=1, sticky="ew", padx=20, pady=5)
         self.coqui_models_text.insert("0.0", json.dumps(self.transcription_models.get("coqui", [])))
-        # Enable Evaluation Checkbox
-        self.enable_eval_var = tk.BooleanVar(value=self.enable_evaluation)
-        eval_checkbox = ctk.CTkCheckBox(frame, text="Enable Evaluation Tab", variable=self.enable_eval_var)
-        eval_checkbox.grid(row=11, column=1, sticky="w", padx=20, pady=5)
 
     def save_settings_changes(self):
         self.input_folder = self.settings_input_var.get()
         self.output_folders["vocals"] = self.settings_vocals_var.get()
         self.output_folders["instrumentals"] = self.settings_instr_var.get()
         self.output_folders["transcriptions"] = self.settings_trans_var.get()
-        self.enable_evaluation = self.enable_eval_var.get()
         try:
             self.separator_models["Demucs"] = json.loads(self.demucs_models_text.get("0.0", "end"))
             self.separator_models["OpenUnmix"] = json.loads(self.openunmix_models_text.get("0.0", "end"))
@@ -851,7 +809,6 @@ class SeparationApp(ctk.CTk):
             "vocals_folder": "output/vocals",
             "instrumentals_folder": "output/instrumentals",
             "transcriptions_folder": "output/text",
-            "enable_evaluation": False,
             "separator_models": {
                 "Spleeter": [],
                 "Demucs": ["mdx", "mdx_extra", "htdemucs"],
@@ -870,7 +827,6 @@ class SeparationApp(ctk.CTk):
             "instrumentals": defaults["instrumentals_folder"],
             "transcriptions": defaults["transcriptions_folder"]
         }
-        self.enable_evaluation = defaults["enable_evaluation"]
         self.separator_models = defaults["separator_models"]
         self.transcription_models = defaults["transcription_models"]
         
@@ -882,7 +838,6 @@ class SeparationApp(ctk.CTk):
         self.settings_vocals_var.set(self.output_folders["vocals"])
         self.settings_instr_var.set(self.output_folders["instrumentals"])
         self.settings_trans_var.set(self.output_folders["transcriptions"])
-        self.enable_eval_var.set(self.enable_evaluation)
         
         # Update model textboxes
         self.demucs_models_text.delete("0.0", "end")
@@ -908,245 +863,6 @@ class SeparationApp(ctk.CTk):
         # Show success and switch to settings tab
         messagebox.showinfo("Defaults Restored", "All settings reset to defaults.")
         self.show_settings()
-
-    def toggle_evaluation(self):
-        self.enable_evaluation = self.enable_eval_var.get()
-        if self.enable_evaluation:
-            self.evaluation_button.grid()  # Add to sidebar
-        else:
-            # Remove evaluation button if exists
-            self.evaluation_button.grid_remove()
-
-    def create_evaluation_tab(self):
-        frame = self.evaluation_frame
-        #frame.grid_columnconfigure(0, weight=1)
-        #frame.grid_rowconfigure(0, weight=1)
-        
-        eval_label = ctk.CTkLabel(frame, text="Model Evaluation (Batch SDR Comparison)", font=ctk.CTkFont(size=20, weight="bold"))
-        eval_label.grid(row=0, column=0, pady=(20, 20))
-        
-        # Dataset folder selection
-        dataset_label = ctk.CTkLabel(frame, text="Select Dataset Folder:", anchor="w")
-        dataset_label.grid(row=1, column=0, sticky="w", padx=20, pady=(10, 0))
-        self.dataset_var = tk.StringVar(value="input/Soprano/Phoenix")
-        dataset_entry = ctk.CTkEntry(frame, textvariable=self.dataset_var, width=400)
-        dataset_entry.grid(row=2, column=0, sticky="ew", padx=20, pady=5)
-        dataset_btn = ctk.CTkButton(frame, text="Browse", command=self.select_dataset_folder)
-        dataset_btn.grid(row=2, column=1, padx=10)
-        
-        # Tools/Models to compare (dynamically generated from settings)
-        tools_label = ctk.CTkLabel(frame, text="Select Tools/Models to Compare:", anchor="w")
-        tools_label.grid(row=3, column=0, sticky="w", padx=20, pady=(20, 0))
-        
-        # Scrollable frame for checkboxes
-        scrollable_frame = ctk.CTkScrollableFrame(frame, width=500, height=150)
-        scrollable_frame.grid(row=4, column=0, sticky="ew", padx=20, pady=5)
-        
-        self.tools_to_compare = {}
-        row = 0
-        for tool, models in self.separator_models.items():
-            if not models:  # No models (e.g., Spleeter)
-                var = tk.BooleanVar(value=True)
-                self.tools_to_compare[tool] = var
-                cb = ctk.CTkCheckBox(scrollable_frame, text=tool, variable=var)
-                cb.grid(row=row, column=0, sticky="w", padx=10, pady=5)
-                row += 1
-            else:  # With models (e.g., Demucs, OpenUnmix)
-                for model in models:
-                    key = f"{tool}-{model}"
-                    var = tk.BooleanVar(value=True)
-                    self.tools_to_compare[key] = var
-                    cb = ctk.CTkCheckBox(scrollable_frame, text=key, variable=var)
-                    cb.grid(row=row, column=0, sticky="w", padx=10, pady=5)
-                    row += 1
-
-        # Shared settings of output files 
-        settings_label = ctk.CTkLabel(frame, text="Select settings for evaluation", anchor="w")
-        settings_label.grid(row=3, column=1, pady=(20,20))
-        settings_frame = ctk.CTkFrame(frame)
-        settings_frame.grid(row=4, column=1, sticky="ew", padx=20, pady=5)
-        self.fmt_val = tk.StringVar(value="wav")
-        dataset_entry = ctk.CTkOptionMenu(settings_frame, variable=self.fmt_val, values=["wav", "mp3", "flac"], width=100)
-        dataset_entry.grid(row=0, column=0, sticky="ew", padx=20, pady=5)
-
-        self.sr_val = tk.StringVar(value="44100")
-        dataset_entry = ctk.CTkEntry(settings_frame, textvariable=self.sr_val, placeholder_text="44100", width=100)
-        dataset_entry.grid(row=1, column=0, sticky="ew", padx=20, pady=5)
-
-        self.bitrate_val = tk.StringVar(value="192")
-        dataset_entry = ctk.CTkEntry(settings_frame, textvariable=self.bitrate_val, placeholder_text="192", width=100)
-        dataset_entry.grid(row=2, column=0, sticky="ew", padx=20, pady=5)
-
-        # Run Evaluation Button
-        run_btn = ctk.CTkButton(frame, text="Run Batch Evaluation", command=self.run_batch_evaluation)
-        run_btn.grid(row=7, column=0, pady=(20, 20))
-
-        # Results Display
-        results_label = ctk.CTkLabel(frame, text="Results (Averaged SDR/SIR/SAR):", anchor="w")
-        results_label.grid(row=8, column=0, sticky="w", padx=20, pady=(10, 0))
-        self.results_text = ctk.CTkTextbox(frame, width=600, height=300)
-        self.results_text.grid(row=row+2, column=0, sticky="ew", padx=20, pady=5)
-        
-        # Export Button
-        export_btn = ctk.CTkButton(frame, text="Export Results to CSV", command=self.export_results)
-        export_btn.grid(row=9, column=0, pady=(10, 20))
-
-    def select_dataset_folder(self):
-        folder = filedialog.askdirectory(title="Select Dataset Folder")
-        if folder:
-            self.dataset_var.set(folder)
-
-    def run_batch_evaluation(self):
-        dataset_path = self.dataset_var.get()
-        
-        if not os.path.exists(dataset_path):
-            messagebox.showerror("Error", "Dataset folder not found.")
-            return
-        elif not os.path.isdir(dataset_path):  # NEW: Ensure it's a directory
-            messagebox.showerror("Error", "Selected path is not a directory. Please select a folder containing track subfolders.")
-            return
-        else:
-            print(dataset_path)
-
-        # Get selected tools
-        selected_tools = [tool for tool, var in self.tools_to_compare.items() if var.get()]
-        if not selected_tools:
-            messagebox.showwarning("No Selection", "Select at least one tool to compare.")
-            return
-        else:
-            print(selected_tools)
-        # Start threaded separation with progress
-        self.status_queue = queue.Queue()
-        
-        # Run in thread
-        thread = threading.Thread(target=self.evaluate_in_thread, args=(dataset_path, selected_tools))
-        thread.daemon = True
-        thread.start()
-
-    def evaluate_in_thread(self, dataset_path, selected_tools):
-        print("Called: evaluate_in_thread()")
-        # Progress window update
-        progress = ProgressWindow(self, "Running Batch Evaluation...")
-
-        # Option: Use MUSDB18 instead of custom dataset
-        use_musdb = True  # Set to True if you want to evaluate on MUSDB18
-        if use_musdb:
-            mus = musdb.DB(download=True)  # Instantiate MUSDB18 (downloads if needed)
-            audio_files = [track.name for track in mus]  # List of track names
-            dataset_path = None  # Not needed for MUSDB
-        else:
-            supported_exts = ('.mp3', '.wav', '.flac')
-            audio_files = [f for f in os.listdir(dataset_path) if f.lower().endswith(supported_exts) and os.path.isfile(os.path.join(dataset_path, f))]
-        
-        if not audio_files:
-            progress.close(success=False)
-            self.after(0, lambda: messagebox.showwarning("No Files", "No supported audio files found."))
-            return
-
-        fmt = self.fmt_val.get()
-        sr = int(self.sr_val.get()) if fmt in ["wav", "flac"] else 44100
-        bitrate = self.bitrate_val.get() if fmt == "mp3" else "192k"
-
-        results = {}
-        for tool in selected_tools:
-            results[tool] = {"SDR": [], "ISR": [], "SIR": [], "SAR": []}
-            print(f"Results for {tool} ready.")
-        
-        with tempfile.TemporaryDirectory() as temp_dir:  # Cross-platform temp dir
-            for i, audio_file in enumerate(audio_files[:5]):  # Limit to 5 for demo; remove [:5] for full run
-                print(f"Processing: {i}, file: {audio_file}")
-                
-                if use_musdb:
-                    track = mus.tracks[i]  # Get MUSDB track
-                    mixture_path = track.path  # Path to mixture
-                    gt_vocals = track.targets['vocals'].audio  # NumPy array for vocals
-                    gt_instr = track.targets['accompaniment'].audio  # NumPy array for accompaniment
-                    base_name = track.name
-                    has_gt = True  # MUSDB always has GT
-                else:
-                    mixture_path = os.path.join(dataset_path, audio_file)
-                    base_name = os.path.splitext(audio_file)[0]
-                    gt_vocals = os.path.join(dataset_path, f"{base_name}_vocals.wav")
-                    gt_instr = os.path.join(dataset_path, f"{base_name}_accompaniment.wav")
-                    has_gt = os.path.exists(gt_vocals) and os.path.exists(gt_instr)
-                
-                progress.update_status(f"Processing {audio_file} ({i+1}/{len(audio_files)})")
-                
-                for tool in selected_tools:
-                    # Unique temp paths
-                    temp_vocals = os.path.join(temp_dir, f"{tool}_{base_name}_vocals.wav")
-                    temp_instr = os.path.join(temp_dir, f"{tool}_{base_name}_instr.wav")
-                    
-                    success = False
-                    try:
-                        if tool == "Spleeter":
-                            # Assuming fixed signature: (input_path, song_name, vocals_folder, instr_folder, fmt, sr, bitrate, do_transcribe, trans_folder, trans_tool, trans_model)
-                            success, _, _ = self.spleeter_sep.separate(mixture_path, base_name, temp_dir, temp_dir, fmt, sr, bitrate, False, temp_dir, "whisper", "tiny")
-                        elif "Demucs" in tool:
-                            model = tool.split("-")[1]  # e.g., "htdemucs"
-                            # Assuming fixed signature: (input_path, song_name, vocals_folder, instr_folder, trans_folder, model, fmt, sr, bitrate, bit_depth, mp3_preset, shifts, do_transcribe, trans_tool, trans_model)
-                            # Note: Add defaults for bit_depth, mp3_preset, shifts if not set
-                            success, _, _ = self.demucs_sep.separate(mixture_path, base_name, temp_dir, temp_dir, temp_dir, model, fmt, sr, bitrate, None, None, 1, False, "whisper", "tiny")
-                        elif "OpenUnmix" in tool:
-                            model = tool.split("-")[1]  # e.g., "umxl"
-                            # Assuming fixed signature: (input_path, song_name, vocals_folder, instr_folder, trans_folder, model, fmt, sr, bitrate, do_transcribe, trans_tool, trans_model)
-                            success, _, _ = self.openunmix_sep.separate(mixture_path, base_name, temp_dir, temp_dir, temp_dir, model, fmt, sr, bitrate, False, "whisper", "tiny")
-                    except Exception as e:
-                        print(f"Separation error for {tool} on {audio_file}: {e}")
-                    
-                    if success and os.path.exists(temp_vocals) and os.path.exists(temp_instr):
-                        print(f"Separation done for {tool} on {audio_file}.")
-                        if has_gt:
-                            try:
-                                # museval.evaluate expects file paths for estimates and arrays/files for GT
-                                sdr, isr, sir, sar = museval.evaluate([temp_vocals, temp_instr], [gt_vocals, gt_instr])
-                                results[tool]["SDR"].append(float(sdr.mean()))
-                                results[tool]["ISR"].append(float(isr.mean()))
-                                results[tool]["SIR"].append(float(sir.mean()))
-                                results[tool]["SAR"].append(float(sar.mean()))
-                            except Exception as e:
-                                print(f"Metrics error for {tool} on {audio_file}: {e}")
-                        else:
-                            print(f"No metrics computed for {tool} on {audio_file} (no GT).")
-                    else:
-                        print(f"Separation failed for {tool} on {audio_file}.")
-        
-        # Aggregate results
-        summary = {}
-        for tool, metrics in results.items():
-            if metrics["SDR"]:  # Only if metrics were computed
-                summary[tool] = {
-                    "Avg SDR": sum(metrics["SDR"]) / len(metrics["SDR"]),
-                    "Avg ISR": sum(metrics["ISR"]) / len(metrics["ISR"]),
-                    "Avg SIR": sum(metrics["SIR"]) / len(metrics["SIR"]),
-                    "Avg SAR": sum(metrics["SAR"]) / len(metrics["SAR"])
-                }
-        
-        # Store summary for export
-        self.summary_results = summary
-        
-        # Display results
-        self.results_text.delete(1.0, tk.END)  # Clear previous
-        if summary:
-            for tool, avg in summary.items():
-                self.results_text.insert("end", f"{tool}: SDR={avg['Avg SDR']:.2f}, ISR={avg['Avg ISR']:.2f}, SIR={avg['Avg SIR']:.2f}, SAR={avg['Avg SAR']:.2f}\n")
-        else:
-            self.results_text.insert("end", "No metrics computed (no ground truth files found).\n")
-        
-        progress.close(success=True)
-        self.after(0, lambda: messagebox.showinfo("Evaluation Complete", "Batch evaluation finished. Check results."))
-
-    def export_results(self):
-        if not hasattr(self, 'summary_results') or not self.summary_results:
-            messagebox.showerror("Error", "No results to export. Run evaluation first.")
-            return
-        
-        with open("evaluation_results.csv", "w", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow(["Tool", "Avg SDR", "Avg ISR", "Avg SIR", "Avg SAR"])
-            for tool, avg in self.summary_results.items():
-                writer.writerow([tool, avg["Avg SDR"], avg["Avg ISR"], avg["Avg SIR"], avg["Avg SAR"]])
-        messagebox.showinfo("Exported", "Results exported to evaluation_results.csv")
 
     def open_selected_song(self, event=None):
         sel = self.songs_listbox.curselection()

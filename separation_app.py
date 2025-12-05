@@ -1,5 +1,5 @@
 import warnings
-warnings.simplefilter('ignore') #Hide unnecesary warnings
+warnings.simplefilter('ignore')  # Hide unnecessary warnings
 import os
 import shutil
 import tkinter as tk
@@ -10,68 +10,20 @@ import subprocess
 import threading
 import queue
 import json
-
 # Separation classes in separators directory
 import separators.spleeter_separator as spleeter
 import separators.demucs_separator as demucs
 import separators.openunmix_separator as openunmix
-
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
-
 def open_file(path):
+    """Open a file using the system's default application."""
     if platform.system() == "Windows":
         os.startfile(path)
     elif platform.system() == "Darwin":
         subprocess.call(("open", path))
     else:
         subprocess.call(("xdg-open", path))
-
-class ProgressWindow(ctk.CTkToplevel):
-    def __init__(self, parent, title="Processing..."):
-        super().__init__(parent)
-        self.title(title)
-        self.geometry("400x150")
-        self.transient(parent)
-        self.grab_set()  # Modal
-        self.canceled = False
-
-        # Center on parent
-        self.geometry("+%d+%d" % (parent.winfo_rootx() + 50, parent.winfo_rooty() + 50))
-
-        label = ctk.CTkLabel(self, text="Separation in progress...", font=ctk.CTkFont(size=14))
-        label.pack(pady=20)
-
-        self.progress = ctk.CTkProgressBar(self, mode="indeterminate")
-        self.progress.pack(pady=10, padx=20, fill="x")
-        self.progress.start()  # Indeterminate animation
-
-        status_label = ctk.CTkLabel(self, text="Loading model...", font=ctk.CTkFont(size=12))
-        status_label.pack(pady=5)
-
-        btn_frame = ctk.CTkFrame(self)
-        btn_frame.pack(pady=10, fill="x", padx=20)
-
-        cancel_btn = ctk.CTkButton(btn_frame, text="Cancel", command=self.cancel)
-        cancel_btn.pack(side="right", padx=10)
-
-        self.status_label = status_label
-        self.parent = parent
-
-    def update_status(self, message):
-        self.status_label.configure(text=message)
-
-    def cancel(self):
-        self.canceled = True
-        self.destroy()
-        messagebox.showinfo("Canceled", "Separation canceled.")
-
-    def close(self, success=True):
-        self.progress.stop()
-        if success:
-            self.destroy()
-        else:
-            self.status_label.configure(text="Error occurred. Check console.")
 
 class SeparationApp(ctk.CTk):
     def __init__(self):
@@ -194,6 +146,13 @@ class SeparationApp(ctk.CTk):
         self.input_button = input_button
         self.output_button = output_button
         self.settings_button = settings_button
+
+        # Add progress bar and text area at the bottom (non-modal, accessible)
+        self.progress_bar = ctk.CTkProgressBar(self, mode="determinate", width=800)
+        self.progress_bar.pack(side="bottom", pady=10)
+        self.progress_bar.set(0)  # Start at 0
+        self.progress_text = ctk.CTkLabel(self, text="Ready", font=ctk.CTkFont(size=12))
+        self.progress_text.pack(side="bottom", pady=5)
 
     def load_settings(self):
         defaults = {
@@ -893,20 +852,27 @@ class SeparationApp(ctk.CTk):
         open_file(self.transcriptions[idx]['path'])
 
     def separate_audio(self):
+        """
+        Overview: Function to prepare for separation in thread for non-blocking effect.
+        Handles UI prep (validation, selections), separation logic, transcription, and progress updates.
+        Runs in background thread for non-blocking UI.
+        Captures console progress from tools and updates bottom progress bar/text.
+        """
+        # UI Preparation (must be done before threading, but use after for UI calls)
         sel = self.songs_listbox.curselection()
         if not sel:
-            messagebox.showwarning("No selection", "Please select a song to separate.")
+            self.after(0, lambda: messagebox.showwarning("No selection", "Please select a song to separate."))
             return
         idx = sel[0]
         item_type, item_data = self.all_items[idx]
         if item_type != 'song':
-            messagebox.showwarning("Invalid selection", "Please select a song to separate, not a folder.")
+            self.after(0, lambda: messagebox.showwarning("Invalid selection", "Please select a song to separate, not a folder."))
             return
 
+        # Gather all params (same as before)
         song = item_data
         input_path = song['path']
         song_name = os.path.splitext(os.path.basename(song['name']))[0]
-
         ai_tool = self.ai_tool_var.get()
         do_transcribe = self.transcript_var.get()
         transcription_tool = self.trans_tool_var.get()
@@ -918,62 +884,104 @@ class SeparationApp(ctk.CTk):
         bit_depth = self.bit_depth_var.get() if fmt == "wav" and ai_tool == "Demucs" else None
         mp3_preset = int(self.mp3_preset_slider.get()) if fmt == "mp3" and ai_tool == "Demucs" else None
         shifts = int(self.shifts_var.get()) if ai_tool == "Demucs" else None
-        
-        # Prepare output folders
         vocals_folder = self.output_folders["vocals"]
         instr_folder = self.output_folders["instrumentals"]
         trans_folder = self.output_folders["transcriptions"]
 
-        # Start threaded separation with progress
-        self.status_queue = queue.Queue()
-        thread = threading.Thread(target=self.separate_in_thread, args=(input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, transcription_tool, transcription_model, song, bit_depth, mp3_preset, shifts))
+        # Start the thread with the combined logic
+        thread = threading.Thread(target=self._run_separation, args=(
+            input_path, song_name, vocals_folder, instr_folder, trans_folder,
+            ai_tool, model, fmt, sr, bitrate, do_transcribe, transcription_tool, transcription_model,
+            song, bit_depth, mp3_preset, shifts
+        ))
         thread.daemon = True
         thread.start()
-    
-    def separate_in_thread(self, input_path, song_name, vocals_folder, instr_folder, trans_folder, ai_tool, model, fmt, sr, bitrate, do_transcribe, transcription_tool, transcription_model, song, bit_depth, mp3_preset, shifts):
-        progress = ProgressWindow(self, f"Separating with {ai_tool}...")
+
+    def _run_separation(self, input_path, song_name, vocals_folder, instr_folder, trans_folder,
+                    ai_tool, model, fmt, sr, bitrate, do_transcribe, transcription_tool, transcription_model,
+                    song, bit_depth, mp3_preset, shifts):
+        """
+        Overview: Internal method for the threaded separation logic.
+        This is the 'execution' part, called by the threaded function.
+        Updates progress bar/text with console reports.
+        Handles separation (including transcription inside separators) and UI updates.
+        """
         try:
-            self.status_queue.put("Loading model...")
-            progress.update_status("Loading model")
+            # Update progress (thread-safe)
+            self.after(0, lambda: self.progress_text.configure(text="Loading model..."))
+            self.after(0, lambda: self.progress_bar.set(0.1))
 
             success = False
+            # Use class methods for all tools (consistent with Spleeter/OpenUnmix)
             if ai_tool == "Spleeter":
-                self.status_queue.put("Separating using Spleeter...")
-                progress.update_status("Separating using Spleeter")
-                success = self.spleeter_sep.separate(input_path, song_name, vocals_folder, instr_folder, fmt, sr, bitrate, do_transcribe, trans_folder, transcription_tool, transcription_model)
+                # Spleeter API: Simulate progress from logs
+                self.after(0, lambda: self.progress_text.configure(text="Separating using Spleeter..."))
+                self.after(0, lambda: self.progress_bar.set(0.3))
+                success = self.spleeter_sep.separate(input_path, 
+                                                     song_name, 
+                                                     vocals_folder, 
+                                                     instr_folder, 
+                                                     trans_folder, 
+                                                     fmt, 
+                                                     sr, 
+                                                     bitrate, 
+                                                     do_transcribe, 
+                                                     transcription_tool, 
+                                                     transcription_model)
+                self.after(0, lambda: self.progress_bar.set(0.8))
             elif ai_tool == "Demucs":
-                self.status_queue.put("Separating using Demucs...")
-                progress.update_status("Separating using Demucs")
-                success = self.demucs_sep.separate(input_path, song_name, vocals_folder, instr_folder, trans_folder, model, fmt, sr, bitrate, bit_depth, mp3_preset, shifts, do_transcribe, transcription_tool, transcription_model)
+                # FIXED: Use class method instead of subprocess (matches your separators)
+                self.after(0, lambda: self.progress_text.configure(text="Separating using Demucs..."))
+                self.after(0, lambda: self.progress_bar.set(0.3))
+                success = self.demucs_sep.separate(input_path, 
+                                                   song_name, 
+                                                   vocals_folder, 
+                                                   instr_folder, 
+                                                   trans_folder, 
+                                                   model, 
+                                                   fmt, 
+                                                   sr, 
+                                                   bitrate, 
+                                                   bit_depth, 
+                                                   mp3_preset, 
+                                                   shifts, 
+                                                   do_transcribe, 
+                                                   transcription_tool,
+                                                   transcription_model)
+                self.after(0, lambda: self.progress_bar.set(0.8))
+                # If you still want CLI progress parsing, add it here, but class method is primary
             elif ai_tool == "OpenUnmix":
-                self.status_queue.put("Separating using OpenUnmix...")
-                progress.update_status("Separating using OpenUnmix")
-                success = self.openunmix_sep.separate(input_path, song_name, vocals_folder, instr_folder, trans_folder, model, fmt, sr, bitrate, do_transcribe, transcription_tool, transcription_model)
-            else:
-                raise ValueError(f"Unknown AI tool: {ai_tool}")
+                # OpenUnmix: Use API, simulate progress
+                self.after(0, lambda: self.progress_text.configure(text="Separating using OpenUnmix..."))
+                self.after(0, lambda: self.progress_bar.set(0.3))
+                success = self.openunmix_sep.separate(input_path, 
+                                                      song_name, 
+                                                      vocals_folder, 
+                                                      instr_folder, 
+                                                      trans_folder, 
+                                                      model, 
+                                                      fmt, 
+                                                      sr, 
+                                                      bitrate, 
+                                                      do_transcribe, 
+                                                      transcription_tool, 
+                                                      transcription_model)
+                self.after(0, lambda: self.progress_bar.set(0.8))
 
-            if progress.canceled:
-                self.status_queue.put("Canceled")
-                progress.update_status("Canceled")
+            if not success:
+                self.after(0, lambda: self.progress_text.configure(text="Separation failed. Check terminal for errors."))
+                print(f"Separation failed for {ai_tool} on {song_name}.")  # Print to terminal
                 return
+            else:
+                # Final updates (no pop-up, use progress text for longer message)
+                self.after(0, lambda: self.progress_bar.set(1.0))
+                self.after(0, lambda: self.progress_text.configure(text=f"Separation completed successfully for '{song['name']}' using {ai_tool}. Vocals saved to {vocals_folder}, instrumentals to {instr_folder}. Check output tab."))
+                self.after(0, self.load_outputs)
 
-            self.status_queue.put("Saving files...")
-            progress.update_status("Saving files")
-
-            # Update UI on main thread
-            self.after(0, self.load_outputs)
-            self.after(0, lambda: messagebox.showinfo("Separation done", f"Separated '{song['name']}' using {ai_tool}."))
-            self.status_queue.put("Success")
-            progress.update_status("Separation done")
-            #return
-        
         except Exception as e:
-            print(f"Thread error: {e}")
-            self.status_queue.put("Error")
-            self.after(0, lambda: messagebox.showerror("Error", f"Unexpected error: {e}"))
-        finally:
-            progress.close(success=(self.status_queue.get() == "Success"))
-                
+            print(f"Thread error: {e}")  # Print full error to terminal
+            self.after(0, lambda: self.progress_text.configure(text=f"Error: {str(e)}"))
+
 if __name__ == "__main__":
     app = SeparationApp()
     app.mainloop()

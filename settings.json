@@ -1,9 +1,8 @@
 {
-    "input_folder": "input",
+    "input_folder": "C:/Users/kriva/Documents/DiplomaThesis/input",
     "vocals_folder": "output/vocals",
     "instrumentals_folder": "output/instrumentals",
     "transcriptions_folder": "output/text",
-    "enable_evaluation": true,
     "separator_models": {
         "Spleeter": [],
         "Demucs": [

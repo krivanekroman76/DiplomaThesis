@@ -105,8 +105,8 @@ class OpenUnmixSeparator:
                 os.makedirs(instr_folder, exist_ok=True)
 
                 # Generate unique destination paths
-                base_vocals_dest = os.path.join(vocals_folder, f"{song_name}_0_vocals.{fmt}")
-                base_instr_dest = os.path.join(instr_folder, f"{song_name}_O_instrumental.{fmt}")
+                base_vocals_dest = os.path.join(vocals_folder, f"{song_name}_OpenUnmix_vocals.{fmt}")
+                base_instr_dest = os.path.join(instr_folder, f"{song_name}_OpenUnmix_instrumental.{fmt}")
 
                 vocals_dest = self._get_unique_filename(base_vocals_dest)
                 instr_dest = self._get_unique_filename(base_instr_dest)
@@ -127,7 +127,7 @@ class OpenUnmixSeparator:
                 print(f"OpenUnmix separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
 
                 if do_transcribe:
-                    trans_path = os.path.join(trans_folder, f"{song_name}_D_transcription.txt")
+                    trans_path = os.path.join(trans_folder, f"{song_name}_OpenUnmix_transcription.txt")
                     success_trans = False
                     if trans_tool == "whisper":
                         success_trans = self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model)

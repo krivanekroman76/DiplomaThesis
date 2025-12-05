@@ -107,8 +107,8 @@ class DemucsSeparator:
                 os.makedirs(instr_dir, exist_ok=True)
 
                 # Generate unique destination paths
-                base_vocals_dest = os.path.join(vocals_dir, f"{song_name}_D_vocals.{fmt}")
-                base_instr_dest = os.path.join(instr_dir, f"{song_name}_D_instrumental.{fmt}")
+                base_vocals_dest = os.path.join(vocals_dir, f"{song_name}_Demucs_vocals.{fmt}")
+                base_instr_dest = os.path.join(instr_dir, f"{song_name}_Demucs_instrumental.{fmt}")
 
                 vocals_dest = self._get_unique_filename(base_vocals_dest)
                 instr_dest = self._get_unique_filename(base_instr_dest)

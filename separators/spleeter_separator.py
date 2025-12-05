@@ -3,15 +3,31 @@ import subprocess
 import shlex
 import tempfile
 import shutil
+import warnings
 from spleeter.separator import Separator
 from spleeter.audio import Codec
+
 # Transcription tools
 import separators.whisper_transcription as whisper_trans 
 #import separators.wav2vec2_transcription as wav2vec2_trans 
-#import separators.coqui_transcription as coqui_trans 
+#import separators.coqui_transcription as coqui_trans
 
 class SpleeterSeparator:
+    """
+    Overview: Class for handling audio source separation using Spleeter.
+    Supports 2-stem separation (vocals and accompaniment).
+    Uses Spleeter's API or CLI fallback, with optional transcription.
+    """
     def __init__(self):
+        """
+        Overview: Initialize the Spleeter separator with model and transcription tools.
+        Suppresses TensorFlow/Keras deprecation warnings for cleaner output.
+        """
+        # Suppress TensorFlow/Keras warnings globally
+        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Suppress TensorFlow logs
+        warnings.filterwarnings('ignore', category=DeprecationWarning)
+        warnings.filterwarnings('ignore', category=FutureWarning)
+        
         self.model = 'spleeter:2stems'
         try:
             self.separator = Separator(self.model)
@@ -23,7 +39,15 @@ class SpleeterSeparator:
         #self.coqui_trans = coqui_trans.CoquiTranscription()
 
     def _get_unique_filename(self, base_path):
-        """Generate a unique filename by appending _1, _2, etc., if the file exists."""
+        """
+        Overview: Generate a unique filename by appending _1, _2, etc., if the file exists.
+        
+        Parameters:
+        - base_path (str): The initial file path to check.
+        
+        Returns:
+        - str: A unique file path that doesn't exist.
+        """
         if not os.path.exists(base_path):
             return base_path
         base, ext = os.path.splitext(base_path)
@@ -40,36 +64,53 @@ class SpleeterSeparator:
                 vocals_folder: str, 
                 instr_folder: str,
                 trans_folder: str, 
-                tool: str,  # NEW: Added tool parameter
                 fmt="wav", 
                 sr=44100, 
                 bitrate="128k", 
                 do_transcribe=False,  
                 trans_tool="whisper", 
                 trans_model="tiny"):
+        """
+        Overview: Perform source separation on an audio file using Spleeter.
+        Saves vocals and accompaniment to specified folders, with optional transcription.
+        
+        Parameters:
+        - input_path (str): Path to the input audio file.
+        - song_name (str): Base name for output files (without extension).
+        - vocals_folder (str): Folder to save vocal tracks.
+        - instr_folder (str): Folder to save instrumental tracks.
+        - fmt (str): Output format ("wav", "mp3", "flac").
+        - sr (int): Sample rate (not used in Spleeter, but kept for consistency).
+        - bitrate (str): Bitrate for MP3 (e.g., "128k").
+        - do_transcribe (bool): Whether to perform transcription.
+        - trans_tool (str): Transcription tool ("whisper", etc.).
+        - trans_model (str): Model for transcription (e.g., "tiny").
+        
+        Returns:
+        - tuple: (success (bool), vocals_path (str or None), instr_path (str or None)).
+        """
         try:
             # Check if input exists
             if not os.path.exists(input_path):
                 print(f"Spleeter: Input file not found: {input_path}")
                 return False, None, None
 
+            # Determine codec based on format
             if fmt == "flac":
                 codec = Codec.FLAC
             elif fmt == "mp3":
                 codec = Codec.MP3
             else:
                 codec = Codec.WAV
-            print(f"Debug: Codec value: {codec}, type: {type(codec)}")  # Debug: Confirm it's an enum
     
             # Create temp dir for processing
             with tempfile.TemporaryDirectory() as temp_dir:
-                # Try direct API first with all parameters
+                # Try direct API first
                 try:
                     self.separator.separate_to_file(audio_descriptor=input_path, destination=temp_dir, audio_adapter=None, codec=codec)
                     print("Spleeter: Direct API separation successful")
                 except Exception as api_err:
                     print(f"Spleeter: Direct API failed ({api_err}), falling back to CLI")
-                    # CLI fallback with parameters
                     cmd = [
                         'spleeter', 'separate',
                         '-p', self.model,
@@ -82,12 +123,10 @@ class SpleeterSeparator:
                     if result.returncode != 0:
                         print(f"Spleeter CLI error: {result.stderr}")
                         return False, None, None
-
-                # Find and move output files from temp_dir to final folders
-                # FIXED: Spleeter creates subfolders like "song_name.stem/"
-                vocals_src = os.path.join(temp_dir, f"{song_name}.stem/vocals.{fmt}")
-                instr_src = os.path.join(temp_dir, f"{song_name}.stem/accompaniment.{fmt}")
-
+                
+                vocals_src = os.path.join(temp_dir, f"{song_name}/vocals.{fmt}")
+                instr_src = os.path.join(temp_dir, f"{song_name}/accompaniment.{fmt}")
+                
                 if not os.path.exists(vocals_src) or not os.path.exists(instr_src):
                     print(f"Spleeter: Output files not found in {temp_dir}. Check filename_format.")
                     return False, None, None
@@ -96,9 +135,8 @@ class SpleeterSeparator:
                 os.makedirs(vocals_folder, exist_ok=True)
                 os.makedirs(instr_folder, exist_ok=True)
 
-                # FIXED: Use tool in filename to match evaluation's temp_vocals/temp_instr
-                base_vocals_dest = os.path.join(vocals_folder, f"{tool}_{song_name}_vocals.{fmt}")
-                base_instr_dest = os.path.join(instr_folder, f"{tool}_{song_name}_instrumental.{fmt}")
+                base_vocals_dest = os.path.join(vocals_folder, f"{song_name}_Spleeter_vocals.{fmt}")
+                base_instr_dest = os.path.join(instr_folder, f"{song_name}_Spleeter_instrumental.{fmt}")
 
                 vocals_dest = self._get_unique_filename(base_vocals_dest)
                 instr_dest = self._get_unique_filename(base_instr_dest)
@@ -109,6 +147,7 @@ class SpleeterSeparator:
 
                 print(f"Spleeter separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
                 
+            # Handle transcription if enabled
             if do_transcribe:
                 trans_path = os.path.join(trans_folder, f"{song_name}_S_transcription.txt")
                 success_trans = False
@@ -128,7 +167,7 @@ class SpleeterSeparator:
                 else:
                     print(f"Spleeter: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                 
-            return True, vocals_dest, instr_dest  # FIXED: Return paths
+            return True, vocals_dest, instr_dest
 
         except subprocess.CalledProcessError as e:
             print(f"Spleeter subprocess failed: {e.stderr}")

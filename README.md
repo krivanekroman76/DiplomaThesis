@@ -131,6 +131,7 @@ This installs CustomTkinter, Whisper, Spleeter, Demucs, OpenUnmix, and other lib
 - For GPU acceleration (optional, for faster processing), install CUDA-compatible versions if you have an NVIDIA GPU (check library docs for Spleeter/Demucs).
 
 ### Run the Application
+Application is run from `separation_app.py` in the terminal/command promt (command line in IDE).
 
 1. Ensure the virtual environment is activated, dependecies are installed and you're in the project folder (`cd DiplomaThesis`).
 
@@ -222,4 +223,5 @@ This project is licensed under the MIT License - see the LICENSE file for deta
 
 
 If you encounter issues, check the console output for errors or open a GitHub issue. For questions, reach out via \[ 240642@vut.cz \].
+
 

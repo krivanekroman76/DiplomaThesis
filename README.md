@@ -122,6 +122,7 @@ You should see `(.venv)` in your prompt. If not, ensure Python is correctly inst
 1. Ensure the virtual environment is activated (see above).
 
 2. Install the required packages: `pip install -r requirements.txt`
+   **NOTE** If the environment is installed to other folder, you must change requirements.txt with full path to the same file on your PC. Same applies to running sepration_app.py in **Run the Application** section
 
 This installs CustomTkinter, Whisper, Spleeter, Demucs, OpenUnmix, and other libraries. First run may download AI models (takes time and internet).
 
@@ -138,7 +139,8 @@ Application is run from `separation_app.py` in the terminal/command promt (comma
 2. Run the app:
     - **Windows**: `python separation_app.py`
     - **macOS/Linux**: `python3 separation_app.py`
-
+    **NOTE** If the environment is installed to other folder, you must change separation_app.py with full path to the same file on your PC.
+      
 The GUI should open. On first run, default folders (`input/`, `output/vocals/`, etc.) are created in the project directory.
 
 **Troubleshooting**:
@@ -223,5 +225,6 @@ This project is licensed under the MIT License - see the LICENSE file for deta
 
 
 If you encounter issues, check the console output for errors or open a GitHub issue. For questions, reach out via \[ 240642@vut.cz \].
+
 
 

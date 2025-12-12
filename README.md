@@ -71,7 +71,6 @@ Follow these steps to set up the Audio Separation Tool on your system. This guid
 ### Prerequisites
 
 - **Python 3.9 or higher**: Download from [python.org](https://www.python.org/downloads/). Verify with `python --version` or `python3 --version` in your terminal/command prompt.
-- **Git**: For cloning the repository. Download from [git-scm.com](https://git-scm.com/downloads) if not installed. Verify with `git --version`.
 - **FFmpeg**: Required for audio processing. 
   - **Windows**: Download from [ffmpeg.org](https://ffmpeg.org/download.html) (get the static build). Extract to a folder (e.g., `C:\ffmpeg`) and add `C:\ffmpeg\bin` to your system's PATH (search for "Environment Variables" in Windows search, edit PATH under System Variables).
   - **macOS**: Install via Homebrew: `brew install ffmpeg`. If Homebrew isn't installed, get it from [brew.sh](https://brew.sh).
@@ -79,6 +78,10 @@ Follow these steps to set up the Audio Separation Tool on your system. This guid
 - **IDE (Optional but Recommended)**: Visual Studio Code (VS Code) for editing and running Python. Download from [code.visualstudio.com](https://code.visualstudio.com/). Install the Python extension for better support.
 
 **NOTE**: If using IDE (VS Code) follow setup for **PowerShell** when on Windows in built in terminal. 
+
+- **Git**: For cloning the repository. Download from [git-scm.com](https://git-scm.com/downloads) if not installed. Verify with `git --version`.
+
+**NOTE**: You can download the code from this repository in .zip format at the top in green drop down menu `<> Code`, then extract it to your desired location. You can do this to skip **Git** dependencies if you want to test this out. If you download it follow only points 1 and 4 in next step. Hint: `cd <path>`
 
 ### Clone the Repository
 1. Open a terminal/command prompt:
@@ -90,9 +93,6 @@ Follow these steps to set up the Audio Separation Tool on your system. This guid
 3. Clone the repository: https://github.com/krivanekroman76/DiplomaThesis.git
 
 4. Enter the project folder: `cd DiplomaThesis`
-
-Alternatively, download the ZIP from GitHub and extract it to your desired location.
-
 
 ### Set Up Virtual Environment
 
@@ -222,3 +222,4 @@ This project is licensed under the MIT License - see the LICENSE file for deta
 
 
 If you encounter issues, check the console output for errors or open a GitHub issue. For questions, reach out via \[ 240642@vut.cz \].
+

@@ -39,13 +39,12 @@ _User can use path_entry field to quickly change input folder._
 
 _Separation options depends on AI-tool's capability ._
 
-![flac at OpenUnmix](screenshots/flac.png)
-![Models of OpenUnmix](screenshots/OpenUnmix_models.png)
 ![mp3 on Spleeter](screenshots/mp3.png)
 ![wav on Spleeter](screenshots/wav.png)
 ![wav on Demucs](screenshots/demucs_wav.png)
 ![mp3 on Demucs](screenshots/demucs_mp3.png)
 ![flac on Demucs](screenshots/demucs_flac.png)
+![Models of OpenUnmix](screenshots/OpenUnmix_models.png)
 
 ### Output Tab
 ![Output Tab](screenshots/output.png)
@@ -62,10 +61,6 @@ _Modal progress window during audio processing._
 ![Modal progress window error](screenshots/modal_done.png)
 
 _Modal progress window after audio processing. WIP - autoclose or OK button (error handeling)_
-
-![pop-up window sucess](screenshots/done.png)
-
-_Pop-up window after audio processing. WIP - integrate it to modal progress window_
 
 ## Installation
 
@@ -224,5 +219,6 @@ This project is licensed under the MIT License - see the LICENSE file for deta
 *   Inspired by various open-source audio processing tools.
 
 ## Support
+
 
 If you encounter issues, check the console output for errors or open a GitHub issue. For questions, reach out via \[ 240642@vut.cz \].

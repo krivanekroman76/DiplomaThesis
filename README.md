@@ -70,7 +70,7 @@ Follow these steps to set up the Audio Separation Tool on your system. This guid
 
 ### Prerequisites
 
-- **Python 3.9 or higher**: Download from [python.org](https://www.python.org/downloads/). Verify with `python --version` or `python3 --version` in your terminal/command prompt.
+- **Python 3.9.4**: Download from [python.org](https://www.python.org/downloads/). Verify with `python --version` or `python3 --version` in your terminal/command prompt.
 - **FFmpeg**: Required for audio processing. 
   - **Windows**: Download from [ffmpeg.org](https://ffmpeg.org/download.html) (get the static build). Extract to a folder (e.g., `C:\ffmpeg`) and add `C:\ffmpeg\bin` to your system's PATH (search for "Environment Variables" in Windows search, edit PATH under System Variables).
   - **macOS**: Install via Homebrew: `brew install ffmpeg`. If Homebrew isn't installed, get it from [brew.sh](https://brew.sh).
@@ -225,6 +225,7 @@ This project is licensed under the MIT License - see the LICENSE file for deta
 
 
 If you encounter issues, check the console output for errors or open a GitHub issue. For questions, reach out via \[ 240642@vut.cz \].
+
 
 
 

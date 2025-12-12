@@ -103,7 +103,9 @@ A virtual environment isolates dependencies. Create and activate it as follows (
     - **Windows (PowerShell)**: `python -m venv .venv`
     - **macOS/Linux**: `python3 -m venv .venv`
 
-**Note**: This should be done in folder from previus step to make project consistent.
+**Note**: This should be done in folder from previus step to make project consistent. .venv can be switched
+
+**Note**: When python of higher version is installed, `python -m pip install virtualenv` must be installed in main python to be able to create virtual environment with different python version. Specific python version in .venv must be installed with command `python -m virtualenv -p="<path to the python executable >" <virtual_environment_directory>` where `"<path to the python executable >"` must be path to the python39\python.exe and `<virtual_environment_directory>` can be changed to any name or `.venv` for simplicity, if changed you must change .venv in next step as well
 
 2. **Activate the Virtual Environment**:
     - **Windows (Command Prompt)**: `.venv\Scripts\activate`
@@ -111,7 +113,7 @@ A virtual environment isolates dependencies. Create and activate it as follows (
     (If execution policy blocks it, run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` first.)
     - **macOS/Linux**: `source .venv/bin/activate`
 
-You should see `(.venv)` in your prompt. If not, ensure Python is correctly installed.
+You should see `(.venv)` or name in your prompt. If not, ensure Python is correctly installed.
 
 3. **Deactivate Later** (when done): Run `deactivate`.
 
@@ -122,6 +124,7 @@ You should see `(.venv)` in your prompt. If not, ensure Python is correctly inst
 1. Ensure the virtual environment is activated (see above).
 
 2. Install the required packages: `pip install -r requirements.txt`
+
    **NOTE** If the environment is installed to other folder, you must change requirements.txt with full path to the same file on your PC. Same applies to running sepration_app.py in **Run the Application** section
 
 This installs CustomTkinter, Whisper, Spleeter, Demucs, OpenUnmix, and other libraries. First run may download AI models (takes time and internet).
@@ -225,6 +228,7 @@ This project is licensed under the MIT License - see the LICENSE file for deta
 
 
 If you encounter issues, check the console output for errors or open a GitHub issue. For questions, reach out via \[ 240642@vut.cz \].
+
 
 
 

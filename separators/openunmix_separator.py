@@ -47,15 +47,43 @@ class OpenUnmixSeparator:
                 model="umxl", 
                 fmt="wav", 
                 sr=44100, 
-                bitrate="192k", 
+                bitrate="128k", 
                 do_transcribe=False, 
                 trans_tool="whisper", 
-                trans_model="tiny"):
+                trans_model="tiny",
+                progress_callback=None):  
+        """
+        Overview: 
+            Perform source separation on an audio file using OpenUnmix.
+            Saves vocals and accompaniment to specified folders, with optional transcription.
+            
+        Parameters:
+            - input_path (str): Path to the input audio file.
+            - song_name (str): Base name for output files (without extension).
+            - vocals_folder (str): Folder to save vocal tracks.
+            - instr_folder (str): Folder to save instrumental tracks.
+            - trans_folder (str): Folder to save transcription files.
+            - model (str): OpenUnmix model (e.g., "umxl", "umxhq").
+            - fmt (str): Output format ("wav", "mp3", "flac").
+            - sr (int): Sample rate (for resampling if needed).
+            - bitrate (str): Bitrate for MP3.
+            - do_transcribe (bool): Whether to perform transcription.
+            - trans_tool (str): Transcription tool ("whisper", etc.).
+            - trans_model (str): Model for transcription.
+            - progress_callback (callable, optional): Function to call for progress updates (e.g., lambda percent, message: update(percent, message)).
+            
+        Returns:
+            - tuple: (success (bool), vocals_path (str or None), instr_path (str or None), trans_path (str or None)).
+        """
         try:
             # Check if input exists
             if not os.path.exists(input_path):
                 print(f"OpenUnmix: Input file not found: {input_path}")
-                return False
+                return False, None, None, None
+
+            # Call progress callback for initial setup (10%)
+            if progress_callback:
+                progress_callback(10, "OpenUnmix: Initializing...")
 
             # Load audio
             audio, original_sr = librosa.load(input_path, sr=44100, mono=False)
@@ -66,7 +94,15 @@ class OpenUnmixSeparator:
                 audio = np.stack([audio, audio], axis=-1)
                 print(f"OpenUnmix: Fixed audio shape: {audio.shape}")
 
+            # Call progress callback for loading audio (20%)
+            if progress_callback:
+                progress_callback(20, "OpenUnmix: Loading and preparing audio...")
+
             with tempfile.TemporaryDirectory() as temp_dir:
+                # Call progress callback for running separation (30%)
+                if progress_callback:
+                    progress_callback(30, "OpenUnmix: Running separation...")
+
                 # Perform separation using predict.separate
                 estimates = predict.separate(
                     audio=torch.as_tensor(audio).float(),
@@ -77,6 +113,10 @@ class OpenUnmixSeparator:
                     device=self.device
                 )
                 print(f"OpenUnmix: Separation complete. Estimates keys: {list(estimates.keys())}")
+
+                # Call progress callback for processing output (60%)
+                if progress_callback:
+                    progress_callback(60, "OpenUnmix: Processing and saving files...")
 
                 # Extract vocals
                 if 'vocals' not in estimates:
@@ -126,7 +166,12 @@ class OpenUnmixSeparator:
                 
                 print(f"OpenUnmix separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
 
+                trans_path = ''
                 if do_transcribe:
+                    # Call progress callback for transcription (70%)
+                    if progress_callback:
+                        progress_callback(70, "OpenUnmix: Transcribing vocals...")
+                    
                     trans_path = os.path.join(trans_folder, f"{song_name}_OpenUnmix_transcription.txt")
                     success_trans = False
                     if trans_tool == "whisper":
@@ -139,18 +184,21 @@ class OpenUnmixSeparator:
                         #success_trans = self.coqui_trans.transcribe(vocals_dest, trans_path, trans_model)
                     else:
                         print(f"OpenUnmix: Unknown transcription tool '{trans_tool}'.")
-                    #    
+                        
                     if success_trans:
                         print(f"OpenUnmix: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                     else:
                         print(f"OpenUnmix: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.")
-                return True
+                        trans_path = None
+                
+                # Call progress callback for completion (100%) handled in separation app with returned values
+                return True, vocals_dest, instr_dest, trans_path
 
         except Exception as e:
             print(f"OpenUnmix error: {e}")
             import traceback
             traceback.print_exc()
-            return False
+            return False, None, None, None
 
     def _prepare_audio_for_save(self, estimate, sr):
         """Helper: Squeeze extra dims, ensure correct shape, and resample if needed."""

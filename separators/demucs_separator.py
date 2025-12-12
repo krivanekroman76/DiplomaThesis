@@ -47,11 +47,42 @@ class DemucsSeparator:
                 shifts=1, 
                 do_transcribe=False,
                 trans_tool="whisper", 
-                trans_model="tiny"):
+                trans_model="tiny",
+                progress_callback=None):
+        """
+        Overview: 
+            Perform source separation on an audio file using Demucs.
+            Saves vocals and accompaniment to specified folders, with optional transcription.
+            
+        Parameters:
+            - input_path (str): Path to the input audio file.
+            - song_name (str): Base name for output files (without extension).
+            - vocals_dir (str): Folder to save vocal tracks.
+            - instr_dir (str): Folder to save instrumental tracks.
+            - trans_folder (str): Folder to save transcription files.
+            - model (str): Demucs model (e.g., "mdx", "htdemucs").
+            - fmt (str): Output format ("wav", "mp3", "flac").
+            - sr (int): Sample rate (for resampling if needed).
+            - bitrate (str): Bitrate for MP3.
+            - bit_depth (bool): True for 24-bit WAV, False for float32.
+            - mp3_preset (int): MP3 preset (2-7).
+            - shifts (int): Number of shifts for quality.
+            - do_transcribe (bool): Whether to perform transcription.
+            - trans_tool (str): Transcription tool ("whisper", etc.).
+            - trans_model (str): Model for transcription.
+            - progress_callback (callable, optional): Function to call for progress updates (e.g., lambda percent, message: update(percent, message)).
+            
+        Returns:
+            - tuple: (success (bool), vocals_path (str or None), instr_path (str or None)).
+        """
         try:
             if not os.path.exists(input_path):
                 raise FileNotFoundError(f"Input file not found: {input_path}")
             print(f"Demucs: Processing input: {input_path}")
+
+            # Call progress callback for initial setup (10%)
+            if progress_callback:
+                progress_callback(10, "Demucs: Initializing...")
 
             # Validate fmt and mutually exclusive bit depth options
             supported_fmts = ["wav", "mp3", "flac"]
@@ -63,6 +94,10 @@ class DemucsSeparator:
             else:
                 float32 = False
                 int24 = True
+
+            # Call progress callback for preparation (20%)
+            if progress_callback:
+                progress_callback(20, "Demucs: Preparing arguments...")
 
             # Create temp dir for processing
             with tempfile.TemporaryDirectory() as temp_dir:
@@ -90,8 +125,16 @@ class DemucsSeparator:
 
                 print(f"Demucs: Running with args: {args}")
 
+                # Call progress callback for running Demucs (30%)
+                if progress_callback:
+                    progress_callback(30, "Demucs: Running separation...")
+
                 demucs_main(args)
                 print(f"Demucs: Separation completed for {song_name}")
+
+                # Call progress callback for post-separation (60%)
+                if progress_callback:
+                    progress_callback(60, "Demucs: Processing output files...")
 
                 # Demucs outputs to a subfolder like "temp_dir/mdx/song_name/"
                 model_dir = os.path.join(temp_dir, model)
@@ -129,8 +172,13 @@ class DemucsSeparator:
 
                 print(f"Demucs separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
                 
+                trans_path = ''
                 if do_transcribe:
-                    trans_path = os.path.join(trans_folder, f"{song_name}_D_transcription.txt")
+                    # Call progress callback for transcription (70%)
+                    if progress_callback:
+                        progress_callback(70, "Demucs: Transcribing vocals...")
+                    
+                    trans_path = os.path.join(trans_folder, f"{song_name}_Demucs_transcription.txt")
                     success_trans = False
                     if trans_tool == "whisper":
                         success_trans = self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model)
@@ -147,8 +195,11 @@ class DemucsSeparator:
                         print(f"Demucs: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                     else:
                         print(f"Demucs: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.")
-                return True
+                        trans_path = None
+
+                # Call progress callback for completion (100%) handled in separation app with returned values
+                return True, vocals_dest, instr_dest, trans_path
 
         except Exception as e:
             print(f"Demucs separation error: {str(e)}", file=sys.stderr)
-            return False
+            return False, None, None, None

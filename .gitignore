@@ -4,3 +4,8 @@
 /separators/__pycache__
 /__pycache__
 /pretrained_models
+/evaluation
+
+evaluation.py
+eval_french
+evaluation_results.txt

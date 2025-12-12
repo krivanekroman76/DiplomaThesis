@@ -71,52 +71,95 @@ _Pop-up window after audio processing. WIP - integrate it to modal progress wind
 
 ### Prerequisites
 
-*   Visual Studio Code or some other python IDE
+Follow these steps to set up the Audio Separation Tool on your system. This guide supports **Windows**, **macOS**, and **Linux**. Ensure you have administrative privileges if needed (e.g., for installing system dependencies).
 
-*   Python 3.9 or higher
-    
-*   FFmpeg (for audio processing; install via your package manager or from ffmpeg.org)  
- (For windows don't forget to add it to path in system variables using win+R and typing "sysdm.cpl")
-    
+### Prerequisites
+
+- **Python 3.9 or higher**: Download from [python.org](https://www.python.org/downloads/). Verify with `python --version` or `python3 --version` in your terminal/command prompt.
+- **Git**: For cloning the repository. Download from [git-scm.com](https://git-scm.com/downloads) if not installed. Verify with `git --version`.
+- **FFmpeg**: Required for audio processing. 
+  - **Windows**: Download from [ffmpeg.org](https://ffmpeg.org/download.html) (get the static build). Extract to a folder (e.g., `C:\ffmpeg`) and add `C:\ffmpeg\bin` to your system's PATH (search for "Environment Variables" in Windows search, edit PATH under System Variables).
+  - **macOS**: Install via Homebrew: `brew install ffmpeg`. If Homebrew isn't installed, get it from [brew.sh](https://brew.sh).
+  - **Linux**: Use your package manager: `sudo apt install ffmpeg` (Ubuntu/Debian) or `sudo dnf install ffmpeg` (Fedora). Verify with `ffmpeg -version`.
+- **IDE (Optional but Recommended)**: Visual Studio Code (VS Code) for editing and running Python. Download from [code.visualstudio.com](https://code.visualstudio.com/). Install the Python extension for better support.
+
+**NOTE**: If using IDE (VS Code) follow setup for **PowerShell** when on Windows in built in terminal. 
+
 ### Clone the Repository
+1. Open a terminal/command prompt:
+   - **Windows**: Command Prompt or PowerShell.
+   - **macOS/Linux**: Terminal.
 
-    clone https://github.com/krivanekroman76/DiplomaThesis.git
+2. Navigate to a directory where you want to store the project (e.g., `cd Desktop`).
 
-or download it in .zip file
+3. Clone the repository: https://github.com/krivanekroman76/DiplomaThesis.git
 
-### Create virtual enviroment for python
+4. Enter the project folder: `cd DiplomaThesis`
 
-In Visual studio code make sure you have python extension and python icon on the left menu. In python menu in global environments at Venv select + icon and create a new .venv python distribution using python 3.9.   
-Best place for .venv is in the projects fodler (workspace environments)
+Alternatively, download the ZIP from GitHub and extract it to your desired location.
 
-Activate virtual environment by typing "& " and full direction path of Activate.ps1 located in .venv folder to the terminal.    
-it should look like:
 
-     & C:/Users/kriva/Documents/DiplomaThesis/.venv/Scripts/.venv/Scripts/Activate.ps1
+### Set Up Virtual Environment
 
-### Dependencies
+A virtual environment isolates dependencies. Create and activate it as follows (replace `<path>` with your actual path if needed).
 
-Install the required Python packages:
+1. **Create the Virtual Environment**:
+    - **Windows (Command Prompt)**: `python -m venv .venv`
+    - **Windows (PowerShell)**: `python -m venv .venv`
+    - **macOS/Linux**: `python3 -m venv .venv`
 
-    pip install -r requirements.txt
+**Note**: This should be done in folder from previus step to make project consistent.
 
-*   **CustomTkinter**: For the modern GUI.
-    
-*   **Whisper**: For transcription (from OpenAI).
-    
-*   **Spleeter, Demucs, OpenUnmix**: For audio separation. These may require additional setup (e.g., model downloads on first run).
+2. **Activate the Virtual Environment**:
+    - **Windows (Command Prompt)**: `.venv\Scripts\activate`
+    - **Windows (PowerShell)**: `.venv\Scripts\Activate.ps1` 
+    (If execution policy blocks it, run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` first.)
+    - **macOS/Linux**: `source .venv/bin/activate`
+
+You should see `(.venv)` in your prompt. If not, ensure Python is correctly installed.
+
+3. **Deactivate Later** (when done): Run `deactivate`.
+
+**Note**: Always activate the virtual environment before installing dependencies or running the app.
+
+### Install Dependencies
+
+1. Ensure the virtual environment is activated (see above).
+
+2. Install the required packages: `pip install -r requirements.txt`
+
+This installs CustomTkinter, Whisper, Spleeter, Demucs, OpenUnmix, and other libraries. First run may download AI models (takes time and internet).
+
+**Troubleshooting**:
+- If `pip` fails, upgrade it: `python -m pip install --upgrade pip`.
+- On Windows, if you get permission errors, run Command Prompt as Administrator.
+- For GPU acceleration (optional, for faster processing), install CUDA-compatible versions if you have an NVIDIA GPU (check library docs for Spleeter/Demucs).
 
 ### Run the Application
 
-Then run code by pressing "Run Python File" (play button on the top) or typing command to run python.exe from .venv/Scripts (like Activate.ps1) via full direction path and placing separation_app.py full direction path after that, like:
+1. Ensure the virtual environment is activated, dependecies are installed and you're in the project folder (`cd DiplomaThesis`).
 
-    & C:/Users/kriva/Documents/DiplomaThesis/.venv/Scripts/python.exe c:/Users/kriva/Documents/DiplomaThesis/separation_app.py
+2. Run the app:
+    - **Windows**: `python separation_app.py`
+    - **macOS/Linux**: `python3 separation_app.py`
 
-On first run, the app will create default **input/**, **output/vocals/**, **output/instrumentals/**, and **output/text/** folders in the project directory.
+The GUI should open. On first run, default folders (`input/`, `output/vocals/`, etc.) are created in the project directory.
+
+**Troubleshooting**:
+- If you get "Module not found" errors, ensure dependencies are installed in the active virtual environment.
+- For GUI issues on Linux, install Tkinter: `sudo apt install python3-tk` (Ubuntu/Debian).
+- Close the app with Ctrl+C in the terminal if it hangs.
+- If FFmpeg isn't found, verify it's in PATH (run `ffmpeg -version` in a new terminal).
+
+### Post-Installation Notes
+
+- **First Run**: AI models download automatically—be patient.
+- **Uninstall**: Delete the project folder and virtual environment.
+- **Support**: If issues arise, check console output and refer to library docs (e.g., [Spleeter](https://github.com/deezer/spleeter), [Demucs](https://github.com/facebookresearch/demucs)).
 
 ## Usage
 
-1.  **Add Songs**: Use the "Add Song" button or place audio files (.mp3, .wav, .flac) in the **input/** folder. Or you can change the **input folder** by typing its full direction path or by "Change Folder/New Folder" button.
+1.  **Add Songs**: Use the `Add Song` button or place audio files (.mp3, .wav, .flac) in the `input/` folder. Or you can change the `input folder` by typing its full direction path or by `Change Folder/New Folder` button.
     
 2.  **Select a Song**: In the Input tab, select a song from the list.
     
@@ -130,9 +173,9 @@ On first run, the app will create default **input/**, **output/vocals/**, **o
         
     *   Enable transcription if desired.
         
-4.  **Separate**: Click "Separate" to process. Monitor progress in the modal window.
+4.  **Separate**: Click `Separate` to process.
     
-5.  **View Outputs**: Switch to the Output tab to browse vocals, instrumentals, and transcriptions. Double-click to open files. You can change each output folder destination if desired.
+5.  **View Outputs**: Switch to the `Output tab` to browse vocals, instrumentals, and transcriptions. Double-click to open files. You can change each output folder destination in output or settings tab if desired.
 
 ### Tips
 
@@ -148,7 +191,7 @@ This project is actively developed. Planned features and fixes include:
 
 *   \[ \] SDR evaluation of tools on provided dataset.
 
-*   \[ \] Transcription and Demucs tool repair.
+*   \[ \] Transcription tool repair.
     
 *   \[ \] Add support for batch processing multiple songs at once.
     
@@ -162,28 +205,13 @@ This project is actively developed. Planned features and fixes include:
     
 *   \[ \] Documentation: Add more detailed guides and API references for custom separators. Proper credits for used libraries.
 
-Feel free to contribute or suggest features via issues!
-
-## Contributing
-
-Contributions are welcome! Please fork the repo, create a feature branch, and submit a pull request. For major changes, open an issue first to discuss.
-
-### Development Setup
-
-*   Ensure all dependencies are installed.
-    
-*   Run tests (if any) and check for linting with tools like **flake8**.
-    
-*   Follow PEP 8 style guidelines.
-    
+Feel free to suggest features via issues!
 
 ## License
-
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Credits
-
 
 *   **Libraries Used**:
     

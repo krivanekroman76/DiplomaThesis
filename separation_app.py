@@ -128,14 +128,14 @@ class SeparationApp(ctk.CTk):
         # Input, output, and settings frames
         self.input_frame = ctk.CTkFrame(self.content_frame)
         self.output_frame = ctk.CTkFrame(self.content_frame)
-        self.settings_frame = ctk.CTkFrame(self.content_frame)
+        self.settings_frame = ctk.CTkScrollableFrame(self.content_frame)
 
         # Create tab contents
         self.create_input_tab()
         self.create_output_tab()
         self.create_settings_tab() 
         #Change listbox font size from settings.json
-        self.apply_listbox_font_size()
+        self.apply_font_size()
         self.update_listbox_themes()
 
         # Buttons in input tab
@@ -175,7 +175,7 @@ class SeparationApp(ctk.CTk):
             "transcriptions_folder": "output/text",
             "appearance_mode": "Dark",
             "scaling": "100%",
-            "listbox_font_size": "12",
+            "font_size": "12",
             "separator_models": {
                 "Spleeter": [],
                 "Demucs": ["mdx", "mdx_extra", "htdemucs"],
@@ -199,7 +199,7 @@ class SeparationApp(ctk.CTk):
                 }
                 self.appearance_mode = data.get("appearance_mode", defaults["appearance_mode"])
                 self.scaling = data.get("scaling", defaults["scaling"])
-                self.listbox_font_size = data.get("listbox_font_size", 12)
+                self.font_size = data.get("font_size", 12)
                 self.separator_models = data.get("separator_models", defaults["separator_models"])
                 self.transcription_models = data.get("transcription_models", defaults["transcription_models"])
             except (json.JSONDecodeError, KeyError):
@@ -216,7 +216,7 @@ class SeparationApp(ctk.CTk):
         }
         self.appearance_mode = defaults["appearance_mode"]
         self.scaling = defaults["scaling"]
-        self.listbox_font_size = 12
+        self.font_size = 12
         self.separator_models = defaults["separator_models"]
         self.transcription_models = defaults["transcription_models"]
         self.save_settings()
@@ -232,7 +232,7 @@ class SeparationApp(ctk.CTk):
             "transcriptions_folder": self.output_folders["transcriptions"],
             "appearance_mode": self.appearance_mode,
             "scaling": self.scaling,
-            "listbox_font_size": self.listbox_font_size,
+            "font_size": self.font_size,
             "separator_models": self.separator_models,
             "transcription_models": self.transcription_models
         }
@@ -594,13 +594,20 @@ class SeparationApp(ctk.CTk):
             # Fallback to defaults
             self.on_trans_tool_change()
 
-    def apply_listbox_font_size(self):
-        font = ("TkDefaultFont", self.listbox_font_size)
+    def apply_font_size(self):
+        font = ("TkDefaultFont", self.font_size)
+        # Apply to listboxes
         self.songs_listbox.configure(font=font)
         self.vocals_listbox.configure(font=font)
         self.instr_listbox.configure(font=font)
         self.trans_listbox.configure(font=font)
-
+        # Apply to textboxes in settings tab
+        self.demucs_models_text.configure(font=font)
+        self.openunmix_models_text.configure(font=font)
+        self.whisper_models_text.configure(font=font)
+        self.wav2vec2_models_text.configure(font=font)
+        self.coqui_models_text.configure(font=font)
+     
     def create_output_tab(self):
         frame = self.output_frame
         frame.grid_columnconfigure(0, weight=1)
@@ -769,80 +776,80 @@ class SeparationApp(ctk.CTk):
                 
     def create_settings_tab(self):
         frame = self.settings_frame
-        frame.grid_columnconfigure((0, 1), weight=1)
-        
+        frame.grid_columnconfigure((1, 4), weight=1)
+
         # Folder label
         settings_label = ctk.CTkLabel(frame, text="Default Folders Settings", font=ctk.CTkFont(size=20, weight="bold"))
-        settings_label.grid(row=0, column=0, pady=(20, 20))
+        settings_label.grid(row=0, column=0, columnspan=2, pady=(20, 20))
         # Input folder
         input_label = ctk.CTkLabel(frame, text="Input Folder:", anchor="w")
         input_label.grid(row=1, column=0, sticky="w", padx=20, pady=(10, 0))
         self.settings_input_var = tk.StringVar(value=self.input_folder)
         input_entry = ctk.CTkEntry(frame, textvariable=self.settings_input_var, width=400)
-        input_entry.grid(row=2, column=0, sticky="ew", padx=20, pady=5)
+        input_entry.grid(row=1, column=1, sticky="ew", padx=20, pady=5)
         # Vocals folder
         vocals_label = ctk.CTkLabel(frame, text="Vocals Folder:", anchor="w")
-        vocals_label.grid(row=3, column=0, sticky="w", padx=20, pady=(10, 0))
+        vocals_label.grid(row=2, column=0, sticky="w", padx=20, pady=(10, 0))
         self.settings_vocals_var = tk.StringVar(value=self.output_folders["vocals"])
         vocals_entry = ctk.CTkEntry(frame, textvariable=self.settings_vocals_var, width=400)
-        vocals_entry.grid(row=4, column=0, sticky="ew", padx=20, pady=5)
+        vocals_entry.grid(row=2, column=1, sticky="ew", padx=20, pady=5)
         # Instrumentals folder
         instr_label = ctk.CTkLabel(frame, text="Instrumentals Folder:", anchor="w")
-        instr_label.grid(row=5, column=0, sticky="w", padx=20, pady=(10, 0))
+        instr_label.grid(row=3, column=0, sticky="w", padx=20, pady=(10, 0))
         self.settings_instr_var = tk.StringVar(value=self.output_folders["instrumentals"])
         instr_entry = ctk.CTkEntry(frame, textvariable=self.settings_instr_var, width=400)
-        instr_entry.grid(row=6, column=0, sticky="ew", padx=20, pady=5)
+        instr_entry.grid(row=3, column=1, sticky="ew", padx=20, pady=5)
         # Transcriptions folder
         trans_label = ctk.CTkLabel(frame, text="Transcriptions Folder:", anchor="w")
-        trans_label.grid(row=7, column=0, sticky="w", padx=20, pady=(10, 0))
+        trans_label.grid(row=4, column=0, sticky="w", padx=20, pady=(10, 0))
         self.settings_trans_var = tk.StringVar(value=self.output_folders["transcriptions"])
         trans_entry = ctk.CTkEntry(frame, textvariable=self.settings_trans_var, width=400)
-        trans_entry.grid(row=8, column=0, sticky="ew", padx=20, pady=5)
+        trans_entry.grid(row=5, column=1, sticky="ew", padx=20, pady=5)
         
         font_size_label = ctk.CTkLabel(frame, text="Listbox Font Size:", anchor="w")
-        font_size_label.grid(row=9, column=0, sticky="w", padx=20, pady=(20, 0))
-        self.font_size_var = tk.StringVar(value=str(self.listbox_font_size))
+        font_size_label.grid(row=6, column=0, sticky="w", padx=20, pady=(20, 0))
+        self.font_size_var = tk.StringVar(value=str(self.font_size))
         font_size_menu = ctk.CTkOptionMenu(frame, variable=self.font_size_var, values=[str(i) for i in range(10, 32)], width=200)
-        font_size_menu.grid(row=10, column=0, sticky="ew", padx=20, pady=5)
+        font_size_menu.grid(row=6, column=1, sticky="ew", padx=20, pady=5)
 
         # Buttons
-        restore_btn = ctk.CTkButton(frame, text="Restore Defaults", command=self.restore_defaults)
-        restore_btn.grid(row=11, column=0, padx=10, pady=5)
         save_btn = ctk.CTkButton(frame, text="Save Changes", command=self.save_settings_changes)
-        save_btn.grid(row=12, column=0, padx=10, pady=5)
+        save_btn.grid(row=7, column=1, columnspan=4, padx=10, pady=5, sticky="w")
+        restore_btn = ctk.CTkButton(frame, text="Restore Defaults", command=self.restore_defaults)
+        restore_btn.grid(row=7, column=1, columnspan=4, padx=10, pady=5, sticky="s")
 
         # Models label in second column
         model_label = ctk.CTkLabel(frame, text="Model Dropdown Menu Settings", font=ctk.CTkFont(size=20, weight="bold"))
-        model_label.grid(row=0, column=1, pady=(20, 20))
+        model_label.grid(row=0, column=3, columnspan=2, pady=(20, 20))
         # Separator Models - Demucs
         demucs_models_label = ctk.CTkLabel(frame, text="Demucs Models (Edit/Reorder):", anchor="w")
-        demucs_models_label.grid(row=1, column=1, sticky="w", padx=20, pady=(20, 0))
+        demucs_models_label.grid(row=1, column=3, sticky="w", padx=20, pady=(20, 0))
         self.demucs_models_text = ctk.CTkTextbox(frame, width=400, height=50)
-        self.demucs_models_text.grid(row=2, column=1, sticky="ew", padx=20, pady=5)
+        self.demucs_models_text.grid(row=1, column=4, sticky="ew", padx=20, pady=5)
         self.demucs_models_text.insert("0.0", json.dumps(self.separator_models.get("Demucs", [])))
         # Separator Models - OpenUnmix
         openunmix_models_label = ctk.CTkLabel(frame, text="OpenUnmix Models (Edit/Reorder):", anchor="w")
-        openunmix_models_label.grid(row=3, column=1, sticky="w", padx=20, pady=(20, 0))
+        openunmix_models_label.grid(row=2, column=3, sticky="w", padx=20, pady=(20, 0))
         self.openunmix_models_text = ctk.CTkTextbox(frame, width=400, height=50)
-        self.openunmix_models_text.grid(row=4, column=1, sticky="ew", padx=20, pady=5)
+        self.openunmix_models_text.grid(row=3, column=4, sticky="ew", padx=20, pady=5)
         self.openunmix_models_text.insert("0.0", json.dumps(self.separator_models.get("OpenUnmix", [])))
         # Transcription Models - Whisper
         whisper_models_label = ctk.CTkLabel(frame, text="Whisper Models (Edit/Reorder):", anchor="w")
-        whisper_models_label.grid(row=5, column=1, sticky="w", padx=20, pady=(20, 0))
+        whisper_models_label.grid(row=4, column=3, sticky="w", padx=20, pady=(20, 0))
         self.whisper_models_text = ctk.CTkTextbox(frame, width=400, height=50)
-        self.whisper_models_text.grid(row=6, column=1, sticky="ew", padx=20, pady=5)
+        self.whisper_models_text.grid(row=4, column=4, sticky="ew", padx=20, pady=5)
         self.whisper_models_text.insert("0.0", json.dumps(self.transcription_models.get("whisper", [])))
         # Transcription Models - Wav2Vec2
         wav2vec2_models_label = ctk.CTkLabel(frame, text="Wav2Vec2 Models (Edit/Reorder):", anchor="w")
-        wav2vec2_models_label.grid(row=7, column=1, sticky="w", padx=20, pady=(20, 0))
+        wav2vec2_models_label.grid(row=5, column=3, sticky="w", padx=20, pady=(20, 0))
         self.wav2vec2_models_text = ctk.CTkTextbox(frame, width=400, height=50)
-        self.wav2vec2_models_text.grid(row=8, column=1, sticky="ew", padx=20, pady=5)
+        self.wav2vec2_models_text.grid(row=5, column=4, sticky="ew", padx=20, pady=5)
         self.wav2vec2_models_text.insert("0.0", json.dumps(self.transcription_models.get("wav2vec2", [])))
         # Transcription Models - Coqui
         coqui_models_label = ctk.CTkLabel(frame, text="Coqui Models (Edit/Reorder):", anchor="w")
-        coqui_models_label.grid(row=9, column=1, sticky="w", padx=20, pady=(20, 0))
+        coqui_models_label.grid(row=6, column=3, sticky="w", padx=20, pady=(20, 0))
         self.coqui_models_text = ctk.CTkTextbox(frame, width=400, height=50)
-        self.coqui_models_text.grid(row=10, column=1, sticky="ew", padx=20, pady=5)
+        self.coqui_models_text.grid(row=6, column=4, sticky="ew", padx=20, pady=5)
         self.coqui_models_text.insert("0.0", json.dumps(self.transcription_models.get("coqui", [])))
 
     def save_settings_changes(self):
@@ -850,7 +857,7 @@ class SeparationApp(ctk.CTk):
         self.output_folders["vocals"] = self.settings_vocals_var.get()
         self.output_folders["instrumentals"] = self.settings_instr_var.get()
         self.output_folders["transcriptions"] = self.settings_trans_var.get()
-        self.listbox_font_size = int(self.font_size_var.get())
+        self.font_size = int(self.font_size_var.get())
         try:
             self.separator_models["Demucs"] = json.loads(self.demucs_models_text.get("0.0", "end"))
             self.separator_models["OpenUnmix"] = json.loads(self.openunmix_models_text.get("0.0", "end"))
@@ -868,7 +875,7 @@ class SeparationApp(ctk.CTk):
         self.load_outputs()
         self.on_tool_change()
         self.on_trans_tool_change()
-        self.apply_listbox_font_size()
+        self.apply_font_size()
         messagebox.showinfo("Settings Saved", "Default folders and models updated and saved.")
 
     def restore_defaults(self):

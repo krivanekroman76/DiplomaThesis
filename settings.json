@@ -1,11 +1,11 @@
 {
     "input_folder": "input",
-    "vocals_folder": "C:/Users/kriva/Documents/DiplomaThesis/output/vocals",
+    "vocals_folder": "output/vocals",
     "instrumentals_folder": "output/instrumentals",
-    "transcriptions_folder": "C:/Users/kriva/Documents/DiplomaThesis/output/text",
+    "transcriptions_folder": "output/text",
     "appearance_mode": "Dark",
     "scaling": "100%",
-    "listbox_font_size": 12,
+    "font_size": 16,
     "separator_models": {
         "Spleeter": [],
         "Demucs": [
@@ -16,7 +16,8 @@
         "OpenUnmix": [
             "umxl",
             "umxhq",
-            "umx"
+            "umx",
+            "umxse"
         ]
     },
     "transcription_models": {

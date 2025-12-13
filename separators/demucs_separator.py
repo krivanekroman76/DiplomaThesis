@@ -172,7 +172,7 @@ class DemucsSeparator:
 
                 print(f"Demucs separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
                 
-                trans_path = ''
+                trans_name = None
                 if do_transcribe:
                     # Call progress callback for transcription (70%)
                     if progress_callback:
@@ -193,12 +193,17 @@ class DemucsSeparator:
                         
                     if success_trans:
                         print(f"Demucs: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
+                        trans_name = os.path.basename(trans_path)  # Return file name only
+                        if progress_callback:
+                            progress_callback(90, "Transcribing vocals done!")
                     else:
                         print(f"Demucs: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                         trans_path = None
 
-                # Call progress callback for completion (100%) handled in separation app with returned values
-                return True, vocals_dest, instr_dest, trans_path
+                # Return file names (not paths) for GUI
+                vocals_name = os.path.basename(vocals_dest) if vocals_dest else None
+                instr_name = os.path.basename(instr_dest) if instr_dest else None
+                return True, vocals_name, instr_name, trans_name
 
         except Exception as e:
             print(f"Demucs separation error: {str(e)}", file=sys.stderr)

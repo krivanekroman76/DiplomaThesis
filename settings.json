@@ -1,8 +1,11 @@
 {
     "input_folder": "input",
-    "vocals_folder": "output/vocals",
+    "vocals_folder": "C:/Users/kriva/Documents/DiplomaThesis/output/vocals",
     "instrumentals_folder": "output/instrumentals",
-    "transcriptions_folder": "output/text",
+    "transcriptions_folder": "C:/Users/kriva/Documents/DiplomaThesis/output/text",
+    "appearance_mode": "Dark",
+    "scaling": "100%",
+    "listbox_font_size": 12,
     "separator_models": {
         "Spleeter": [],
         "Demucs": [

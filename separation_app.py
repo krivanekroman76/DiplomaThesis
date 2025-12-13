@@ -13,8 +13,10 @@ import json
 import separators.spleeter_separator as spleeter
 import separators.demucs_separator as demucs
 import separators.openunmix_separator as openunmix
+
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
+
 def open_file(path):
     """Open a file using the system's default application."""
     if platform.system() == "Windows":
@@ -80,7 +82,7 @@ class SeparationApp(ctk.CTk):
             command=self.show_output,
             width=180
         )
-        output_button.grid(row=1, column=0, padx=20, pady=10, sticky="ew")
+        output_button.grid(row=1, column=0, padx=20, pady=(20, 10), sticky="ew")
 
         settings_button = ctk.CTkButton(
             self.sidebar, 
@@ -88,7 +90,7 @@ class SeparationApp(ctk.CTk):
             command=self.show_settings,
             width=180
         )
-        settings_button.grid(row=4, column=0, padx=20, pady=10, sticky="ew")
+        settings_button.grid(row=4, column=0, padx=20, pady=(20, 10), sticky="ew")
 
         # Appearance mode selection (bottom-aligned)
         appearance_mode_label = ctk.CTkLabel(self.sidebar, text="Appearance Mode:", anchor="w")
@@ -101,20 +103,19 @@ class SeparationApp(ctk.CTk):
             width=160
         )
         appearance_mode_optionemenu.grid(row=6, column=0, padx=20, pady=(10, 10), sticky="ew")
-        appearance_mode_optionemenu.set("Dark")
+        appearance_mode_optionemenu.set(self.appearance_mode)
+        ctk.set_appearance_mode(self.appearance_mode)
 
         # UI Scaling (Zoom) selection (bottom-aligned)
-        scaling_label = ctk.CTkLabel(self.sidebar, text="UI Scaling:", anchor="w")
-        scaling_label.grid(row=7, column=0, padx=20, pady=(10, 0), sticky="w")
-
-        scaling_optionemenu = ctk.CTkOptionMenu(
+        scaling_values = [f"{i}%" for i in range(50, 201, 10)]  # 50%, 60%, ..., 200%
+        self.scaling_optionemenu = ctk.CTkOptionMenu(
             self.sidebar, 
-            values=["80%", "90%", "100%", "110%", "120%"],
+            values=scaling_values,
             command=self.change_scaling_event,
             width=160
         )
-        scaling_optionemenu.grid(row=8, column=0, padx=20, pady=(10, 20), sticky="ew")
-        scaling_optionemenu.set("100%")
+        self.scaling_optionemenu.grid(row=8, column=0, padx=20, pady=(10, 20), sticky="ew")
+        self.scaling_optionemenu.set(self.scaling)
 
         # Content frame
         self.content_frame = ctk.CTkFrame(main_frame)
@@ -133,25 +134,38 @@ class SeparationApp(ctk.CTk):
         self.create_input_tab()
         self.create_output_tab()
         self.create_settings_tab() 
-
-        # Initially show input
-        self.show_input()
-
-        # Load initial songs and outputs
-        self.load_input()
-        self.load_outputs()
+        #Change listbox font size from settings.json
+        self.apply_listbox_font_size()
+        self.update_listbox_themes()
 
         # Buttons in input tab
         self.input_button = input_button
         self.output_button = output_button
         self.settings_button = settings_button
 
-        # Add progress bar and text area at the bottom (non-modal, accessible)
-        self.progress_bar = ctk.CTkProgressBar(self, mode="determinate", width=800)
-        self.progress_bar.pack(side="bottom", pady=10)
-        self.progress_bar.set(0)  # Start at 0
-        self.progress_text = ctk.CTkLabel(self, text="Ready", font=ctk.CTkFont(size=12))
-        self.progress_text.pack(side="bottom", pady=5)
+        # Progress bar and text area at the bottom (non-modal, accessible)
+        progress_frame = ctk.CTkFrame(main_frame)
+        progress_frame.grid(row=1, column=1, sticky="ew", padx=(10, 0), pady=(10, 0))
+        progress_frame.grid_columnconfigure(1, weight=1)
+
+        self.progress_bar = ctk.CTkProgressBar(progress_frame, mode="determinate", width=600, height=20)
+        self.progress_bar.grid(row=0, column=0, sticky="w", padx=(0, 10))
+        self.progress_bar.set(0)
+        self.progress_bar.grid_remove()
+        self.progress_text = ctk.CTkLabel(progress_frame, text="Ready", font=ctk.CTkFont(size=12))
+        self.progress_text.grid(row=0, column=1, sticky="w")
+
+        self.abort_separation = False
+        self.abort_button = ctk.CTkButton(progress_frame, text="Abort", command=self.abort_separation_process, width=80)
+        self.abort_button.grid(row=0, column=2, sticky="e", padx=(10, 0))
+        self.abort_button.grid_remove()  # Hide initially
+
+        # Load initial songs and outputs
+        self.load_input()
+        self.load_outputs()
+        
+        # Initially show input
+        self.show_input()
 
     def load_settings(self):
         defaults = {
@@ -159,6 +173,9 @@ class SeparationApp(ctk.CTk):
             "vocals_folder": "output/vocals",
             "instrumentals_folder": "output/instrumentals",
             "transcriptions_folder": "output/text",
+            "appearance_mode": "Dark",
+            "scaling": "100%",
+            "listbox_font_size": "12",
             "separator_models": {
                 "Spleeter": [],
                 "Demucs": ["mdx", "mdx_extra", "htdemucs"],
@@ -180,6 +197,9 @@ class SeparationApp(ctk.CTk):
                     "instrumentals": data.get("instrumentals_folder", defaults["instrumentals_folder"]),
                     "transcriptions": data.get("transcriptions_folder", defaults["transcriptions_folder"])
                 }
+                self.appearance_mode = data.get("appearance_mode", defaults["appearance_mode"])
+                self.scaling = data.get("scaling", defaults["scaling"])
+                self.listbox_font_size = data.get("listbox_font_size", 12)
                 self.separator_models = data.get("separator_models", defaults["separator_models"])
                 self.transcription_models = data.get("transcription_models", defaults["transcription_models"])
             except (json.JSONDecodeError, KeyError):
@@ -194,6 +214,9 @@ class SeparationApp(ctk.CTk):
             "instrumentals": defaults["instrumentals_folder"],
             "transcriptions": defaults["transcriptions_folder"]
         }
+        self.appearance_mode = defaults["appearance_mode"]
+        self.scaling = defaults["scaling"]
+        self.listbox_font_size = 12
         self.separator_models = defaults["separator_models"]
         self.transcription_models = defaults["transcription_models"]
         self.save_settings()
@@ -207,6 +230,9 @@ class SeparationApp(ctk.CTk):
             "vocals_folder": self.output_folders["vocals"],
             "instrumentals_folder": self.output_folders["instrumentals"],
             "transcriptions_folder": self.output_folders["transcriptions"],
+            "appearance_mode": self.appearance_mode,
+            "scaling": self.scaling,
+            "listbox_font_size": self.listbox_font_size,
             "separator_models": self.separator_models,
             "transcription_models": self.transcription_models
         }
@@ -216,36 +242,99 @@ class SeparationApp(ctk.CTk):
             print(f"Settings saved to {self.settings_file}")
         except Exception as e:
             print(f"Error saving settings: {e}")
-
+    
     def show_input(self):
         self.input_frame.grid(row=0, column=0, sticky="nsew")
         self.output_frame.grid_forget()
         self.settings_frame.grid_forget()
+        # Highlight active button (black/white bg, darker hover, contrasting text)
+        if ctk.get_appearance_mode() == "Dark":
+            self.input_button.configure(fg_color="#FFFFFF", text_color="#000000", hover_color="#CCCCCC")  # White bg, black text
+        else:
+            self.input_button.configure(fg_color="#000000", text_color="#FFFFFF", hover_color="#333333")  # Black bg, white text
+        # Reset others with default colors
+        self.output_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"], text_color=ctk.ThemeManager.theme["CTkButton"]["text_color"], hover_color=ctk.ThemeManager.theme["CTkButton"]["hover_color"])
+        self.settings_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"], text_color=ctk.ThemeManager.theme["CTkButton"]["text_color"], hover_color=ctk.ThemeManager.theme["CTkButton"]["hover_color"])
 
     def show_output(self):
         self.output_frame.grid(row=0, column=0, sticky="nsew")
         self.input_frame.grid_forget()
         self.settings_frame.grid_forget()
         # Highlight active button
-        self.output_button.configure(fg_color=("#DCE4EE", "#1f538d"))
-        self.input_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
-        self.settings_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+        if ctk.get_appearance_mode() == "Dark":
+            self.output_button.configure(fg_color="#FFFFFF", text_color="#000000", hover_color="#CCCCCC")
+        else:
+            self.output_button.configure(fg_color="#000000", text_color="#FFFFFF", hover_color="#333333")
+        # Reset others
+        self.input_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"], text_color=ctk.ThemeManager.theme["CTkButton"]["text_color"], hover_color=ctk.ThemeManager.theme["CTkButton"]["hover_color"])
+        self.settings_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"], text_color=ctk.ThemeManager.theme["CTkButton"]["text_color"], hover_color=ctk.ThemeManager.theme["CTkButton"]["hover_color"])
 
     def show_settings(self):
         self.settings_frame.grid(row=0, column=0, sticky="nsew")
         self.input_frame.grid_forget()
         self.output_frame.grid_forget()
         # Highlight active button
-        self.settings_button.configure(fg_color=("#DCE4EE", "#1f538d"))
-        self.input_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
-        self.output_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+        if ctk.get_appearance_mode() == "Dark":
+            self.settings_button.configure(fg_color="#FFFFFF", text_color="#000000", hover_color="#CCCCCC")
+        else:
+            self.settings_button.configure(fg_color="#000000", text_color="#FFFFFF", hover_color="#333333")
+        # Reset others
+        self.input_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"], text_color=ctk.ThemeManager.theme["CTkButton"]["text_color"], hover_color=ctk.ThemeManager.theme["CTkButton"]["hover_color"])
+        self.output_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"], text_color=ctk.ThemeManager.theme["CTkButton"]["text_color"], hover_color=ctk.ThemeManager.theme["CTkButton"]["hover_color"])
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
+        # Change buttons background and frontground color depending on active tab (Not )
+        if self.input_frame.winfo_ismapped():  # If input tab is active
+            if new_appearance_mode == "Dark":
+                self.input_button.configure(fg_color="#FFFFFF", text_color="#000000", hover_color="#CCCCCC")  # White bg, black text
+            else:
+                self.input_button.configure(fg_color="#000000", text_color="#FFFFFF", hover_color="#333333")  # Black bg, white text
+        elif self.output_frame.winfo_ismapped():  # If output tab is active
+            if new_appearance_mode == "Dark":
+                self.output_button.configure(fg_color="#FFFFFF", text_color="#000000", hover_color="#CCCCCC")
+            else:
+                self.output_button.configure(fg_color="#000000", text_color="#FFFFFF", hover_color="#333333")
+        elif self.settings_frame.winfo_ismapped():  # If settings tab is active
+            if new_appearance_mode == "Dark":
+                self.settings_button.configure(fg_color="#FFFFFF", text_color="#000000", hover_color="#CCCCCC")  # White bg, black text
+            else:
+                self.settings_button.configure(fg_color="#000000", text_color="#FFFFFF", hover_color="#333333")  # Black bg, white text 
+        # Change appearance mode and save it
         ctk.set_appearance_mode(new_appearance_mode)
+        self.appearance_mode = new_appearance_mode
+        self.save_settings()
+        self.update_listbox_themes()  # Update listbox backgrounds
 
     def change_scaling_event(self, new_scaling: str):
         new_scaling_float = int(new_scaling.replace("%", "")) / 100
         ctk.set_widget_scaling(new_scaling_float)
+        self.scaling = new_scaling
+        self.save_settings()
+        # Reinitialize all tabs, because changing scale loads all items so it broke GUI tabs
+        self.progress_bar.grid_remove()
+        self.abort_button.grid_remove()         
+        if self.input_frame.winfo_ismapped():  # If input tab is active
+            print("Input frame detected")
+            self.create_input_tab()
+        elif self.output_frame.winfo_ismapped():  # If output tab is active
+            print("Output frame detected")
+            self.create_output_tab()
+        elif self.settings_frame.winfo_ismapped():  # If settings tab is active
+            print("Settings frame detected")
+            self.create_settings_tab()
+
+    def update_listbox_themes(self):
+        """Update listbox backgrounds based on appearance mode."""
+        if ctk.get_appearance_mode() == "Dark":
+            bg_color = "#000000"
+            fg_color = "#FFFFFF"  # White text
+        else:
+            bg_color = "#FFFFFF"
+            fg_color = "#000000"  # Black text
+        self.songs_listbox.configure(bg=bg_color, fg=fg_color)
+        self.vocals_listbox.configure(bg=bg_color, fg=fg_color)
+        self.instr_listbox.configure(bg=bg_color, fg=fg_color)
+        self.trans_listbox.configure(bg=bg_color, fg=fg_color)
 
     def create_input_tab(self):
         frame = self.input_frame
@@ -277,7 +366,7 @@ class SeparationApp(ctk.CTk):
         self.add_song_button.grid(row=2, column=3, sticky="ew", padx=5)
 
         # Songs/Folders list
-        self.songs_listbox = tk.Listbox(frame)
+        self.songs_listbox = tk.Listbox(frame, bg="#000000", fg="#FFFFFF")
         self.songs_listbox.grid(row=1, column=0, sticky="nsew", padx=10, pady=(0,10))
         self.songs_listbox.bind("<Double-Button-1>", self.on_listbox_double_click)
 
@@ -505,6 +594,13 @@ class SeparationApp(ctk.CTk):
             # Fallback to defaults
             self.on_trans_tool_change()
 
+    def apply_listbox_font_size(self):
+        font = ("TkDefaultFont", self.listbox_font_size)
+        self.songs_listbox.configure(font=font)
+        self.vocals_listbox.configure(font=font)
+        self.instr_listbox.configure(font=font)
+        self.trans_listbox.configure(font=font)
+
     def create_output_tab(self):
         frame = self.output_frame
         frame.grid_columnconfigure(0, weight=1)
@@ -517,7 +613,7 @@ class SeparationApp(ctk.CTk):
         trans_btn = ctk.CTkButton(frame, text="Change Folder", command=lambda: self.change_output_folder("transcriptions"))
         trans_btn.grid(row=0, column=1, sticky="e", padx=10, pady=(10,5))
 
-        self.trans_listbox = tk.Listbox(frame)
+        self.trans_listbox = tk.Listbox(frame, bg="#000000", fg="#FFFFFF")
         self.trans_listbox.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10)
         self.trans_listbox.bind("<Double-Button-1>", self.open_selected_transcription)
 
@@ -528,7 +624,7 @@ class SeparationApp(ctk.CTk):
         vocals_btn = ctk.CTkButton(frame, text="Change Folder", command=lambda: self.change_output_folder("vocals"))
         vocals_btn.grid(row=2, column=1, sticky="e", padx=10, pady=(20,5))
 
-        self.vocals_listbox = tk.Listbox(frame)
+        self.vocals_listbox = tk.Listbox(frame, bg="#000000", fg="#FFFFFF")
         self.vocals_listbox.grid(row=3, column=0, columnspan=2, sticky="nsew", padx=10)
         self.vocals_listbox.bind("<Double-Button-1>", self.open_selected_vocal)
 
@@ -539,7 +635,7 @@ class SeparationApp(ctk.CTk):
         instr_btn = ctk.CTkButton(frame, text="Change Folder", command=lambda: self.change_output_folder("instrumentals"))
         instr_btn.grid(row=4, column=1, sticky="e", padx=10, pady=(20,5))
 
-        self.instr_listbox = tk.Listbox(frame)
+        self.instr_listbox = tk.Listbox(frame, bg="#000000", fg="#FFFFFF")
         self.instr_listbox.grid(row=5, column=0, columnspan=2, sticky="nsew", padx=10)
         self.instr_listbox.bind("<Double-Button-1>", self.open_selected_instrumental)
 
@@ -574,6 +670,8 @@ class SeparationApp(ctk.CTk):
             self.load_input()
             # Prompt to save as default
             if messagebox.askyesno("Save as Default", "Save this folder as the new default input folder?"):
+                # Refresh Settings tab variable than save
+                self.settings_input_var.set(self.input_folder)
                 self.save_settings()
 
     def go_back(self):
@@ -660,6 +758,13 @@ class SeparationApp(ctk.CTk):
             self.load_outputs()
             # Prompt to save as default
             if messagebox.askyesno("Save as Default", f"Save this folder as the new default {filetype} folder?"):
+                # Refresh Settings tab variables than save
+                if filetype == "vocals":
+                    self.settings_vocals_var.set(self.output_folders["vocals"])
+                elif filetype == "instrumentals":
+                    self.settings_instr_var.set(self.output_folders["instrumentals"])
+                elif filetype == "transcriptions":
+                    self.settings_trans_var.set(self.output_folders["transcriptions"])
                 self.save_settings()
                 
     def create_settings_tab(self):
@@ -694,13 +799,17 @@ class SeparationApp(ctk.CTk):
         trans_entry = ctk.CTkEntry(frame, textvariable=self.settings_trans_var, width=400)
         trans_entry.grid(row=8, column=0, sticky="ew", padx=20, pady=5)
         
+        font_size_label = ctk.CTkLabel(frame, text="Listbox Font Size:", anchor="w")
+        font_size_label.grid(row=9, column=0, sticky="w", padx=20, pady=(20, 0))
+        self.font_size_var = tk.StringVar(value=str(self.listbox_font_size))
+        font_size_menu = ctk.CTkOptionMenu(frame, variable=self.font_size_var, values=[str(i) for i in range(10, 32)], width=200)
+        font_size_menu.grid(row=10, column=0, sticky="ew", padx=20, pady=5)
+
         # Buttons
-        button_frame = ctk.CTkFrame(frame)
-        button_frame.grid(row=9, column=0, pady=(20, 20))
-        save_btn = ctk.CTkButton(button_frame, text="Save Changes", command=self.save_settings_changes)
-        save_btn.grid(row=0, column=0, padx=10)
-        restore_btn = ctk.CTkButton(button_frame, text="Restore Defaults", command=self.restore_defaults)
-        restore_btn.grid(row=0, column=1, padx=10)
+        restore_btn = ctk.CTkButton(frame, text="Restore Defaults", command=self.restore_defaults)
+        restore_btn.grid(row=11, column=0, padx=10, pady=5)
+        save_btn = ctk.CTkButton(frame, text="Save Changes", command=self.save_settings_changes)
+        save_btn.grid(row=12, column=0, padx=10, pady=5)
 
         # Models label in second column
         model_label = ctk.CTkLabel(frame, text="Model Dropdown Menu Settings", font=ctk.CTkFont(size=20, weight="bold"))
@@ -741,6 +850,7 @@ class SeparationApp(ctk.CTk):
         self.output_folders["vocals"] = self.settings_vocals_var.get()
         self.output_folders["instrumentals"] = self.settings_instr_var.get()
         self.output_folders["transcriptions"] = self.settings_trans_var.get()
+        self.listbox_font_size = int(self.font_size_var.get())
         try:
             self.separator_models["Demucs"] = json.loads(self.demucs_models_text.get("0.0", "end"))
             self.separator_models["OpenUnmix"] = json.loads(self.openunmix_models_text.get("0.0", "end"))
@@ -758,6 +868,7 @@ class SeparationApp(ctk.CTk):
         self.load_outputs()
         self.on_tool_change()
         self.on_trans_tool_change()
+        self.apply_listbox_font_size()
         messagebox.showinfo("Settings Saved", "Default folders and models updated and saved.")
 
     def restore_defaults(self):
@@ -849,6 +960,11 @@ class SeparationApp(ctk.CTk):
         idx = sel[0]
         open_file(self.transcriptions[idx]['path'])
 
+    def abort_separation_process(self):
+        self.abort_separation = True
+        self.progress_text.configure(text="Aborting separation...")
+        self.abort_button.grid_remove()
+
     def separate_audio(self):
         """
         Overview: Function to prepare for separation in thread for non-blocking effect.
@@ -883,8 +999,8 @@ class SeparationApp(ctk.CTk):
         shifts = int(self.shifts_var.get()) if ai_tool == "Demucs" else None
         vocals_folder = self.output_folders["vocals"]
         instr_folder = self.output_folders["instrumentals"]
-        trans_folder = self.output_folders["transcriptions"]
-
+        trans_folder = self.output_folders["transcriptions"] 
+        
         # Start the thread
         thread = threading.Thread(target=self._run_separation, args=(input_path, song_name, vocals_folder, instr_folder, trans_folder,
                                                                      ai_tool, model, fmt, sr, bitrate, do_transcribe, transcription_tool, 
@@ -903,13 +1019,33 @@ class SeparationApp(ctk.CTk):
         """
         # Define progress callback
         def update_progress(percent, message):
-            self.after(0, lambda: self.progress_bar.set(percent / 100.0))
-            self.after(0, lambda: self.progress_text.configure(text=message))
+                # Check for abort on every progress update (responsive even during long separations)
+                if self.abort_separation:
+                    self.after(0, lambda: self.progress_text.configure(text="Separation aborted."))
+                    self.after(0, lambda: self.progress_bar.configure(mode="indeterminate"))
+                    self.after(0, lambda: self.progress_bar.set(0))
+                    self.abort_button.grid_remove()
+                    self.progress_bar.grid_remove()
+                    raise SystemExit("Aborted")  # Exit the thread immediately
+                
+                # Hide bar for idle states, show bar when separating
+                if (percent == 0 or percent == 100) and ("Ready" in message or "completed" in message):  
+                    self.abort_separation = False
+                    self.abort_button.grid_remove() 
+                    self.progress_bar.configure(mode="indeterminate")
+                    self.progress_bar.set(0)
+                    self.progress_bar.grid_remove()
+                else:
+                    self.abort_button.grid()
+                    self.progress_bar.configure(mode="determinate")
+                    self.progress_bar.set(percent / 100.0)
+                    self.progress_bar.grid()
+                self.after(0, lambda: self.progress_text.configure(text=message))
 
         try:
             # Update initial progress
             update_progress(0, "Starting separation...")
-            
+
             success = False
             vocals_path = None
             instr_path = None
@@ -934,8 +1070,8 @@ class SeparationApp(ctk.CTk):
                     model, fmt, sr, bitrate, do_transcribe, transcription_tool, transcription_model,
                     progress_callback=update_progress
                 )
-            if isinstance(result, tuple) and len(result) >= 3:
-                success, vocals_path, instr_path = result[:3]
+            if isinstance(result, tuple) and len(result) >= 4:
+                success, vocals_path, instr_path, trans_path = result
             else:
                 success = False
 
@@ -945,12 +1081,15 @@ class SeparationApp(ctk.CTk):
                 return
             else:
                 # Final updates Print names of new files and update output tab
-                self.after(0, lambda: self.progress_text.configure(text=f"Separation completed successfully for '{song['name']}'! Vocals: {vocals_path}, Instrumentals: {instr_path}, Transcription: {trans_path}. Check output tab."))   
+                self.after(0, lambda: self.progress_text.configure(text=f"Separation completed! Files saved as {vocals_path}, {instr_path}, {trans_path}. Check output tab."))   
                 self.after(0, self.load_outputs)
 
         except Exception as e:
             print(f"Thread error: {e}")
-            update_progress(0, f"Error: {str(e)}")
+            update_progress(0, f"Error: {str(e)}") 
+        # Hide Abort button and progress bar after completion
+        self.abort_button.grid_remove()  
+        self.progress_bar.grid_remove()
 
 if __name__ == "__main__":
     app = SeparationApp()

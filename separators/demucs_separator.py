@@ -35,8 +35,8 @@ class DemucsSeparator:
     def separate(self, 
                 input_path: str, 
                 song_name: str, 
-                vocals_dir: str, 
-                instr_dir: str,
+                vocals_folder: str, 
+                instr_folder: str,
                 trans_folder: str, 
                 model="mdx", 
                 fmt="wav", 
@@ -57,8 +57,8 @@ class DemucsSeparator:
         Parameters:
             - input_path (str): Path to the input audio file.
             - song_name (str): Base name for output files (without extension).
-            - vocals_dir (str): Folder to save vocal tracks.
-            - instr_dir (str): Folder to save instrumental tracks.
+            - vocals_folder (str): Folder to save vocal tracks.
+            - instr_folder (str): Folder to save instrumental tracks.
             - trans_folder (str): Folder to save transcription files.
             - model (str): Demucs model (e.g., "mdx", "htdemucs").
             - fmt (str): Output format ("wav", "mp3", "flac").
@@ -138,20 +138,22 @@ class DemucsSeparator:
 
                 # Demucs outputs to a subfolder like "temp_dir/mdx/song_name/"
                 model_dir = os.path.join(temp_dir, model)
-                output_subdir = os.path.join(model_dir, song_name)
+                input_stem = os.path.splitext(os.path.basename(input_path))[0]
+                output_subdir = os.path.join(model_dir, input_stem)
                 vocals_src = os.path.join(output_subdir, f"vocals.{fmt}")
                 instr_src = os.path.join(output_subdir, f"no_vocals.{fmt}")
+
 
                 if not os.path.exists(vocals_src) or not os.path.exists(instr_src):
                     raise FileNotFoundError(f"Demucs output files not found in {output_subdir}")
 
                 # Ensure final folders exist
-                os.makedirs(vocals_dir, exist_ok=True)
-                os.makedirs(instr_dir, exist_ok=True)
+                os.makedirs(vocals_folder, exist_ok=True)
+                os.makedirs(instr_folder, exist_ok=True)
 
                 # Generate unique destination paths
-                base_vocals_dest = os.path.join(vocals_dir, f"{song_name}_Demucs_vocals.{fmt}")
-                base_instr_dest = os.path.join(instr_dir, f"{song_name}_Demucs_instrumental.{fmt}")
+                base_vocals_dest = os.path.join(vocals_folder, f"{song_name}_Demucs_{model}_vocals.{fmt}")
+                base_instr_dest = os.path.join(instr_folder, f"{song_name}_Demucs_{model}_instrumental.{fmt}")
 
                 vocals_dest = self._get_unique_filename(base_vocals_dest)
                 instr_dest = self._get_unique_filename(base_instr_dest)

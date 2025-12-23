@@ -179,7 +179,7 @@ class SeparationApp(ctk.CTk):
             "separator_models": {
                 "Spleeter": [],
                 "Demucs": ["mdx", "mdx_extra", "htdemucs"],
-                "OpenUnmix": ["umxl", "umxhq", "umx", "umxse"]
+                "OpenUnmix": ["umxl", "umxhq", "umx"]
             },
             "transcription_models": {
                 "whisper": ["large", "medium", "small", "tiny", "base", "turbo"],
@@ -393,7 +393,7 @@ class SeparationApp(ctk.CTk):
         self.model_label.grid(row=4, column=0, sticky="w", padx=20, pady=(10,0))
         self.model_var = tk.StringVar(value="umxl")  # Default for OpenUnmix
         self.model_menu = ctk.CTkOptionMenu(
-            sep_scrollable, variable=self.model_var, values=["umxl", "umxhq", "umx", "umxse"], width=200
+            sep_scrollable, variable=self.model_var, values=["umxl", "umxhq", "umx"], width=200
         )
         self.model_menu.grid(row=5, column=0, sticky="ew", padx=20, pady=5)
 
@@ -522,7 +522,7 @@ class SeparationApp(ctk.CTk):
                 self.model_label.grid()
                 self.model_menu.grid()
             elif tool == "OpenUnmix":
-                values = self.separator_models.get("OpenUnmix", ["umxl", "umxhq", "umx", "umxse"])
+                values = self.separator_models.get("OpenUnmix", ["umxl", "umxhq", "umx"])
                 self.model_menu.configure(values=values)
                 self.model_var.set(values[0] if values else "umxl")
                 self.model_label.grid()
@@ -534,7 +534,7 @@ class SeparationApp(ctk.CTk):
                 self.model_menu.configure(values=["mdx", "mdx_extra", "htdemucs"])
                 self.model_var.set("mdx")
             elif tool == "OpenUnmix":
-                self.model_menu.configure(values=["umxl", "umxhq", "umx", "umxse"])
+                self.model_menu.configure(values=["umxl", "umxhq", "umx"])
                 self.model_var.set("umxl")
             self.model_label.grid()
             self.model_menu.grid()
@@ -887,7 +887,7 @@ class SeparationApp(ctk.CTk):
             "separator_models": {
                 "Spleeter": [],
                 "Demucs": ["mdx", "mdx_extra", "htdemucs"],
-                "OpenUnmix": ["umxl", "umxhq", "umx", "umxse"]
+                "OpenUnmix": ["umxl", "umxhq", "umx"]
             },
             "transcription_models": {
                 "whisper": ["large", "medium", "small", "tiny", "base", "turbo"],

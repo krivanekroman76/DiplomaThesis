@@ -1,0 +1,25 @@
+\begin{table}[h!]
+\centering
+\caption{Mean separation metrics for each tool/model}
+\label{tab:separation_metrics}
+\begin{tabular}{lllcccc}
+\hline
+Tool & Model & Target & SDR [dB] & SIR [dB] & SAR [dB] & ISR [dB] \\
+\hline
+Spleeter &  & accompaniment & 11.68 & 15.73 & 13.69 & 18.53 \\
+Spleeter &  & vocals & 6.30 & 12.42 & 6.85 & 9.97 \\
+Demucs & mdx & accompaniment & 11.82 & 18.11 & 13.88 & 19.13 \\
+Demucs & mdx & vocals & 7.60 & 13.20 & 8.21 & 12.41 \\
+Demucs & mdx\_extra & accompaniment & 14.23 & 20.05 & 16.00 & 21.61 \\
+Demucs & mdx\_extra & vocals & 8.96 & 15.52 & 9.74 & 14.17 \\
+Demucs & htdemucs & accompaniment & 13.36 & 19.20 & 15.53 & 21.02 \\
+Demucs & htdemucs & vocals & 8.12 & 14.65 & 8.57 & 13.31 \\
+OpenUnmix & umx & accompaniment & 11.59 & 17.16 & 13.43 & 17.92 \\
+OpenUnmix & umx & vocals & 5.60 & 9.97 & 7.37 & 11.68 \\
+OpenUnmix & umxhq & accompaniment & 11.33 & 17.12 & 13.33 & 17.39 \\
+OpenUnmix & umxhq & vocals & 5.28 & 9.18 & 7.34 & 11.64 \\
+OpenUnmix & umxl & accompaniment & 12.27 & 19.54 & 13.90 & 17.90 \\
+OpenUnmix & umxl & vocals & 6.75 & 10.56 & 7.85 & 14.10 \\
+\hline
+\end{tabular}
+\end{table}

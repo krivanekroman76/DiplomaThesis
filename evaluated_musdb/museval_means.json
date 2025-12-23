@@ -1,0 +1,6302 @@
+[
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 9.520189502702854,
+    "mean_SIR": 15.220432002221445,
+    "mean_SAR": 10.651878960750507,
+    "mean_ISR": 16.945847347241806
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 10.507285384951473,
+    "mean_SIR": 17.973049498469887,
+    "mean_SAR": 11.48539354547998,
+    "mean_ISR": 16.599725773092906
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 9.687265546015405,
+    "mean_SIR": 15.53400613764258,
+    "mean_SAR": 10.98233873665923,
+    "mean_ISR": 16.191683559168634
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 10.68082717211606,
+    "mean_SIR": 17.1529216225557,
+    "mean_SAR": 11.967519962813347,
+    "mean_ISR": 16.998247028713404
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 8.536220781805712,
+    "mean_SIR": 14.093631014303062,
+    "mean_SAR": 10.30668751588189,
+    "mean_ISR": 13.724296009060119
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 9.162400341637566,
+    "mean_SIR": 14.779452344268966,
+    "mean_SAR": 10.799934089799512,
+    "mean_ISR": 16.135099883079892
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 6.934289127094544,
+    "mean_SIR": 12.490996007955149,
+    "mean_SAR": 8.795552304697974,
+    "mean_ISR": 11.784940460522732
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 8.05653478409001,
+    "mean_SIR": 12.15122737511991,
+    "mean_SAR": 10.102950303181379,
+    "mean_ISR": 14.577083160749213
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 6.354155881400682,
+    "mean_SIR": 12.811187118009855,
+    "mean_SAR": 8.40070383841777,
+    "mean_ISR": 10.286303798852462
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 7.487071799668826,
+    "mean_SIR": 10.717670979015592,
+    "mean_SAR": 10.110228232246795,
+    "mean_ISR": 14.98535644150592
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 7.47412724702239,
+    "mean_SIR": 11.745623817739416,
+    "mean_SAR": 9.461125833759828,
+    "mean_ISR": 16.794645410727313
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 8.589752983128578,
+    "mean_SIR": 17.429275712038585,
+    "mean_SAR": 9.601136212605471,
+    "mean_ISR": 13.147239648683255
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 6.916228276282681,
+    "mean_SIR": 14.84860457296197,
+    "mean_SAR": 7.800164529471304,
+    "mean_ISR": 10.463504460022959
+  },
+  {
+    "track": "Al James - Schoolboy Facination",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 7.696347404452656,
+    "mean_SIR": 11.153957599591273,
+    "mean_SAR": 9.734822529456538,
+    "mean_ISR": 13.80688783374139
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 11.262826808840643,
+    "mean_SIR": 17.159002401470843,
+    "mean_SAR": 12.695437951889685,
+    "mean_ISR": 16.37569001152149
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 14.329044901022671,
+    "mean_SIR": 20.46599413173973,
+    "mean_SAR": 15.993132737555547,
+    "mean_ISR": 20.423635929994216
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 12.181395839589142,
+    "mean_SIR": 18.81886624012959,
+    "mean_SAR": 13.469120464991436,
+    "mean_ISR": 17.62518876483742
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 15.140111191830364,
+    "mean_SIR": 21.64465744960407,
+    "mean_SAR": 16.559872127280652,
+    "mean_ISR": 21.976925773087046
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 10.429525656224639,
+    "mean_SIR": 17.315559960294145,
+    "mean_SAR": 12.30020802544538,
+    "mean_ISR": 14.173739040361871
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 12.055859515584515,
+    "mean_SIR": 18.12848741020497,
+    "mean_SAR": 13.500404593955531,
+    "mean_ISR": 19.022995132843146
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 8.603605275373319,
+    "mean_SIR": 16.08257363895268,
+    "mean_SAR": 9.92878712483393,
+    "mean_ISR": 12.52295107892543
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 11.94162957267818,
+    "mean_SIR": 15.965310576676037,
+    "mean_SAR": 13.896414562969495,
+    "mean_ISR": 20.396813423728236
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 8.207644267461983,
+    "mean_SIR": 13.552342519983101,
+    "mean_SAR": 10.10488524386646,
+    "mean_ISR": 11.859431644372828
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 11.590369005313121,
+    "mean_SIR": 15.105411820560363,
+    "mean_SAR": 13.97626934027791,
+    "mean_ISR": 18.14290843212847
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 9.884496305773313,
+    "mean_SIR": 16.410215721029008,
+    "mean_SAR": 12.50431299585049,
+    "mean_ISR": 13.769942386162668
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 13.138507440991063,
+    "mean_SIR": 17.263493805747988,
+    "mean_SAR": 15.663937866736532,
+    "mean_ISR": 19.999006598192047
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 9.985291884987832,
+    "mean_SIR": 19.624524200676746,
+    "mean_SAR": 11.687313944666643,
+    "mean_ISR": 12.969916714590783
+  },
+  {
+    "track": "AM Contra - Heart Peripheral",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 12.275637748882373,
+    "mean_SIR": 16.595861325549603,
+    "mean_SAR": 12.282807260103786,
+    "mean_ISR": 13.821539455958098
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 11.170307439098991,
+    "mean_SIR": 18.87180909141809,
+    "mean_SAR": 11.322190286604503,
+    "mean_ISR": 16.176282888660342
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 12.817181591323637,
+    "mean_SIR": 18.143444931590327,
+    "mean_SAR": 13.290498418150761,
+    "mean_ISR": 21.227521362052272
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 11.383634160596031,
+    "mean_SIR": 18.65412306911483,
+    "mean_SAR": 11.498083782526782,
+    "mean_ISR": 15.80677214913203
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 13.058464223358754,
+    "mean_SIR": 17.593877871931948,
+    "mean_SAR": 13.525536620287163,
+    "mean_ISR": 21.84025779026466
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 10.432959230658359,
+    "mean_SIR": 16.134309865897396,
+    "mean_SAR": 10.90309473307301,
+    "mean_ISR": 15.761019997859394
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 11.736283214537165,
+    "mean_SIR": 17.452306109201565,
+    "mean_SAR": 12.230387677850027,
+    "mean_ISR": 18.21079480472988
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 9.815941863039866,
+    "mean_SIR": 17.00993875167447,
+    "mean_SAR": 9.96337517226461,
+    "mean_ISR": 14.275470373712038
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 11.628051775457477,
+    "mean_SIR": 15.876510439484752,
+    "mean_SAR": 11.888223674721457,
+    "mean_ISR": 20.1907500156984
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 9.618346590299266,
+    "mean_SIR": 16.748859583664515,
+    "mean_SAR": 9.952212512821724,
+    "mean_ISR": 15.140251010182318
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 11.44366619592576,
+    "mean_SIR": 16.793518800543314,
+    "mean_SAR": 11.906763760958981,
+    "mean_ISR": 19.984636388928998
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 10.085473363345764,
+    "mean_SIR": 16.053135571154233,
+    "mean_SAR": 10.841494108847682,
+    "mean_ISR": 16.90206703862991
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 11.892896504428967,
+    "mean_SIR": 18.68650329167577,
+    "mean_SAR": 12.47372383843753,
+    "mean_ISR": 18.728753859284613
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 9.457877487001388,
+    "mean_SIR": 17.862571528171593,
+    "mean_SAR": 9.618490013615345,
+    "mean_ISR": 12.755914812488854
+  },
+  {
+    "track": "Angels In Amplifiers - I'm Alright",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 10.991659891343767,
+    "mean_SIR": 15.444621818702588,
+    "mean_SAR": 12.004416559269975,
+    "mean_ISR": 17.255803452036844
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 9.226936218399741,
+    "mean_SIR": 17.562403196201952,
+    "mean_SAR": 9.135593795198556,
+    "mean_ISR": 16.93402678490033
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 17.991248013150937,
+    "mean_SIR": 27.24820514492579,
+    "mean_SAR": 18.58727200163315,
+    "mean_ISR": 26.46838595916344
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 9.819052063956619,
+    "mean_SIR": 18.458272856090428,
+    "mean_SAR": 9.715734645230507,
+    "mean_ISR": 16.72017729989598
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 18.80038717658887,
+    "mean_SIR": 26.05955598783849,
+    "mean_SAR": 19.586340925548658,
+    "mean_ISR": 28.47407599982972
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 7.666743709448571,
+    "mean_SIR": 14.45863196307672,
+    "mean_SAR": 7.76621331125575,
+    "mean_ISR": 13.62485807167208
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 14.670182157117521,
+    "mean_SIR": 24.719647518259702,
+    "mean_SAR": 15.140729666573863,
+    "mean_ISR": 21.128023621055164
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 4.935327947068269,
+    "mean_SIR": 8.149882132699288,
+    "mean_SAR": 5.598608353984107,
+    "mean_ISR": 11.733521160792519
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 14.146496121533845,
+    "mean_SIR": 20.713223221114895,
+    "mean_SAR": 15.429123688888154,
+    "mean_ISR": 19.186896545653543
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 4.784369885885398,
+    "mean_SIR": 7.465096034967634,
+    "mean_SAR": 6.113431734368173,
+    "mean_ISR": 11.008976745344293
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 14.00691484620251,
+    "mean_SIR": 19.991081160843663,
+    "mean_SAR": 15.875468499906203,
+    "mean_ISR": 18.580682400924047
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 4.9271095799937745,
+    "mean_SIR": 8.614622303752544,
+    "mean_SAR": 5.687381654337211,
+    "mean_ISR": 16.161774885488928
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 14.128847224636568,
+    "mean_SIR": 25.018087136075376,
+    "mean_SAR": 14.682694351492716,
+    "mean_ISR": 18.864128895793648
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 4.366266276791669,
+    "mean_SIR": 10.335720829581497,
+    "mean_SAR": 4.9607521233823615,
+    "mean_ISR": 8.1213370613724
+  },
+  {
+    "track": "Arise - Run Run Run",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 13.353988849165232,
+    "mean_SIR": 17.093909737617455,
+    "mean_SAR": 15.922340873141373,
+    "mean_ISR": 20.86417751442005
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 5.9191232827185205,
+    "mean_SIR": 12.827066743774862,
+    "mean_SAR": 5.78531684733771,
+    "mean_ISR": 9.468239986082358
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 13.762431472124447,
+    "mean_SIR": 17.63368808523006,
+    "mean_SAR": 15.710120869549968,
+    "mean_ISR": 21.903376090845587
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 6.032773458727579,
+    "mean_SIR": 11.843407558848824,
+    "mean_SAR": 6.174606520064867,
+    "mean_ISR": 10.031771283414232
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 13.891653087265022,
+    "mean_SIR": 18.075860153892066,
+    "mean_SAR": 15.766271263777798,
+    "mean_ISR": 21.339969577025062
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 5.063530182227399,
+    "mean_SIR": 11.189834501088768,
+    "mean_SAR": 5.198329807927348,
+    "mean_ISR": 7.671933015876687
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 12.430619604429546,
+    "mean_SIR": 15.81639077471074,
+    "mean_SAR": 14.845552662073795,
+    "mean_ISR": 20.117568657362835
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 3.7423236826886277,
+    "mean_SIR": 10.413162875820232,
+    "mean_SAR": 3.8841227950567343,
+    "mean_ISR": 6.130280277513698
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 11.75034545823138,
+    "mean_SIR": 14.070378419822836,
+    "mean_SAR": 15.228899741508135,
+    "mean_ISR": 21.347749175158697
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 3.5124333429906556,
+    "mean_SIR": 8.46319222826297,
+    "mean_SAR": 4.577867341751591,
+    "mean_ISR": 6.081226007253291
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 11.533286382004137,
+    "mean_SIR": 13.996411471665533,
+    "mean_SAR": 15.434135459390212,
+    "mean_ISR": 19.60071402988893
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 4.234552196955629,
+    "mean_SIR": 8.840303436577681,
+    "mean_SAR": 5.051420941201468,
+    "mean_ISR": 8.968205892185404
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 12.222818633583174,
+    "mean_SIR": 16.819109656776444,
+    "mean_SAR": 14.412778012571588,
+    "mean_ISR": 18.726283232927113
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 3.319374109092211,
+    "mean_SIR": 12.182384352209617,
+    "mean_SAR": 3.398213465769779,
+    "mean_ISR": 5.174114650991153
+  },
+  {
+    "track": "Ben Carrigan - We'll Talk About It All Tonight",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 11.14861191171562,
+    "mean_SIR": 13.214386467700747,
+    "mean_SAR": 15.558353578854877,
+    "mean_ISR": 20.90733748599271
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 5.810208562420519,
+    "mean_SIR": 13.837181465957336,
+    "mean_SAR": 7.051293712108179,
+    "mean_ISR": 9.142528273957693
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 12.118069538999025,
+    "mean_SIR": 15.484964733586489,
+    "mean_SAR": 15.084286990770927,
+    "mean_ISR": 20.905133574868934
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 6.734117368995931,
+    "mean_SIR": 14.223273817159699,
+    "mean_SAR": 8.086088566448423,
+    "mean_ISR": 10.401629243415956
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 13.000652749915607,
+    "mean_SIR": 16.637066142708637,
+    "mean_SAR": 15.762196502969028,
+    "mean_ISR": 21.622422172606303
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 5.564841411339921,
+    "mean_SIR": 13.309795900748812,
+    "mean_SAR": 7.197122693114075,
+    "mean_ISR": 8.20095945428393
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 11.277089712398988,
+    "mean_SIR": 14.368532776861372,
+    "mean_SAR": 14.60323112740681,
+    "mean_ISR": 20.85412397686474
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 4.385150442768884,
+    "mean_SIR": 13.7087184939318,
+    "mean_SAR": 5.921931395979596,
+    "mean_ISR": 7.029524755603833
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 10.781913630827397,
+    "mean_SIR": 13.29619358572315,
+    "mean_SAR": 14.679630768623488,
+    "mean_ISR": 22.441852075505633
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 3.887521783669497,
+    "mean_SIR": 10.572403105581719,
+    "mean_SAR": 4.978902720215904,
+    "mean_ISR": 7.224373857063413
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 10.303206905382808,
+    "mean_SIR": 13.335597893576413,
+    "mean_SAR": 13.660032915827719,
+    "mean_ISR": 19.834249382199392
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 5.308349815247094,
+    "mean_SIR": 12.30089214683255,
+    "mean_SAR": 6.430629337271012,
+    "mean_ISR": 9.295181630945052
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 11.697508298163635,
+    "mean_SIR": 15.35166040556234,
+    "mean_SAR": 14.264542593152939,
+    "mean_ISR": 20.650557754913407
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 3.5593650494965954,
+    "mean_SIR": 14.88520535590728,
+    "mean_SAR": 2.713442930879069,
+    "mean_ISR": 4.418265939010898
+  },
+  {
+    "track": "BKS - Bulldozer",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 10.00473837177958,
+    "mean_SIR": 10.804997875400412,
+    "mean_SAR": 15.189553085202936,
+    "mean_ISR": 25.608442268701367
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 11.231722692123745,
+    "mean_SIR": 20.047162864964815,
+    "mean_SAR": 11.691749959671126,
+    "mean_ISR": 17.491072446162644
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 14.35073823243261,
+    "mean_SIR": 21.422602769686858,
+    "mean_SAR": 15.0514116427899,
+    "mean_ISR": 22.765159086687714
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 11.450052150798612,
+    "mean_SIR": 20.506659301932928,
+    "mean_SAR": 11.87798356435937,
+    "mean_ISR": 16.957447602581073
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 14.63172658408719,
+    "mean_SIR": 20.443196085687678,
+    "mean_SAR": 15.316887518007919,
+    "mean_ISR": 23.462546740898485
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 10.66559994812498,
+    "mean_SIR": 19.80015493274466,
+    "mean_SAR": 11.380865951839503,
+    "mean_ISR": 15.964768308428738
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 13.21942261918222,
+    "mean_SIR": 19.419329824263453,
+    "mean_SAR": 14.22921248167839,
+    "mean_ISR": 21.60675815196058
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 7.869604996583625,
+    "mean_SIR": 13.891740472078688,
+    "mean_SAR": 8.644150008142327,
+    "mean_ISR": 14.597739081759896
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 11.315464750340679,
+    "mean_SIR": 17.86776299417048,
+    "mean_SAR": 12.378195339817934,
+    "mean_ISR": 17.820204123408455
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 7.845310571661778,
+    "mean_SIR": 15.614337100722409,
+    "mean_SAR": 8.58809695259624,
+    "mean_ISR": 13.79362832528836
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 11.291170624104575,
+    "mean_SIR": 17.073022865110133,
+    "mean_SAR": 12.5873014142693,
+    "mean_ISR": 19.626007885893134
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 9.258256520302728,
+    "mean_SIR": 14.960808061681092,
+    "mean_SAR": 10.385570014791474,
+    "mean_ISR": 19.645507156536734
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 12.653675408402641,
+    "mean_SIR": 23.078334831642753,
+    "mean_SAR": 13.36087348431918,
+    "mean_ISR": 18.486925331066804
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 9.188839005293822,
+    "mean_SIR": 19.41160800801813,
+    "mean_SAR": 7.734793610926579,
+    "mean_ISR": 9.536748770995926
+  },
+  {
+    "track": "BKS - Too Much",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 11.87276793402471,
+    "mean_SIR": 13.152210515334504,
+    "mean_SAR": 11.629381484208457,
+    "mean_ISR": 17.61031884801005
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 9.353928521903354,
+    "mean_SIR": 15.430816571805215,
+    "mean_SAR": 9.423116917080423,
+    "mean_ISR": 15.866253743474273
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 14.956891696438747,
+    "mean_SIR": 21.512002723394264,
+    "mean_SAR": 15.629272420359959,
+    "mean_ISR": 21.500727340484655
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 9.54580330337209,
+    "mean_SIR": 15.541402448426778,
+    "mean_SAR": 9.689300497788157,
+    "mean_ISR": 15.347652421482286
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 15.321107276405925,
+    "mean_SIR": 21.27441790147856,
+    "mean_SAR": 16.10690305175869,
+    "mean_ISR": 21.981326805214966
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 9.130665742524076,
+    "mean_SIR": 14.555477142305413,
+    "mean_SAR": 9.264255543944248,
+    "mean_ISR": 14.603734496650254
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 12.40853473336027,
+    "mean_SIR": 20.05154194875064,
+    "mean_SAR": 13.235830017612535,
+    "mean_ISR": 19.598664810927776
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 7.178554168097229,
+    "mean_SIR": 11.74948052149473,
+    "mean_SAR": 7.5855758787553595,
+    "mean_ISR": 14.073409981784899
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 13.06246696053361,
+    "mean_SIR": 19.68414093618225,
+    "mean_SAR": 13.779775974618824,
+    "mean_ISR": 18.740477578418588
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 6.699231015667839,
+    "mean_SIR": 12.177705590683757,
+    "mean_SAR": 7.059124205874266,
+    "mean_ISR": 12.9106349550527
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 12.591247243696367,
+    "mean_SIR": 18.465387923078897,
+    "mean_SAR": 13.571408205132458,
+    "mean_ISR": 19.479275529650362
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 7.594134708297788,
+    "mean_SIR": 11.2659873367324,
+    "mean_SAR": 7.871411753907956,
+    "mean_ISR": 14.096814803120928
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 13.469247798047443,
+    "mean_SIR": 19.627196138488912,
+    "mean_SAR": 13.804026784670961,
+    "mean_ISR": 18.079060644874414
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 6.654899409763304,
+    "mean_SIR": 14.730860315176443,
+    "mean_SAR": 6.691947745081524,
+    "mean_ISR": 9.350011610232157
+  },
+  {
+    "track": "Bobby Nobody - Stitch Up",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 13.094908427821707,
+    "mean_SIR": 15.93820870538375,
+    "mean_SAR": 14.431167226097585,
+    "mean_ISR": 22.11385139580385
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 4.138170165466465,
+    "mean_SIR": 8.005043289673909,
+    "mean_SAR": 4.858068209995982,
+    "mean_ISR": 8.13555326781134
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 12.368658361914855,
+    "mean_SIR": 16.19941771107413,
+    "mean_SAR": 14.772994368836635,
+    "mean_ISR": 18.85785498016487
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 4.84013900049537,
+    "mean_SIR": 14.074362828433578,
+    "mean_SAR": 5.181582083435995,
+    "mean_ISR": 6.577441873177617
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 13.08865986541287,
+    "mean_SIR": 14.96003718840411,
+    "mean_SAR": 16.649587916997344,
+    "mean_ISR": 25.206309913184857
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 3.7366005218492493,
+    "mean_SIR": 11.912904114653832,
+    "mean_SAR": 3.8764219303393954,
+    "mean_ISR": 5.474616115892078
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 11.623888058776023,
+    "mean_SIR": 13.759247585588971,
+    "mean_SAR": 14.889948429062585,
+    "mean_ISR": 23.418629440754916
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 2.304709220074905,
+    "mean_SIR": 6.262934506055374,
+    "mean_SAR": 2.988383947939743,
+    "mean_ISR": 4.921526824537966
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 10.623101737174997,
+    "mean_SIR": 12.924380864059707,
+    "mean_SAR": 14.252123802497286,
+    "mean_ISR": 19.004241307435283
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 1.184466289201056,
+    "mean_SIR": 0.7718408831509418,
+    "mean_SAR": 3.7751080865736903,
+    "mean_ISR": 6.320815016596339
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 9.53463747258147,
+    "mean_SIR": 14.009091411066857,
+    "mean_SAR": 12.599668764760724,
+    "mean_ISR": 13.06823752173807
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 2.7713232453873418,
+    "mean_SIR": 8.404547484195101,
+    "mean_SAR": 3.004378452493901,
+    "mean_ISR": 4.917838139311998
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 11.07240434644134,
+    "mean_SIR": 12.976947303501454,
+    "mean_SAR": 14.461375003479441,
+    "mean_ISR": 20.874187752792185
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 2.0721540277429353,
+    "mean_SIR": 6.979344907517819,
+    "mean_SAR": 1.784710711090726,
+    "mean_ISR": 3.6954185569243183
+  },
+  {
+    "track": "Buitraker - Revo X",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 10.326774243669698,
+    "mean_SIR": 11.827871223842763,
+    "mean_SAR": 14.463447660788928,
+    "mean_ISR": 20.349401076438017
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 7.6774224307489645,
+    "mean_SIR": 13.472393970906055,
+    "mean_SAR": 7.837297333789906,
+    "mean_ISR": 11.343898761701405
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 7.231606696496523,
+    "mean_SIR": 11.22122225892511,
+    "mean_SAR": 8.55380422609891,
+    "mean_ISR": 15.168043991400381
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 8.344718446823292,
+    "mean_SIR": 13.572632060973428,
+    "mean_SAR": 8.970849507876245,
+    "mean_ISR": 12.873860069951773
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 7.7925158501299725,
+    "mean_SIR": 12.654663651293271,
+    "mean_SAR": 9.064487621919655,
+    "mean_ISR": 15.31395092022233
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 6.860755290030579,
+    "mean_SIR": 12.888716978693516,
+    "mean_SAR": 7.57626138506949,
+    "mean_ISR": 9.501693979139551
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 6.512455892459397,
+    "mean_SIR": 9.296766738108554,
+    "mean_SAR": 8.748510652957583,
+    "mean_ISR": 14.74813120293413
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 4.976796830746125,
+    "mean_SIR": 10.36090493235647,
+    "mean_SAR": 5.428833366389319,
+    "mean_ISR": 8.147005457542411
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 5.352061277171496,
+    "mean_SIR": 7.295445960106875,
+    "mean_SAR": 7.916648032965821,
+    "mean_ISR": 13.383613107661164
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 4.719523138468522,
+    "mean_SIR": 10.825310584212787,
+    "mean_SAR": 5.193371170216515,
+    "mean_ISR": 7.319945316645996
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 5.091774379595169,
+    "mean_SIR": 6.585366822006801,
+    "mean_SAR": 8.365452837965769,
+    "mean_ISR": 14.066969623622455
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 6.7598512283074585,
+    "mean_SIR": 10.259754261275166,
+    "mean_SAR": 8.024858512701115,
+    "mean_ISR": 14.75638497326667
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 7.124723509968603,
+    "mean_SIR": 13.63227041437728,
+    "mean_SAR": 7.372559802461616,
+    "mean_ISR": 11.663346862234805
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 6.839910718806333,
+    "mean_SIR": 12.332446273240356,
+    "mean_SAR": 6.8803685123368625,
+    "mean_ISR": 9.870657287664008
+  },
+  {
+    "track": "Carlos Gonzalez - A Place For Us",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 7.225593977434219,
+    "mean_SIR": 9.392115849397445,
+    "mean_SAR": 8.77944127313903,
+    "mean_ISR": 14.802283249440348
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 16.380291788870085,
+    "mean_SIR": 22.464932661871433,
+    "mean_SAR": 16.55212609177003,
+    "mean_ISR": 26.13935132800209
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 20.291921242971657,
+    "mean_SIR": 30.99112737348106,
+    "mean_SAR": 20.633106628963624,
+    "mean_ISR": 25.78243088908933
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 16.417244426347263,
+    "mean_SIR": 22.867942483252673,
+    "mean_SAR": 16.646375653121286,
+    "mean_ISR": 26.226267091393925
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 20.714510276183294,
+    "mean_SIR": 31.46663282878954,
+    "mean_SAR": 21.017887220638855,
+    "mean_ISR": 26.260610140621356
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 16.225089172726303,
+    "mean_SIR": 22.151199111187193,
+    "mean_SAR": 16.434462349783917,
+    "mean_ISR": 25.24545855009602
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 16.198241779099455,
+    "mean_SIR": 30.198740296977377,
+    "mean_SAR": 16.14647537932302,
+    "mean_ISR": 23.80990052996512
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 13.936990373687225,
+    "mean_SIR": 20.515086276827386,
+    "mean_SAR": 14.033835339297648,
+    "mean_ISR": 21.913841882950333
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 18.530989434185656,
+    "mean_SIR": 28.637641903164234,
+    "mean_SAR": 18.479061491387558,
+    "mean_ISR": 23.635088945054047
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 13.378326330312733,
+    "mean_SIR": 20.37299812470845,
+    "mean_SAR": 13.501932485516548,
+    "mean_ISR": 20.734746612441814
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 17.98178499482557,
+    "mean_SIR": 26.856137180210865,
+    "mean_SAR": 18.049292481550037,
+    "mean_ISR": 23.59779494348245
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 13.788721086536723,
+    "mean_SIR": 19.60408949533978,
+    "mean_SAR": 13.834015477872738,
+    "mean_ISR": 23.05766236430722
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 18.36216538334134,
+    "mean_SIR": 29.597374404268326,
+    "mean_SAR": 18.177263013838257,
+    "mean_ISR": 23.013744358865775
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 14.313634004311888,
+    "mean_SIR": 20.9278636107702,
+    "mean_SAR": 14.316445286428687,
+    "mean_ISR": 22.64093860652288
+  },
+  {
+    "track": "Cristina Vane - So Easy",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 18.92200411603554,
+    "mean_SIR": 29.015008281786255,
+    "mean_SAR": 19.027491121922726,
+    "mean_ISR": 24.333944481093496
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 10.203421251463638,
+    "mean_SIR": 14.603104664245912,
+    "mean_SAR": 10.702295580073553,
+    "mean_ISR": 18.606725515540614
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 10.71778710708375,
+    "mean_SIR": 20.874426687203062,
+    "mean_SAR": 10.867034878302618,
+    "mean_ISR": 16.048985635996928
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 12.766661240960767,
+    "mean_SIR": 20.77047720977624,
+    "mean_SAR": 12.71615420126408,
+    "mean_ISR": 18.035564039795997
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 13.181786474401372,
+    "mean_SIR": 20.474289828337636,
+    "mean_SAR": 13.249064580778466,
+    "mean_ISR": 22.281107369440605
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 10.47808554065062,
+    "mean_SIR": 14.309722910563693,
+    "mean_SAR": 11.498026871143901,
+    "mean_ISR": 18.852195396548264
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 11.233437708136828,
+    "mean_SIR": 20.967777829506044,
+    "mean_SAR": 11.3288823377609,
+    "mean_ISR": 17.175003464205048
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 7.897654245993075,
+    "mean_SIR": 11.87894099449876,
+    "mean_SAR": 9.86428303167507,
+    "mean_ISR": 17.215048224916384
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 10.282562677538904,
+    "mean_SIR": 18.842583876606742,
+    "mean_SAR": 11.338144901603698,
+    "mean_ISR": 14.621945333800015
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 7.259150912811144,
+    "mean_SIR": 10.44219560569434,
+    "mean_SAR": 9.717525037144219,
+    "mean_ISR": 19.378339657304256
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 9.670258424766502,
+    "mean_SIR": 21.017315411005452,
+    "mean_SAR": 10.62271726019818,
+    "mean_ISR": 13.026881415050601
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 7.666232287749724,
+    "mean_SIR": 10.525765688296856,
+    "mean_SAR": 10.170827828098062,
+    "mean_ISR": 21.24415636985564
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 10.053887438492746,
+    "mean_SIR": 23.138075212874757,
+    "mean_SAR": 11.16929151430402,
+    "mean_ISR": 13.114144723976912
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 8.154345143898054,
+    "mean_SIR": 12.659115809466392,
+    "mean_SAR": 8.491185075354265,
+    "mean_ISR": 14.02983454775113
+  },
+  {
+    "track": "Detsky Sad - Walkie Talkie",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 10.317377489209067,
+    "mean_SIR": 15.77538558718399,
+    "mean_SAR": 10.621657329177326,
+    "mean_ISR": 15.256252604974378
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 12.196125016797835,
+    "mean_SIR": 18.292836709857976,
+    "mean_SAR": 13.349643058549356,
+    "mean_ISR": 18.81304147051853
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 13.091976426165195,
+    "mean_SIR": 19.782425255627178,
+    "mean_SAR": 14.376109699127731,
+    "mean_ISR": 19.43290264533984
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 12.878631269298069,
+    "mean_SIR": 18.922864560003088,
+    "mean_SAR": 14.082228864209235,
+    "mean_ISR": 20.6322005341799
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 13.779338755570441,
+    "mean_SIR": 21.72649597840766,
+    "mean_SAR": 14.982766045926896,
+    "mean_ISR": 20.164647540219743
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 11.961594028731904,
+    "mean_SIR": 17.423014482440976,
+    "mean_SAR": 13.580662880913204,
+    "mean_ISR": 19.293755586059078
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 8.939530701331966,
+    "mean_SIR": 21.067580008058254,
+    "mean_SAR": 12.02333651587341,
+    "mean_ISR": 13.038610002139228
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 9.767517550030645,
+    "mean_SIR": 14.381395893067728,
+    "mean_SAR": 11.595616281747036,
+    "mean_ISR": 20.113855680409362
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 10.761571077674587,
+    "mean_SIR": 20.703435502527004,
+    "mean_SAR": 12.014386161783952,
+    "mean_ISR": 15.60724137953094
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 9.838862468544697,
+    "mean_SIR": 14.19308810001884,
+    "mean_SAR": 11.683142788361941,
+    "mean_ISR": 19.55664322367127
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 10.827374434227366,
+    "mean_SIR": 20.373095340689968,
+    "mean_SAR": 12.183733095429988,
+    "mean_ISR": 15.430784116017227
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 10.423260635083157,
+    "mean_SIR": 14.924191656053338,
+    "mean_SAR": 12.20849589078543,
+    "mean_ISR": 21.92496112876948
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 11.405080924088827,
+    "mean_SIR": 22.72413723147892,
+    "mean_SAR": 12.582150828177754,
+    "mean_ISR": 16.13154241699888
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 9.691912639446501,
+    "mean_SIR": 14.719491712236932,
+    "mean_SAR": 10.615647002680964,
+    "mean_ISR": 16.249120261219684
+  },
+  {
+    "track": "Enda Reilly - Cur An Long Ag Seol",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 10.40542968825084,
+    "mean_SIR": 15.938274363413287,
+    "mean_SAR": 11.069490182941024,
+    "mean_ISR": 14.167921518602048
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 8.23720125113316,
+    "mean_SIR": 13.19085126828349,
+    "mean_SAR": 8.980181524045973,
+    "mean_ISR": 15.411095648151962
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 12.448348394605832,
+    "mean_SIR": 19.66067470381538,
+    "mean_SAR": 13.057996389761655,
+    "mean_ISR": 17.148638170550864
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 8.250578232939407,
+    "mean_SIR": 13.981147042773836,
+    "mean_SAR": 9.128853706219157,
+    "mean_ISR": 14.68231873725932
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 12.463680911105063,
+    "mean_SIR": 18.9453581913673,
+    "mean_SAR": 13.648277070413585,
+    "mean_ISR": 18.587064566902658
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 8.190027994104417,
+    "mean_SIR": 12.499790762012777,
+    "mean_SAR": 9.031609178026077,
+    "mean_ISR": 14.587038254321127
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 11.953708166192063,
+    "mean_SIR": 18.559384850060695,
+    "mean_SAR": 13.19300872901371,
+    "mean_ISR": 17.38818604889057
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 7.0562222367494485,
+    "mean_SIR": 11.019284065030524,
+    "mean_SAR": 8.503771376083805,
+    "mean_ISR": 14.893296730871455
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 11.287448704217292,
+    "mean_SIR": 18.88255024567206,
+    "mean_SAR": 12.240176370660826,
+    "mean_ISR": 15.848693824422668
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 6.737270581798999,
+    "mean_SIR": 10.76347236100411,
+    "mean_SAR": 8.3793621719611,
+    "mean_ISR": 14.52175394406874
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 10.994465600290603,
+    "mean_SIR": 18.480012924371362,
+    "mean_SAR": 12.121664603406641,
+    "mean_ISR": 15.646330446972891
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 7.897696644167432,
+    "mean_SIR": 10.867423805085147,
+    "mean_SAR": 8.754769398367783,
+    "mean_ISR": 16.727946783479382
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 12.082793150991245,
+    "mean_SIR": 20.847223267646573,
+    "mean_SAR": 12.315055398866036,
+    "mean_ISR": 15.589354766618683
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 7.588443708737628,
+    "mean_SIR": 14.423235741910752,
+    "mean_SAR": 8.394982617544711,
+    "mean_ISR": 12.436581994596425
+  },
+  {
+    "track": "Forkupines - Semantics",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 11.810460451543259,
+    "mean_SIR": 16.753774065417705,
+    "mean_SAR": 13.203069140149216,
+    "mean_ISR": 18.89864708634133
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 6.810637570092613,
+    "mean_SIR": 9.897372862386696,
+    "mean_SAR": 7.367703215848027,
+    "mean_ISR": 14.273395665078908
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 9.959277184333267,
+    "mean_SIR": 17.567289512889932,
+    "mean_SAR": 10.533438068920313,
+    "mean_ISR": 14.273409182956007
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 8.092483152355078,
+    "mean_SIR": 13.062731135769617,
+    "mean_SAR": 8.823272030884981,
+    "mean_ISR": 14.300493670882792
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 11.301603803869567,
+    "mean_SIR": 17.448188344672896,
+    "mean_SAR": 12.565305469760881,
+    "mean_ISR": 17.450949412411195
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 6.625575689072856,
+    "mean_SIR": 10.36563896500674,
+    "mean_SAR": 7.400941409855723,
+    "mean_ISR": 12.089226531949132
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 9.484225991290652,
+    "mean_SIR": 15.140317316496166,
+    "mean_SAR": 10.710443021702334,
+    "mean_ISR": 14.422505946281944
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 4.437854223353573,
+    "mean_SIR": 7.2184162656194575,
+    "mean_SAR": 5.7011936756013775,
+    "mean_ISR": 8.48962315721221
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 7.7829684730234865,
+    "mean_SIR": 10.883250591168457,
+    "mean_SAR": 10.265200231434227,
+    "mean_ISR": 12.961799236825334
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 4.129348032133466,
+    "mean_SIR": 6.459454692767959,
+    "mean_SAR": 5.400551933105586,
+    "mean_ISR": 7.9319437185270845
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 7.479914085441546,
+    "mean_SIR": 10.477066912897103,
+    "mean_SAR": 10.12556190825377,
+    "mean_ISR": 12.376554460884122
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 5.8555188561708436,
+    "mean_SIR": 8.484020570952532,
+    "mean_SAR": 7.609385359822244,
+    "mean_ISR": 15.680591894931704
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 9.159288407320277,
+    "mean_SIR": 18.723516561980798,
+    "mean_SAR": 10.207602620005508,
+    "mean_ISR": 12.881526388676315
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 5.45249820735629,
+    "mean_SIR": 9.884222028383169,
+    "mean_SAR": 5.609328302880858,
+    "mean_ISR": 9.76356992855841
+  },
+  {
+    "track": "Georgia Wonder - Siren",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 8.246811843941542,
+    "mean_SIR": 12.570106887322337,
+    "mean_SAR": 9.435580586300324,
+    "mean_ISR": 11.54260718803672
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 5.89682131183238,
+    "mean_SIR": 10.483926143100172,
+    "mean_SAR": 6.57589593013251,
+    "mean_ISR": 8.892055582496303
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 10.2803674488255,
+    "mean_SIR": 13.279256254991688,
+    "mean_SAR": 11.4311116153506,
+    "mean_ISR": 15.641138911508463
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 6.186516712788497,
+    "mean_SIR": 12.37953873592052,
+    "mean_SAR": 5.644823546289342,
+    "mean_ISR": 6.836109517327169
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 10.63722833016696,
+    "mean_SIR": 11.146274108573209,
+    "mean_SAR": 10.752396234512474,
+    "mean_ISR": 17.326675808009497
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 5.7668112397296385,
+    "mean_SIR": 11.54095359828718,
+    "mean_SAR": 5.901132045651875,
+    "mean_ISR": 7.075169914782399
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 9.803704513026071,
+    "mean_SIR": 11.372905190541545,
+    "mean_SAR": 10.672947227721755,
+    "mean_ISR": 16.49656901711899
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 4.56833551788588,
+    "mean_SIR": 7.868331858274032,
+    "mean_SAR": 5.981576860134086,
+    "mean_ISR": 8.851895754039386
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 9.13408948241962,
+    "mean_SIR": 12.726823996594462,
+    "mean_SAR": 10.165158045029001,
+    "mean_ISR": 13.296674286982784
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 4.639761830243852,
+    "mean_SIR": 8.255363206672902,
+    "mean_SAR": 5.9979801465672,
+    "mean_ISR": 9.72622233563893
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 9.204782006731381,
+    "mean_SIR": 13.724881602426303,
+    "mean_SAR": 11.088649468062249,
+    "mean_ISR": 14.453924997943169
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 4.555927743732892,
+    "mean_SIR": 7.267300963107921,
+    "mean_SAR": 6.904843557467309,
+    "mean_ISR": 11.40883663327899
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 9.125257051493183,
+    "mean_SIR": 15.30159257190916,
+    "mean_SAR": 10.737058116718226,
+    "mean_ISR": 12.735413481714618
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 4.945752951584767,
+    "mean_SIR": 10.442045620551463,
+    "mean_SAR": 5.059499645495026,
+    "mean_ISR": 7.301869886668142
+  },
+  {
+    "track": "Girls Under Glass - We Feel Alright",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 9.440442300083511,
+    "mean_SIR": 10.740066336003563,
+    "mean_SAR": 10.392181150839422,
+    "mean_ISR": 16.333630359462738
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 7.634247227197758,
+    "mean_SIR": 12.205705843283397,
+    "mean_SAR": 7.842234840603751,
+    "mean_ISR": 11.312976111840383
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 13.827845596684298,
+    "mean_SIR": 17.784434817156,
+    "mean_SAR": 15.036329986314906,
+    "mean_ISR": 19.162509944092893
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 7.816788078856251,
+    "mean_SIR": 13.06365881501511,
+    "mean_SAR": 7.612126512858215,
+    "mean_ISR": 10.44761097884121
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 14.178391229045673,
+    "mean_SIR": 17.08399502162973,
+    "mean_SAR": 15.24948683188835,
+    "mean_ISR": 20.058848248502127
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 7.697201877763157,
+    "mean_SIR": 12.334008980382954,
+    "mean_SAR": 7.791336602115287,
+    "mean_ISR": 11.008676962625609
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 10.946870494450915,
+    "mean_SIR": 16.952633602605378,
+    "mean_SAR": 11.938834644824242,
+    "mean_ISR": 14.836621053045723
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 6.845369416883281,
+    "mean_SIR": 10.246146069320845,
+    "mean_SAR": 7.829194734053462,
+    "mean_ISR": 11.920950205517292
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 13.269597777359621,
+    "mean_SIR": 17.993040161792003,
+    "mean_SAR": 14.228015477952738,
+    "mean_ISR": 17.023165406081798
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 6.798131053743204,
+    "mean_SIR": 10.621497518466024,
+    "mean_SAR": 7.250520114522935,
+    "mean_ISR": 10.52489152334129
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 13.225637879730465,
+    "mean_SIR": 16.52507417985368,
+    "mean_SAR": 13.795558161361392,
+    "mean_ISR": 17.54114549109956
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 5.926759822208932,
+    "mean_SIR": 8.527442669747815,
+    "mean_SAR": 8.025715322401663,
+    "mean_ISR": 13.034093513094069
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 12.373742960562561,
+    "mean_SIR": 18.92201444699469,
+    "mean_SAR": 13.907558990962974,
+    "mean_ISR": 15.274288797615966
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 6.387258256735854,
+    "mean_SIR": 11.900117406377106,
+    "mean_SAR": 5.799058496130641,
+    "mean_ISR": 9.037942571475272
+  },
+  {
+    "track": "Hollow Ground - Ill Fate",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 12.856349015210242,
+    "mean_SIR": 15.683105553315087,
+    "mean_SAR": 13.675343816171944,
+    "mean_ISR": 19.422049835867973
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 5.942181974926416,
+    "mean_SIR": 15.480167910506978,
+    "mean_SAR": 6.138069808956501,
+    "mean_ISR": 8.400498905491778
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 8.804162297247965,
+    "mean_SIR": 11.083740514782269,
+    "mean_SAR": 11.347959013534174,
+    "mean_ISR": 19.504015783339895
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 6.623189863391134,
+    "mean_SIR": 14.095371646175538,
+    "mean_SAR": 7.013367122520378,
+    "mean_ISR": 9.470155346517991
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 9.465306117508984,
+    "mean_SIR": 11.995111488094587,
+    "mean_SAR": 11.595206738954452,
+    "mean_ISR": 18.52376940831866
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 5.453014376069906,
+    "mean_SIR": 14.681399338558066,
+    "mean_SAR": 5.540126716137387,
+    "mean_ISR": 7.6536895118465305
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 7.998294285995214,
+    "mean_SIR": 10.404456059565877,
+    "mean_SAR": 10.824529993494373,
+    "mean_ISR": 18.982393312595878
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 4.982620858381104,
+    "mean_SIR": 11.82090169171707,
+    "mean_SAR": 5.066493359200076,
+    "mean_ISR": 8.293089079803414
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 7.874456126655006,
+    "mean_SIR": 10.796045869367726,
+    "mean_SAR": 10.175697997905191,
+    "mean_ISR": 17.15132416780373
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 5.0618982700398885,
+    "mean_SIR": 12.722698304600899,
+    "mean_SAR": 4.972912307877941,
+    "mean_ISR": 8.027590354927588
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 7.950164831497228,
+    "mean_SIR": 10.584083200571087,
+    "mean_SAR": 10.321654652814017,
+    "mean_ISR": 17.98445318319999
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 5.23403023834837,
+    "mean_SIR": 12.396739102612655,
+    "mean_SAR": 5.69471389118065,
+    "mean_ISR": 8.87474486199491
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 8.124881387689562,
+    "mean_SIR": 11.317775562204334,
+    "mean_SAR": 10.072144808622062,
+    "mean_ISR": 17.029184557012965
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 5.84008915405563,
+    "mean_SIR": 14.91321885823067,
+    "mean_SAR": 5.6566029701493825,
+    "mean_ISR": 8.100986022766811
+  },
+  {
+    "track": "James Elder & Mark M Thompson - The English Actor",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 8.706180238186288,
+    "mean_SIR": 11.00013085398072,
+    "mean_SAR": 10.848086150375444,
+    "mean_ISR": 19.218448166130077
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 10.657101829793607,
+    "mean_SIR": 16.744501547683953,
+    "mean_SAR": 11.268422120956481,
+    "mean_ISR": 17.29043584932784
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 17.305744695058348,
+    "mean_SIR": 23.19736651267368,
+    "mean_SAR": 18.376003825871294,
+    "mean_ISR": 24.575420695717117
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 11.197430619545203,
+    "mean_SIR": 18.06834786036622,
+    "mean_SAR": 11.741678592249215,
+    "mean_ISR": 16.758172872020953
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 18.097047037590375,
+    "mean_SIR": 22.93469353811439,
+    "mean_SAR": 19.23873239594119,
+    "mean_ISR": 26.97946599336996
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 9.853735783709986,
+    "mean_SIR": 14.787288385745585,
+    "mean_SAR": 10.606370886658263,
+    "mean_ISR": 15.882699642487056
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 15.272635010867115,
+    "mean_SIR": 21.242243105092417,
+    "mean_SAR": 16.18062448439981,
+    "mean_ISR": 23.56927516818556
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 9.408094012832246,
+    "mean_SIR": 16.34847662751223,
+    "mean_SAR": 9.434105872862057,
+    "mean_ISR": 13.512202439941218
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 16.40081466585394,
+    "mean_SIR": 20.009579331503105,
+    "mean_SAR": 17.002599561332367,
+    "mean_ISR": 25.002205257910862
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 8.77199842279424,
+    "mean_SIR": 15.349917292498853,
+    "mean_SAR": 9.254136139513468,
+    "mean_ISR": 13.625400462050203
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 15.78732193941753,
+    "mean_SIR": 20.033055745174945,
+    "mean_SAR": 16.900468282605548,
+    "mean_ISR": 24.045050949612218
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 8.831476846987194,
+    "mean_SIR": 12.452570871301324,
+    "mean_SAR": 9.525883543573684,
+    "mean_ISR": 16.7236044784968
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 15.84070431298254,
+    "mean_SIR": 21.327061588440472,
+    "mean_SAR": 16.649736247168363,
+    "mean_ISR": 21.942596819058974
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 8.512704719628372,
+    "mean_SIR": 15.181691612509496,
+    "mean_SAR": 9.489413012732522,
+    "mean_ISR": 13.039657127775284
+  },
+  {
+    "track": "Juliet's Rescue - Heartbeats",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 15.292123844585483,
+    "mean_SIR": 18.36788630299755,
+    "mean_SAR": 15.703380297177311,
+    "mean_ISR": 20.908861942262273
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 9.642543188175123,
+    "mean_SIR": 21.62727906836736,
+    "mean_SAR": 9.556667443163365,
+    "mean_ISR": 13.753799432588503
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 14.497184139042544,
+    "mean_SIR": 19.32109772234783,
+    "mean_SAR": 15.71147801096196,
+    "mean_ISR": 25.660820939051856
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 11.086241493838267,
+    "mean_SIR": 19.827529050084756,
+    "mean_SAR": 11.74460212498328,
+    "mean_ISR": 17.3527814837627
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 15.785407302482051,
+    "mean_SIR": 22.642678718359452,
+    "mean_SAR": 16.9737384531759,
+    "mean_ISR": 24.69890927234141
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 6.733648708140379,
+    "mean_SIR": 17.729126378272507,
+    "mean_SAR": 7.1332233882380836,
+    "mean_ISR": 8.554761506154541
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 11.613499649251601,
+    "mean_SIR": 13.740593055879964,
+    "mean_SAR": 14.515112110320722,
+    "mean_ISR": 23.157531350015446
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 6.033247072363152,
+    "mean_SIR": 12.722517525724259,
+    "mean_SAR": 5.848171001613753,
+    "mean_ISR": 9.480829548864953
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 11.002550768325639,
+    "mean_SIR": 14.177264385880326,
+    "mean_SAR": 13.025885820778065,
+    "mean_ISR": 20.17298614679459
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 6.2709005945284275,
+    "mean_SIR": 18.136852101186278,
+    "mean_SAR": 5.860508464754578,
+    "mean_ISR": 8.140821155851567
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 11.239821645441067,
+    "mean_SIR": 13.038680851232934,
+    "mean_SAR": 14.129284559247488,
+    "mean_ISR": 25.416871330466517
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 8.446973615567105,
+    "mean_SIR": 14.946439129148288,
+    "mean_SAR": 9.464153619420403,
+    "mean_ISR": 14.14178828585314
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 13.350229308267808,
+    "mean_SIR": 19.03103074122642,
+    "mean_SAR": 15.1618499450846,
+    "mean_ISR": 20.899457546100063
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 6.194612448357243,
+    "mean_SIR": 18.763020746793934,
+    "mean_SAR": 6.242090687589432,
+    "mean_ISR": 8.30124988405389
+  },
+  {
+    "track": "Little Chicago's Finest - My Own",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 10.83406344884577,
+    "mean_SIR": 13.210189289743738,
+    "mean_SAR": 13.850950078287733,
+    "mean_ISR": 19.98001937160472
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 8.870396275880433,
+    "mean_SIR": 16.05213567466765,
+    "mean_SAR": 8.649454807807007,
+    "mean_ISR": 15.461416615903325
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 14.260802613281948,
+    "mean_SIR": 21.154939843906163,
+    "mean_SAR": 14.461311942401212,
+    "mean_ISR": 21.27019957229274
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 10.041371945141929,
+    "mean_SIR": 16.012276304901814,
+    "mean_SAR": 9.927877394894264,
+    "mean_ISR": 15.611552338362932
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 15.488885626424981,
+    "mean_SIR": 21.342409328037274,
+    "mean_SAR": 15.853055700414606,
+    "mean_ISR": 21.99278043286344
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 9.126358582619437,
+    "mean_SIR": 13.071164704224678,
+    "mean_SAR": 9.0023947789594,
+    "mean_ISR": 15.915126888767576
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 14.072848007057884,
+    "mean_SIR": 20.850822330292427,
+    "mean_SAR": 14.291808722075276,
+    "mean_ISR": 19.883587201124943
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 5.760867359374553,
+    "mean_SIR": 11.605510948827913,
+    "mean_SAR": 5.98679985787669,
+    "mean_ISR": 10.798185655219692
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 11.620552846334022,
+    "mean_SIR": 15.663527105947006,
+    "mean_SAR": 12.056629682902988,
+    "mean_ISR": 19.03914661751254
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 5.631557764028817,
+    "mean_SIR": 11.482853211030038,
+    "mean_SAR": 5.9159996882765595,
+    "mean_ISR": 11.17882188769279
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 11.506741731607347,
+    "mean_SIR": 16.163679690582267,
+    "mean_SAR": 12.063342659161776,
+    "mean_ISR": 18.83651185300907
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 7.0215557149884695,
+    "mean_SIR": 12.628779453795808,
+    "mean_SAR": 6.997876531925436,
+    "mean_ISR": 13.588180352829935
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 12.839734198818995,
+    "mean_SIR": 19.101479095310133,
+    "mean_SAR": 13.17155580789292,
+    "mean_ISR": 19.381778977823654
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 5.778470200642462,
+    "mean_SIR": 6.885736893335424,
+    "mean_SAR": 5.193964648703914,
+    "mean_ISR": 10.492998472931365
+  },
+  {
+    "track": "Louis Cressy Band - Good Time",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 11.59019479546342,
+    "mean_SIR": 16.06981729209279,
+    "mean_SAR": 11.611916927512446,
+    "mean_ISR": 13.902825309024097
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 11.468157737149289,
+    "mean_SIR": 22.331077010534603,
+    "mean_SAR": 11.851964464214852,
+    "mean_ISR": 15.647973770248418
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 14.810112173633192,
+    "mean_SIR": 19.346942285801283,
+    "mean_SAR": 15.908390803698845,
+    "mean_ISR": 25.174347504381426
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 13.422946575404106,
+    "mean_SIR": 21.57775846805559,
+    "mean_SAR": 13.970977241480353,
+    "mean_ISR": 21.158732750808735
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 16.641507873769324,
+    "mean_SIR": 24.95451227727806,
+    "mean_SAR": 17.30177395986306,
+    "mean_ISR": 24.24001423512415
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 11.172101620297852,
+    "mean_SIR": 21.65557645805934,
+    "mean_SAR": 12.900507953151,
+    "mean_ISR": 14.170327911071672
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 13.199409315201274,
+    "mean_SIR": 17.442495710383024,
+    "mean_SAR": 14.864594181616829,
+    "mean_ISR": 22.54961265843642
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 11.516716985274016,
+    "mean_SIR": 19.14960956520063,
+    "mean_SAR": 11.685003000861728,
+    "mean_ISR": 17.917507857141292
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 14.89190362833695,
+    "mean_SIR": 21.483273581854807,
+    "mean_SAR": 15.215797071588467,
+    "mean_ISR": 22.57826621960163
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 11.167231378740693,
+    "mean_SIR": 16.692796309872744,
+    "mean_SAR": 11.283567844659714,
+    "mean_ISR": 19.051908667228158
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 14.549776818873248,
+    "mean_SIR": 22.15125552738942,
+    "mean_SAR": 14.473870096841045,
+    "mean_ISR": 20.542321218520424
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 11.640853842431577,
+    "mean_SIR": 17.72477371605839,
+    "mean_SAR": 12.193156098145801,
+    "mean_ISR": 22.220608613365997
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 15.00318744756697,
+    "mean_SIR": 25.377856260843554,
+    "mean_SAR": 15.233303602500206,
+    "mean_ISR": 21.167679881970702
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 11.235742417831204,
+    "mean_SIR": 21.74341101180067,
+    "mean_SAR": 11.718403752096663,
+    "mean_ISR": 14.492122252487539
+  },
+  {
+    "track": "Lyndsey Ollard - Catching Up",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 14.58236624231963,
+    "mean_SIR": 17.993122787390742,
+    "mean_SAR": 15.642516594396788,
+    "mean_ISR": 23.27296029590872
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 7.521613342609652,
+    "mean_SIR": 16.90205256745287,
+    "mean_SAR": 8.839990144540362,
+    "mean_ISR": 10.76323908225892
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 9.82504858537002,
+    "mean_SIR": 13.05391319506071,
+    "mean_SAR": 12.358529181431303,
+    "mean_ISR": 19.245278545738547
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 8.658568576651716,
+    "mean_SIR": 16.902320309245344,
+    "mean_SAR": 9.71017475577188,
+    "mean_ISR": 12.666309550463197
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 10.920461746355398,
+    "mean_SIR": 14.971597700161759,
+    "mean_SAR": 12.908911095625292,
+    "mean_ISR": 19.522205379150773
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 6.780934452001276,
+    "mean_SIR": 14.125536094009176,
+    "mean_SAR": 8.87563252090243,
+    "mean_ISR": 9.480315748949467
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 8.96199088323756,
+    "mean_SIR": 11.485546025112669,
+    "mean_SAR": 12.275517994118575,
+    "mean_ISR": 17.326928920891294
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 7.313844731326671,
+    "mean_SIR": 11.573578980527353,
+    "mean_SAR": 8.561589460873314,
+    "mean_ISR": 13.640061162488857
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 9.67895679104922,
+    "mean_SIR": 15.566860176428598,
+    "mean_SAR": 10.920501071199894,
+    "mean_ISR": 14.796589111258747
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 7.116248991449228,
+    "mean_SIR": 11.938296401084202,
+    "mean_SAR": 8.310482374629903,
+    "mean_ISR": 13.171204518561888
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 9.494151509680513,
+    "mean_SIR": 15.052109983275441,
+    "mean_SAR": 10.899252530823931,
+    "mean_ISR": 15.283770198708718
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 7.405145756461278,
+    "mean_SIR": 12.317546017225496,
+    "mean_SAR": 8.989353626243437,
+    "mean_ISR": 14.152120974497729
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 9.780084307702536,
+    "mean_SIR": 16.19240204178254,
+    "mean_SAR": 11.183230436293433,
+    "mean_ISR": 15.26139584892781
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 7.328920951285805,
+    "mean_SIR": 13.9198716090793,
+    "mean_SAR": 7.995663568133196,
+    "mean_ISR": 11.403338466933745
+  },
+  {
+    "track": "M.E.R.C. Music - Knockout",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 9.30400796452399,
+    "mean_SIR": 13.836461860828864,
+    "mean_SAR": 11.107381386538536,
+    "mean_ISR": 14.638001313470271
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 13.591704349630144,
+    "mean_SIR": 21.276662496120633,
+    "mean_SAR": 13.991934723307379,
+    "mean_ISR": 21.319176754194007
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 15.849216217268411,
+    "mean_SIR": 22.803719433744632,
+    "mean_SAR": 16.40557379698775,
+    "mean_ISR": 24.15148596576259
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 13.754421833560853,
+    "mean_SIR": 22.117402579826916,
+    "mean_SAR": 14.323487526015604,
+    "mean_ISR": 21.12183950097447
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 16.06822728800767,
+    "mean_SIR": 23.437998608097487,
+    "mean_SAR": 16.823888502474095,
+    "mean_ISR": 24.81086316446819
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 12.810344950737864,
+    "mean_SIR": 19.965707429660828,
+    "mean_SAR": 13.442779801710017,
+    "mean_ISR": 20.553164807652305
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 14.632963786325172,
+    "mean_SIR": 23.671904475424203,
+    "mean_SAR": 15.310779668202926,
+    "mean_ISR": 21.5470530850625
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 11.066306120842297,
+    "mean_SIR": 16.816066669052763,
+    "mean_SAR": 11.819943104930289,
+    "mean_ISR": 18.00325683114171
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 13.518803728898723,
+    "mean_SIR": 20.50182366113053,
+    "mean_SAR": 14.316147510353717,
+    "mean_ISR": 19.784892234929476
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 11.677749455027204,
+    "mean_SIR": 16.63517599528014,
+    "mean_SAR": 12.339432724124114,
+    "mean_ISR": 19.516571500539893
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 14.12085811221221,
+    "mean_SIR": 22.174694588897776,
+    "mean_SAR": 14.741812532657429,
+    "mean_ISR": 19.49909672292465
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 12.391896214063458,
+    "mean_SIR": 18.435058331784138,
+    "mean_SAR": 13.054123182834411,
+    "mean_ISR": 20.562698465904273
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 14.811826665114745,
+    "mean_SIR": 22.830327609022333,
+    "mean_SAR": 15.448420816590968,
+    "mean_ISR": 21.54869756637989
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 11.659156343752281,
+    "mean_SIR": 20.727784010229445,
+    "mean_SAR": 11.869207214967064,
+    "mean_ISR": 16.917521191931957
+  },
+  {
+    "track": "Moosmusic - Big Dummy Shake",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 14.069516685557609,
+    "mean_SIR": 19.480497953011824,
+    "mean_SAR": 14.792622697085823,
+    "mean_ISR": 22.406783129951705
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 0.0009677012611447287,
+    "mean_SIR": -3.3900418327223876,
+    "mean_SAR": -10.698626368858159,
+    "mean_ISR": 0.0008937185985402771
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 11.299321830317894,
+    "mean_SIR": 11.393605331067235,
+    "mean_SAR": 29.50395858813286,
+    "mean_ISR": 30.01085400638239
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 3.61493231063489,
+    "mean_SIR": 7.731924951575935,
+    "mean_SAR": 5.161325189839426,
+    "mean_ISR": 4.38181233775491
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 14.86990343945498,
+    "mean_SIR": 15.665125660606714,
+    "mean_SAR": 22.282128110457453,
+    "mean_ISR": 25.147361561430426
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": -0.12311780078565426,
+    "mean_SIR": -9.0404209634822,
+    "mean_SAR": -1.1017595001867087,
+    "mean_ISR": 0.5219764434080258
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 11.07322055953648,
+    "mean_SIR": 11.689348945829323,
+    "mean_SAR": 20.347660394199696,
+    "mean_ISR": 22.73903332666812
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": -5.026953340115276,
+    "mean_SIR": -6.031998582646324,
+    "mean_SAR": 10.74241162978428,
+    "mean_ISR": 9.613488406003752
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 6.27598888167356,
+    "mean_SIR": 19.696417642844153,
+    "mean_SAR": 13.862695978255866,
+    "mean_ISR": 6.46891926460239
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": -3.7838118713027877,
+    "mean_SIR": -4.242295375352974,
+    "mean_SAR": 8.529398931503382,
+    "mean_ISR": 9.925594710778709
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 7.516898352926778,
+    "mean_SIR": 20.295759775860333,
+    "mean_SAR": 13.354869233974851,
+    "mean_ISR": 8.248518157184542
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": -0.7584771189533873,
+    "mean_SIR": -1.6435386225416193,
+    "mean_SAR": 4.928421831409497,
+    "mean_ISR": 7.28214491267686
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 10.537612842382934,
+    "mean_SIR": 17.80242031089612,
+    "mean_SAR": 14.768605446375156,
+    "mean_ISR": 13.373237517398602
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": -1.7168177455867069,
+    "mean_SIR": -8.037353273863866,
+    "mean_SAR": 4.268738760103823,
+    "mean_ISR": 2.6846486472812288
+  },
+  {
+    "track": "Motor Tapes - Shore",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 9.581877879727246,
+    "mean_SIR": 13.000723612322687,
+    "mean_SAR": 15.768772042646335,
+    "mean_ISR": 13.17982140336148
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 14.7975195430355,
+    "mean_SIR": 25.920466380841372,
+    "mean_SAR": 14.538752232408148,
+    "mean_ISR": 20.50562973897681
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 17.853152570221386,
+    "mean_SIR": 24.37233411033627,
+    "mean_SAR": 17.760018823318433,
+    "mean_ISR": 28.59518505419797
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 15.245664790984085,
+    "mean_SIR": 25.993423196310008,
+    "mean_SAR": 15.0734201763103,
+    "mean_ISR": 20.85325770565517
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 18.45994495426567,
+    "mean_SIR": 24.968665829329627,
+    "mean_SAR": 18.409199927899518,
+    "mean_ISR": 28.683190617073336
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 14.784615255475758,
+    "mean_SIR": 25.414758680992495,
+    "mean_SAR": 14.706147320106341,
+    "mean_ISR": 19.726928230520382
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 17.00830023678924,
+    "mean_SIR": 23.48333492221542,
+    "mean_SAR": 17.16116782665372,
+    "mean_ISR": 27.744275165018482
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 11.99190841221742,
+    "mean_SIR": 18.723239901518312,
+    "mean_SAR": 12.745008032559857,
+    "mean_ISR": 21.928086875022547
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 15.32774289380385,
+    "mean_SIR": 25.99871579495965,
+    "mean_SAR": 15.899719145351149,
+    "mean_ISR": 21.55297394491723
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 12.50450130171388,
+    "mean_SIR": 19.86588915633043,
+    "mean_SAR": 13.186300360242717,
+    "mean_ISR": 21.48316860508366
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 15.844417782613853,
+    "mean_SIR": 25.412355511483714,
+    "mean_SAR": 16.477980781561488,
+    "mean_ISR": 22.715854476134187
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 12.812918924882927,
+    "mean_SIR": 20.940405256472662,
+    "mean_SAR": 13.4606419836502,
+    "mean_ISR": 23.181707329438083
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 16.144978805041962,
+    "mean_SIR": 27.859514734705815,
+    "mean_SAR": 16.692156758152354,
+    "mean_ISR": 23.64666492572918
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 11.981028896592642,
+    "mean_SIR": 21.671886142033017,
+    "mean_SAR": 12.450908828789677,
+    "mean_ISR": 17.820663935941653
+  },
+  {
+    "track": "Mu - Too Bright",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 15.322496156716722,
+    "mean_SIR": 20.066947050401396,
+    "mean_SAR": 15.536166719150671,
+    "mean_ISR": 23.25426053568958
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 8.45789318043645,
+    "mean_SIR": 14.496369591768124,
+    "mean_SAR": 11.410288364153672,
+    "mean_ISR": 11.482085823826997
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 8.685594107184086,
+    "mean_SIR": 11.134128262082804,
+    "mean_SAR": 12.43374590941845,
+    "mean_ISR": 16.225261190307407
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 9.965646240806999,
+    "mean_SIR": 13.483042943597932,
+    "mean_SAR": 12.887246317577862,
+    "mean_ISR": 15.342321728183466
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 10.160844522056873,
+    "mean_SIR": 14.99227900160865,
+    "mean_SAR": 13.086622211163514,
+    "mean_ISR": 14.622302312420638
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 8.05746417800471,
+    "mean_SIR": 13.233240906782436,
+    "mean_SAR": 10.791225566958664,
+    "mean_ISR": 11.64621713235219
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 8.049475108074128,
+    "mean_SIR": 11.04887335131815,
+    "mean_SAR": 10.965022342416491,
+    "mean_ISR": 14.694999181823315
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 6.55215735472508,
+    "mean_SIR": 13.486956428711048,
+    "mean_SAR": 8.28615731479088,
+    "mean_ISR": 9.775357136297048
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 6.809484151422278,
+    "mean_SIR": 9.51672840455076,
+    "mean_SAR": 9.877822415376512,
+    "mean_ISR": 15.786440996843476
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 6.095959730773249,
+    "mean_SIR": 13.300559085188558,
+    "mean_SAR": 7.979562466417363,
+    "mean_ISR": 8.63134569636617
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 6.353746960139527,
+    "mean_SIR": 8.392168143149876,
+    "mean_SAR": 10.745017946041367,
+    "mean_ISR": 17.365778098947725
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 7.926003120863553,
+    "mean_SIR": 13.8872586821914,
+    "mean_SAR": 10.875748844029085,
+    "mean_ISR": 11.753831419326753
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 8.175430161705757,
+    "mean_SIR": 11.429675108079318,
+    "mean_SAR": 11.376455403437781,
+    "mean_ISR": 15.361381090907221
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 7.271293576831293,
+    "mean_SIR": 14.60873390830806,
+    "mean_SAR": 10.140537214168047,
+    "mean_ISR": 9.419705799396242
+  },
+  {
+    "track": "Nerve 9 - Pray For The Rain",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 7.522205061965064,
+    "mean_SIR": 9.24837644505556,
+    "mean_SAR": 11.997750765381776,
+    "mean_ISR": 17.026612558000945
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": -7.152279157678084,
+    "mean_SIR": 3.311463328013527,
+    "mean_SAR": 1.1338794685033344,
+    "mean_ISR": 1.1234921002819738
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 25.898710819233674,
+    "mean_SIR": 31.38910330398383,
+    "mean_SAR": 28.759302563613122,
+    "mean_ISR": 38.20298430613061
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": -7.095969670388771,
+    "mean_SIR": 4.8289391066804255,
+    "mean_SAR": -0.12658775886698712,
+    "mean_ISR": 0.6134587527747324
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 26.1293980040201,
+    "mean_SIR": 31.123318407399626,
+    "mean_SAR": 29.56218777803461,
+    "mean_ISR": 38.30108400111407
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": -9.230071799067666,
+    "mean_SIR": -5.186575219757308,
+    "mean_SAR": -8.252290960758687,
+    "mean_ISR": -0.7185231742121791
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 15.93348974719846,
+    "mean_SIR": 30.300998063738025,
+    "mean_SAR": 16.968726817426802,
+    "mean_ISR": 24.882238559587915
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": -18.01235621100855,
+    "mean_SIR": -26.60261418993751,
+    "mean_SAR": -1.5389580097657756,
+    "mean_ISR": 0.3120798390200889
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 22.313709815280294,
+    "mean_SIR": 30.958390188414082,
+    "mean_SAR": 21.35463603281379,
+    "mean_ISR": 23.991936884355557
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": -20.837087907213512,
+    "mean_SIR": -26.02091960708164,
+    "mean_SAR": -0.38139177472556574,
+    "mean_ISR": -1.0219086388028304
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 20.706813117924707,
+    "mean_SIR": 32.40897003820526,
+    "mean_SAR": 18.027320562151978,
+    "mean_ISR": 19.083398447987665
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": -7.300821048204152,
+    "mean_SIR": -24.523037566898456,
+    "mean_SAR": -8.056541192321857,
+    "mean_ISR": 0.024907885327989553
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 25.100918966056827,
+    "mean_SIR": 29.395828061649258,
+    "mean_SAR": 30.47618031909056,
+    "mean_ISR": 37.73129186043784
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": -5.886112897254558,
+    "mean_SIR": -17.70846989552705,
+    "mean_SAR": -3.654863157452007,
+    "mean_ISR": 0.07922190418882404
+  },
+  {
+    "track": "PR - Happy Daze",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 21.28210050939924,
+    "mean_SIR": 29.50224698473221,
+    "mean_SAR": 25.251429617821373,
+    "mean_ISR": 23.793858121761833
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 0.1712175189927829,
+    "mean_SIR": 7.142944572135615,
+    "mean_SAR": 1.5711026693978605,
+    "mean_ISR": 3.060043524157829
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 8.869128048186509,
+    "mean_SIR": 34.76709734146335,
+    "mean_SAR": 20.58051260569204,
+    "mean_ISR": 9.091558188541976
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 0.19261542075328755,
+    "mean_SIR": 11.302792228784698,
+    "mean_SAR": 1.6153692113882532,
+    "mean_ISR": 2.6584969425463725
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 8.973918828715076,
+    "mean_SIR": 34.692229009040425,
+    "mean_SAR": 21.10826451807227,
+    "mean_ISR": 9.186565434397966
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": -1.1185807413937947,
+    "mean_SIR": 8.655759169513253,
+    "mean_SAR": -0.037682644771965146,
+    "mean_ISR": 1.4438677443449215
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 8.71867066400265,
+    "mean_SIR": 33.111387028252885,
+    "mean_SAR": 20.361967503181994,
+    "mean_ISR": 8.974380043531198
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": -17.677705306582638,
+    "mean_SIR": -26.306847949809164,
+    "mean_SAR": 2.292229457382636,
+    "mean_ISR": -0.10919475180466005
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 8.30454632986014,
+    "mean_SIR": 32.258229290244756,
+    "mean_SAR": 17.150522262901145,
+    "mean_ISR": 8.530121694081595
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": -19.368790314296508,
+    "mean_SIR": -26.674065483017987,
+    "mean_SAR": 2.4957939290615814,
+    "mean_ISR": -0.059055677257545625
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 7.979584780771215,
+    "mean_SIR": 32.26967441658925,
+    "mean_SAR": 16.16422317898989,
+    "mean_ISR": 8.216891261574597
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": -2.601901676990035,
+    "mean_SIR": -9.609945222365603,
+    "mean_SAR": -8.462749311632814,
+    "mean_ISR": 0.0820070230142144
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 8.889906051801782,
+    "mean_SIR": 31.776761251399495,
+    "mean_SAR": 20.93406820317156,
+    "mean_ISR": 9.162928364023422
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": -8.810915369050315,
+    "mean_SIR": -12.191294749665994,
+    "mean_SAR": -1.1364394105688582,
+    "mean_ISR": 2.275449895846035
+  },
+  {
+    "track": "PR - Oh No",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 8.569759504624548,
+    "mean_SIR": 34.063233378142414,
+    "mean_SAR": 18.33218499648729,
+    "mean_ISR": 8.867016662563818
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 9.95381040548925,
+    "mean_SIR": 19.962540517676057,
+    "mean_SAR": 10.539307014669046,
+    "mean_ISR": 16.566419501493275
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 15.696165177081985,
+    "mean_SIR": 23.968532674946832,
+    "mean_SAR": 16.31776354157995,
+    "mean_ISR": 27.370357935486634
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 10.257260951898202,
+    "mean_SIR": 19.17441387445454,
+    "mean_SAR": 10.845794008861652,
+    "mean_ISR": 17.26989355759055
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 15.822592039162359,
+    "mean_SIR": 24.004942779874785,
+    "mean_SAR": 16.263755147254226,
+    "mean_ISR": 26.462900091286105
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 7.461570537870107,
+    "mean_SIR": 13.73320772561093,
+    "mean_SAR": 8.086939953434566,
+    "mean_ISR": 16.78849036663331
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 12.493331779371191,
+    "mean_SIR": 23.56900404339798,
+    "mean_SAR": 12.88801682631265,
+    "mean_ISR": 20.71840764698028
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 7.907104047846759,
+    "mean_SIR": 13.409851502397219,
+    "mean_SAR": 8.766033164298465,
+    "mean_ISR": 15.057391370290333
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 15.329936281323468,
+    "mean_SIR": 21.476124455387037,
+    "mean_SAR": 16.361932848276258,
+    "mean_ISR": 22.105416540650882
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 6.906736717324866,
+    "mean_SIR": 10.614383132974707,
+    "mean_SAR": 8.636102138878861,
+    "mean_ISR": 16.21167084742657
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 14.354761991872317,
+    "mean_SIR": 22.506777711414532,
+    "mean_SAR": 15.75836106578606,
+    "mean_ISR": 19.031764773970753
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 8.282237395901491,
+    "mean_SIR": 14.904324294170683,
+    "mean_SAR": 8.911179971810927,
+    "mean_ISR": 14.80584606860244
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 15.68543380305367,
+    "mean_SIR": 21.276965303073247,
+    "mean_SAR": 16.394125865234546,
+    "mean_ISR": 23.369876986145528
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 8.89966850267517,
+    "mean_SIR": 17.301870956706175,
+    "mean_SAR": 8.890832918057106,
+    "mean_ISR": 13.334685622350847
+  },
+  {
+    "track": "Punkdisco - Oral Hygiene",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 16.10507294234973,
+    "mean_SIR": 21.163705273685757,
+    "mean_SAR": 16.308017707221556,
+    "mean_ISR": 23.163476279649903
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 6.654798786333957,
+    "mean_SIR": 12.046269152219793,
+    "mean_SAR": 7.362302658764132,
+    "mean_ISR": 11.279879972204768
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 11.84598452654039,
+    "mean_SIR": 16.316046139901655,
+    "mean_SAR": 14.052909546139466,
+    "mean_ISR": 18.518195966824454
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 7.047965799650297,
+    "mean_SIR": 11.715830648490353,
+    "mean_SAR": 7.915158014880581,
+    "mean_ISR": 11.968908332448725
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 12.26756241804077,
+    "mean_SIR": 16.936869380426554,
+    "mean_SAR": 14.438176742842133,
+    "mean_ISR": 18.486694891519647
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 6.018366631883864,
+    "mean_SIR": 10.853219326767494,
+    "mean_SAR": 6.786115119530135,
+    "mean_ISR": 9.778468731114831
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 10.551866073962527,
+    "mean_SIR": 14.580225454529241,
+    "mean_SAR": 12.67022663131722,
+    "mean_ISR": 17.8256025654788
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 4.803222521259776,
+    "mean_SIR": 9.565795288890973,
+    "mean_SAR": 5.482367925904609,
+    "mean_ISR": 8.150013496941357
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 10.116329433296338,
+    "mean_SIR": 12.929566125130792,
+    "mean_SAR": 12.87572809021606,
+    "mean_ISR": 17.813191161027078
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 4.862317452283151,
+    "mean_SIR": 10.209722409140312,
+    "mean_SAR": 6.042907210272304,
+    "mean_ISR": 8.365020700653906
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 10.173582116846513,
+    "mean_SIR": 13.25817936741354,
+    "mean_SAR": 13.321700007325816,
+    "mean_ISR": 18.041911344592364
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 5.8766239307168435,
+    "mean_SIR": 9.165707824863409,
+    "mean_SAR": 7.4122349359357855,
+    "mean_ISR": 15.093061848605648
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 11.182159319724235,
+    "mean_SIR": 19.45902652147355,
+    "mean_SAR": 12.619743360056122,
+    "mean_ISR": 15.672003667063427
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 5.118384312417554,
+    "mean_SIR": 11.089149158239158,
+    "mean_SAR": 5.306684390571839,
+    "mean_ISR": 7.7564370047867355
+  },
+  {
+    "track": "Raft Monk - Tiring",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 10.424781324444114,
+    "mean_SIR": 12.72747615826355,
+    "mean_SAR": 13.419944709865916,
+    "mean_ISR": 19.36828846753491
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 11.76138913750581,
+    "mean_SIR": 17.843250424704618,
+    "mean_SAR": 13.132208150225743,
+    "mean_ISR": 18.965576683031532
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 15.845374759570207,
+    "mean_SIR": 22.689264200894232,
+    "mean_SAR": 17.16458760734417,
+    "mean_ISR": 22.570846321472043
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 13.124785897163198,
+    "mean_SIR": 17.57820282541492,
+    "mean_SAR": 14.186101611977433,
+    "mean_ISR": 21.713534197721586
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 17.05283209968726,
+    "mean_SIR": 24.755500760830937,
+    "mean_SAR": 17.991235596300438,
+    "mean_ISR": 22.240500775347233
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 11.180747833082984,
+    "mean_SIR": 13.899898211116975,
+    "mean_SAR": 11.736348878105064,
+    "mean_ISR": 19.006303839965103
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 13.347223773797964,
+    "mean_SIR": 21.08142666617162,
+    "mean_SAR": 13.693912858049659,
+    "mean_ISR": 18.855992810599364
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 9.439595571931568,
+    "mean_SIR": 15.288196119548658,
+    "mean_SAR": 10.89296629574425,
+    "mean_ISR": 12.774360381536662
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 13.689271391106049,
+    "mean_SIR": 16.62134955124122,
+    "mean_SAR": 15.506328284678256,
+    "mean_ISR": 20.822893229266516
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 9.090347510038894,
+    "mean_SIR": 14.026855298317122,
+    "mean_SAR": 11.387363092533334,
+    "mean_ISR": 12.89279298463498
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 13.338621050571204,
+    "mean_SIR": 16.72687563215675,
+    "mean_SAR": 15.894747704346793,
+    "mean_ISR": 19.292188363454347
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 9.743642549552971,
+    "mean_SIR": 11.12374373879382,
+    "mean_SAR": 12.11592828129058,
+    "mean_ISR": 22.254242166047447
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 13.944987034190413,
+    "mean_SIR": 22.79884553380033,
+    "mean_SAR": 15.266298949557205,
+    "mean_ISR": 16.10032915416099
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 9.312498512019527,
+    "mean_SIR": 18.23804900687235,
+    "mean_SAR": 10.39068828968132,
+    "mean_ISR": 11.958054465765139
+  },
+  {
+    "track": "Sambasevam Shanmugam - Kaathaadi",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 13.452176335948955,
+    "mean_SIR": 15.837690286462367,
+    "mean_SAR": 15.366163932574572,
+    "mean_ISR": 21.648147786072908
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 7.673648289836162,
+    "mean_SIR": 12.968149730575654,
+    "mean_SAR": 8.46080122204493,
+    "mean_ISR": 16.094839563102465
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 9.681739698364757,
+    "mean_SIR": 17.252751771234415,
+    "mean_SAR": 10.428331254472193,
+    "mean_ISR": 15.79523845309518
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 8.864458398885173,
+    "mean_SIR": 13.685065645524157,
+    "mean_SAR": 9.358994852907022,
+    "mean_ISR": 16.247648907817457
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 11.0296906007363,
+    "mean_SIR": 17.14315668749458,
+    "mean_SAR": 11.639958646298297,
+    "mean_ISR": 17.351125153808603
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 8.634806668184803,
+    "mean_SIR": 14.385294441435354,
+    "mean_SAR": 9.065668097280362,
+    "mean_ISR": 13.832046031704962
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 10.461545887863165,
+    "mean_SIR": 14.995647508243446,
+    "mean_SAR": 11.502097909675214,
+    "mean_ISR": 18.469137157964763
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 7.214464670388208,
+    "mean_SIR": 11.385125422378929,
+    "mean_SAR": 7.551414214369145,
+    "mean_ISR": 14.410250608361762
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 9.416047990228245,
+    "mean_SIR": 14.203167726253575,
+    "mean_SAR": 9.630339608209328,
+    "mean_ISR": 15.851837712934952
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 6.978390409015123,
+    "mean_SIR": 11.54638840392316,
+    "mean_SAR": 7.344652195454192,
+    "mean_ISR": 12.960952957634616
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 9.180559752188568,
+    "mean_SIR": 13.709077876254069,
+    "mean_SAR": 9.831203136010053,
+    "mean_ISR": 16.081948656186007
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 7.165911607699365,
+    "mean_SIR": 11.158882261269708,
+    "mean_SAR": 8.404083863398972,
+    "mean_ISR": 16.12994662511181
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 9.365088526531638,
+    "mean_SIR": 16.758257357548608,
+    "mean_SAR": 9.891193465146523,
+    "mean_ISR": 14.520013605202392
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 6.749208095552981,
+    "mean_SIR": 13.454346676547864,
+    "mean_SAR": 7.2262667769730315,
+    "mean_ISR": 10.238285105567515
+  },
+  {
+    "track": "Secretariat - Borderline",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 9.057276234924684,
+    "mean_SIR": 11.527068014988584,
+    "mean_SAR": 10.455177258277201,
+    "mean_ISR": 17.31125186239049
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 9.136243284865479,
+    "mean_SIR": 18.08920738457009,
+    "mean_SAR": 9.632776894129847,
+    "mean_ISR": 16.806236897427947
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 17.12155559536914,
+    "mean_SIR": 27.376449012260196,
+    "mean_SAR": 17.964636125794225,
+    "mean_ISR": 24.880666344278
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 9.40017034166525,
+    "mean_SIR": 18.19713904389987,
+    "mean_SAR": 10.083033403746622,
+    "mean_ISR": 16.265304133503083
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 17.679947397603062,
+    "mean_SIR": 26.528023067193715,
+    "mean_SAR": 18.531410471130766,
+    "mean_ISR": 26.713452761447204
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 8.95150446013735,
+    "mean_SIR": 16.894022298236347,
+    "mean_SAR": 9.666148447180701,
+    "mean_ISR": 16.146707321640104
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 14.907767719907392,
+    "mean_SIR": 26.26867437477904,
+    "mean_SAR": 15.812900157353509,
+    "mean_ISR": 24.637366675513302
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 6.382068383565401,
+    "mean_SIR": 11.6340598965065,
+    "mean_SAR": 7.958735124992631,
+    "mean_ISR": 16.903181024328614
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 15.314487429510777,
+    "mean_SIR": 26.845786383841546,
+    "mean_SAR": 15.763934943760441,
+    "mean_ISR": 21.505808855043465
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 5.539894526117884,
+    "mean_SIR": 8.360611826155266,
+    "mean_SAR": 7.423417225581922,
+    "mean_ISR": 17.898992943786716
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 14.664102640505812,
+    "mean_SIR": 26.464237314692667,
+    "mean_SAR": 14.616626011618342,
+    "mean_ISR": 18.63944759956851
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 6.961827998108817,
+    "mean_SIR": 13.062951805649334,
+    "mean_SAR": 8.201741263987431,
+    "mean_ISR": 17.027006734750216
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 15.806474675229682,
+    "mean_SIR": 26.96655699568719,
+    "mean_SAR": 16.126156774957543,
+    "mean_ISR": 22.76913420689816
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 7.077085817670214,
+    "mean_SIR": 14.946550207808253,
+    "mean_SAR": 7.796835457513548,
+    "mean_ISR": 11.490728682810852
+  },
+  {
+    "track": "Secretariat - Over The Top",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 14.156729165578136,
+    "mean_SIR": 21.628432289831334,
+    "mean_SAR": 16.504877782424618,
+    "mean_ISR": 18.547400791340298
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 12.848807136339596,
+    "mean_SIR": 16.823900663714408,
+    "mean_SAR": 12.447489585751855,
+    "mean_ISR": 22.23323964674482
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 15.449689006782945,
+    "mean_SIR": 24.554814587809073,
+    "mean_SAR": 15.087825055616776,
+    "mean_ISR": 20.259958235955192
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 13.79796947668747,
+    "mean_SIR": 20.464939456898225,
+    "mean_SAR": 13.954639697755445,
+    "mean_ISR": 21.97006001623711
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 16.387866558869643,
+    "mean_SIR": 25.211270932672935,
+    "mean_SAR": 16.650168555945054,
+    "mean_ISR": 23.02712264997182
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 12.66065185213131,
+    "mean_SIR": 16.81486067245519,
+    "mean_SAR": 12.569380805724498,
+    "mean_ISR": 21.208143571555258
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 14.881880424064109,
+    "mean_SIR": 23.532933915853192,
+    "mean_SAR": 15.01186457829463,
+    "mean_ISR": 19.49293800868016
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 10.120565440566736,
+    "mean_SIR": 11.60159177866185,
+    "mean_SAR": 10.382359545309145,
+    "mean_ISR": 21.636735831070336
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 12.859706652024405,
+    "mean_SIR": 22.165965800554215,
+    "mean_SAR": 12.58126713776961,
+    "mean_ISR": 15.239804001453871
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 10.071403214624675,
+    "mean_SIR": 10.47720033750777,
+    "mean_SAR": 9.831718673448194,
+    "mean_ISR": 21.272240973851424
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 12.803083818780246,
+    "mean_SIR": 21.25133795404204,
+    "mean_SAR": 11.990685859308948,
+    "mean_ISR": 14.30550434545995
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 10.615075678056632,
+    "mean_SIR": 15.80568764515256,
+    "mean_SAR": 11.645476884277228,
+    "mean_ISR": 20.124238790727382
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 13.32819571121483,
+    "mean_SIR": 22.87048808554117,
+    "mean_SAR": 14.09855119397997,
+    "mean_ISR": 18.16152467992769
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 9.506048481870375,
+    "mean_SIR": 13.166233797042329,
+    "mean_SAR": 9.276337553436681,
+    "mean_ISR": 13.780234484144506
+  },
+  {
+    "track": "Side Effects Project - Sing With Me",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 12.700018246512458,
+    "mean_SIR": 18.55008514469934,
+    "mean_SAR": 12.301797917838856,
+    "mean_ISR": 15.84388270181065
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 11.482526775956073,
+    "mean_SIR": 18.243572058462156,
+    "mean_SAR": 10.315106000430927,
+    "mean_ISR": 14.093299136935281
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 14.533991045880894,
+    "mean_SIR": 17.605677707382632,
+    "mean_SAR": 14.151323070784622,
+    "mean_ISR": 21.098403029819973
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 11.59494465806022,
+    "mean_SIR": 18.271905596464258,
+    "mean_SAR": 10.459197927080615,
+    "mean_ISR": 13.781659407303474
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 14.831648218243116,
+    "mean_SIR": 17.240589427582034,
+    "mean_SAR": 14.450479458891301,
+    "mean_ISR": 22.05435137406118
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 10.9084200500893,
+    "mean_SIR": 17.824993414088258,
+    "mean_SAR": 9.975582973994905,
+    "mean_ISR": 13.065183983860981
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 12.342970642561072,
+    "mean_SIR": 16.47336944917919,
+    "mean_SAR": 12.10360409419989,
+    "mean_ISR": 20.654033938514843
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 7.97558799396258,
+    "mean_SIR": 13.431800667419457,
+    "mean_SAR": 6.477996279718142,
+    "mean_ISR": 9.474130666042583
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 11.455614862727993,
+    "mean_SIR": 12.00232529671741,
+    "mean_SAR": 10.381084953864693,
+    "mean_ISR": 18.370823234364263
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 8.052268396674942,
+    "mean_SIR": 12.684229923549337,
+    "mean_SAR": 7.15688831244427,
+    "mean_ISR": 11.064600099758325
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 11.53468048573088,
+    "mean_SIR": 13.823640663405689,
+    "mean_SAR": 10.532789608162842,
+    "mean_ISR": 16.638909778215226
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 8.80810151982348,
+    "mean_SIR": 14.24715206302835,
+    "mean_SAR": 9.460689240086676,
+    "mean_ISR": 14.24135374402625
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 12.256680269898197,
+    "mean_SIR": 18.030839814843613,
+    "mean_SAR": 12.979253796239142,
+    "mean_ISR": 18.047815678761957
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 8.956044101771754,
+    "mean_SIR": 17.176412920961173,
+    "mean_SAR": 7.097688631347947,
+    "mean_ISR": 9.437823516594591
+  },
+  {
+    "track": "Signe Jakobsen - What Have You Done To Me",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 12.418856484171355,
+    "mean_SIR": 12.164111924248894,
+    "mean_SAR": 11.335237511737802,
+    "mean_ISR": 22.244140196023054
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 0.32295401580247346,
+    "mean_SIR": 4.829234835930193,
+    "mean_SAR": -1.5904678172207722,
+    "mean_ISR": 0.34851559626234346
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 5.850542961610056,
+    "mean_SIR": 6.2080473163915455,
+    "mean_SAR": 20.391714896031043,
+    "mean_ISR": 17.612533537464667
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 3.2696915525933044,
+    "mean_SIR": 4.965819097312134,
+    "mean_SAR": 4.795959156570178,
+    "mean_ISR": 3.689942589250115
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 8.767035592200228,
+    "mean_SIR": 9.514773264437139,
+    "mean_SAR": 16.27168393861486,
+    "mean_ISR": 16.122034507584335
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 0.0826955764771876,
+    "mean_SIR": 6.329721685150599,
+    "mean_SAR": -4.500939652311749,
+    "mean_ISR": 0.08061308508665192
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 5.4943747086965615,
+    "mean_SIR": 5.603851145061121,
+    "mean_SAR": 18.688913006967685,
+    "mean_ISR": 16.686381121891603
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 0.27932366728723884,
+    "mean_SIR": -0.4594625877273349,
+    "mean_SAR": -1.1260330788985502,
+    "mean_ISR": 0.5645546612639646
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 5.731121617830076,
+    "mean_SIR": 6.271243554248806,
+    "mean_SAR": 18.026088468603845,
+    "mean_ISR": 17.188370764139382
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 0.020277011694117067,
+    "mean_SIR": -15.659801045721274,
+    "mean_SAR": -0.27882876515803523,
+    "mean_ISR": 0.026350325297545673
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 5.479747466712794,
+    "mean_SIR": 5.812881944072906,
+    "mean_SAR": 21.45995268151832,
+    "mean_ISR": 17.819870848812172
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 3.527144840764333,
+    "mean_SIR": 4.821239234217324,
+    "mean_SAR": 3.917810895947867,
+    "mean_ISR": 5.68946080760227
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 8.863337675742606,
+    "mean_SIR": 11.024253289588197,
+    "mean_SAR": 11.163389802010009,
+    "mean_ISR": 13.255980168851908
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 0.6389676782634292,
+    "mean_SIR": 3.6747028743658183,
+    "mean_SAR": -0.5065496472100495,
+    "mean_ISR": 0.6828104146585567
+  },
+  {
+    "track": "Skelpolu - Resurrection",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 5.641071628633239,
+    "mean_SIR": 6.338872234687872,
+    "mean_SAR": 15.017967576775092,
+    "mean_ISR": 12.319588199473126
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 7.118253612173337,
+    "mean_SIR": 12.220909770221638,
+    "mean_SAR": 7.1082359288498465,
+    "mean_ISR": 10.540515472567426
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 18.044482602290888,
+    "mean_SIR": 22.146605145376398,
+    "mean_SAR": 19.23787724136061,
+    "mean_ISR": 24.228551922448798
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 7.894146027478137,
+    "mean_SIR": 10.506532315928508,
+    "mean_SAR": 8.547843060063345,
+    "mean_ISR": 13.667997871071345
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 18.842915126841337,
+    "mean_SIR": 25.528415203462526,
+    "mean_SAR": 20.04734991109029,
+    "mean_ISR": 22.71310864347007
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 5.205972515026484,
+    "mean_SIR": 8.093372856550863,
+    "mean_SAR": 6.761711749268308,
+    "mean_ISR": 10.587723008830276
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 14.332808169208052,
+    "mean_SIR": 22.117878787759157,
+    "mean_SAR": 16.407049453273874,
+    "mean_ISR": 19.897328519557412
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 3.2064379022291924,
+    "mean_SIR": 5.75355734407626,
+    "mean_SAR": 5.143159111444969,
+    "mean_ISR": 7.418060709948672
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 14.494506256270947,
+    "mean_SIR": 18.484089560264096,
+    "mean_SAR": 16.55690366930987,
+    "mean_ISR": 18.921655269512996
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 2.55977206205624,
+    "mean_SIR": 4.363937237466067,
+    "mean_SAR": 4.796382534703381,
+    "mean_ISR": 7.017920078782002
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 13.851861426620765,
+    "mean_SIR": 17.96438903413078,
+    "mean_SAR": 15.78252412860919,
+    "mean_ISR": 17.571604564095825
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 3.816350186857522,
+    "mean_SIR": 4.193705922839325,
+    "mean_SAR": 6.640136868873216,
+    "mean_ISR": 13.111925638622248
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 15.038278311128801,
+    "mean_SIR": 24.927495823119013,
+    "mean_SAR": 16.54974553059169,
+    "mean_ISR": 16.48931900463526
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 4.129616257620422,
+    "mean_SIR": 9.738139259733426,
+    "mean_SAR": 4.795612125664804,
+    "mean_ISR": 5.8771581243209665
+  },
+  {
+    "track": "Speak Softly - Broken Man",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 14.911766043630237,
+    "mean_SIR": 17.188959047996295,
+    "mean_SAR": 17.729706359848453,
+    "mean_ISR": 21.348123767854577
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 7.370884029562153,
+    "mean_SIR": 13.87954678203773,
+    "mean_SAR": 8.105276135981947,
+    "mean_ISR": 9.612082374180337
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 12.163582654267431,
+    "mean_SIR": 14.344761128013824,
+    "mean_SAR": 15.36449901560024,
+    "mean_ISR": 21.334855451049027
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 8.58810730603473,
+    "mean_SIR": 11.994916398337608,
+    "mean_SAR": 10.29210565248903,
+    "mean_ISR": 14.385816159348382
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 13.258336022491719,
+    "mean_SIR": 18.81973617962748,
+    "mean_SAR": 15.537090375744079,
+    "mean_ISR": 18.02957773229777
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 7.232946343165119,
+    "mean_SIR": 10.851705898627971,
+    "mean_SAR": 8.7169270922663,
+    "mean_ISR": 12.24226446409763
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 11.781888599636815,
+    "mean_SIR": 16.30418066519074,
+    "mean_SAR": 13.958037345539116,
+    "mean_ISR": 17.637480632056484
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 5.496123068676996,
+    "mean_SIR": 9.495505475330637,
+    "mean_SAR": 6.686369439007933,
+    "mean_ISR": 10.791399779799972
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 10.223879123271661,
+    "mean_SIR": 14.658132923347244,
+    "mean_SAR": 12.340019163650771,
+    "mean_ISR": 16.402523615391118
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 5.783126546723953,
+    "mean_SIR": 8.892851601968458,
+    "mean_SAR": 7.704441818238756,
+    "mean_ISR": 13.226166803711775
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 10.508072073880124,
+    "mean_SIR": 17.108385243305904,
+    "mean_SAR": 12.367873174292038,
+    "mean_ISR": 14.977734500744367
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 6.297463432549068,
+    "mean_SIR": 9.06545315554319,
+    "mean_SAR": 8.168843991764044,
+    "mean_ISR": 13.476524458333243
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 10.99716557983613,
+    "mean_SIR": 16.56269566311837,
+    "mean_SAR": 12.653418906375078,
+    "mean_ISR": 15.283077500178289
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 4.7995630290170865,
+    "mean_SIR": 8.410312616791982,
+    "mean_SAR": 6.386105261085632,
+    "mean_ISR": 8.700014774905895
+  },
+  {
+    "track": "Speak Softly - Like Horses",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 9.48278560982058,
+    "mean_SIR": 11.997018690299948,
+    "mean_SAR": 11.906920561811779,
+    "mean_ISR": 15.512688756010467
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 7.601248201072617,
+    "mean_SIR": 12.808041254490334,
+    "mean_SAR": 8.198039950986292,
+    "mean_ISR": 10.961544445768938
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 12.327242673992815,
+    "mean_SIR": 15.824630466439595,
+    "mean_SAR": 13.733505695765771,
+    "mean_ISR": 17.84857166237081
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 9.344850759992513,
+    "mean_SIR": 14.002837421797304,
+    "mean_SAR": 10.001682867618477,
+    "mean_ISR": 13.980197461530366
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 13.861904626562323,
+    "mean_SIR": 18.594111551602452,
+    "mean_SAR": 15.19706278119888,
+    "mean_ISR": 19.02541476818459
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 7.681007725413102,
+    "mean_SIR": 13.111766090840328,
+    "mean_SAR": 8.001373568465567,
+    "mean_ISR": 10.909758654592101
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 11.485622248443248,
+    "mean_SIR": 15.06005641066134,
+    "mean_SAR": 12.84797527801448,
+    "mean_ISR": 18.311191097478304
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 6.189960116715471,
+    "mean_SIR": 14.574743751601849,
+    "mean_SAR": 6.263749248029591,
+    "mean_ISR": 7.572077982443228
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 10.771826290087837,
+    "mean_SIR": 12.089311358834456,
+    "mean_SAR": 12.212260385923372,
+    "mean_ISR": 20.235996130653906
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 5.974339217008133,
+    "mean_SIR": 15.535744815518655,
+    "mean_SAR": 6.046090658310818,
+    "mean_ISR": 7.22741350436502
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 10.555616767285473,
+    "mean_SIR": 11.78818312284484,
+    "mean_SAR": 12.428123952943205,
+    "mean_ISR": 21.454892571050593
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 6.720936860221101,
+    "mean_SIR": 15.309162760040659,
+    "mean_SAR": 7.239645133453372,
+    "mean_ISR": 9.446052866329158
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 11.303120226593938,
+    "mean_SIR": 14.039113680025777,
+    "mean_SAR": 13.403023313412504,
+    "mean_ISR": 21.02918767922075
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 5.3642638868908215,
+    "mean_SIR": 19.12847151653073,
+    "mean_SAR": 5.212253545486424,
+    "mean_ISR": 6.098945168032981
+  },
+  {
+    "track": "The Doppler Shift - Atrophy",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 10.134906357465537,
+    "mean_SIR": 11.185902017591088,
+    "mean_SAR": 12.781712645631117,
+    "mean_ISR": 24.72736257655804
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 5.129407820893351,
+    "mean_SIR": 9.877008517257043,
+    "mean_SAR": 6.400772034111884,
+    "mean_ISR": 8.28227686354249
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 8.252539063761025,
+    "mean_SIR": 11.293800402010369,
+    "mean_SAR": 11.53300791433198,
+    "mean_ISR": 14.693003265299344
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 6.538242716671626,
+    "mean_SIR": 11.016611441557197,
+    "mean_SAR": 7.966568365486817,
+    "mean_ISR": 11.094443087063906
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 9.537803241874208,
+    "mean_SIR": 14.040073728327227,
+    "mean_SAR": 12.215283425836319,
+    "mean_ISR": 15.238812170668105
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 5.28593249064154,
+    "mean_SIR": 7.98696463005563,
+    "mean_SAR": 7.413549349159804,
+    "mean_ISR": 10.645489817546276
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 7.518568505646459,
+    "mean_SIR": 11.944941499766331,
+    "mean_SAR": 9.251812958708538,
+    "mean_ISR": 12.87522519164074
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 3.365710902577364,
+    "mean_SIR": 7.698665197193219,
+    "mean_SAR": 4.002655015990633,
+    "mean_ISR": 5.834847116849432
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 6.450444934675489,
+    "mean_SIR": 8.187527840818024,
+    "mean_SAR": 9.605982512562134,
+    "mean_ISR": 14.250754815484909
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 3.7994687469127544,
+    "mean_SIR": 7.686823655013743,
+    "mean_SAR": 4.790911992891476,
+    "mean_ISR": 6.887351481834106
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 6.873877082086207,
+    "mean_SIR": 9.251392636304558,
+    "mean_SAR": 9.840915659759476,
+    "mean_ISR": 13.900334678841963
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 4.225936339791133,
+    "mean_SIR": 7.269474509185216,
+    "mean_SAR": 6.10831221034008,
+    "mean_ISR": 10.533685228792534
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 7.311607046187478,
+    "mean_SIR": 12.93102341880409,
+    "mean_SAR": 9.578647862815258,
+    "mean_ISR": 12.334914021347396
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 4.984517506092009,
+    "mean_SIR": 12.320126514667976,
+    "mean_SAR": 5.318007949941619,
+    "mean_ISR": 8.803582183509706
+  },
+  {
+    "track": "The Easton Ellises (Baumi) - SDRNR",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 7.067098078071446,
+    "mean_SIR": 11.286819041055802,
+    "mean_SAR": 9.88808887472245,
+    "mean_ISR": 12.076393446520614
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 3.9636054837815013,
+    "mean_SIR": 12.441131744415351,
+    "mean_SAR": 4.91073451744365,
+    "mean_ISR": 4.614146404080864
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 8.551800979017452,
+    "mean_SIR": 9.031638090803364,
+    "mean_SAR": 14.898490022415599,
+    "mean_ISR": 20.906307239319094
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 4.676693335745363,
+    "mean_SIR": 14.805667859855939,
+    "mean_SAR": 7.548400405660783,
+    "mean_ISR": 5.8218726390732165
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 9.20706810543403,
+    "mean_SIR": 10.249885739371786,
+    "mean_SAR": 16.31334341754114,
+    "mean_ISR": 21.633906988024325
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 2.5261046502082976,
+    "mean_SIR": 6.951181984753767,
+    "mean_SAR": 2.8237094263168316,
+    "mean_ISR": 3.023925089111463
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 6.830787073633338,
+    "mean_SIR": 7.1013436575650495,
+    "mean_SAR": 13.796500346909758,
+    "mean_ISR": 17.100517328066946
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 4.566487408472515,
+    "mean_SIR": 7.498731743002168,
+    "mean_SAR": 6.3813361777648225,
+    "mean_ISR": 7.941342435588944
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 9.128873819708568,
+    "mean_SIR": 11.319812394077381,
+    "mean_SAR": 11.517032903612652,
+    "mean_ISR": 14.475728079902133
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 3.0316679969060867,
+    "mean_SIR": 3.627510795248971,
+    "mean_SAR": 7.022113944731356,
+    "mean_ISR": 10.070683757870436
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 7.614075236953478,
+    "mean_SIR": 12.125539466819397,
+    "mean_SAR": 9.9857320600588,
+    "mean_ISR": 9.902816165184573
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 3.825763123565846,
+    "mean_SIR": 9.015416075097368,
+    "mean_SAR": 4.400806052798278,
+    "mean_ISR": 5.3955862358441
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 8.408526266079848,
+    "mean_SIR": 9.517700846821263,
+    "mean_SAR": 12.63770253925162,
+    "mean_ISR": 18.117112380302586
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 4.157212098202654,
+    "mean_SIR": 9.235333368768666,
+    "mean_SAR": 5.2744286927290025,
+    "mean_ISR": 7.021921366554927
+  },
+  {
+    "track": "The Easton Ellises - Falcon 69",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 8.67896657858026,
+    "mean_SIR": 11.230538749729567,
+    "mean_SAR": 12.40857321103391,
+    "mean_ISR": 16.410731549768258
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 9.658078421561633,
+    "mean_SIR": 14.470820456454051,
+    "mean_SAR": 10.042568117744585,
+    "mean_ISR": 17.876682404757638
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 13.530694516453302,
+    "mean_SIR": 21.35821110135286,
+    "mean_SAR": 14.14729393111042,
+    "mean_ISR": 19.57613211899245
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 9.983875467942683,
+    "mean_SIR": 14.978035315887832,
+    "mean_SAR": 10.410270867900204,
+    "mean_ISR": 17.64148182194425
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 13.959330715210264,
+    "mean_SIR": 21.63750802106077,
+    "mean_SAR": 14.719441340164076,
+    "mean_ISR": 19.934775000801537
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 9.161433979769672,
+    "mean_SIR": 14.278428071569849,
+    "mean_SAR": 9.43962212439328,
+    "mean_ISR": 14.603529679548144
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 12.286510817116104,
+    "mean_SIR": 18.157882260494492,
+    "mean_SAR": 13.10764361006549,
+    "mean_ISR": 19.43362298229524
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 7.607812431836581,
+    "mean_SIR": 11.696067287739714,
+    "mean_SAR": 7.725031338996153,
+    "mean_ISR": 13.994870647243426
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 11.632184533730026,
+    "mean_SIR": 16.48936461678409,
+    "mean_SAR": 12.230966768749449,
+    "mean_ISR": 17.91056113797318
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 7.232614955347337,
+    "mean_SIR": 11.460910116982992,
+    "mean_SAR": 7.525009454767527,
+    "mean_ISR": 13.327698301223009
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 11.26310948305719,
+    "mean_SIR": 16.35708695565244,
+    "mean_SAR": 12.245635421667984,
+    "mean_ISR": 17.546893298496613
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 8.601389891830202,
+    "mean_SIR": 12.020674764064433,
+    "mean_SAR": 8.440188974544073,
+    "mean_ISR": 16.517283532846797
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 12.608647190932858,
+    "mean_SIR": 18.045295185643813,
+    "mean_SAR": 12.249215470606293,
+    "mean_ISR": 17.65696453290815
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 7.9607618210482185,
+    "mean_SIR": 13.343831277327965,
+    "mean_SAR": 8.106670186207472,
+    "mean_ISR": 12.217751930851863
+  },
+  {
+    "track": "The Long Wait - Dark Horses",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 12.010718407600924,
+    "mean_SIR": 17.16905423208938,
+    "mean_SAR": 12.752869008309057,
+    "mean_ISR": 17.76496549909015
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 7.601131570743971,
+    "mean_SIR": 14.920005713903558,
+    "mean_SAR": 8.43225562358039,
+    "mean_ISR": 14.402283717891573
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 16.779092429999828,
+    "mean_SIR": 24.355924515697904,
+    "mean_SAR": 17.732598044962472,
+    "mean_ISR": 24.140314292543053
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 8.919693041457085,
+    "mean_SIR": 15.233175158983576,
+    "mean_SAR": 9.365579308509025,
+    "mean_ISR": 14.306075354542628
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 17.828959600074004,
+    "mean_SIR": 24.195365886093967,
+    "mean_SAR": 18.66032145937826,
+    "mean_ISR": 24.50350367362773
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 8.33430804199215,
+    "mean_SIR": 13.050768942815191,
+    "mean_SAR": 8.741269443053637,
+    "mean_ISR": 14.098952338616783
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 15.934890675239131,
+    "mean_SIR": 23.858013912688715,
+    "mean_SAR": 16.824139524151633,
+    "mean_ISR": 23.02322856103416
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 6.791903874327738,
+    "mean_SIR": 12.282085488122727,
+    "mean_SAR": 7.186949769819741,
+    "mean_ISR": 13.243805907254925
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 16.062740300132095,
+    "mean_SIR": 22.91565524105495,
+    "mean_SAR": 16.578925672609675,
+    "mean_ISR": 22.299950705216105
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 6.246307375776413,
+    "mean_SIR": 11.388681648983855,
+    "mean_SAR": 6.8962650323860615,
+    "mean_ISR": 12.240251648566284
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 15.60472891707264,
+    "mean_SIR": 21.875514360043255,
+    "mean_SAR": 16.395579343568645,
+    "mean_ISR": 21.5546085134041
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 7.090583574877719,
+    "mean_SIR": 11.039617932749929,
+    "mean_SAR": 7.87759224631749,
+    "mean_ISR": 16.06799194804319
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 16.37342128035084,
+    "mean_SIR": 25.95994243058207,
+    "mean_SAR": 16.696064172573614,
+    "mean_ISR": 20.94060133669851
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 7.08688583863798,
+    "mean_SIR": 11.869782823469814,
+    "mean_SAR": 7.4072758550293285,
+    "mean_ISR": 12.872869635748273
+  },
+  {
+    "track": "The Mountaineering Club - Mallory",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 16.02530894723745,
+    "mean_SIR": 22.68539344313862,
+    "mean_SAR": 16.480842557263756,
+    "mean_ISR": 20.110095279644224
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 11.581470873471412,
+    "mean_SIR": 19.25854847079352,
+    "mean_SAR": 12.288577490182467,
+    "mean_ISR": 20.18532542448386
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 15.910740640578595,
+    "mean_SIR": 24.32466091687834,
+    "mean_SAR": 16.717693840537752,
+    "mean_ISR": 23.238022718848764
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 12.544870711699732,
+    "mean_SIR": 20.165723402352246,
+    "mean_SAR": 13.06665641885494,
+    "mean_ISR": 20.870485183404515
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 16.958745502511082,
+    "mean_SIR": 24.867981443002744,
+    "mean_SAR": 17.728597616616778,
+    "mean_ISR": 25.402870279466583
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 11.27136560624642,
+    "mean_SIR": 16.93231111032418,
+    "mean_SAR": 11.97569617317405,
+    "mean_ISR": 20.21798365140911
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 14.518060460406707,
+    "mean_SIR": 23.41386329284661,
+    "mean_SAR": 15.291921094473993,
+    "mean_ISR": 21.91682073123499
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 9.312426410339219,
+    "mean_SIR": 15.346752430619594,
+    "mean_SAR": 10.047026967317152,
+    "mean_ISR": 18.153504353218175
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 13.835665858533753,
+    "mean_SIR": 21.356943291733984,
+    "mean_SAR": 14.569310373839395,
+    "mean_ISR": 20.87099828151513
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 9.024416726420727,
+    "mean_SIR": 14.241257534601901,
+    "mean_SAR": 9.735873873607035,
+    "mean_ISR": 19.2521691985693
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 13.540758947314453,
+    "mean_SIR": 22.037717883906073,
+    "mean_SAR": 14.116667072249092,
+    "mean_ISR": 19.835970812293834
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 9.550712091792565,
+    "mean_SIR": 14.782462618684754,
+    "mean_SAR": 10.452370827173386,
+    "mean_ISR": 20.128257454286313
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 14.060371678289883,
+    "mean_SIR": 22.709503274927858,
+    "mean_SAR": 14.579661975116563,
+    "mean_ISR": 19.914517179281265
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 8.71254512519779,
+    "mean_SIR": 15.573766818333143,
+    "mean_SAR": 9.089852974844263,
+    "mean_ISR": 15.298114251447723
+  },
+  {
+    "track": "The Sunshine Garcia Band - For I Am The Moon",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 13.127676437254086,
+    "mean_SIR": 17.653287818329648,
+    "mean_SAR": 13.12937668824045,
+    "mean_ISR": 19.83601923735331
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 6.166112220578107,
+    "mean_SIR": 12.801289331070407,
+    "mean_SAR": 6.169728474339659,
+    "mean_ISR": 8.478514369316235
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 15.084647682767704,
+    "mean_SIR": 17.959958774657824,
+    "mean_SAR": 16.753399570472272,
+    "mean_ISR": 23.432720424306826
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 6.3680288151863005,
+    "mean_SIR": 12.658403435322995,
+    "mean_SAR": 6.2394837147023345,
+    "mean_ISR": 8.676919530073674
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 15.36994610462107,
+    "mean_SIR": 17.932740430885538,
+    "mean_SAR": 16.95794434707518,
+    "mean_ISR": 23.610464506582222
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 5.815799276086465,
+    "mean_SIR": 10.58980861201466,
+    "mean_SAR": 6.296121727312104,
+    "mean_ISR": 9.436954880118662
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 13.679329858001516,
+    "mean_SIR": 18.519549907366322,
+    "mean_SAR": 15.130159134629414,
+    "mean_ISR": 20.01357682315096
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 4.133977300574588,
+    "mean_SIR": 6.708193233648366,
+    "mean_SAR": 5.589432203039601,
+    "mean_ISR": 11.045039233019422
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 13.278230821735846,
+    "mean_SIR": 20.155652829801195,
+    "mean_SAR": 14.96201298119239,
+    "mean_ISR": 17.146473479222326
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 3.164234395405288,
+    "mean_SIR": 6.311219171526705,
+    "mean_SAR": 4.4092355255950375,
+    "mean_ISR": 8.20781531059882
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 12.339451023751957,
+    "mean_SIR": 17.02528161288532,
+    "mean_SAR": 14.944014256098413,
+    "mean_ISR": 18.16295489101038
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 3.5240984225000926,
+    "mean_SIR": 7.1404983922578396,
+    "mean_SAR": 4.7695018699362,
+    "mean_ISR": 7.705064176502451
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 12.692913066415803,
+    "mean_SIR": 16.709008559638438,
+    "mean_SAR": 15.953154559842245,
+    "mean_ISR": 19.536414313064604
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 4.254920170627192,
+    "mean_SIR": 9.375499829861221,
+    "mean_SAR": 4.13291877292859,
+    "mean_ISR": 6.320131477031242
+  },
+  {
+    "track": "Timboz - Pony",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 13.331455894952455,
+    "mean_SIR": 15.590324122615444,
+    "mean_SAR": 16.689665777392843,
+    "mean_ISR": 22.89817862706592
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 7.293572373528735,
+    "mean_SIR": 14.378893737665829,
+    "mean_SAR": 8.551845852996255,
+    "mean_ISR": 11.05071145725348
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 16.777368268530214,
+    "mean_SIR": 20.970921044770513,
+    "mean_SAR": 18.04270296173265,
+    "mean_ISR": 23.061660390136527
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 8.934124981715112,
+    "mean_SIR": 14.976940930604913,
+    "mean_SAR": 9.207042166497544,
+    "mean_ISR": 14.391583882804497
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 18.430948209684004,
+    "mean_SIR": 24.632556435737257,
+    "mean_SAR": 18.83530318975022,
+    "mean_ISR": 23.653919975665815
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 7.58397678149187,
+    "mean_SIR": 13.856523842641671,
+    "mean_SAR": 8.474206113383593,
+    "mean_ISR": 11.383341515737436
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 15.818828095336988,
+    "mean_SIR": 22.072882731297796,
+    "mean_SAR": 16.22600003280229,
+    "mean_ISR": 22.932733407550185
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 6.214257818054502,
+    "mean_SIR": 10.70461218988985,
+    "mean_SAR": 6.861408562667269,
+    "mean_ISR": 9.548562422703755
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 15.83065629104086,
+    "mean_SIR": 19.28788824919498,
+    "mean_SAR": 16.581817071164306,
+    "mean_ISR": 20.298363770968468
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 6.35487431629612,
+    "mean_SIR": 10.699431519029906,
+    "mean_SAR": 6.938139113151013,
+    "mean_ISR": 9.38564502611844
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 15.971934515065719,
+    "mean_SIR": 19.14684654169976,
+    "mean_SAR": 16.815271628682268,
+    "mean_ISR": 20.450940980431564
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 6.007646894958964,
+    "mean_SIR": 10.499267661840703,
+    "mean_SAR": 6.85167058029418,
+    "mean_ISR": 10.262715051798413
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 15.621590309783457,
+    "mean_SIR": 19.885956130672096,
+    "mean_SAR": 16.309918986053205,
+    "mean_ISR": 19.993651045107256
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 6.303952783391739,
+    "mean_SIR": 11.418050808926962,
+    "mean_SAR": 7.383431190331393,
+    "mean_ISR": 9.997693162871668
+  },
+  {
+    "track": "Tom McKenzie - Directions",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 15.767919542452939,
+    "mean_SIR": 19.799988417693243,
+    "mean_SAR": 15.961116696205819,
+    "mean_ISR": 18.42910183544838
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 10.60975738234787,
+    "mean_SIR": 14.019033403170141,
+    "mean_SAR": 12.109447097146374,
+    "mean_ISR": 17.527527973391184
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 10.06024735667077,
+    "mean_SIR": 17.274943099957298,
+    "mean_SAR": 11.43576074127018,
+    "mean_ISR": 13.806223119475419
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 11.337905691773939,
+    "mean_SIR": 14.97953449180205,
+    "mean_SAR": 12.302063790617296,
+    "mean_ISR": 16.76081793907476
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 10.779089224739542,
+    "mean_SIR": 16.443014214793035,
+    "mean_SAR": 11.73028802250873,
+    "mean_ISR": 14.916513735166369
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 9.55513426673351,
+    "mean_SIR": 12.010517502234478,
+    "mean_SAR": 12.013235139318946,
+    "mean_ISR": 17.430837180375715
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 8.900000371748357,
+    "mean_SIR": 16.89411496666776,
+    "mean_SAR": 10.993477132492048,
+    "mean_ISR": 11.8092361166147
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 7.923568072887136,
+    "mean_SIR": 10.986770973506326,
+    "mean_SAR": 10.236449157730187,
+    "mean_ISR": 13.970955867149618
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 7.6261286089301175,
+    "mean_SIR": 12.63666944086613,
+    "mean_SAR": 9.634706194716573,
+    "mean_ISR": 11.521177060641364
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 7.940765481864479,
+    "mean_SIR": 10.449309781832133,
+    "mean_SAR": 10.789567752756694,
+    "mean_ISR": 14.570943682965819
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 7.646614917751322,
+    "mean_SIR": 13.231168624430156,
+    "mean_SAR": 9.861876434810924,
+    "mean_ISR": 10.823697748807424
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 8.763876719027992,
+    "mean_SIR": 10.720488573895807,
+    "mean_SAR": 12.054126314691954,
+    "mean_ISR": 18.64486348490367
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 8.478959992739208,
+    "mean_SIR": 17.309223464159057,
+    "mean_SAR": 10.469120119963678,
+    "mean_ISR": 10.597178838643218
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 10.237157783042116,
+    "mean_SIR": 14.691743306611235,
+    "mean_SAR": 10.840067703500338,
+    "mean_ISR": 15.343181138953156
+  },
+  {
+    "track": "Triviul feat. The Fiend - Widow",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 9.872399103462266,
+    "mean_SIR": 14.694583579497033,
+    "mean_SAR": 10.446925189270358,
+    "mean_ISR": 14.665191718259543
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 7.204964330392824,
+    "mean_SIR": 14.405798804998318,
+    "mean_SAR": 7.543907729853514,
+    "mean_ISR": 11.776658383818782
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 14.293372365842115,
+    "mean_SIR": 19.197586133585393,
+    "mean_SAR": 15.741035180367959,
+    "mean_ISR": 22.469729827943763
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 7.476584533343748,
+    "mean_SIR": 14.095480983133854,
+    "mean_SAR": 7.883529693672268,
+    "mean_ISR": 12.214278946581125
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 14.623927179588811,
+    "mean_SIR": 19.631170071939078,
+    "mean_SAR": 16.068598133219282,
+    "mean_ISR": 22.509752613076103
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 7.099553070479332,
+    "mean_SIR": 14.042546143563728,
+    "mean_SAR": 7.587685795597136,
+    "mean_ISR": 10.991688014157937
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 13.307257190193345,
+    "mean_SIR": 18.456122361872396,
+    "mean_SAR": 14.697476841965747,
+    "mean_ISR": 20.935441874053357
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 5.667389137917702,
+    "mean_SIR": 11.510891052068688,
+    "mean_SAR": 5.8586875070540865,
+    "mean_ISR": 9.56524170281794
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 12.903472248276406,
+    "mean_SIR": 16.714986075577386,
+    "mean_SAR": 14.625718609396094,
+    "mean_ISR": 20.989831903516475
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 5.1985154615574,
+    "mean_SIR": 10.576128224437527,
+    "mean_SAR": 5.512280965260639,
+    "mean_ISR": 9.424176543308247
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 12.448540244280345,
+    "mean_SIR": 16.51484599176594,
+    "mean_SAR": 14.12583205606179,
+    "mean_ISR": 19.93811142310528
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 5.677304090035874,
+    "mean_SIR": 10.71505782974775,
+    "mean_SAR": 6.279282562801335,
+    "mean_ISR": 12.259843605567136
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 12.9159454828055,
+    "mean_SIR": 19.34172816190939,
+    "mean_SAR": 14.144419471910444,
+    "mean_ISR": 19.349108111050324
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 5.620790291924982,
+    "mean_SIR": 15.305128578048672,
+    "mean_SAR": 5.05655291496958,
+    "mean_ISR": 8.613268586048806
+  },
+  {
+    "track": "We Fell From The Sky - Not You",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 12.890595216146167,
+    "mean_SIR": 16.070648301426946,
+    "mean_SAR": 14.633351009004656,
+    "mean_ISR": 23.992404441002837
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "Demucs_htdemucs",
+    "target": "vocals",
+    "mean_SDR": 8.284113934507406,
+    "mean_SIR": 14.639775415577809,
+    "mean_SAR": 8.301651126117598,
+    "mean_ISR": 13.57643698387296
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "Demucs_htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 11.410224959953625,
+    "mean_SIR": 15.691976981892246,
+    "mean_SAR": 12.105348897636226,
+    "mean_ISR": 19.107981413837972
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "Demucs_mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 8.94100763375151,
+    "mean_SIR": 14.426369947234562,
+    "mean_SAR": 9.057331299172839,
+    "mean_ISR": 14.308697330389785
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "Demucs_mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 12.079336415589163,
+    "mean_SIR": 16.219927768269013,
+    "mean_SAR": 12.626615056440421,
+    "mean_ISR": 19.601393591626024
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "Demucs_mdx",
+    "target": "vocals",
+    "mean_SDR": 7.784160959016762,
+    "mean_SIR": 12.043647474979329,
+    "mean_SAR": 8.076229722478088,
+    "mean_ISR": 13.587224610269061
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "Demucs_mdx",
+    "target": "accompaniment",
+    "mean_SDR": 10.05999175303713,
+    "mean_SIR": 14.95615350273141,
+    "mean_SAR": 10.610653949622142,
+    "mean_ISR": 15.27993961868117
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "OpenUnmix_umx",
+    "target": "vocals",
+    "mean_SDR": 6.351509459096405,
+    "mean_SIR": 11.908009503858677,
+    "mean_SAR": 6.98801386949508,
+    "mean_ISR": 14.3819796287719
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "OpenUnmix_umx",
+    "target": "accompaniment",
+    "mean_SDR": 9.572679969878216,
+    "mean_SIR": 16.256233138928923,
+    "mean_SAR": 10.060636011430894,
+    "mean_ISR": 16.61971378965661
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "OpenUnmix_umxhq",
+    "target": "vocals",
+    "mean_SDR": 6.317542593541289,
+    "mean_SIR": 12.11577943393435,
+    "mean_SAR": 6.9189076320837595,
+    "mean_ISR": 14.600176988975491
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "OpenUnmix_umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 9.540333365348973,
+    "mean_SIR": 16.586648726896936,
+    "mean_SAR": 9.928555584468066,
+    "mean_ISR": 16.655802113392987
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "OpenUnmix_umxl",
+    "target": "vocals",
+    "mean_SDR": 6.998064145991126,
+    "mean_SIR": 13.101708449642603,
+    "mean_SAR": 7.569055080869532,
+    "mean_ISR": 15.165512395159169
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "OpenUnmix_umxl",
+    "target": "accompaniment",
+    "mean_SDR": 10.208992787056163,
+    "mean_SIR": 17.456872056448777,
+    "mean_SAR": 10.74369181785543,
+    "mean_ISR": 17.552791755903332
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "Spleeter",
+    "target": "vocals",
+    "mean_SDR": 7.046497258707727,
+    "mean_SIR": 13.140272970617763,
+    "mean_SAR": 6.19376852106051,
+    "mean_ISR": 9.756734696773673
+  },
+  {
+    "track": "Zeno - Signs",
+    "system": "Spleeter",
+    "target": "accompaniment",
+    "mean_SDR": 10.266583068743868,
+    "mean_SIR": 12.827916093546731,
+    "mean_SAR": 11.268674853764194,
+    "mean_ISR": 20.655562847735037
+  }
+]

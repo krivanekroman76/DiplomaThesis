@@ -1,0 +1,142 @@
+[
+  {
+    "system": "Demucs_htdemucs",
+    "tool": "Demucs",
+    "model": "htdemucs",
+    "target": "vocals",
+    "mean_SDR": 8.121107532255348,
+    "mean_SIR": 14.64788096473405,
+    "mean_SAR": 8.570729757642615,
+    "mean_ISR": 13.308188668422513
+  },
+  {
+    "system": "Demucs_htdemucs",
+    "tool": "Demucs",
+    "model": "htdemucs",
+    "target": "accompaniment",
+    "mean_SDR": 13.364398727017933,
+    "mean_SIR": 19.200188313265873,
+    "mean_SAR": 15.534048074167103,
+    "mean_ISR": 21.01934529782204
+  },
+  {
+    "system": "Demucs_mdx_extra",
+    "tool": "Demucs",
+    "model": "mdx_extra",
+    "target": "vocals",
+    "mean_SDR": 8.960805851052692,
+    "mean_SIR": 15.52220080476252,
+    "mean_SAR": 9.736597941268313,
+    "mean_ISR": 14.17421396990675
+  },
+  {
+    "system": "Demucs_mdx_extra",
+    "tool": "Demucs",
+    "model": "mdx_extra",
+    "target": "accompaniment",
+    "mean_SDR": 14.226019653957376,
+    "mean_SIR": 20.052714417959724,
+    "mean_SAR": 15.99577207982393,
+    "mean_ISR": 21.605732870058215
+  },
+  {
+    "system": "Demucs_mdx",
+    "tool": "Demucs",
+    "model": "mdx",
+    "target": "vocals",
+    "mean_SDR": 7.595374697979001,
+    "mean_SIR": 13.198213349641993,
+    "mean_SAR": 8.214417802192209,
+    "mean_ISR": 12.41498643829841
+  },
+  {
+    "system": "Demucs_mdx",
+    "tool": "Demucs",
+    "model": "mdx",
+    "target": "accompaniment",
+    "mean_SDR": 11.822535145688382,
+    "mean_SIR": 18.109703234233834,
+    "mean_SAR": 13.876391281162324,
+    "mean_ISR": 19.131313930522772
+  },
+  {
+    "system": "OpenUnmix_umx",
+    "tool": "OpenUnmix",
+    "model": "umx",
+    "target": "vocals",
+    "mean_SDR": 5.6022898273652455,
+    "mean_SIR": 9.971497502615811,
+    "mean_SAR": 7.37067707138802,
+    "mean_ISR": 11.684242739887937
+  },
+  {
+    "system": "OpenUnmix_umx",
+    "tool": "OpenUnmix",
+    "model": "umx",
+    "target": "accompaniment",
+    "mean_SDR": 11.589012180725422,
+    "mean_SIR": 17.164171038755377,
+    "mean_SAR": 13.434875595478784,
+    "mean_ISR": 17.915639300105234
+  },
+  {
+    "system": "OpenUnmix_umxhq",
+    "tool": "OpenUnmix",
+    "model": "umxhq",
+    "target": "vocals",
+    "mean_SDR": 5.28102981812335,
+    "mean_SIR": 9.178145551451669,
+    "mean_SAR": 7.3410172464431245,
+    "mean_ISR": 11.642452501891968
+  },
+  {
+    "system": "OpenUnmix_umxhq",
+    "tool": "OpenUnmix",
+    "model": "umxhq",
+    "target": "accompaniment",
+    "mean_SDR": 11.331919463745407,
+    "mean_SIR": 17.12137281670944,
+    "mean_SAR": 13.332353405464323,
+    "mean_ISR": 17.386177547546378
+  },
+  {
+    "system": "OpenUnmix_umxl",
+    "tool": "OpenUnmix",
+    "model": "umxl",
+    "target": "vocals",
+    "mean_SDR": 6.750842740227049,
+    "mean_SIR": 10.563437033021437,
+    "mean_SAR": 7.847121942780558,
+    "mean_ISR": 14.101108369386411
+  },
+  {
+    "system": "OpenUnmix_umxl",
+    "tool": "OpenUnmix",
+    "model": "umxl",
+    "target": "accompaniment",
+    "mean_SDR": 12.272079763059997,
+    "mean_SIR": 19.543194727120518,
+    "mean_SAR": 13.897356683214587,
+    "mean_ISR": 17.903146326327054
+  },
+  {
+    "system": "Spleeter",
+    "tool": "Spleeter",
+    "model": "",
+    "target": "vocals",
+    "mean_SDR": 6.303976264141138,
+    "mean_SIR": 12.424507488693063,
+    "mean_SAR": 6.849326043345972,
+    "mean_ISR": 9.968874741126992
+  },
+  {
+    "system": "Spleeter",
+    "tool": "Spleeter",
+    "model": "",
+    "target": "accompaniment",
+    "mean_SDR": 11.68341915288919,
+    "mean_SIR": 15.725027417710812,
+    "mean_SAR": 13.69301421919683,
+    "mean_ISR": 18.528351206625153
+  }
+]

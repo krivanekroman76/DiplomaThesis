@@ -3,9 +3,9 @@
     "vocals_folder": "output/vocals",
     "instrumentals_folder": "output/instrumentals",
     "transcriptions_folder": "output/text",
-    "appearance_mode": "Dark",
+    "appearance_mode": "Light",
     "scaling": "100%",
-    "font_size": 16,
+    "font_size": 12,
     "separator_models": {
         "Spleeter": [],
         "Demucs": [
@@ -16,8 +16,7 @@
         "OpenUnmix": [
             "umxl",
             "umxhq",
-            "umx",
-            "umxse"
+            "umx"
         ]
     },
     "transcription_models": {

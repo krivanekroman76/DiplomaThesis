@@ -6,3 +6,8 @@
 /pretrained_models
 
 /separated_musdb
+
+/separation_app.spec
+/separation_app.exe
+/dist
+/build

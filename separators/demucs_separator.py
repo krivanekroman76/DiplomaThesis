@@ -1,3 +1,5 @@
+
+import logging
 import os
 import shutil
 import sys
@@ -9,11 +11,16 @@ import separators.whisper_transcription as whisper_trans
 #import separators.wav2vec2_transcription as wav2vec2_trans 
 #import separators.coqui_transcription as coqui_trans 
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+
 class DemucsSeparator:
     def __init__(self):
         try:
             from demucs.separate import main
-            print("Demucs initialized successfully")
+            logging.info("Demucs initialized successfully")
         except ImportError as e:
             raise ImportError(f"Demucs not installed properly: {e}. Run 'pip install demucs'.")
         self.whisper_trans = whisper_trans.WhisperTranscription()
@@ -78,7 +85,7 @@ class DemucsSeparator:
         try:
             if not os.path.exists(input_path):
                 raise FileNotFoundError(f"Input file not found: {input_path}")
-            print(f"Demucs: Processing input: {input_path}")
+            logging.info(f"Demucs: Processing input: {input_path}")
 
             # Call progress callback for initial setup (10%)
             if progress_callback:
@@ -123,14 +130,14 @@ class DemucsSeparator:
 
                 args.append(input_path)
 
-                print(f"Demucs: Running with args: {args}")
+                logging.info(f"Demucs: Running with args: {args}")
 
                 # Call progress callback for running Demucs (30%)
                 if progress_callback:
                     progress_callback(30, "Demucs: Running separation...")
 
                 demucs_main(args)
-                print(f"Demucs: Separation completed for {song_name}")
+                logging.info(f"Demucs: Separation completed for {song_name}")
 
                 # Call progress callback for post-separation (60%)
                 if progress_callback:
@@ -172,7 +179,7 @@ class DemucsSeparator:
                     shutil.move(vocals_src, vocals_dest)
                     shutil.move(instr_src, instr_dest)
 
-                print(f"Demucs separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
+                logging.info(f"Demucs separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
                 
                 trans_name = None
                 if do_transcribe:
@@ -180,7 +187,15 @@ class DemucsSeparator:
                     if progress_callback:
                         progress_callback(70, "Demucs: Transcribing vocals...")
                     
-                    trans_path = os.path.join(trans_folder, f"{song_name}_Demucs_transcription.txt")
+                    # Ensure trans_folder exists
+                    os.makedirs(trans_folder, exist_ok=True)
+                    
+                    # Set initial trans_path
+                    base_trans_path = os.path.join(trans_folder, f"{song_name}_Demucs_{trans_tool}_{trans_model}_transcription.txt")
+                    
+                    # Get unique filename if it exists
+                    trans_path = self._get_unique_filename(base_trans_path)
+
                     success_trans = False
                     if trans_tool == "whisper":
                         success_trans = self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model)
@@ -194,12 +209,12 @@ class DemucsSeparator:
                         print(f"Demucs: Unknown transcription tool '{trans_tool}'.")
                         
                     if success_trans:
-                        print(f"Demucs: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
+                        logging.info(f"Demucs: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                         trans_name = os.path.basename(trans_path)  # Return file name only
                         if progress_callback:
                             progress_callback(90, "Transcribing vocals done!")
                     else:
-                        print(f"Demucs: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.")
+                        logging.error(f"Demucs: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.", exc_info=True)
                         trans_path = None
 
                 # Return file names (not paths) for GUI
@@ -208,5 +223,5 @@ class DemucsSeparator:
                 return True, vocals_name, instr_name, trans_name
 
         except Exception as e:
-            print(f"Demucs separation error: {str(e)}", file=sys.stderr)
+            logging.error(f"Demucs separation error: {str(e)}", exc_info=True)
             return False, None, None, None

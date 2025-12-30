@@ -1,4 +1,5 @@
 import os
+import logging
 import subprocess
 import shlex
 import tempfile
@@ -12,6 +13,11 @@ import separators.whisper_transcription as whisper_trans
 #import separators.wav2vec2_transcription as wav2vec2_trans 
 #import separators.coqui_transcription as coqui_trans
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+
 class SpleeterSeparator:
     """
     Overview: Class for handling audio source separation using Spleeter.
@@ -23,17 +29,12 @@ class SpleeterSeparator:
         Overview: Initialize the Spleeter separator with model and transcription tools.
         Suppresses TensorFlow/Keras deprecation warnings for cleaner output.
         """
-        # Suppress TensorFlow/Keras warnings globally
-        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Suppress TensorFlow logs
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        warnings.filterwarnings('ignore', category=FutureWarning)
-        
         self.model = 'spleeter:2stems'
         try:
             self.separator = Separator(self.model)
-            print("Spleeter initialized successfully (direct API)")
+            logging.info("Spleeter initialized successfully (direct API)")
         except Exception as e:
-            print(f"Spleeter init warning: {e} (will use CLI)")
+            logging.error(f"Spleeter init warning: {e} (will use CLI)", exc_info=True)
         self.whisper_trans = whisper_trans.WhisperTranscription()
         #self.wav2vec2_trans = wav2vec2_trans.Wav2Vec2Transcription() 
         #self.coqui_trans = coqui_trans.CoquiTranscription()
@@ -96,7 +97,7 @@ class SpleeterSeparator:
         try:
             # Check if input exists
             if not os.path.exists(input_path):
-                print(f"Spleeter: Input file not found: {input_path}")
+                logging.error(f"Spleeter: Input file not found: {input_path}", exc_info=True)
                 return False, None, None, None
 
             # Determine codec based on format
@@ -116,11 +117,11 @@ class SpleeterSeparator:
                 # Try direct API first
                 try:
                     self.separator.separate_to_file(audio_descriptor=input_path, destination=temp_dir, audio_adapter=None, codec=codec)
-                    print("Spleeter: Direct API separation successful")
+                    logging.info("Spleeter: Direct API separation successful")
                     if progress_callback:
                         progress_callback(30, "Spleeter separation in progress...")
                 except Exception as api_err:
-                    print(f"Spleeter: Direct API failed ({api_err}), falling back to CLI")
+                    logging.info(f"Spleeter: Direct API failed ({api_err}), falling back to CLI")
                     cmd = [
                         'spleeter', 'separate',
                         '-p', self.model,
@@ -131,7 +132,7 @@ class SpleeterSeparator:
                     
                     result = subprocess.run(cmd, capture_output=True, text=True, check=True)
                     if result.returncode != 0:
-                        print(f"Spleeter CLI error: {result.stderr}")
+                        logging.info(f"Spleeter CLI error: {result.stderr}")
                         return False, None, None, None
                     if progress_callback:
                         progress_callback(30, "Spleeter CLI separation in progress...")
@@ -140,7 +141,7 @@ class SpleeterSeparator:
                 instr_src = os.path.join(temp_dir, f"{song_name}/accompaniment.{fmt}")
                 
                 if not os.path.exists(vocals_src) or not os.path.exists(instr_src):
-                    print(f"Spleeter: Output files not found in {temp_dir}. Check filename_format.")
+                    logging.info(f"Spleeter: Output files not found in {temp_dir}. Check filename_format.")
                     return False, None, None, None
 
                 # Call progress callback for file moving (60%)
@@ -161,14 +162,23 @@ class SpleeterSeparator:
                 shutil.move(vocals_src, vocals_dest)
                 shutil.move(instr_src, instr_dest)
 
-                print(f"Spleeter separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
+                logging.info(f"Spleeter separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
                 
             # Handle transcription if enabled (runs synchronously after separation)
-            trans_name = None
+            trans_path = None
             if do_transcribe:
                 if progress_callback:
                     progress_callback(70, "Transcribing vocals...")
-                trans_path = os.path.join(trans_folder, f"{song_name}_Spleeter_transcription.txt")
+               
+               # Ensure trans_folder exists
+                os.makedirs(trans_folder, exist_ok=True)
+                
+                # Set initial trans_path
+                base_trans_path = os.path.join(trans_folder, f"{song_name}_Spleeter_{trans_tool}_{trans_model}_transcription.txt")
+                
+                # Get unique filename if it exists
+                trans_path = self._get_unique_filename(base_trans_path)
+                
                 success_trans = False
                 if trans_tool == "whisper":
                     success_trans = self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model)
@@ -179,16 +189,14 @@ class SpleeterSeparator:
                     print("Placeholder for coqui transcription tool")
                     #success_trans = self.coqui_trans.transcribe(vocals_dest, trans_path, trans_model)
                 else:
-                    print(f"Spleeter: Unknown transcription tool '{trans_tool}'.")
+                    logging.info(f"Spleeter: Unknown transcription tool '{trans_tool}'.")
                     
                 if success_trans:
-                    print(f"Spleeter: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
-                    trans_name = os.path.basename(trans_path)  # Return file name only
+                    logging.info(f"Spleeter: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                     if progress_callback:
                         progress_callback(90, "Transcribing vocals done!")
                 else:
-                    print(f"Spleeter: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.")
-                    trans_name = None  # Ensure it's None on failure
+                    logging.error(f"Spleeter: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.", exc_info=True)
 
             # Call progress callback for completion (100%)
             if progress_callback:
@@ -197,11 +205,12 @@ class SpleeterSeparator:
             # Return file names (not paths) for GUI
             vocals_name = os.path.basename(vocals_dest) if vocals_dest else None
             instr_name = os.path.basename(instr_dest) if instr_dest else None
+            trans_name = os.path.basename(trans_path) if trans_path else None
             return True, vocals_name, instr_name, trans_name
 
         except subprocess.CalledProcessError as e:
-            print(f"Spleeter subprocess failed: {e.stderr}")
+            logging.error(f"Spleeter subprocess failed: {e.stderr}", exc_info=True)
             return False, None, None, None
         except Exception as e:
-            print(f"Spleeter general error: {e}")
+            logging.error(f"Spleeter general error: {e}", exc_info=True)
             return False, None, None, None

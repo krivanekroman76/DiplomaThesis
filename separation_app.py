@@ -1,5 +1,6 @@
 import warnings
 warnings.simplefilter('ignore')  # Hide unnecessary warnings
+import logging
 import os
 import shutil
 import tkinter as tk
@@ -16,6 +17,11 @@ import separators.openunmix_separator as openunmix
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
 
 def open_file(path):
     """Open a file using the system's default application."""
@@ -241,7 +247,7 @@ class SeparationApp(ctk.CTk):
                 json.dump(data, f, indent=4)
             print(f"Settings saved to {self.settings_file}")
         except Exception as e:
-            print(f"Error saving settings: {e}")
+            logging.info(f"Error saving settings: {e}")
     
     def show_input(self):
         self.input_frame.grid(row=0, column=0, sticky="nsew")
@@ -528,7 +534,7 @@ class SeparationApp(ctk.CTk):
                 self.model_label.grid()
                 self.model_menu.grid()
         except Exception as e:
-            print(f"Error updating separator models: {e}")
+            logging.error(f"Error updating separator models: {e}", exc_info=True)
             # Fallback to defaults
             if tool == "Demucs":
                 self.model_menu.configure(values=["mdx", "mdx_extra", "htdemucs"])
@@ -590,7 +596,7 @@ class SeparationApp(ctk.CTk):
             self.trans_model_label.grid()
             self.transcript_model_menu.grid()
         except Exception as e:
-            print(f"Error updating transcription models: {e}")
+            logging.info(f"Error updating transcription models: {e}")
             # Fallback to defaults
             self.on_trans_tool_change()
 
@@ -1084,7 +1090,7 @@ class SeparationApp(ctk.CTk):
 
             if not success:
                 update_progress(0, "Separation failed for {ai_tool} on {song_name}. Check terminal for errors.")
-                print(f"Separation failed for {ai_tool} on {song_name}.")
+                logging.info(f"Separation failed for {ai_tool} on {song_name}.")
                 return
             else:
                 # Final updates Print names of new files and update output tab
@@ -1092,8 +1098,8 @@ class SeparationApp(ctk.CTk):
                 self.after(0, self.load_outputs)
 
         except Exception as e:
-            print(f"Thread error: {e}")
-            update_progress(0, f"Error: {str(e)}") 
+            update_progress(0, f"Error: {str(e)}")
+            logging.error(f"Thread error: {e}", exc_info=True)
         # Hide Abort button and progress bar after completion
         self.abort_button.grid_remove()  
         self.progress_bar.grid_remove()

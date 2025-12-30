@@ -16,12 +16,32 @@ class WhisperTranscription:
                 raise ValueError(f"Failed to load Whisper model '{model_name}': {e}")
         return self.loaded_models[model_name]
 
+    def _get_unique_filename(self, base_path):
+        """
+        Overview: Generate a unique filename by appending _1, _2, etc., if the file exists.
+        
+        Parameters:
+        - base_path (str): The initial file path to check.
+        
+        Returns:
+        - str: A unique file path that doesn't exist.
+        """
+        if not os.path.exists(base_path):
+            return base_path
+        base, ext = os.path.splitext(base_path)
+        counter = 1
+        while True:
+            new_path = f"{base}_{counter}{ext}"
+            if not os.path.exists(new_path):
+                return new_path
+            counter += 1
+
     def transcribe(self, audio_path: str, output_path: str, model_name: str = "base", verbose: bool = False):
         """
         Transcribe the audio file using the specified Whisper model and save to output_path.
        
         :param audio_path: Path to the audio file (e.g., vocals.wav).
-        :param output_path: Path to save the transcription (e.g., transcription.txt).
+        :param output_path: Path to save the transcription.
         :param model_name: Whisper model name (e.g., "tiny", "base", "small", "medium", "large", "turbo").
         :param verbose: If True, enable verbose output during transcription.
         :return: True if successful, False otherwise.
@@ -36,7 +56,7 @@ class WhisperTranscription:
             # Perform transcription
             print(f"Whisper: Transcribing '{audio_path}' with model '{model_name}'...")
             result = model.transcribe(audio_path, verbose=verbose)
-               
+
             # Write the transcription to file
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(f"Transcription (Model: {model_name}):\n{result['text']}\n\n")

@@ -134,7 +134,7 @@ with open(OUTPUT_LATEX_TABLE, "w") as f:
 print(f"[INFO] LaTeX table with caption saved to {OUTPUT_LATEX_TABLE}")
 
 # =========================
-# Plot setup: all in one figure with same scale
+# Plot setup
 # =========================
 MODEL_COLORS = {
     "": "#636EFA",           # Spleeter

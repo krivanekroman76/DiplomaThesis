@@ -1,9 +1,9 @@
 {
-    "input_folder": "input",
+    "input_folder": "/input",
     "vocals_folder": "output/vocals",
     "instrumentals_folder": "output/instrumentals",
     "transcriptions_folder": "output/text",
-    "appearance_mode": "Light",
+    "appearance_mode": "Dark",
     "scaling": "100%",
     "font_size": 12,
     "separator_models": {

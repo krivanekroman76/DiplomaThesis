@@ -1,3 +1,4 @@
+import logging
 import os
 import tempfile
 import shutil
@@ -12,16 +13,21 @@ import separators.whisper_transcription as whisper_trans
 #import separators.wav2vec2_transcription as wav2vec2_trans 
 #import separators.coqui_transcription as coqui_trans 
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+
 class OpenUnmixSeparator:
     def __init__(self):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         try:
-            print(f"OpenUnmix: Initializing on {self.device}")
-            print("OpenUnmix: Import successful. Models will load on first separation.")
-            print(f"OpenUnmix: Ready on {self.device}")
+            logging.info(f"OpenUnmix: Initializing on {self.device}")
+            logging.info("OpenUnmix: Import successful. Models will load on first separation.")
+            logging.info(f"OpenUnmix: Ready on {self.device}")
         except Exception as e:
-            print(f"OpenUnmix init error: {e}")
-            print("OpenUnmix: Check: pip install openunmix-pytorch")
+            logging.error(f"OpenUnmix init error: {e}", exc_info=True)
+            logging.error("OpenUnmix: Check: pip install openunmix-pytorch", exc_info=True)
         self.whisper_trans = whisper_trans.WhisperTranscription()
         #self.wav2vec2_trans = wav2vec2_trans.Wav2Vec2Transcription() 
         #self.coqui_trans = coqui_trans.CoquiTranscription()
@@ -78,7 +84,7 @@ class OpenUnmixSeparator:
         try:
             # Check if input exists
             if not os.path.exists(input_path):
-                print(f"OpenUnmix: Input file not found: {input_path}")
+                logging.error(f"OpenUnmix: Input file not found: {input_path}", exc_info=True)
                 return False, None, None, None
 
             # Call progress callback for initial setup (10%)
@@ -112,7 +118,7 @@ class OpenUnmixSeparator:
                     residual=True,  # Creates residual for instrumental
                     device=self.device
                 )
-                print(f"OpenUnmix: Separation complete. Estimates keys: {list(estimates.keys())}")
+                logging.info(f"OpenUnmix: Separation complete. Estimates keys: {list(estimates.keys())}")
 
                 # Call progress callback for processing output (60%)
                 if progress_callback:
@@ -164,7 +170,7 @@ class OpenUnmixSeparator:
                     audio_vocals.export(vocals_dest, format="wav")
                     audio_instr.export(instr_dest, format="wav")
                 
-                print(f"OpenUnmix separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
+                logging.info(f"OpenUnmix separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
 
                 trans_name = None
                 if do_transcribe:
@@ -172,7 +178,15 @@ class OpenUnmixSeparator:
                     if progress_callback:
                         progress_callback(70, "OpenUnmix: Transcribing vocals...")
                     
-                    trans_path = os.path.join(trans_folder, f"{song_name}_OpenUnmix_transcription.txt")
+                                   # Ensure trans_folder exists
+                    os.makedirs(trans_folder, exist_ok=True)
+                    
+                    # Set initial trans_path
+                    base_trans_path = os.path.join(trans_folder, f"{song_name}_OpenUnmix_{trans_tool}_{trans_model}_transcription.txt")
+                    
+                    # Get unique filename if it exists
+                    trans_path = self._get_unique_filename(base_trans_path)
+
                     success_trans = False
                     if trans_tool == "whisper":
                         success_trans = self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model)
@@ -183,15 +197,15 @@ class OpenUnmixSeparator:
                         print("Placeholder for coqui transcription tool")
                         #success_trans = self.coqui_trans.transcribe(vocals_dest, trans_path, trans_model)
                     else:
-                        print(f"OpenUnmix: Unknown transcription tool '{trans_tool}'.")
+                        logging.error(f"OpenUnmix: Unknown transcription tool '{trans_tool}'.", exc_info=True)
                         
                     if success_trans:
-                        print(f"OpenUnmix: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
+                        logging.info(f"OpenUnmix: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
                         trans_name = os.path.basename(trans_path)  # Return file name only
                         if progress_callback:
                             progress_callback(90, "Transcribing vocals done!")
                     else:
-                        print(f"OpenUnmix: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.")
+                        logging.error(f"OpenUnmix: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.", exc_info=True)
                         trans_path = None
                 
                 # Return file names (not paths) for GUI
@@ -200,7 +214,7 @@ class OpenUnmixSeparator:
                 return True, vocals_name, instr_name, trans_name
 
         except Exception as e:
-            print(f"OpenUnmix error: {e}")
+            logging.error(f"OpenUnmix error: {e}", exc_info=True)
             import traceback
             traceback.print_exc()
             return False, None, None, None

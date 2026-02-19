@@ -1,6 +1,7 @@
 import warnings
 warnings.simplefilter('ignore')  # Hide unnecessary warnings
 import logging
+import sys
 import os
 import shutil
 import tkinter as tk
@@ -22,6 +23,16 @@ logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
+
+def get_base_path():
+    if hasattr(sys, '_MEIPASS'):
+        # Running as a PyInstaller .exe
+        return sys._MEIPASS
+    # Running as a normal script
+    return os.path.abspath(".")
+
+# Use this to prefix your local folder paths
+base_path = get_base_path()
 
 def open_file(path):
     """Open a file using the system's default application."""

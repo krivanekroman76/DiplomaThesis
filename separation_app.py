@@ -11,10 +11,14 @@ import platform
 import subprocess
 import threading
 import json
-# Separation classes in separators directory
+# Separation tools
 import separators.spleeter_separator as spleeter
 import separators.demucs_separator as demucs
 import separators.openunmix_separator as openunmix
+# Transcription tools
+import separators.whisper_transcription as whisper 
+import separators.wav2vec2_transcription as wav2vec2 
+# import separators.coqui_transcription as coqui_trans
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
@@ -200,7 +204,11 @@ class SeparationApp(ctk.CTk):
             },
             "transcription_models": {
                 "whisper": ["large", "medium", "small", "tiny", "base", "turbo"],
-                "wav2vec2": ["facebook/wav2vec2-base-960h", "facebook/wav2vec2-large-960h"],
+                "wav2vec2": ["facebook/wav2vec2-base-960h", 
+                             "facebook/wav2vec2-large-960h",
+                             "facebook/wav2vec2-large-xlsr-53-czech",
+                             "facebook/wav2vec2-large-xlsr-53-french"
+                             ],
                 "coqui": ["model.pbmm"]
             }
         }
@@ -485,37 +493,6 @@ class SeparationApp(ctk.CTk):
         self.shifts_entry = ctk.CTkEntry(self.shifts_frame, textvariable=self.shifts_var, width=150, placeholder_text="1")
         self.shifts_entry.grid(row=1, column=0, sticky="ew", padx=20, pady=5)
 
-        # Transcription checkbox
-        self.transcript_var = tk.BooleanVar(value=False)
-        self.transcript_checkbox = ctk.CTkCheckBox(sep_scrollable, text="Transcribe vocals", variable=self.transcript_var, command=self.on_trans_tool_change)
-        self.transcript_checkbox.grid(row=11, column=0, sticky="w", padx=20, pady=10)
-
-        # Transcription frame
-        self.transcription_frame = ctk.CTkFrame(sep_scrollable)
-        self.transcription_frame.grid(row=12, column=0, sticky="ew", padx=20, pady=5)
-        self.transcription_frame.grid_remove()  # Hide initially
-
-        # Transcription tool label
-        self.trans_tool_label = ctk.CTkLabel(self.transcription_frame, text="Tool:", anchor="w")
-        self.trans_tool_label.grid(row=1, column=0, sticky="w", padx=20, pady=(10,0))
-        self.trans_tool_var = tk.StringVar(value="whisper")
-        self.radio_whisper = ctk.CTkRadioButton(self.transcription_frame, text="whisper", variable=self.trans_tool_var, value="whisper", command=self.on_trans_tool_change)
-        self.radio_wav2vec2 = ctk.CTkRadioButton(self.transcription_frame, text="wav2vec2", variable=self.trans_tool_var, value="wav2vec2", command=self.on_trans_tool_change)
-        self.radio_coqui = ctk.CTkRadioButton(self.transcription_frame, text="coqui", variable=self.trans_tool_var, value="coqui", command=self.on_trans_tool_change)
-
-        self.radio_whisper.grid(row=2, column=0, sticky="w", padx=20, pady=5)
-        self.radio_wav2vec2.grid(row=3, column=0, sticky="w", padx=20, pady=5)
-        self.radio_coqui.grid(row=4, column=0, sticky="w", padx=20, pady=5)
-
-        # Transcription model label
-        self.trans_model_label = ctk.CTkLabel(self.transcription_frame, text="Model:", anchor="w")
-        self.trans_model_label.grid(row=5, column=0, sticky="w", padx=20, pady=(10,0))
-
-        self.transcript_model = tk.StringVar(value="tiny")
-        self.transcript_model_menu = ctk.CTkOptionMenu(self.transcription_frame, variable=self.transcript_model, width=200,
-            values=["large", "medium", "small", "tiny", "base", "turbo", "large-v1", "large-v2", "large-v3", "large-v3-turbo"])
-        self.transcript_model_menu.grid(row=16, column=0, sticky="ew", padx=20, pady=5)
-
         # Separate button
         self.separate_button = ctk.CTkButton(sep_scrollable, text="Separate", command=self.separate_audio)
         self.separate_button.grid(row=17, column=0, sticky="ew", padx=20, pady=(20,10))
@@ -628,41 +605,67 @@ class SeparationApp(ctk.CTk):
     def create_output_tab(self):
         frame = self.output_frame
         frame.grid_columnconfigure(0, weight=1)
-        frame.grid_rowconfigure((1,3,5), weight=1)
+        frame.grid_columnconfigure(1, weight=0) # Right sidebar for tools
+        frame.grid_rowconfigure((1, 3, 5), weight=1)
 
-        # Transcriptions section
-        trans_label = ctk.CTkLabel(frame, text="Transcriptions", font=ctk.CTkFont(size=18, weight="bold"))
-        trans_label.grid(row=0, column=0, sticky="w", padx=10, pady=(10,5))
-
-        trans_btn = ctk.CTkButton(frame, text="Change Folder", command=lambda: self.change_output_folder("transcriptions"))
-        trans_btn.grid(row=0, column=1, sticky="e", padx=10, pady=(10,5))
-
+        # --- LEFT SIDE: LISTBOXES (Your existing layout) ---
+        # Transcriptions
+        ctk.CTkLabel(frame, text="Transcriptions", font=ctk.CTkFont(size=18, weight="bold")).grid(row=0, column=0, sticky="w", padx=10, pady=(10, 5))
+        ctk.CTkButton(frame, text="Change Folder", command=lambda: self.change_output_folder("transcriptions")).grid(row=0, column=0, sticky="e", padx=10, pady=(10, 5))
         self.trans_listbox = tk.Listbox(frame, bg="#000000", fg="#FFFFFF")
-        self.trans_listbox.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10)
+        self.trans_listbox.grid(row=1, column=0, sticky="nsew", padx=10)
         self.trans_listbox.bind("<Double-Button-1>", self.open_selected_transcription)
 
-        # Vocals section
-        vocals_label = ctk.CTkLabel(frame, text="Vocals", font=ctk.CTkFont(size=18, weight="bold"))
-        vocals_label.grid(row=2, column=0, sticky="w", padx=10, pady=(20,5))
-
-        vocals_btn = ctk.CTkButton(frame, text="Change Folder", command=lambda: self.change_output_folder("vocals"))
-        vocals_btn.grid(row=2, column=1, sticky="e", padx=10, pady=(20,5))
-
+        # Vocals
+        ctk.CTkLabel(frame, text="Vocals", font=ctk.CTkFont(size=18, weight="bold")).grid(row=2, column=0, sticky="w", padx=10, pady=(20, 5))
+        ctk.CTkButton(frame, text="Change Folder", command=lambda: self.change_output_folder("vocals")).grid(row=2, column=0, sticky="e", padx=10, pady=(20, 5))
         self.vocals_listbox = tk.Listbox(frame, bg="#000000", fg="#FFFFFF")
-        self.vocals_listbox.grid(row=3, column=0, columnspan=2, sticky="nsew", padx=10)
+        self.vocals_listbox.grid(row=3, column=0, sticky="nsew", padx=10)
         self.vocals_listbox.bind("<Double-Button-1>", self.open_selected_vocal)
 
-        # Instrumentals section
-        instr_label = ctk.CTkLabel(frame, text="Instrumentals", font=ctk.CTkFont(size=18, weight="bold"))
-        instr_label.grid(row=4, column=0, sticky="w", padx=10, pady=(20,5))
-
-        instr_btn = ctk.CTkButton(frame, text="Change Folder", command=lambda: self.change_output_folder("instrumentals"))
-        instr_btn.grid(row=4, column=1, sticky="e", padx=10, pady=(20,5))
-
+        # Instrumentals
+        ctk.CTkLabel(frame, text="Instrumentals", font=ctk.CTkFont(size=18, weight="bold")).grid(row=4, column=0, sticky="w", padx=10, pady=(20, 5))
+        ctk.CTkButton(frame, text="Change Folder", command=lambda: self.change_output_folder("instrumentals")).grid(row=4, column=0, sticky="e", padx=10, pady=(20, 5))
         self.instr_listbox = tk.Listbox(frame, bg="#000000", fg="#FFFFFF")
-        self.instr_listbox.grid(row=5, column=0, columnspan=2, sticky="nsew", padx=10)
-        self.instr_listbox.bind("<Double-Button-1>", self.open_selected_instrumental)
+        self.instr_listbox.grid(row=5, column=0, sticky="nsew", padx=10)
 
+        # --- RIGHT SIDE: TRANSCRIPTION MENU (Matches Input Tab style) ---
+        trans_menu = ctk.CTkScrollableFrame(frame, width=350, height=600)
+        trans_menu.grid(row=0, column=1, rowspan=6, sticky="nsew", padx=10, pady=10)
+        trans_menu.grid_columnconfigure(0, weight=1)
+
+        ctk.CTkLabel(trans_menu, text="Transcription Menu", font=ctk.CTkFont(size=20, weight="bold")).grid(row=0, column=0, pady=(10, 20))
+
+        # Tool Selection (Radio Buttons)
+        ctk.CTkLabel(trans_menu, text="Tool:", anchor="w").grid(row=1, column=0, sticky="w", padx=20)
+        self.trans_tool_var = tk.StringVar(value="whisper")
+        
+        ctk.CTkRadioButton(trans_menu, text="Whisper", variable=self.trans_tool_var, value="whisper", 
+                           command=lambda: self.update_retrans_models("whisper")).grid(row=2, column=0, sticky="w", padx=20, pady=5)
+        ctk.CTkRadioButton(trans_menu, text="Wav2Vec2", variable=self.trans_tool_var, value="wav2vec2", 
+                           command=lambda: self.update_retrans_models("wav2vec2")).grid(row=3, column=0, sticky="w", padx=20, pady=5)
+        ctk.CTkRadioButton(trans_menu, text="Coqui", variable=self.trans_tool_var, value="coqui", 
+                           command=lambda: self.update_retrans_models("coqui")).grid(row=4, column=0, sticky="w", padx=20, pady=5)
+
+        ctk.CTkLabel(trans_menu, text="Model:", anchor="w").grid(row=5, column=0, sticky="w", padx=20, pady=(10, 0))
+        self.retrans_model_var = tk.StringVar()
+        self.retrans_model_menu = ctk.CTkOptionMenu(trans_menu, variable=self.retrans_model_var, values=[], width=200)
+        self.retrans_model_menu.grid(row=6, column=0, sticky="ew", padx=20, pady=5)
+
+        # Language Selection
+        ctk.CTkLabel(trans_menu, text="Language:", anchor="w").grid(row=7, column=0, sticky="w", padx=20, pady=(10, 0))
+        self.retrans_lang_var = tk.StringVar(value="auto")
+        self.retrans_lang_menu = ctk.CTkOptionMenu(trans_menu, variable=self.retrans_lang_var, values=["auto", "cs", "en", "fr", "de", "es"], width=200)
+        self.retrans_lang_menu.grid(row=8, column=0, sticky="ew", padx=20, pady=5)
+
+        # Run Button
+        self.retrans_button = ctk.CTkButton(trans_menu, text="Transcribe", command=self.run_standalone_transcription)
+        self.retrans_button.grid(row=9, column=0, sticky="ew", padx=20, pady=(30, 10))
+        
+        ctk.CTkLabel(trans_menu, text="Note: Select a file in 'Vocals' list first.", font=ctk.CTkFont(size=10, slant="italic")).grid(row=10, column=0, padx=20)
+
+        self.update_retrans_models("whisper")
+        
     def load_input(self):
         self.songs_listbox.delete(0, tk.END)
         self.folders.clear()
@@ -1115,6 +1118,64 @@ class SeparationApp(ctk.CTk):
         self.abort_button.grid_remove()  
         self.progress_bar.grid_remove()
 
+    def update_retrans_models(self, choice):
+        """Aktualizuje seznam modelů v dropdownu na základě vybraného nástroje."""
+        if choice == "whisper":
+            values = self.transcription_models.get("whisper", ["tiny", "base", "small"])
+        elif choice == "wav2vec2":
+            values = self.transcription_models.get("wav2vec2", ["facebook/wav2vec2-base-960h"])
+        elif choice == "coqui":
+            values = self.transcription_models.get("coqui", ["model.pbmm"])
+        else:
+            values = []
+
+        self.retrans_model_menu.configure(values=values)
+        if values:
+            self.retrans_model_var.set(values[0])
+
+    def run_standalone_transcription(self):
+        """Runs transcription on a file already in the Vocals listbox."""
+        sel = self.vocals_listbox.curselection()
+        if not sel:
+            messagebox.showwarning("Selection Required", "Please select a file from the Vocals list first.")
+            return
+        
+        filename = self.vocals_listbox.get(sel[0])
+        vocal_path = os.path.join(self.output_folders["vocals"], filename)
+        
+        tool = self.trans_tool_var.get()
+        model = self.retrans_model_var.get()
+        lang = self.retrans_lang_var.get()
+        
+        # Create output name based on tool and model
+        base_name = os.path.splitext(filename)[0]
+        out_name = f"{base_name}_{tool}_{model.replace('/', '_')}.txt"
+        out_path = os.path.join(self.output_folders["transcriptions"], out_name)
+
+        # Run in thread to keep UI responsive
+        threading.Thread(target=self._exec_standalone_trans, 
+                         args=(vocal_path, out_path, tool, model, lang), 
+                         daemon=True).start()
+
+    def _exec_standalone_trans(self, input_p, output_p, tool, model, lang):
+            self.after(0, lambda: self.progress_text.configure(text=f"Transcribing with {tool}..."))
+            
+            success = False
+            try:
+                if tool == "whisper":
+                    # Note: Whisper's transcribe method needs to be updated to accept 'language'
+                    success = self.whisper.transcribe(input_p, output_p, model, language=lang)
+                elif tool == "wav2vec2":
+                    success = self.wav2vec2.transcribe(input_p, output_p, model)
+                
+                if success:
+                    self.after(0, lambda: self.progress_text.configure(text="Transcription finished!"))
+                    self.after(0, self.load_outputs)
+                else:
+                    self.after(0, lambda: self.progress_text.configure(text="Transcription failed."))
+            except Exception as e:
+                logging.error(f"Standalone trans error: {e}")
+                
 if __name__ == "__main__":
     app = SeparationApp()
     app.mainloop()

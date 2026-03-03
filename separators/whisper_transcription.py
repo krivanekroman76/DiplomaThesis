@@ -36,14 +36,13 @@ class WhisperTranscription:
                 return new_path
             counter += 1
 
-    def transcribe(self, audio_path: str, output_path: str, model_name: str = "base", verbose: bool = False):
+    def transcribe(self, audio_path, output_path, model_name, language="auto"):
         """
         Transcribe the audio file using the specified Whisper model and save to output_path.
        
         :param audio_path: Path to the audio file (e.g., vocals.wav).
         :param output_path: Path to save the transcription.
         :param model_name: Whisper model name (e.g., "tiny", "base", "small", "medium", "large", "turbo").
-        :param verbose: If True, enable verbose output during transcription.
         :return: True if successful, False otherwise.
         """
         try:
@@ -52,10 +51,13 @@ class WhisperTranscription:
            
             # Load the model
             model = self.load_model(model_name)
-               
+            
+            # If language is "auto", pass None to whisper, otherwise pass the lang code
+            lang_param = None if language == "auto" else language
+       
             # Perform transcription
             print(f"Whisper: Transcribing '{audio_path}' with model '{model_name}'...")
-            result = model.transcribe(audio_path, verbose=verbose)
+            result = self.model.transcribe(audio_path, language=lang_param)
 
             # Write the transcription to file
             with open(output_path, "w", encoding="utf-8") as f:

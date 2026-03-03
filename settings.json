@@ -1,11 +1,11 @@
 {
-    "input_folder": "input",
-    "vocals_folder": "output/vocals",
-    "instrumentals_folder": "output/instrumentals",
-    "transcriptions_folder": "output/text",
+    "input_folder": "/Users/romankrivanek/PycharmProjects/DiplomaThesis/example_input_output/input",
+    "vocals_folder": "/Users/romankrivanek/PycharmProjects/DiplomaThesis/example_input_output/output/vocals",
+    "instrumentals_folder": "/Users/romankrivanek/PycharmProjects/DiplomaThesis/example_input_output/output/instrumentals",
+    "transcriptions_folder": "/Users/romankrivanek/PycharmProjects/DiplomaThesis/example_input_output/output/text",
     "appearance_mode": "Dark",
     "scaling": "120%",
-    "font_size": 20,
+    "font_size": 16,
     "separator_models": {
         "Spleeter": [],
         "Demucs": [

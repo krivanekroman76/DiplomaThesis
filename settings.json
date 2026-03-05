@@ -20,20 +20,25 @@
         ]
     },
     "transcription_models": {
-        "whisper": [
-            "large",
-            "medium",
-            "small",
-            "tiny",
-            "base",
-            "turbo"
-        ],
-        "wav2vec2": [
-            "facebook/wav2vec2-base-960h",
-            "facebook/wav2vec2-large-960h"
-        ],
-        "coqui": [
-            "model.pbmm"
-        ]
+            "whisper": [
+                "large",
+                "medium",
+                "small",
+                "tiny",
+                "base",
+                "turbo"
+            ],
+            "wav2vec2": [
+                "facebook/wav2vec2-base-960h",
+                "facebook/wav2vec2-large-960h"
+            ],
+            "vosk": [
+                "vosk-model-spk-0.4",
+                "vosk-model-small-cs-0.4-rhassspy",
+                "vosk-model-small-fr-0.22",
+                "vosk-model-small-fr-pguyot-0.3",
+                "vosk-model-small-en-us-0.15",
+                "vosk-model-en-us-0.22-lgraph"
+            ]
     }
 }

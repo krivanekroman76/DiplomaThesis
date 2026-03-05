@@ -18,7 +18,7 @@ import separators.openunmix_separator as openunmix
 # Transcription tools
 import separators.whisper_transcription as whisper 
 import separators.wav2vec2_transcription as wav2vec2 
-# import separators.coqui_transcription as coqui_trans
+import separators.vosk_transcription as vosk
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
@@ -67,6 +67,9 @@ class SeparationApp(ctk.CTk):
         self.spleeter_sep = spleeter.SpleeterSeparator()
         self.demucs_sep = demucs.DemucsSeparator()
         self.openunmix_sep = openunmix.OpenUnmixSeparator()
+        self.whisper_trans = whisper.WhisperTranscription()
+        self.wav2vec2_trans = wav2vec2.Wav2Vec2Transcription()
+        self.vosk_trans = vosk.VoskTranscription()
 
         # Data lists
         self.songs = []
@@ -189,6 +192,7 @@ class SeparationApp(ctk.CTk):
         self.show_input()
 
     def load_settings(self):
+        """Loads settings from a JSON file or initializes them with default values."""
         defaults = {
             "input_folder": "input",
             "vocals_folder": "output/vocals",
@@ -196,7 +200,7 @@ class SeparationApp(ctk.CTk):
             "transcriptions_folder": "output/text",
             "appearance_mode": "Dark",
             "scaling": "100%",
-            "font_size": "12",
+            "font_size": 12,
             "separator_models": {
                 "Spleeter": [],
                 "Demucs": ["mdx", "mdx_extra", "htdemucs"],
@@ -204,18 +208,29 @@ class SeparationApp(ctk.CTk):
             },
             "transcription_models": {
                 "whisper": ["large", "medium", "small", "tiny", "base", "turbo"],
-                "wav2vec2": ["facebook/wav2vec2-base-960h", 
-                             "facebook/wav2vec2-large-960h",
-                             "facebook/wav2vec2-large-xlsr-53-czech",
-                             "facebook/wav2vec2-large-xlsr-53-french"
-                             ],
-                "coqui": ["model.pbmm"]
+                "wav2vec2": [
+                    "facebook/wav2vec2-base-960h", 
+                    "facebook/wav2vec2-large-960h",
+                    "facebook/wav2vec2-large-xlsr-53-czech",
+                    "facebook/wav2vec2-large-xlsr-53-french"
+                ],
+                "vosk": [
+                    "vosk-model-spk-0.4",
+                    "vosk-model-small-cs-0.4-rhassspy",
+                    "vosk-model-small-fr-0.22",
+                    "vosk-model-small-fr-pguyot-0.3",
+                    "vosk-model-small-en-us-0.15",
+                    "vosk-model-en-us-0.22-lgraph"
+                ]
             }
         }
+
         if os.path.exists(self.settings_file):
             try:
-                with open(self.settings_file, "r") as f:
+                with open(self.settings_file, "r", encoding="utf-8") as f:
                     data = json.load(f)
+                
+                # Load paths and UI preferences
                 self.input_folder = data.get("input_folder", defaults["input_folder"])
                 self.output_folders = {
                     "vocals": data.get("vocals_folder", defaults["vocals_folder"]),
@@ -225,11 +240,16 @@ class SeparationApp(ctk.CTk):
                 self.appearance_mode = data.get("appearance_mode", defaults["appearance_mode"])
                 self.scaling = data.get("scaling", defaults["scaling"])
                 self.font_size = data.get("font_size", 12)
+                
+                # Load model configurations
                 self.separator_models = data.get("separator_models", defaults["separator_models"])
                 self.transcription_models = data.get("transcription_models", defaults["transcription_models"])
-            except (json.JSONDecodeError, KeyError):
+                
+            except (json.JSONDecodeError, KeyError) as e:
+                print(f"Settings error: {e}. Restoring defaults.")
                 self.set_defaults(defaults)
         else:
+            # Create settings with default values if file does not exist
             self.set_defaults(defaults)
     
     def set_defaults(self, defaults):
@@ -561,33 +581,57 @@ class SeparationApp(ctk.CTk):
             self.shifts_frame.grid_remove()  # Hide shifts for other tools
 
     def on_trans_tool_change(self, *args):
+        """
+        Complete logic for UI visibility and model population.
+        Handles: model lists, language dropdown visibility, and speaker ID toggle.
+        """
         tool = self.trans_tool_var.get()
-        trans_check = self.transcript_var.get()
-        # Transcription frame visible
-        if trans_check:
-            self.transcription_frame.grid()
-        else:
-            self.transcription_frame.grid_remove()
+            
         try:
-            if tool == "whisper":
-                values = self.transcription_models.get("whisper", ["tiny", "base"])
-            elif tool == "wav2vec2":
-                values = self.transcription_models.get("wav2vec2", ["facebook/wav2vec2-base-960h"])
-            elif tool == "coqui":
-                values = self.transcription_models.get("coqui", ["model.pbmm"])
+            # 1. RETRIEVE DATA FROM SETTINGS
+            # Get models from settings.json or use hardcoded fallbacks
+            all_models = self.transcription_models.get(tool, [])
+            
+            # 2. MODEL SELECTION LOGIC
+            if tool in ["whisper", "wav2vec2", "vosk"]:
+                # Filter logic for Vosk (don't show the spk model in the dropdown)
+                if tool == "vosk":
+                    values = [m for m in all_models if "spk" not in m]
+                    if not values: values = ["vosk-model-small-cs-0.4-rhassspy"]
+                else:
+                    values = all_models if all_models else ["base"]
+
+                # Update the dropdown menu values
+                if hasattr(self, 'trans_model_menu'):
+                    self.trans_model_menu.configure(values=values)
+                    self.trans_model_var.set(values[0] if values else "")
+
+                # Show the widgets
+                self.trans_model_label.grid()
+                self.trans_model_menu.grid()
             else:
                 self.trans_model_label.grid_remove()
-                self.transcript_model_menu.grid_remove()
-                return
-            self.transcript_model_menu.configure(values=values)
-            self.transcript_model.set(values[0] if values else "")
-            self.trans_model_label.grid()
-            self.transcript_model_menu.grid()
-        except Exception as e:
-            logging.info(f"Error updating transcription models: {e}")
-            # Fallback to defaults
-            self.on_trans_tool_change()
+                self.trans_model_menu.grid_remove()
 
+            # 3. LANGUAGE SELECTION VISIBILITY
+            # Only Whisper is multilingual in a single model; others are per-model.
+            if tool == "whisper":
+                if hasattr(self, 'trans_lang_label'): self.trans_lang_label.grid()
+                if hasattr(self, 'trans_lang_menu'): self.trans_lang_menu.grid()
+            else:
+                if hasattr(self, 'trans_lang_label'): self.trans_lang_label.grid_remove()
+                if hasattr(self, 'trans_lang_menu'): self.trans_lang_menu.grid_remove()
+
+            # 4. SPEAKER ID (DIARIZATION) VISIBILITY
+            # Feature exclusive to our Vosk implementation
+            if tool == "vosk":
+                if hasattr(self, 'spk_toggle'): self.spk_toggle.grid()
+            else:
+                if hasattr(self, 'spk_toggle'): self.spk_toggle.grid_remove()
+                    
+        except Exception as e:
+            logging.error(f"Error in on_trans_tool_change: {e}")
+            
     def apply_font_size(self):
         font = ("TkDefaultFont", self.font_size)
         # Apply to listboxes
@@ -600,7 +644,7 @@ class SeparationApp(ctk.CTk):
         self.openunmix_models_text.configure(font=font)
         self.whisper_models_text.configure(font=font)
         self.wav2vec2_models_text.configure(font=font)
-        self.coqui_models_text.configure(font=font)
+        self.vosk_models_text.configure(font=font)
      
     def create_output_tab(self):
         frame = self.output_frame
@@ -634,37 +678,47 @@ class SeparationApp(ctk.CTk):
         trans_menu.grid(row=0, column=1, rowspan=6, sticky="nsew", padx=10, pady=10)
         trans_menu.grid_columnconfigure(0, weight=1)
 
-        ctk.CTkLabel(trans_menu, text="Transcription Menu", font=ctk.CTkFont(size=20, weight="bold")).grid(row=0, column=0, pady=(10, 20))
-
+        self.trans_model_label = ctk.CTkLabel(trans_menu, text="Transcription Menu", font=ctk.CTkFont(size=20, weight="bold"))
+        self.trans_model_label.grid(row=0, column=0, pady=(10, 20))
+        
         # Tool Selection (Radio Buttons)
         ctk.CTkLabel(trans_menu, text="Tool:", anchor="w").grid(row=1, column=0, sticky="w", padx=20)
         self.trans_tool_var = tk.StringVar(value="whisper")
         
         ctk.CTkRadioButton(trans_menu, text="Whisper", variable=self.trans_tool_var, value="whisper", 
-                           command=lambda: self.update_retrans_models("whisper")).grid(row=2, column=0, sticky="w", padx=20, pady=5)
+                           command=self.on_trans_tool_change).grid(row=2, column=0, sticky="w", padx=20, pady=5)
         ctk.CTkRadioButton(trans_menu, text="Wav2Vec2", variable=self.trans_tool_var, value="wav2vec2", 
-                           command=lambda: self.update_retrans_models("wav2vec2")).grid(row=3, column=0, sticky="w", padx=20, pady=5)
-        ctk.CTkRadioButton(trans_menu, text="Coqui", variable=self.trans_tool_var, value="coqui", 
-                           command=lambda: self.update_retrans_models("coqui")).grid(row=4, column=0, sticky="w", padx=20, pady=5)
+                           command=self.on_trans_tool_change).grid(row=3, column=0, sticky="w", padx=20, pady=5)
+        ctk.CTkRadioButton(trans_menu, text="vosk", variable=self.trans_tool_var, value="vosk", 
+                           command=self.on_trans_tool_change).grid(row=4, column=0, sticky="w", padx=20, pady=5)
 
         ctk.CTkLabel(trans_menu, text="Model:", anchor="w").grid(row=5, column=0, sticky="w", padx=20, pady=(10, 0))
-        self.retrans_model_var = tk.StringVar()
-        self.retrans_model_menu = ctk.CTkOptionMenu(trans_menu, variable=self.retrans_model_var, values=[], width=200)
-        self.retrans_model_menu.grid(row=6, column=0, sticky="ew", padx=20, pady=5)
+        self.trans_model_var = tk.StringVar()
+        self.trans_model_menu = ctk.CTkOptionMenu(trans_menu, variable=self.trans_model_var, values=[], width=200)
+        self.trans_model_menu.grid(row=6, column=0, sticky="ew", padx=20, pady=5)
 
         # Language Selection
-        ctk.CTkLabel(trans_menu, text="Language:", anchor="w").grid(row=7, column=0, sticky="w", padx=20, pady=(10, 0))
-        self.retrans_lang_var = tk.StringVar(value="auto")
-        self.retrans_lang_menu = ctk.CTkOptionMenu(trans_menu, variable=self.retrans_lang_var, values=["auto", "cs", "en", "fr", "de", "es"], width=200)
-        self.retrans_lang_menu.grid(row=8, column=0, sticky="ew", padx=20, pady=5)
+        self.trans_lang_label = ctk.CTkLabel(trans_menu, text="Language:", anchor="w")
+        self.trans_lang_label.grid(row=7, column=0, sticky="w", padx=20, pady=(10, 0))
+        self.trans_lang_var = tk.StringVar(value="auto")
+        self.trans_lang_menu = ctk.CTkOptionMenu(trans_menu, variable=self.trans_lang_var, values=["auto", "cs", "en", "fr", "de", "es"], width=200)
+        self.trans_lang_menu.grid(row=8, column=0, sticky="ew", padx=20, pady=5)
 
+        # Speaker Identification Toggle (Only for Vosk)
+        self.use_spk_id_var = tk.BooleanVar(value=False)
+        self.spk_toggle = ctk.CTkSwitch(trans_menu, text="Identify Speakers", 
+                                       variable=self.use_spk_id_var,
+                                       progress_color="#1f538d")
+        self.spk_toggle.grid(row=8, column=0, sticky="w", padx=20, pady=10)
+        self.spk_toggle.grid_remove() # Hidden by default
+        
         # Run Button
-        self.retrans_button = ctk.CTkButton(trans_menu, text="Transcribe", command=self.run_standalone_transcription)
-        self.retrans_button.grid(row=9, column=0, sticky="ew", padx=20, pady=(30, 10))
+        self.trans_button = ctk.CTkButton(trans_menu, text="Transcribe", command=self.run_standalone_transcription)
+        self.trans_button.grid(row=9, column=0, sticky="ew", padx=20, pady=(30, 10))
         
         ctk.CTkLabel(trans_menu, text="Note: Select a file in 'Vocals' list first.", font=ctk.CTkFont(size=10, slant="italic")).grid(row=10, column=0, padx=20)
 
-        self.update_retrans_models("whisper")
+        self.on_trans_tool_change()
         
     def load_input(self):
         self.songs_listbox.delete(0, tk.END)
@@ -865,12 +919,12 @@ class SeparationApp(ctk.CTk):
         self.wav2vec2_models_text = ctk.CTkTextbox(frame, width=400, height=50)
         self.wav2vec2_models_text.grid(row=5, column=4, sticky="ew", padx=20, pady=5)
         self.wav2vec2_models_text.insert("0.0", json.dumps(self.transcription_models.get("wav2vec2", [])))
-        # Transcription Models - Coqui
-        coqui_models_label = ctk.CTkLabel(frame, text="Coqui Models (Edit/Reorder):", anchor="w")
-        coqui_models_label.grid(row=6, column=3, sticky="w", padx=20, pady=(20, 0))
-        self.coqui_models_text = ctk.CTkTextbox(frame, width=400, height=50)
-        self.coqui_models_text.grid(row=6, column=4, sticky="ew", padx=20, pady=5)
-        self.coqui_models_text.insert("0.0", json.dumps(self.transcription_models.get("coqui", [])))
+        # Transcription Models - vosk
+        vosk_models_label = ctk.CTkLabel(frame, text="vosk Models (Edit/Reorder):", anchor="w")
+        vosk_models_label.grid(row=6, column=3, sticky="w", padx=20, pady=(20, 0))
+        self.vosk_models_text = ctk.CTkTextbox(frame, width=400, height=50)
+        self.vosk_models_text.grid(row=6, column=4, sticky="ew", padx=20, pady=5)
+        self.vosk_models_text.insert("0.0", json.dumps(self.transcription_models.get("vosk", [])))
 
     def save_settings_changes(self):
         self.input_folder = self.settings_input_var.get()
@@ -883,7 +937,7 @@ class SeparationApp(ctk.CTk):
             self.separator_models["OpenUnmix"] = json.loads(self.openunmix_models_text.get("0.0", "end"))
             self.transcription_models["whisper"] = json.loads(self.whisper_models_text.get("0.0", "end"))
             self.transcription_models["wav2vec2"] = json.loads(self.wav2vec2_models_text.get("0.0", "end"))
-            self.transcription_models["coqui"] = json.loads(self.coqui_models_text.get("0.0", "end"))
+            self.transcription_models["vosk"] = json.loads(self.vosk_models_text.get("0.0", "end"))
         except json.JSONDecodeError:
             messagebox.showerror("Error", "Invalid JSON in model fields.")
             return
@@ -912,10 +966,15 @@ class SeparationApp(ctk.CTk):
             "transcription_models": {
                 "whisper": ["large", "medium", "small", "tiny", "base", "turbo"],
                 "wav2vec2": ["facebook/wav2vec2-base-960h", "facebook/wav2vec2-large-960h"],
-                "coqui": ["model.pbmm"]
+                "vosk": [
+                    "vosk-model-small-cs-0.4-rhassspy",
+                    "vosk-model-small-en-us-0.15",
+                    "vosk-model-en-us-0.22-lgraph",
+                    "vosk-model-spk-0.4"
+                ]
             }
         }
-        # Restore all attributes
+        # Restore all attributes from defaults dictionary
         self.input_folder = defaults["input_folder"]
         self.output_folders = {
             "vocals": defaults["vocals_folder"],
@@ -925,40 +984,44 @@ class SeparationApp(ctk.CTk):
         self.separator_models = defaults["separator_models"]
         self.transcription_models = defaults["transcription_models"]
         
-        # Save to file
+        # Save updated settings to the configuration file
         self.save_settings()
         
-        # Update UI variables
+        # Update UI control variables
         self.settings_input_var.set(self.input_folder)
         self.settings_vocals_var.set(self.output_folders["vocals"])
         self.settings_instr_var.set(self.output_folders["instrumentals"])
         self.settings_trans_var.set(self.output_folders["transcriptions"])
         
-        # Update model textboxes
+        # Update model textboxes with JSON formatted strings
         self.demucs_models_text.delete("0.0", "end")
-        self.demucs_models_text.insert("0.0", json.dumps(self.separator_models["Demucs"]))
-        self.openunmix_models_text.delete("0.0", "end")
-        self.openunmix_models_text.insert("0.0", json.dumps(self.separator_models["OpenUnmix"]))
-        self.whisper_models_text.delete("0.0", "end")
-        self.whisper_models_text.insert("0.0", json.dumps(self.transcription_models["whisper"]))
-        self.wav2vec2_models_text.delete("0.0", "end")
-        self.wav2vec2_models_text.insert("0.0", json.dumps(self.transcription_models["wav2vec2"]))
-        self.coqui_models_text.delete("0.0", "end")
-        self.coqui_models_text.insert("0.0", json.dumps(self.transcription_models["coqui"]))
+        self.demucs_models_text.insert("0.0", json.dumps(self.separator_models["Demucs"], indent=4))
         
-        # Ensure folders exist
+        self.openunmix_models_text.delete("0.0", "end")
+        self.openunmix_models_text.insert("0.0", json.dumps(self.separator_models["OpenUnmix"], indent=4))
+        
+        self.whisper_models_text.delete("0.0", "end")
+        self.whisper_models_text.insert("0.0", json.dumps(self.transcription_models["whisper"], indent=4))
+        
+        self.wav2vec2_models_text.delete("0.0", "end")
+        self.wav2vec2_models_text.insert("0.0", json.dumps(self.transcription_models["wav2vec2"], indent=4))
+        
+        self.vosk_models_text.delete("0.0", "end")
+        self.vosk_models_text.insert("0.0", json.dumps(self.transcription_models["vosk"], indent=4))
+        
+        # Ensure that input and output directories exist
         os.makedirs(self.input_folder, exist_ok=True)
         for folder in self.output_folders.values():
             os.makedirs(folder, exist_ok=True)
         
-        # Reload data
+        # Reload file lists and UI data
         self.load_input()
         self.load_outputs()
         
-        # Show success and switch to settings tab
-        messagebox.showinfo("Defaults Restored", "All settings reset to defaults.")
+        # Notify user and switch to the settings tab
+        messagebox.showinfo("Defaults Restored", "All settings, including Vosk models, have been reset to defaults.")
         self.show_settings()
-
+        
     def open_selected_song(self, event=None):
         sel = self.songs_listbox.curselection()
         if not sel:
@@ -995,7 +1058,7 @@ class SeparationApp(ctk.CTk):
     def separate_audio(self):
         """
         Overview: Function to prepare for separation in thread for non-blocking effect.
-        Handles UI prep (validation, selections), separation logic, transcription, and progress updates.
+        Handles UI prep (validation, selections), separation logic and progress updates.
         Runs in background thread for non-blocking UI.
         Captures console progress from tools and updates bottom progress bar/text.
         """
@@ -1014,9 +1077,6 @@ class SeparationApp(ctk.CTk):
         input_path = song['path']
         song_name = os.path.splitext(os.path.basename(song['name']))[0]
         ai_tool = self.ai_tool_var.get()
-        do_transcribe = self.transcript_var.get()
-        transcription_tool = self.trans_tool_var.get()
-        transcription_model = self.transcript_model.get()
         model = self.model_var.get()
         fmt = self.format_var.get()
         sr = int(self.sr_var.get()) if fmt in ["wav", "flac"] else 44100
@@ -1026,23 +1086,20 @@ class SeparationApp(ctk.CTk):
         shifts = int(self.shifts_var.get()) if ai_tool == "Demucs" else None
         vocals_folder = self.output_folders["vocals"]
         instr_folder = self.output_folders["instrumentals"]
-        trans_folder = self.output_folders["transcriptions"] 
         
         # Start the thread
-        thread = threading.Thread(target=self._run_separation, args=(input_path, song_name, vocals_folder, instr_folder, trans_folder,
-                                                                     ai_tool, model, fmt, sr, bitrate, do_transcribe, transcription_tool, 
-                                                                     transcription_model, song, bit_depth, mp3_preset, shifts))
+        thread = threading.Thread(target=self._run_separation, args=(input_path, song_name, vocals_folder, instr_folder,
+                                                                     ai_tool, model, fmt, sr, bitrate, song, bit_depth, mp3_preset, shifts))
         thread.daemon = True
         thread.start()
 
-    def _run_separation(self, input_path, song_name, vocals_folder, instr_folder, trans_folder,
-                        ai_tool, model, fmt, sr, bitrate, do_transcribe, transcription_tool, 
-                        transcription_model, song, bit_depth, mp3_preset, shifts):
+    def _run_separation(self, input_path, song_name, vocals_folder, instr_folder,
+                        ai_tool, model, fmt, sr, bitrate, song, bit_depth, mp3_preset, shifts):
         """
         Overview: Internal method for the threaded separation logic.
         This is the 'execution' part, called by the threaded function.
         Updates progress bar/text with console reports.
-        Handles separation (including transcription inside separators) and UI updates.
+        Handles separation and UI updates.
         """
         # Define progress callback
         def update_progress(percent, message):
@@ -1076,29 +1133,25 @@ class SeparationApp(ctk.CTk):
             success = False
             vocals_path = None
             instr_path = None
-            trans_path = None
             result = None
             if ai_tool == "Spleeter":
                 result = self.spleeter_sep.separate(
-                    input_path, song_name, vocals_folder, instr_folder, trans_folder,
-                    fmt, sr, bitrate, do_transcribe, transcription_tool, transcription_model,
+                    input_path, song_name, vocals_folder, instr_folder, fmt, sr, bitrate,
                     progress_callback=update_progress  # Pass the callback
                 )
             elif ai_tool == "Demucs":
                 result = self.demucs_sep.separate(
-                    input_path, song_name, vocals_folder, instr_folder, trans_folder,
+                    input_path, song_name, vocals_folder, instr_folder,
                     model, fmt, sr, bitrate, bit_depth, mp3_preset, shifts,
-                    do_transcribe, transcription_tool, transcription_model,
                     progress_callback=update_progress
                 )
             elif ai_tool == "OpenUnmix":
                 result = self.openunmix_sep.separate(
-                    input_path, song_name, vocals_folder, instr_folder, trans_folder,
-                    model, fmt, sr, bitrate, do_transcribe, transcription_tool, transcription_model,
+                    input_path, song_name, vocals_folder, instr_folder, model, fmt, sr, bitrate,
                     progress_callback=update_progress
                 )
             if isinstance(result, tuple) and len(result) >= 4:
-                success, vocals_path, instr_path, trans_path = result
+                success, vocals_path, instr_path = result
             else:
                 success = False
 
@@ -1108,7 +1161,7 @@ class SeparationApp(ctk.CTk):
                 return
             else:
                 # Final updates Print names of new files and update output tab
-                self.after(0, lambda: self.progress_text.configure(text=f"Separation completed! Files saved as {vocals_path}, {instr_path}, {trans_path}. Check output tab."))   
+                self.after(0, lambda: self.progress_text.configure(text=f"Separation completed! Files saved as {vocals_path}, {instr_path}. Check output tab."))   
                 self.after(0, self.load_outputs)
 
         except Exception as e:
@@ -1117,22 +1170,7 @@ class SeparationApp(ctk.CTk):
         # Hide Abort button and progress bar after completion
         self.abort_button.grid_remove()  
         self.progress_bar.grid_remove()
-
-    def update_retrans_models(self, choice):
-        """Aktualizuje seznam modelů v dropdownu na základě vybraného nástroje."""
-        if choice == "whisper":
-            values = self.transcription_models.get("whisper", ["tiny", "base", "small"])
-        elif choice == "wav2vec2":
-            values = self.transcription_models.get("wav2vec2", ["facebook/wav2vec2-base-960h"])
-        elif choice == "coqui":
-            values = self.transcription_models.get("coqui", ["model.pbmm"])
-        else:
-            values = []
-
-        self.retrans_model_menu.configure(values=values)
-        if values:
-            self.retrans_model_var.set(values[0])
-
+            
     def run_standalone_transcription(self):
         """Runs transcription on a file already in the Vocals listbox."""
         sel = self.vocals_listbox.curselection()
@@ -1144,30 +1182,33 @@ class SeparationApp(ctk.CTk):
         vocal_path = os.path.join(self.output_folders["vocals"], filename)
         
         tool = self.trans_tool_var.get()
-        model = self.retrans_model_var.get()
-        lang = self.retrans_lang_var.get()
+        model = self.trans_model_var.get()
+        lang = self.trans_lang_var.get()
+        # Get the state of the Speaker ID switch
+        use_spk = self.use_spk_id_var.get() if tool == "vosk" else False
         
         # Create output name based on tool and model
         base_name = os.path.splitext(filename)[0]
         out_name = f"{base_name}_{tool}_{model.replace('/', '_')}.txt"
         out_path = os.path.join(self.output_folders["transcriptions"], out_name)
 
-        # Run in thread to keep UI responsive
+        # Add 'use_spk' to the thread arguments
         threading.Thread(target=self._exec_standalone_trans, 
-                         args=(vocal_path, out_path, tool, model, lang), 
+                         args=(vocal_path, out_path, tool, model, lang, use_spk), 
                          daemon=True).start()
 
-    def _exec_standalone_trans(self, input_p, output_p, tool, model, lang):
+    def _exec_standalone_trans(self, input_p, output_p, tool, model, lang, use_spk):
             self.after(0, lambda: self.progress_text.configure(text=f"Transcribing with {tool}..."))
             
             success = False
             try:
                 if tool == "whisper":
-                    # Note: Whisper's transcribe method needs to be updated to accept 'language'
-                    success = self.whisper.transcribe(input_p, output_p, model, language=lang)
+                    success = self.whisper_trans.transcribe(input_p, output_p, model, language=lang)
                 elif tool == "wav2vec2":
-                    success = self.wav2vec2.transcribe(input_p, output_p, model)
-                
+                    success = self.wav2vec2_trans.transcribe(input_p, output_p, model)
+                elif tool == "vosk":
+                    success = self.vosk_trans.transcribe(input_p, output_p, model, use_diarization=use_spk)
+                    
                 if success:
                     self.after(0, lambda: self.progress_text.configure(text="Transcription finished!"))
                     self.after(0, self.load_outputs)

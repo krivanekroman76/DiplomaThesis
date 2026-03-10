@@ -1,6 +1,8 @@
 import os
 import torch
 import librosa
+import gc # Import the garbage collector
+import math
 from transformers import Wav2Vec2Processor, Wav2Vec2ForCTC
 
 class Wav2Vec2Transcription:
@@ -37,33 +39,89 @@ class Wav2Vec2Transcription:
         except Exception as e:
             print(f"[ERROR] Wav2Vec2: Failed to load {model_name}: {e}")
 
-    def transcribe(self, audio_path: str, output_path: str, model_name: str):
-        """
-        Transcribes audio, switching models if necessary.
-        :param model_name: The technical string from your GUI settings (e.g., 'facebook/wav2vec2-large-960h').
-        """
+    def transcribe(self, audio_path: str, output_path: str, model_name: str, progress_callback=None):
         try:
-            # Check if we need to swap weights
+            if progress_callback:
+                progress_callback(5, "Wav2Vec2: Loading model and audio...")
+                
             if model_name and model_name != self.current_model_name:
                 self._load_model_weights(model_name)
 
             if not os.path.exists(audio_path):
-                return False
+                return False, None # <-- Changed to return tuple
 
-            # Processing logic
-            audio, _ = librosa.load(audio_path, sr=16000)
-            inputs = self.processor(audio, sampling_rate=16000, return_tensors="pt", padding=True)
+            # 1. Load the audio
+            audio, sr = librosa.load(audio_path, sr=16000)
             
+            # 2. Define chunk parameters
+            chunk_length_s = 10
+            chunk_size = chunk_length_s * 16000
+            total_samples = len(audio)
+            
+            full_transcription = []
+
+            # Calculate total chunks for our progress bar
+            total_chunks = math.ceil(total_samples / chunk_size)
+
+            # 3. Process in chunks
             with torch.no_grad():
-                logits = self.model(inputs.input_values.to(self.device)).logits
-            
-            predicted_ids = torch.argmax(logits, dim=-1)
-            transcription = self.processor.batch_decode(predicted_ids)[0]
-            
+                for chunk_index, i in enumerate(range(0, total_samples, chunk_size)):
+                    
+                    # --- PROGRESS BAR UPDATE ---
+                    if progress_callback:
+                        percent_done = (chunk_index / total_chunks) * 80
+                        current_progress = 10 + percent_done
+                        
+                        progress_callback(
+                            current_progress, 
+                            f"Wav2Vec2: Transcribing chunk {chunk_index + 1} of {total_chunks}..."
+                        )
+                    # ---------------------------
+
+                    audio_chunk = audio[i : i + chunk_size]
+                    
+                    inputs = self.processor(audio_chunk, sampling_rate=16000, return_tensors="pt", padding=True)
+                    logits = self.model(inputs.input_values.to(self.device)).logits
+                    
+                    predicted_ids = torch.argmax(logits, dim=-1)
+                    chunk_text = self.processor.batch_decode(predicted_ids)[0]
+                    
+                    if chunk_text:
+                        full_transcription.append(chunk_text.lower())
+
+            if progress_callback:
+                progress_callback(95, "Wav2Vec2: Saving transcription...")
+
+            # 4. Save to file (Matching Whisper Format)
             with open(output_path, "w", encoding="utf-8") as f:
-                f.write(transcription.lower())
+                # Write the full block of text first
+                f.write(f"Transcription (Model: {model_name}):\n")
+                f.write(" ".join(full_transcription) + "\n\n")
                 
-            return True
+                # Write the generated chunk timestamps
+                f.write("Timestamps:\n")
+                for chunk_index, text in enumerate(full_transcription):
+                    start_t = chunk_index * chunk_length_s
+                    end_t = start_t + chunk_length_s
+                    f.write(f"{start_t:.2f}s - {end_t:.2f}s: {text}\n")
+                
+            # 5. Cleanup RAM
+            del audio
+            del inputs
+            del logits
+            gc.collect()
+            if torch.backends.mps.is_available():
+                torch.mps.empty_cache()
+                
+            if progress_callback:
+                progress_callback(100, "Wav2Vec2: Transcription Complete!")
+                
+            # Extract just the filename from the full path
+            filename = os.path.basename(output_path)
+            return True, filename # <-- Return success and filename
+            
         except Exception as e:
             print(f"[ERROR] Wav2Vec2 transcription failed: {e}")
-            return False
+            if progress_callback:
+                progress_callback(0, f"Error: {str(e)}")
+            return False, None # <-- Changed to return tuple

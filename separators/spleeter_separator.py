@@ -8,15 +8,14 @@ import warnings
 from spleeter.separator import Separator
 from spleeter.audio import Codec
 
-# Transcription tools
-import separators.whisper_transcription as whisper_trans 
-#import separators.wav2vec2_transcription as wav2vec2_trans 
-#import separators.coqui_transcription as coqui_trans
-
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
+# --- ADD THESE LINES TO SILENCE SPAM ---
+logging.getLogger('numba').setLevel(logging.WARNING)
+logging.getLogger('matplotlib').setLevel(logging.WARNING)
+logging.getLogger('tensorflow').setLevel(logging.ERROR)
 
 class SpleeterSeparator:
     """
@@ -35,9 +34,6 @@ class SpleeterSeparator:
             logging.info("Spleeter initialized successfully (direct API)")
         except Exception as e:
             logging.error(f"Spleeter init warning: {e} (will use CLI)", exc_info=True)
-        self.whisper_trans = whisper_trans.WhisperTranscription()
-        #self.wav2vec2_trans = wav2vec2_trans.Wav2Vec2Transcription() 
-        #self.coqui_trans = coqui_trans.CoquiTranscription()
 
     def _get_unique_filename(self, base_path):
         """
@@ -60,18 +56,14 @@ class SpleeterSeparator:
             counter += 1
 
     def separate(self, 
-                input_path: str, 
-                song_name: str, 
-                vocals_folder: str, 
-                instr_folder: str,
-                trans_folder: str, 
-                fmt="wav", 
-                sr=44100, 
-                bitrate="128k", 
-                do_transcribe=False,  
-                trans_tool="whisper", 
-                trans_model="tiny",
-                progress_callback=None):
+                 input_path, 
+                 song_name, 
+                 vocals_folder, 
+                 instr_folder, 
+                 fmt="wav", 
+                 sr=44100, 
+                 bitrate="128k", 
+                 progress_callback=None):
         """
         Overview: 
             Perform source separation on an audio file using Spleeter.
@@ -82,13 +74,9 @@ class SpleeterSeparator:
             - song_name (str): Base name for output files (without extension).
             - vocals_folder (str): Folder to save vocal tracks.
             - instr_folder (str): Folder to save instrumental tracks.
-            - trans_folder (str): Folder to save transcription files.
             - fmt (str): Output format ("wav", "mp3", "flac").
             - sr (int): Sample rate (not used in Spleeter, but kept for consistency).
             - bitrate (str): Bitrate for MP3 (e.g., "128k").
-            - do_transcribe (bool): Whether to perform transcription.
-            - trans_tool (str): Transcription tool ("whisper", etc.).
-            - trans_model (str): Model for transcription (e.g., "tiny").
             - progress_callback (callable, optional): Function to call for progress updates (e.g., lambda percent: update_bar(percent)).
         
         Returns:
@@ -146,7 +134,7 @@ class SpleeterSeparator:
 
                 # Call progress callback for file moving (60%)
                 if progress_callback:
-                    progress_callback(60, "Moving files to output folders...")
+                    progress_callback(80, "Moving files to output folders...")
 
                 # Ensure final folders exist
                 os.makedirs(vocals_folder, exist_ok=True)
@@ -164,40 +152,6 @@ class SpleeterSeparator:
 
                 logging.info(f"Spleeter separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
                 
-            # Handle transcription if enabled (runs synchronously after separation)
-            trans_path = None
-            if do_transcribe:
-                if progress_callback:
-                    progress_callback(70, "Transcribing vocals...")
-               
-               # Ensure trans_folder exists
-                os.makedirs(trans_folder, exist_ok=True)
-                
-                # Set initial trans_path
-                base_trans_path = os.path.join(trans_folder, f"{song_name}_Spleeter_{trans_tool}_{trans_model}_transcription.txt")
-                
-                # Get unique filename if it exists
-                trans_path = self._get_unique_filename(base_trans_path)
-                
-                success_trans = False
-                if trans_tool == "whisper":
-                    success_trans = self.whisper_trans.transcribe(vocals_dest, trans_path, trans_model)
-                elif trans_tool == "wav2vec2":
-                    print("Placeholder for wav2vec2 transcription tool")
-                    #success_trans = self.wav2vec2_trans.transcribe(vocals_dest, trans_path, trans_model)
-                elif trans_tool == "coqui":
-                    print("Placeholder for coqui transcription tool")
-                    #success_trans = self.coqui_trans.transcribe(vocals_dest, trans_path, trans_model)
-                else:
-                    logging.info(f"Spleeter: Unknown transcription tool '{trans_tool}'.")
-                    
-                if success_trans:
-                    logging.info(f"Spleeter: Transcription completed for {song_name} by '{trans_tool}' using '{trans_model}'.")
-                    if progress_callback:
-                        progress_callback(90, "Transcribing vocals done!")
-                else:
-                    logging.error(f"Spleeter: Transcription failed for {song_name} by '{trans_tool}' using '{trans_model}'.", exc_info=True)
-
             # Call progress callback for completion (100%)
             if progress_callback:
                 progress_callback(100, "Separation done!")
@@ -205,12 +159,11 @@ class SpleeterSeparator:
             # Return file names (not paths) for GUI
             vocals_name = os.path.basename(vocals_dest) if vocals_dest else None
             instr_name = os.path.basename(instr_dest) if instr_dest else None
-            trans_name = os.path.basename(trans_path) if trans_path else None
-            return True, vocals_name, instr_name, trans_name
+            return True, vocals_name, instr_name
 
         except subprocess.CalledProcessError as e:
             logging.error(f"Spleeter subprocess failed: {e.stderr}", exc_info=True)
-            return False, None, None, None
+            return False, None, None
         except Exception as e:
             logging.error(f"Spleeter general error: {e}", exc_info=True)
-            return False, None, None, None
+            return False, None, None

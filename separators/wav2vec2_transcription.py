@@ -1,4 +1,5 @@
 import os
+import logging
 import torch
 import librosa
 import gc # Import the garbage collector
@@ -39,13 +40,31 @@ class Wav2Vec2Transcription:
         except Exception as e:
             print(f"[ERROR] Wav2Vec2: Failed to load {model_name}: {e}")
 
-    def transcribe(self, audio_path: str, output_path: str, model_name: str, progress_callback=None):
+    def _get_device(self, device_choice):
+        if device_choice in ["Auto", "GPU"]:
+            if torch.cuda.is_available(): return torch.device("cuda")
+            elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available(): return torch.device("mps")
+        return torch.device("cpu")
+
+    def transcribe(self, audio_path: str, output_path: str, model_name: str, device_choice="Auto", progress_callback=None):
         try:
-            if progress_callback:
-                progress_callback(5, "Wav2Vec2: Loading model and audio...")
+            target_device = self._get_device(device_choice)
+            prefix = f"[{target_device.type.upper()}]"
+
+            if model_name != self.current_model_name or self.model is None or self.model.device.type != target_device.type:
+                if progress_callback:
+                    progress_callback(5, f"{prefix} Wav2Vec2: Downloading/Loading weights...")
                 
-            if model_name and model_name != self.current_model_name:
-                self._load_model_weights(model_name)
+                logging.debug(f"Wav2Vec2: Loading on {target_device.type.upper()}")
+                if self.model is not None:
+                    del self.model
+                    del self.processor
+                    gc.collect()
+                    if torch.cuda.is_available(): torch.cuda.empty_cache()
+
+                self.processor = Wav2Vec2Processor.from_pretrained(model_name)
+                self.model = Wav2Vec2ForCTC.from_pretrained(model_name).to(target_device)
+                self.current_model_name = model_name
 
             if not os.path.exists(audio_path):
                 return False, None # <-- Changed to return tuple

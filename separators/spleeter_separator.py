@@ -5,6 +5,7 @@ import shlex
 import tempfile
 import shutil
 import warnings
+from pydub import AudioSegment
 from spleeter.separator import Separator
 from spleeter.audio import Codec
 
@@ -59,10 +60,12 @@ class SpleeterSeparator:
                  input_path, 
                  song_name, 
                  vocals_folder, 
-                 instr_folder, 
+                 instr_folder,
+                 channels="Stereo",  
                  fmt="wav", 
                  sr=44100, 
-                 bitrate="128k", 
+                 bitrate="128k",
+                 device_choice="Auto", 
                  progress_callback=None):
         """
         Overview: 
@@ -103,13 +106,21 @@ class SpleeterSeparator:
             # Create temp dir for processing
             with tempfile.TemporaryDirectory() as temp_dir:
                 # Try direct API first
-                try:
+                try: 
                     self.separator.separate_to_file(audio_descriptor=input_path, destination=temp_dir, audio_adapter=None, codec=codec)
                     logging.info("Spleeter: Direct API separation successful")
                     if progress_callback:
                         progress_callback(30, "Spleeter separation in progress...")
                 except Exception as api_err:
                     logging.info(f"Spleeter: Direct API failed ({api_err}), falling back to CLI")
+                    
+                    # --- ADD ENVIRONMENT VARIABLE LOGIC FOR CLI ---
+                    cli_env = os.environ.copy()
+                    if device_choice == "CPU":
+                        cli_env["CUDA_VISIBLE_DEVICES"] = "-1"
+                    elif device_choice == "GPU" and "CUDA_VISIBLE_DEVICES" in cli_env and cli_env["CUDA_VISIBLE_DEVICES"] == "-1":
+                        del cli_env["CUDA_VISIBLE_DEVICES"]
+
                     cmd = [
                         'spleeter', 'separate',
                         '-p', self.model,
@@ -118,7 +129,8 @@ class SpleeterSeparator:
                         '--bitrate', bitrate,
                     ]
                     
-                    result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+                    # --- PASS env=cli_env to subprocess ---
+                    result = subprocess.run(cmd, capture_output=True, text=True, check=True, env=cli_env)
                     if result.returncode != 0:
                         logging.info(f"Spleeter CLI error: {result.stderr}")
                         return False, None, None, None
@@ -146,9 +158,24 @@ class SpleeterSeparator:
                 vocals_dest = self._get_unique_filename(base_vocals_dest)
                 instr_dest = self._get_unique_filename(base_instr_dest)
 
-                # Move files to unique final locations
-                shutil.move(vocals_src, vocals_dest)
-                shutil.move(instr_src, instr_dest)
+                # REPLACE the final shutil.move block with this:
+                if progress_callback:
+                    progress_callback(80, "Processing final audio format...")
+
+                # If Mono is selected, process with PyDub instead of just moving
+                if channels == "Mono":
+                    v_audio = AudioSegment.from_file(vocals_src).set_channels(1)
+                    i_audio = AudioSegment.from_file(instr_src).set_channels(1)
+                    
+                    export_kwargs = {"format": fmt}
+                    if fmt == "mp3": export_kwargs["bitrate"] = bitrate
+
+                    v_audio.export(vocals_dest, **export_kwargs)
+                    i_audio.export(instr_dest, **export_kwargs)
+                else:
+                    # Standard Move for Stereo
+                    shutil.move(vocals_src, vocals_dest)
+                    shutil.move(instr_src, instr_dest)
 
                 logging.info(f"Spleeter separation successful for {song_name} in {fmt} format. Files saved as: {vocals_dest}, {instr_dest}")
                 

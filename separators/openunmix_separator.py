@@ -42,9 +42,11 @@ class OpenUnmixSeparator:
                 vocals_folder: str, 
                 instr_folder: str,
                 model="umxl", 
+                channels="Stereo", 
                 fmt="wav", 
                 sr=44100, 
                 bitrate="128k", 
+                device_choice="Auto",
                 progress_callback=None):  
         
         try:
@@ -62,8 +64,17 @@ class OpenUnmixSeparator:
             if audio.ndim == 1:
                 audio = np.stack([audio, audio], axis=-1)
 
+            target_device = "cpu"
+            if device_choice in ["Auto", "GPU"]:
+                if torch.cuda.is_available(): target_device = "cuda"
+                elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available(): target_device = "mps"
+            
+            prefix = f"[{target_device.upper()}]"
+            logging.debug(f"OpenUnmix: Processing on {target_device}")
+
+            # 3. Add the warning:
             if progress_callback:
-                progress_callback(20, "OpenUnmix: Loading and preparing audio...")
+                progress_callback(30, f"{prefix} OpenUnmix: Separating (Downloading model if first run)...")
 
             with tempfile.TemporaryDirectory() as temp_dir:
                 if progress_callback:
@@ -71,13 +82,13 @@ class OpenUnmixSeparator:
 
                 # Perform separation
                 estimates = predict.separate(
-                    audio=torch.as_tensor(audio).float(),
-                    rate=original_sr,
-                    model_str_or_path=model,
-                    targets=['vocals'],  # Only vocals
-                    residual=True,  # Creates residual for instrumental
-                    device=self.device
-                )
+                        audio=torch.as_tensor(audio).float(),
+                        rate=original_sr,
+                        model_str_or_path=model,
+                        targets=['vocals'], 
+                        residual=True, 
+                        device=target_device # <--- Explicit device here!
+                    )
 
                 if progress_callback:
                     progress_callback(60, "OpenUnmix: Processing and saving files...")
@@ -118,6 +129,10 @@ class OpenUnmixSeparator:
                 # Load and export files
                 audio_vocals = AudioSegment.from_wav(vocals_temp_path)
                 audio_instr = AudioSegment.from_wav(instr_temp_path)
+                
+                if channels == "Mono":
+                    audio_vocals = audio_vocals.set_channels(1)
+                    audio_instr = audio_instr.set_channels(1)
                 
                 if fmt == "mp3":
                     audio_vocals.export(vocals_dest, format="mp3", bitrate=bitrate)

@@ -4,6 +4,7 @@
     "instrumentals_folder": "output/instrumentals",
     "transcriptions_folder": "output/text",
     "appearance_mode": "Dark",
+    "color_theme": "blue",
     "scaling": "100%",
     "auto_flush_memory": true,
     "separator_models": {
@@ -36,11 +37,12 @@
         ],
         "vosk": [
             "vosk-model-spk-0.4",
-            "vosk-model-small-cs-0.4-rhassspy",
+            "vosk-model-small-cs-0.4-rhasspy",
             "vosk-model-small-fr-0.22",
             "vosk-model-small-fr-pguyot-0.3",
             "vosk-model-small-en-us-0.15",
             "vosk-model-en-us-0.22-lgraph"
         ]
-    }
+    },
+    "models_dir": "D:\\DiplomaThesis\\Models"
 }

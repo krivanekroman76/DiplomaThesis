@@ -10,7 +10,7 @@ import gc
 vosk.SetLogLevel(-1)
 
 class VoskTranscription:
-    def __init__(self):
+    def __init__(self, custom_models_dir=None):
         # Cache for loaded ASR models to avoid redundant disk I/O
         self.loaded_models = {}
         
@@ -20,8 +20,11 @@ class VoskTranscription:
         # Dynamically resolve the project base directory
         base_project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         
-        # Define the absolute path to the pretrained Vosk models
-        self.models_dir = os.path.join(base_project_dir, "pretrained_models", "vosk")
+        # Use the provided custom directory, or default to the centralized 'Models' folder
+        if custom_models_dir:
+            self.models_dir = custom_models_dir
+        else:
+            self.models_dir = os.path.join(base_project_dir, "Models")
         
         if not os.path.exists(self.models_dir):
             print(f"[WARNING] Vosk models directory not found at: {self.models_dir}")
@@ -75,7 +78,7 @@ class VoskTranscription:
             self.speaker_profiles[best_speaker].append(new_vector)
             return best_speaker
 
-    def transcribe(self, audio_path, output_path, model_name, use_diarization=False, progress_callback=None):
+    def transcribe(self, audio_path, output_path, model_name, use_diarization=False, device_choice="Auto", progress_callback=None):
         """Perform transcription with optional speaker diarization and Whisper-style formatting."""
         try:
             if progress_callback:

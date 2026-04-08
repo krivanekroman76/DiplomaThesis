@@ -1,210 +1,187 @@
-# Diploma thesis: Audio Separation Tool
+# Diploma thesis: Audio Separation & Transcription Tool
 
 [![Project Status](https://img.shields.io/badge/Status-Work%20in%20Progress-yellow)](#TODO)
 
-A desktop application for separating audio files into vocals and instrumentals using AI-powered tools like Spleeter, Demucs, and OpenUnmix. It also supports transcription of vocals using OpenAI's Whisper model. Built with Python and CustomTkinter for a modern, dark-themed GUI.
+A desktop application for separating audio files into vocals and instrumentals using AI-powered tools (Spleeter, Demucs, and OpenUnmix). Furthermore, it supports advanced speech-to-text transcription using multiple tools (Whisper, Wav2Vec2, Vosk) with speaker diarization support (Vosk). Built with Python and CustomTkinter for a modern GUI.
 
 ## Features
 
-*   **Audio Separation**: Separate songs into vocals and instrumentals using multiple AI tools:
-    
-    *   Spleeter
-        
-    *   Demucs (with models like mdx, mdx\_extra, htdemucs)
-        
-    *   OpenUnmix (with models like umxl, umxhq, umx, umxse)
-        
-*   **Output Formats**: Export in WAV, MP3, or FLAC with customizable settings (sample rate, bitrate, channels, bit depth).
-    
-*   **Transcription**: Optionally transcribe vocals to text using Whisper, with timestamps.
-    
-*   **File Management**: Browse and manage input/output folders, add songs, and open files directly.
-    
-*   **Progress Tracking**: Modal progress window with cancellation support.
-    
-*   **Cross-Platform**: Works on Windows, macOS, and Linux.
-    
+### 🎵 Core Audio Processing
+* **Audio Separation**: Isolate vocals and instrumentals using top-tier AI models:
+  * **Spleeter**
+  * **Demucs** (supports mdx, mdx_extra, htdemucs)
+  * **OpenUnmix** (supports umxl, umxhq, umx, umxse)
+* **Advanced Transcription**: Transcribe extracted vocals to text with timestamps using:
+  * **OpenAI Whisper** (Highly accurate, multi-language)
+  * **Wav2Vec2** (Fast, HuggingFace integration)
+  * **Vosk** (Lightweight, supports **Speaker Diarization** to identify different singers/speakers)
+* **Flexible Output Formatting**: Export in WAV, MP3, or FLAC with granular control over sample rate, bitrate, channels (Mono/Stereo), and bit depth.
 
-## Screenshots
+### ⚙️ System & Performance
+* **Hardware Acceleration Control**: Explicitly assign tasks to the CPU or GPU (CUDA/MPS) directly from the UI, or let the app auto-detect the best hardware.
+* **Smart Memory Management**: Implements aggressive garbage collection (RAM/VRAM flushing) between processing chunks and batch files to prevent memory leaks and crashes on lower-end hardware.
+* **Asynchronous Processing**: Heavy AI tasks are offloaded to background daemon threads, keeping the main GUI completely responsive.
 
+### 🖥️ User Experience & Workflow
+* **Batch Processing**: Queue up and run standalone batch transcriptions on multiple selected vocal or instrumental tracks simultaneously.
+* **Offline First**: Designed to work entirely offline once models are acquired. The app automatically scans local directories for manually downloaded models (like Vosk) and avoids unnecessary network calls.
+* **Interactive GUI**: Built with CustomTkinter for a modern interface featuring a Welcome Screen, detailed file information viewing, and one-click file opening.
+* **Real-time Progress Tracking**: Modal progress window with detailed step-by-step logging, error catching, and safe cancellation support.
+* **Cross-Platform Compatibility**: Works natively on Windows, macOS, and Linux.
 
-### Input Tab
-
-![Main GUI](screenshots/Input.png)
-
-_The main interface showing the input tab with file browser and separation options._   
-_User can use path_entry field to quickly change input folder._ 
-
-### Separation settings for each AI-tool
-
-_Separation options depends on AI-tool's capability ._
-
-![mp3 on Spleeter](screenshots/mp3.png)
-![wav on Spleeter](screenshots/wav.png)
-![wav on Demucs](screenshots/demucs_wav.png)
-![mp3 on Demucs](screenshots/demucs_mp3.png)
-![flac on Demucs](screenshots/demucs_flac.png)
-![Models of OpenUnmix](screenshots/OpenUnmix_models.png)
-
-### Output Tab
-![Output Tab](screenshots/output.png)
-
-_View and manage separated vocals, instrumentals, and transcriptions._   
-_Program automaticly adds number at the end if same file and same output format selected._
-
-### Separation in Progress
-
-![Modal progress window](screenshots/modal.png)
-
-_Modal progress window during audio processing._
-
-![Modal progress window error](screenshots/modal_done.png)
-
-_Modal progress window after audio processing. WIP - autoclose or OK button (error handeling)_
+![Input Tab](screenshots/Input.png)
 
 ## Installation
 
-### Prerequisites
+Choose the installation method that best fits your needs. The pre-packaged Windows release is highly recommended for standard users.
 
-Follow these steps to set up the Audio Separation Tool on your system. This guide supports **Windows**, **macOS**, and **Linux**. Ensure you have administrative privileges if needed (e.g., for installing system dependencies).
+### Method 1: Portable Windows Release (Easiest)
+No Python or prerequisite installations required. This is a standalone version.
+* **Step 1:** Download the latest `AudioSeparatorApp.rar` from the [Releases page]([text](https://github.com/krivanekroman76/DiplomaThesis/releases/tag/v0.9)).
+* **Step 2:** Extract the archive using WinRAR or 7-Zip to your desired location.
+* **Step 3:** Open the extracted folder and double-click the executable to launch the app.
 
-### Prerequisites
+---
 
-- **Python 3.9.4**: Download from [python.org](https://www.python.org/downloads/). Verify with `python --version` or `python3 --version` in your terminal/command prompt.
-- **FFmpeg**: Required for audio processing. 
-  - **Windows**: Download from [ffmpeg.org](https://ffmpeg.org/download.html) (get the static build). Extract to a folder (e.g., `C:\ffmpeg`) and add `C:\ffmpeg\bin` to your system's PATH (search for "Environment Variables" in Windows search, edit PATH under System Variables).
-  - **macOS**: Install via Homebrew: `brew install ffmpeg`. If Homebrew isn't installed, get it from [brew.sh](https://brew.sh).
-  - **Linux**: Use your package manager: `sudo apt install ffmpeg` (Ubuntu/Debian) or `sudo dnf install ffmpeg` (Fedora). Verify with `ffmpeg -version`.
-- **IDE (Optional but Recommended)**: Visual Studio Code (VS Code) for editing and running Python. Download from [code.visualstudio.com](https://code.visualstudio.com/). Install the Python extension for better support.
+### Method 2: Windows Batch Script (Automated Source Setup)
+If you downloaded the source code (`.zip` or via Git) on Windows, you can use the included batch script to automate the environment setup.
+* **Step 1:** Ensure you have [Python 3.9.x](https://www.python.org/downloads/) installed.
+* **Step 2:** Download the repository and extract it.
+* **Step 3:** Double-click the `windows.bat` file. This script will automatically create a virtual environment, install dependencies, and launch the application.
 
-**NOTE**: If using IDE (VS Code) follow setup for **PowerShell** when on Windows in built in terminal. 
+---
 
-- **Git**: For cloning the repository. Download from [git-scm.com](https://git-scm.com/downloads) if not installed. Verify with `git --version`.
+### Method 3: Manual Developer Setup (Cross-Platform / IDE)
+For macOS, Linux, or developers who want to run the application manually via terminal or VS Code.
 
-**NOTE**: You can download the code from this repository in .zip format at the top in green drop down menu `<> Code`, then extract it to your desired location. You can do this to skip **Git** dependencies if you want to test this out. If you download it follow only points 1 and 4 in next step. Hint: `cd <path>`
+**1. Prerequisites**
+* **Python 3.9.x**: Verify by running `python --version` in your terminal.  
+    * (Windows 10 tested on 3.9.13 and macos tested on 3.9.25)
+* **Git** (Optional): For cloning the repository. Alternatively, download the code as a `.zip` via the `<> Code` button. (part of Visual Studio Code IDE)
 
-### Clone the Repository
-1. Open a terminal/command prompt:
-   - **Windows**: Command Prompt or PowerShell.
-   - **macOS/Linux**: Terminal.
+**2. Clone and Prepare**
+* Open your terminal or IDE (like VS Code).
+* Clone the repository: `git clone https://github.com/krivanekroman76/DiplomaThesis.git`
+* Navigate to the folder: `cd DiplomaThesis`
 
-2. Navigate to a directory where you want to store the project (e.g., `cd Desktop`).
+**3. Virtual Environment & Dependencies**
+* Create a virtual environment: `python -m venv .venv` (use `python3` on macOS/Linux).
+* Activate it (Windows Command Prompt): `.venv\Scripts\activate`
+* Activate it (Windows PowerShell): `.venv\Scripts\Activate.ps1`
+* Activate it (macOS/Linux): `source .venv/bin/activate`
+* Install requirements: `pip install -r requirements.txt`
 
-3. Clone the repository: https://github.com/krivanekroman76/DiplomaThesis.git
+**4. Run the Application**
+* Execute the main script: `python separation_app.py`
 
-4. Enter the project folder: `cd DiplomaThesis`
+---
 
-### Set Up Virtual Environment
+### 📥 Offline Usage & Downloading Models
+If you plan to use the application without an internet connection, you need to prepare the AI models beforehand:
 
-A virtual environment isolates dependencies. Create and activate it as follows (replace `<path>` with your actual path if needed).
+* **Whisper, Demucs, and OpenUnmix:** These tools download their weights automatically the first time you use them. To prepare them for offline use, simply click the **Download Default Models** button in the Settings tab to cache them in advance.
+* **Vosk:** Unlike the others, Vosk requires manual model downloading and placement for offline transcription:
+  1. Go to the [Vosk Models Page](https://alphacephei.com/vosk/models).
+  2. Download your preferred language models (e.g., `vosk-model-en-us-0.22`).
+  3. Download `vosk-model-spk-0.4` if you want Speaker Diarization features.
+  4. Extract the `.zip` files into the `Models/vosk/` directory inside your project folder. Ensure the core files (`am`, `conf`, `graph`) are directly inside the named folder without double-nesting.
+  5. In the app's Settings tab, add the exact folder names to the Vosk entry field separated by commas, or simply click the **Scan Directory** button to add them automatically.
 
-1. **Create the Virtual Environment**:
-    - **Windows (Command Prompt)**: `python -m venv .venv`
-    - **Windows (PowerShell)**: `python -m venv .venv`
-    - **macOS/Linux**: `python3 -m venv .venv`
+---
 
-**Note**: This should be done in folder from previus step to make project consistent. .venv can be switched
+### Troubleshooting
+* **FFmpeg Issues:** For Windows users, `ffmpeg.exe` is already included in the repository folder. If you encounter audio processing errors, you may need to update this executable by downloading a fresh static build from [ffmpeg.org](https://ffmpeg.org/download.html) and replacing the one in the folder. Older versions of this repository code may require adding FFmpeg manually to your system's PATH.
+* **Module Not Found:** Ensure your virtual environment is activated before running `pip install` or starting the app. Start only the `separation_app.py`for the GUI.
+* **Linux GUI Errors:** You may need to install Tkinter. Run `sudo apt install python3-tk` (Ubuntu/Debian).
 
-**Note**: When python of higher version is installed, `python -m pip install virtualenv` must be installed in main python to be able to create virtual environment with different python version. Specific python version in .venv must be installed with command `python -m virtualenv -p="<path to the python executable >" <virtual_environment_directory>` where `"<path to the python executable >"` must be path to the python39\python.exe and `<virtual_environment_directory>` can be changed to any name or `.venv` for simplicity, if changed you must change .venv in next step as well
-
-2. **Activate the Virtual Environment**:
-    - **Windows (Command Prompt)**: `.venv\Scripts\activate`
-    - **Windows (PowerShell)**: `.venv\Scripts\Activate.ps1` 
-    (If execution policy blocks it, run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` first.)
-    - **macOS/Linux**: `source .venv/bin/activate`
-
-You should see `(.venv)` or name in your prompt. If not, ensure Python is correctly installed.
-
-3. **Deactivate Later** (when done): Run `deactivate`.
-
-**Note**: Always activate the virtual environment before installing dependencies or running the app.
-
-### Install Dependencies
-
-1. Ensure the virtual environment is activated (see above).
-
-2. Install the required packages: `pip install -r requirements.txt`
-
-   **NOTE** If the environment is installed to other folder, you must change requirements.txt with full path to the same file on your PC. Same applies to running sepration_app.py in **Run the Application** section
-
-This installs CustomTkinter, Whisper, Spleeter, Demucs, OpenUnmix, and other libraries. First run may download AI models (takes time and internet).
-
-**Troubleshooting**:
-- If `pip` fails, upgrade it: `python -m pip install --upgrade pip`.
-- On Windows, if you get permission errors, run Command Prompt as Administrator.
-- For GPU acceleration (optional, for faster processing), install CUDA-compatible versions if you have an NVIDIA GPU (check library docs for Spleeter/Demucs).
-
-### Run the Application
-Application is run from `separation_app.py` in the terminal/command promt (command line in IDE).
-
-1. Ensure the virtual environment is activated, dependecies are installed and you're in the project folder (`cd DiplomaThesis`).
-
-2. Run the app:
-    - **Windows**: `python separation_app.py`
-    - **macOS/Linux**: `python3 separation_app.py`
-    **NOTE** If the environment is installed to other folder, you must change separation_app.py with full path to the same file on your PC.
-      
-The GUI should open. On first run, default folders (`input/`, `output/vocals/`, etc.) are created in the project directory.
-
-**Troubleshooting**:
-- If you get "Module not found" errors, ensure dependencies are installed in the active virtual environment.
-- For GUI issues on Linux, install Tkinter: `sudo apt install python3-tk` (Ubuntu/Debian).
-- Close the app with Ctrl+C in the terminal if it hangs.
-- If FFmpeg isn't found, verify it's in PATH (run `ffmpeg -version` in a new terminal).
-
-### Post-Installation Notes
-
-- **First Run**: AI models download automatically—be patient.
-- **Uninstall**: Delete the project folder and virtual environment.
-- **Support**: If issues arise, check console output and refer to library docs (e.g., [Spleeter](https://github.com/deezer/spleeter), [Demucs](https://github.com/facebookresearch/demucs)).
+---
 
 ## Usage
 
-1.  **Add Songs**: Use the `Add Song` button or place audio files (.mp3, .wav, .flac) in the `input/` folder. Or you can change the `input folder` by typing its full direction path or by `Change Folder/New Folder` button.
-    
-2.  **Select a Song**: In the Input tab, select a song from the list.
-    
-3.  **Configure Separation**:
-    
-    *   Choose an AI tool (Spleeter, Demucs, OpenUnmix).
-        
-    *   Select model (if posible).
-        
-    *   Pick output format and adjust settings (e.g., sample rate for WAV/FLAC, bitrate for MP3).
-        
-    *   Enable transcription if desired.
-        
-4.  **Separate**: Click `Separate` to process.
-    
-5.  **View Outputs**: Switch to the `Output tab` to browse vocals, instrumentals, and transcriptions. Double-click to open files. You can change each output folder destination in output or settings tab if desired.
+1. **Add Songs:** Click the **Add Song** button or drag audio files (.mp3, .wav, .flac) into your designated `input/` folder. You can change your input directory directly in the UI.
+2. **Manage & Select Files:** In the **Input** tab, check the boxes next to the songs or folders you want to process. Each audio file features a control panel where you can **Play**, view **Information**, check **Duration** and **Size**, or **Delete** the file.
+3. **Configure Separation:** * Choose your preferred AI tool (Spleeter, Demucs, OpenUnmix).
+   * Select a specific model from the dropdown (if applicable).
+   * Adjust output formatting (Format, Sample Rate, Bitrate, Mono/Stereo). 
+     * *Hint:* Audio formatting details can be copied directly from the input song's Information panel.
+4. **Separate Audio:** Click **Start Batch Separation**. You can cancel long processes at any time via the Abort button on the progress bar.
+5. **View Separation Outputs:** Navigate to the **Separation Output** tab to browse your generated vocals and instrumentals. Just like the input tab, use the inline buttons to play, view info, or delete files. Default output locations can be customized in the Settings tab.
+6. **Transcribe Audio:** * Select the audio files you want to transcribe using their checkboxes.
+   * Choose a transcription tool and its specific model.
+   * Click **Transcribe**.
+7. **View Transcription Outputs:** Navigate to the **Transcription Output** tab to browse your generated texts. Text files feature simplified inline controls allowing you to easily **Open**, view **Size**, and **Delete** them.
 
-### Tips
+### Quick Tips
+* **Interactive Tutorial:** Need a refresher on how to navigate the app? Go to the **Settings** tab and click **Show Tutorial** to view the welcome screen and UI highlights at any time!
+* **Input Quality:** Always use high-quality, lossless audio files (WAV/FLAC) as inputs for the cleanest separation and transcription results.
+* **First-Time Setup:** The first time you run a specific AI model, it will take extra time to download the necessary weights. Please be patient!
+    
+## 📸 Screenshots & Features
 
-*   For best results, use high-quality audio files.
-    
-*   Cancel long processes via the progress window.
-    
+### Welcome Tutorial Screen
+![Welcome Screen](screenshots/welcome.png)
+
+*A built-in interactive Welcome Tutorial highlights key UI elements to help new users get started instantly.*
+
+### Main Interface (Input & Separation Menu)
+![Input Tab](screenshots/Input.png)
+
+*The modern interface featuring the Input tab. Manage files with interactive inline controls (Play, Info, Delete) and configure your output using the dynamic Separation Menu.*
+
+### Audio Inspector
+![Audio Inspector](screenshots/Information.png)
+
+*Clicking the 'i' (Information) button on any track opens the Audio Inspector. Easily view track metadata and use the "Sync" buttons to match your output settings to the original file perfectly.*
+
+### Dynamic Separation Settings
+![Demucs Options](screenshots/demucs_mp3.png) 
+![Demucs Options WAV](screenshots/demucs_wav.png) 
+![OpenUnmix Models](screenshots/OpenUnmix_models.png)
+![Spleeter Options](screenshots/mp3.png) 
+
+*The Separation Menu adapts based on the selected AI tool (Spleeter, Demucs, OpenUnmix), offering granular control over formats (MP3, WAV, FLAC), bitrates, shifts, and specific model selection.*
+
+### Output Management & Transcription
+![Separation Output](screenshots/separation_output_tab.png)
+
+*The Separated Output tab neatly organizes generated Vocals and Instrumentals. Select isolated tracks here and use the right-hand Transcription Menu (Whisper, Wav2Vec2, Vosk) to generate text.*
+
+![Transcription Output](screenshots/transcription_output_tab.png)
+
+*A dedicated tab for managing, viewing, and opening your generated transcriptions.*
+
+### App Settings
+![Settings Tab](screenshots/settings.png)
+
+*Customize your experience: toggle Dark/Light mode, change the UI color theme, adjust scaling, and manage default directories or offline AI models.*
+
+### Real-Time Progress
+![Progress Status Modal](screenshots/modal.png) ![Progress Status Load](screenshots/progress_transcription_load.png) 
+![Progress Status Loading](screenshots/modal_progress.png) ![Progress Status Transcription](screenshots/progress_transcription.png) 
+![Progress Status Done](screenshots/modal_done.png) ![Progress Status Transcription 2](screenshots/progress_transcription2.png) 
+![Progress Status Flush](screenshots/modal_flush.png)
+
+*Keep track of heavy AI processing with real-time status updates, modal windows, and progress bars directly at the bottom of the window.*
+
+### Completion Window
+![Batch Window](screenshots/Batch_info.png) 
+![Batch Window](screenshots/Batch_info_transcription.png)
+
+*Non-blocking pop-up windows informing the user of the names of the output files and the success count.*
 
 ## TODO 
 ![Project Status](https://img.shields.io/badge/Status-Work%20in%20Progress-yellow)
 
 This project is actively developed. Planned features and fixes include:
 
-*   \[ \] SDR evaluation of tools on provided dataset.
-
-*   \[ \] Transcription tool repair.
-    
-*   \[ \] Add support for batch processing multiple songs at once.
-    
-*   \[ \] Implement transcription options (second choice).
-    
-*   \[ \] Improve error handling and logging for separation failures.
-    
-*   \[ \] Optimize performance for large files (e.g., GPU acceleration for Whisper/Separation).
-    
-*   \[ \] Cross-platform testing and packaging (e.g., via PyInstaller).
-    
-*   \[ \] Documentation: Add more detailed guides and API references for custom separators. Proper credits for used libraries.
+* [ ] SDR evaluation of tools on provided dataset.
+* [x] Transcription tool repair.
+* [x] Add support for batch processing multiple songs at once.
+* [x] Implement transcription options (second choice: Vosk, Wav2Vec2).
+* [x] Improve error handling and logging for separation failures.
+* [ ] Optimize performance for large files (e.g., GPU acceleration for Whisper/Separation).
+* [ ] Cross-platform testing and packaging (e.g., via PyInstaller).
+* [ ] Documentation: Add more detailed guides and API references for custom separators. Proper credits for used libraries.
 
 Feel free to suggest features via issues!
 
@@ -218,7 +195,7 @@ This project is licensed under the MIT License - see the LICENSE file for deta
     
     *   CustomTkinter for the GUI.
         
-    *   OpenAI Whisper for transcription.
+    *   OpenAI Whisper, Wav2vec2 from Hugging face, Vosk for transcription.
         
     *   Spleeter, Demucs, OpenUnmix for audio separation.
         

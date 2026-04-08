@@ -2,42 +2,32 @@ import os
 import whisper
 import librosa
 import math
-import torch
-import gc
 import logging
+from .utils import resolve_torch_device, clear_memory_cache, save_transcription_to_file
 
 class WhisperTranscription:
     def __init__(self):
         self.current_model_name = None
         self.model = None
 
-    def _get_device(self, device_choice):
-        if device_choice in ["Auto", "GPU"]:
-            if torch.cuda.is_available(): return "cuda"
-            elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available(): return "mps"
-        return "cpu"
-
     def load_model(self, model_name: str, device_choice: str, progress_callback=None):
-        target_device = self._get_device(device_choice)
+        target_device = resolve_torch_device(device_choice, return_string=True)
         
         if model_name != self.current_model_name or self.model is None or self.model.device.type != target_device:
             if self.model is not None:
                 del self.model
                 self.model = None
-                gc.collect()
-                if torch.cuda.is_available(): torch.cuda.empty_cache()
-                elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available(): torch.mps.empty_cache()
+                clear_memory_cache()
 
             import sys
             base_dir = sys._MEIPASS if hasattr(sys, '_MEIPASS') else os.path.abspath(".")
             whisper_path = os.path.join(base_dir, "pretrained_models", "whisper")
             os.makedirs(whisper_path, exist_ok=True)
             
-            # --- DOWNLOAD WARNING ---
             if progress_callback:
-                progress_callback(5, f"[{target_device.upper()}] Whisper: Downloading/Loading model (May take a moment)...")
+                progress_callback(5, f"[{target_device.upper()}] Whisper: Downloading/Loading model...")
             
-            logging.debug(f"Whisper: Loading '{model_name}' on {target_device.upper()}...")
+            logging.info(f"Whisper: Loading '{model_name}' on {target_device.upper()}...")
             self.model = whisper.load_model(model_name, device=target_device, download_root=whisper_path)
             self.current_model_name = model_name
 
@@ -83,17 +73,14 @@ class WhisperTranscription:
 
             if progress_callback: progress_callback(95, f"{prefix} Whisper: Formatting file...")
 
-            with open(output_path, "w", encoding="utf-8") as f:
-                f.write(f"Transcription (Model: {model_name}):\n")
-                f.write(" ".join(full_text_blocks) + "\n\nTimestamps:\n")
-                for seg in all_segments:
-                    f.write(f"{seg['start']:.2f}s - {seg['end']:.2f}s: {seg['text'].strip()}\n")
+            save_transcription_to_file(output_path, model_name, full_text_blocks, all_segments)
 
             del audio
-            gc.collect()
+            clear_memory_cache()
+            logging.info(f"Whisper: Transcription saved to {output_path}")
             return True, os.path.basename(output_path)
             
         except Exception as e:
-            logging.error(f"Whisper Error: {e}")
+            logging.error(f"Whisper Error: {e}", exc_info=True)
             if progress_callback: progress_callback(0, f"Error: {str(e)}")
             return False, None

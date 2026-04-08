@@ -19,6 +19,10 @@ import urllib.request
 import zipfile
 import tempfile
 import multiprocessing
+import math
+import queue
+from dataclasses import dataclass
+from typing import Optional
 # The separators and transcription tools are lazy loaded to save RAM
 
 ctk.set_appearance_mode("System")
@@ -37,28 +41,44 @@ logging.getLogger('tensorflow').setLevel(logging.ERROR)
 logging.getLogger('absl').setLevel(logging.ERROR) # TensorFlow's internal abseil logger
 
 def get_app_dir():
-    """Always returns the directory containing the .exe or the main .py script."""
+    """Always returns the directory containing the .exe or the main .py script.
+       Use this for saving settings.json or user output files!"""
     if getattr(sys, 'frozen', False):
-        # Running as compiled executable
         return os.path.dirname(sys.executable)
     else:
-        # Running as a normal Python script
         return os.path.dirname(os.path.abspath(__file__))
 
-def get_app_dir():
-    """ Get path to the permanent location of the EXE (Write-Writeable) """
-    if hasattr(sys, 'frozen'): # 'frozen' means it's a PyInstaller EXE
-        return os.path.dirname(sys.executable)
-    return os.path.abspath(".")
+def get_binaries_dir():
+    """Returns the directory containing bundled files like ffmpeg.exe.
+       When compiled, this magically points to the '_internal' folder."""
+    if getattr(sys, 'frozen', False):
+        # sys._MEIPASS is a special PyInstaller variable pointing to the internal bundle
+        return sys._MEIPASS
+    else:
+        # When running uncompiled, everything is just in the same folder
+        return os.path.dirname(os.path.abspath(__file__))
 
-# Use the permanent directory for models
-app_dir = get_app_dir()
+def setup_ffmpeg_environment():
+    """Injects the local ffmpeg path into the system's PATH variable temporarily."""
+    # Use the BINARIES directory to find ffmpeg, NOT the app directory!
+    bin_dir = get_binaries_dir()
+    
+    # Check if we've already injected it during this session
+    if os.environ.get("FFMPEG_INJECTED") != "TRUE":
+        
+        # Now it correctly looks inside '_internal' when compiled
+        if os.path.exists(os.path.join(bin_dir, "ffmpeg.exe")):
+            # Prepend our internal folder to the system PATH
+            os.environ["PATH"] = bin_dir + os.pathsep + os.environ.get("PATH", "")
+            logging.info(f"FFmpeg path injected from: {bin_dir}")
+        else:
+            logging.warning(f"ffmpeg.exe not found in {bin_dir}! Audio processing may fail if not installed system-wide.")
+            
+        # Set the lock so it never runs again
+        os.environ["FFMPEG_INJECTED"] = "TRUE"
 
-# 1. Reroute HuggingFace (Wav2Vec2)
-os.environ["HF_HOME"] = os.path.join(app_dir, "pretrained_models", "huggingface")
-
-# 2. Reroute PyTorch (Demucs & OpenUnmix)
-os.environ["TORCH_HOME"] = os.path.join(app_dir, "pretrained_models", "torch")
+# --- CALL IT IMMEDIATELY ---
+setup_ffmpeg_environment()
 
 def open_file(path):
     """Open a file using the system's default application."""
@@ -68,6 +88,32 @@ def open_file(path):
         subprocess.call(("open", path))
     else:
         subprocess.call(("xdg-open", path))
+
+@dataclass
+class SeparationSettings:
+    ai_tool: str
+    model: str
+    channels: str
+    fmt: str
+    sr: int
+    bitrate: str
+    bit_depth: Optional[str]  # Using Optional since it can be None
+    mp3_preset: int
+    shifts: int
+    overlap: float
+    flac_compression: int
+    device: str
+    vocals_folder: str
+    instr_folder: str
+
+@dataclass
+class TranscriptionSettings:
+    tool: str
+    model: str
+    lang: str
+    use_spk: bool
+    device: str
+    output_folder: str
 
 class SeparationApp(ctk.CTk):
     def __init__(self):
@@ -100,6 +146,18 @@ class SeparationApp(ctk.CTk):
         self.abort_separation = False
         self.input_tab_loaded = False
         self.output_tab_loaded = False
+        
+        # Set up the Threading Mailbox EARLY
+        self.folder_size_queue = queue.Queue()
+        self._check_size_queue()
+
+        # Pagination Trackers
+        self.current_pages = {
+            "input": 0,
+            "vocals": 0, 
+            "instr": 0, 
+            "trans": 0
+        }
 
         # 2. Set Theme and Scaling (Global)
         ctk.set_appearance_mode(self.appearance_mode)
@@ -109,114 +167,372 @@ class SeparationApp(ctk.CTk):
         # 3. BUILD UI (The Body)
         self._setup_main_containers()
 
-        # 4. Initial tab loading
-        # Tells the app to draw the window immediately, then run the tab switch 100 milliseconds later
-        self.after(100, lambda: self._switch_tab(self.input_frame, self.input_button, "input"))
+        # 4. Initial tab loading based on First Run flag
+        if getattr(self, "is_first_run", False):
+            # First time ever opening the app! Go to Settings.
+            self._switch_tab(self.settings_frame, self.settings_button, "settings")
+            
+            # Show a welcome tutorial shortly after the UI loads
+            self.after(500, self.show_welcome_tutorial)
+            
+            # Flip the flag so this never happens again, and save it silently
+            self.is_first_run = False
+            self.save_settings()
+        else:
+            # Normal boot, go to input
+            self._switch_tab(self.input_frame, self.input_button, "input")  
+
+        self._last_width = self.winfo_width()
+        self._last_height = self.winfo_height()
+        self._resize_timer = None
+        
+        # Bind the configure event
+        self.bind("<Configure>", self._on_window_configure)
+
+        # Force Tkinter to finish drawing the initial window geometry (e.g., 1200x700)
+        self.update_idletasks() 
+        
+        # Run the pagination math immediately for the initial setup
+        self._recalculate_pagination(is_initialization=True)
+
+    def show_welcome_tutorial(self):
+        """Displays a paginated interactive tutorial for first-time users."""
+        dialog = ctk.CTkToplevel(self)
+        dialog.title("Welcome to Audio Separator!")
+        # Increased size slightly to comfortably fit detailed instructions
+        dialog.geometry("560x450") 
+        dialog.attributes("-topmost", True)
+    
+        self.tutorial_page = 0
+        
+        # --- THE UPDATED FULL WORKFLOW TUTORIAL ---
+        pages = [
+            {
+                "title": "Welcome! 🎉",
+                "text": "Let's take a quick interactive tour to get you set up.\n\n"
+                "This application allows you to easily extract vocals, instrumentals, "
+                "and generate highly accurate text transcriptions using powerful AI models."
+            },
+            {
+                "title": "⚙️ Step 1: Folders & Paths",
+                "text": "First, we are in the Settings tab.\n\n"
+                "At the top, you can define exactly where your AI models are saved, "
+                "and set your default Input and Output folders.\n\nUse the 'Browse' buttons to set these up."
+            },
+            {
+                "title": "🧠 Step 2: AI Models",
+                "text": "Scroll down a bit in Settings!\n\n"
+                "Under 'AI Models List', you must ensure you have the required models downloaded."
+                " Click 'Download Default Models' to get started automatically, or 'Scan Directory' if you added them manually."
+            },
+            {
+                "title": "🎵 Step 3: Add Your Audio",
+                "text": "Now, we've moved to the 'Input' tab.\n\n"
+                "Click 'Add Song' to load your audio files. They will appear in the list below. "
+                "If you add many files, you can use the `<` and `>` arrows at the bottom to flip through the pages!"
+            },
+            {
+                "title": "✂️ Step 4: Separation Menu",
+                "text": "Look at the menu on the right side of the Input tab.\n\n"
+                "Here, choose your separation tool (like Spleeter or Demucs), pick a model, and select your output format (WAV, MP3, FLAC). "
+                "When ready, click 'Start Batch Separation' at the bottom."
+            },
+            {
+                "title": "🎧 Step 5: Separation Results",
+                "text": "Once finished, your isolated tracks move to the 'Separated Output' tab.\n\n"
+                "You will see lists for Vocals and Instrumentals. You can use the ▶ button to listen to them immediately, "
+                "or the 🗑 button to delete unwanted tracks."
+            },
+            {
+                "title": "🗣️ Step 6: Trigger Transcription",
+                "text": "Want text from those vocals?\n\n"
+                "Still in the 'Separated Output' tab, check the box on the left of any vocal track. "
+                "Then, use the Transcription Menu on the right side to pick your AI tool (like Whisper or Vosk), "
+                "select a language, and click 'Transcribe'!"
+            },
+            {
+                "title": "📝 Step 7: Read & Wrap-up",
+                "text": "Finally, any generated text files will appear in the 'Transcribed Output' tab!\n\n"
+                "Click the 📖 icon next to your text file to open and read it instantly.\n\n"
+                "You are all set! Click 'Get Started' below to begin your audio processing."
+            }
+        ]
+
+        # Top Frame for Content
+        content_frame = ctk.CTkFrame(dialog, fg_color="transparent")
+        content_frame.pack(fill="both", expand=True, padx=30, pady=30)
+
+        title_label = ctk.CTkLabel(content_frame, text="", font=ctk.CTkFont(size=22, weight="bold"))
+        title_label.pack(pady=(10, 20))
+
+        text_label = ctk.CTkLabel(content_frame, text="", font=ctk.CTkFont(size=15), wraplength=480, justify="left")
+        text_label.pack(pady=10, fill="both", expand=True)
+
+        # Bottom Frame for Buttons
+        btn_frame = ctk.CTkFrame(dialog, fg_color="transparent")
+        btn_frame.pack(fill="x", padx=30, pady=20)
+
+        def update_ui():
+            page = pages[self.tutorial_page]
+            title_label.configure(text=page["title"])
+            text_label.configure(text=page["text"])
+            
+            # --- AUTO NAVIGATION & HIGHLIGHTING ---
+            try:
+                flash_duration = 2200 
+
+                if self.tutorial_page == 1:
+                    # Step 1: Settings Folders
+                    if not self.settings_frame.winfo_ismapped():
+                        self._switch_tab(self.settings_frame, self.settings_button, "settings")
+                    self.flash_highlight(self.settings_button)
+                    
+                    if hasattr(self, 'models_browse_btn'): self.after(flash_duration, lambda: self.flash_highlight(self.models_browse_btn))
+                    if hasattr(self, 'input_browse_btn'): self.after(flash_duration, lambda: self.flash_highlight(self.input_browse_btn))
+                    if hasattr(self, 'vocals_browse_btn'): self.after(flash_duration, lambda: self.flash_highlight(self.vocals_browse_btn))
+                    if hasattr(self, 'instr_browse_btn'): self.after(flash_duration, lambda: self.flash_highlight(self.instr_browse_btn))
+                    if hasattr(self, 'trans_browse_btn'): self.after(flash_duration, lambda: self.flash_highlight(self.trans_browse_btn))
+
+                elif self.tutorial_page == 2:
+                    # Step 2: Settings Models
+                    if hasattr(self, 'download_models_btn'): self.flash_highlight(self.download_models_btn)
+                    if hasattr(self, 'scan_models_btn'): self.after(flash_duration, lambda: self.flash_highlight(self.scan_models_btn))
+
+                elif self.tutorial_page == 3:
+                    # Step 3: Input Tab - Add Audio
+                    self._switch_tab(self.input_frame, self.input_button, "input")
+                    self.flash_highlight(self.input_button)
+                    
+                    if hasattr(self, 'add_file_btn'):
+                        self.after(flash_duration, lambda: self.flash_highlight(self.add_file_btn))
+                    if hasattr(self, 'input_page_frame'):
+                        self.after(flash_duration * 2, lambda: self.flash_highlight(self.input_page_frame))
+
+                elif self.tutorial_page == 4:
+                    # Step 4: Input Tab - Separation Menu
+                    if hasattr(self, 'model_menu'):
+                        self.flash_highlight(self.model_menu)
+                    if hasattr(self, 'separate_button'):
+                        self.after(flash_duration, lambda: self.flash_highlight(self.separate_button))
+
+                elif self.tutorial_page == 5:
+                    # Step 5: Separation Output - Results
+                    self._switch_tab(self.sep_out_frame, self.sep_out_button, "sep_out")
+                    self.flash_highlight(self.sep_out_button)
+                    
+                    if hasattr(self, 'vocals_list_frame'):
+                        self.after(flash_duration, lambda: self.flash_highlight(self.vocals_list_frame))
+
+                elif self.tutorial_page == 6:
+                    # Step 6: Separation Output - Transcribe Menu (Right side)
+                    if hasattr(self, 'trans_model_menu'):
+                        self.flash_highlight(self.trans_model_menu)
+                    if hasattr(self, 'trans_button'):
+                        self.after(flash_duration, lambda: self.flash_highlight(self.trans_button))
+
+                elif self.tutorial_page == 7:
+                    # Step 7: Transcribed Output Tab
+                    self._switch_tab(self.trans_out_frame, self.trans_out_button, "trans_out")
+                    self.flash_highlight(self.trans_out_button)
+                    
+                    if hasattr(self, 'trans_list_frame'):
+                        self.after(flash_duration, lambda: self.flash_highlight(self.trans_list_frame))
+                    
+            except Exception as e:
+                print(f"Tutorial Navigation Warning: {e}")
+
+            # --- BUTTON STATE MANAGEMENT ---
+            if self.tutorial_page == 0:
+                prev_btn.configure(state="disabled", fg_color="transparent")
+            else:
+                prev_btn.configure(state="normal", fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+                
+            if self.tutorial_page == len(pages) - 1:
+                next_btn.configure(text="Get Started! ✨")
+                skip_btn.pack_forget() 
+            else:
+                skip_btn.pack(expand=True)
+                next_btn.configure(text="Next ➔")
+
+        def go_next():
+            if self.tutorial_page < len(pages) - 1:
+                self.tutorial_page += 1
+                update_ui()
+            elif self.tutorial_page == len(pages) - 1:
+                dialog.destroy() # Close tutorial on last page 'Get Started' click
+
+        def go_prev():
+            if self.tutorial_page > 0:
+                self.tutorial_page -= 1
+                update_ui()
+
+        # --- Create the buttons ---
+        prev_btn = ctk.CTkButton(btn_frame, text="⬅ Previous", width=100, command=go_prev)
+        prev_btn.pack(side="left")
+
+        next_btn = ctk.CTkButton(btn_frame, text="Next ➔", width=120, command=go_next, font=ctk.CTkFont(weight="bold"))
+        next_btn.pack(side="right")
+        
+        skip_btn = ctk.CTkButton(btn_frame, text="Skip", width=80, fg_color="transparent", border_width=1, command=dialog.destroy)
+        skip_btn.pack(expand=True)
+
+        # Load the first page immediately
+        update_ui()
+
+    def flash_highlight(self, widget, flashes=3):
+        """Flashes a widget to draw attention. Smartly handles borders, text, and backgrounds."""
+        try:
+            if not widget.winfo_exists():
+                return
+
+            # Smart attribute targeting based on widget type
+            if isinstance(widget, ctk.CTkEntry):
+                color_attr = "border_color"
+            elif isinstance(widget, ctk.CTkLabel):
+                color_attr = "text_color" # Flash the text color for labels!
+            else:
+                color_attr = "fg_color"
+
+            original_color = widget.cget(color_attr)
+            highlight_color = "#D4AF37" # Gold/yellow highlight
+            
+            def toggle(count):
+                if count <= 0 or not widget.winfo_exists():
+                    try: widget.configure(**{color_attr: original_color})
+                    except: pass
+                    return
+                
+                current_color = widget.cget(color_attr)
+                new_color = highlight_color if current_color == original_color else original_color
+                widget.configure(**{color_attr: new_color})
+                
+                self.after(350, toggle, count - 1)
+                
+            toggle(flashes * 2)
+        except Exception as e:
+            print(f"Highlight warning: {e}")
 
     def _switch_tab(self, active_frame, active_button, tab_name):
-        frames = [self.input_frame, self.output_frame, self.settings_frame]
-        buttons = [self.input_button, self.output_button, self.settings_button]
+        frames = [self.input_frame, self.sep_out_frame, self.trans_out_frame, self.settings_frame]
+        buttons = [self.input_button, self.sep_out_button, self.trans_out_button, self.settings_button]
         
         # Hide all frames
         for frame in frames:
             frame.grid_forget()
 
-        # --- NEW: ACTIVE MEMORY MANAGEMENT (Forget inactive tabs) ---
-        if tab_name != "input" and self.input_tab_loaded:
-            for widget in self.input_frame.winfo_children():
-                widget.destroy()
+        # --- ACTIVE MEMORY MANAGEMENT (Forget inactive tabs) ---
+        if tab_name != "input" and getattr(self, 'input_tab_loaded', False):
+            for widget in self.input_frame.winfo_children(): widget.destroy()
             self.input_tab_loaded = False
             
-        if tab_name != "output" and self.output_tab_loaded:
-            for widget in self.output_frame.winfo_children():
-                widget.destroy()
-            self.output_tab_loaded = False
+        if tab_name != "sep_out" and getattr(self, 'sep_out_tab_loaded', False):
+            for widget in self.sep_out_frame.winfo_children(): widget.destroy()
+            self.sep_out_tab_loaded = False
+
+        if tab_name != "trans_out" and getattr(self, 'trans_out_tab_loaded', False):
+            for widget in self.trans_out_frame.winfo_children(): widget.destroy()
+            self.trans_out_tab_loaded = False
+
+        # --- FIXED: Added Memory Management for Settings ---
+        if tab_name != "settings" and getattr(self, 'settings_tab_loaded', False):
+            for widget in self.settings_frame.winfo_children(): widget.destroy()
+            self.settings_tab_loaded = False
 
         # Show active frame
         active_frame.grid(row=0, column=0, sticky="nsew")
 
-        # Highlight active button
+        # Grab the standard and active colors directly from the current UI theme
+        default_bg = ctk.ThemeManager.theme["CTkButton"]["fg_color"]
+        active_bg = ctk.ThemeManager.theme["CTkButton"]["hover_color"]
+        default_text = ctk.ThemeManager.theme["CTkButton"]["text_color"]
+
+        # Reset all buttons to the standard button look
+        for button in buttons:
+            button.configure(
+                fg_color=default_bg, 
+                text_color=default_text
+            )
+
+        # Make the active button darker to show it is currently selected
         active_button.configure(
-            fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"],
-            text_color="white"
+            fg_color=active_bg,
+            text_color=default_text
         )
 
-        # Force Tkinter to drop focus from any entry boxes before we destroy them!
         self.focus_set() 
 
-        if tab_name != "input" and self.input_tab_loaded:
-            for widget in self.input_frame.winfo_children():
-                widget.destroy()
-            self.input_tab_loaded = False
-            
-        if tab_name != "output" and self.output_tab_loaded:
-            for widget in self.output_frame.winfo_children():
-                widget.destroy()
-            self.output_tab_loaded = False
-
         # --- LAZY LOADING LOGIC ---
-        if tab_name == "input" and not self.input_tab_loaded:
-            self.create_input_tab() # Make sure to create the base tab UI!
-            self.load_input()
+        if tab_name == "input" and not getattr(self, 'input_tab_loaded', False):
+            self.create_input_tab() 
+            if hasattr(self, 'load_input'): self.load_input()
             self.input_tab_loaded = True
             
-        elif tab_name == "output" and not self.output_tab_loaded:
-            self.create_output_tab() # Make sure to create the base tab UI!
-            self.load_outputs()
-            self.output_tab_loaded = True
-        
-        elif tab_name == "settings":
-            self.create_settings_tab() # Rebuild settings if needed
+        elif tab_name == "sep_out" and not getattr(self, 'sep_out_tab_loaded', False):
+            self.create_sep_out_tab() 
+            if hasattr(self, 'load_separation_outputs'): self.load_separation_outputs() 
+            self.sep_out_tab_loaded = True
 
-        # Free memory if needed
+        elif tab_name == "trans_out" and not getattr(self, 'trans_out_tab_loaded', False):
+            self.create_trans_out_tab() 
+            if hasattr(self, 'load_transcription_outputs'): self.load_transcription_outputs() 
+            self.trans_out_tab_loaded = True
+        
+        # --- FIXED: Added Lazy Loading Check for Settings ---
+        elif tab_name == "settings" and not getattr(self, 'settings_tab_loaded', False):
+            if hasattr(self, 'create_settings_tab'):
+                self.create_settings_tab() 
+            self.settings_tab_loaded = True
+
         if hasattr(self, '_free_inactive_models'):
             self._free_inactive_models(tab_name)
-        
-    def setup_progress_bar(self, parent):
-        progress_frame = ctk.CTkFrame(parent, height=40, corner_radius=0)
-        progress_frame.grid(row=1, column=1, sticky="ew", padx=(10, 0), pady=(0, 10))
-        progress_frame.grid_propagate(False)
-        progress_frame.grid_columnconfigure(1, weight=1)
-
-        self.progress_bar = ctk.CTkProgressBar(progress_frame, mode="determinate", height=12)
-        self.progress_bar.grid(row=0, column=0, sticky="w", padx=10)
-        self.progress_bar.set(0)
-        self.progress_bar.grid_remove()
-
-        self.progress_text = ctk.CTkLabel(progress_frame, text="Ready", font=ctk.CTkFont(size=12))
-        self.progress_text.grid(row=0, column=1, sticky="w")
-
-        self.abort_button = ctk.CTkButton(progress_frame, text="Abort", command=self.abort_separation_process, width=80, height=24, corner_radius=0)
-        self.abort_button.grid(row=0, column=2, sticky="e", padx=10)
-        self.abort_button.grid_remove()
-
-    def change_scaling_event(self, new_scaling: str):
-        # GUARD: If it's already the current scale, do absolutely nothing!
-        if new_scaling == self.scaling:
-            return 
-            
-        self.scaling = new_scaling
-        self.after(100, self._master_reload_pipeline)
 
     def update_theme_settings(self, new_value: str, setting_type: str):
+        """Updates the appearance mode or color theme safely."""
+        
         if setting_type == "mode":
+            # GUARD: If it's already the current mode, do nothing
             if new_value == self.appearance_mode:
                 return
+            
             self.appearance_mode = new_value
             ctk.set_appearance_mode(self.appearance_mode)
-            self.save_settings()
             
+            # Save the new mode to settings.json
+            if hasattr(self, 'save_settings'):
+                self.save_settings()
+                
         elif setting_type == "theme":
             # GUARD: If it's already the current theme, do absolutely nothing!
             if new_value == self.color_theme:
                 return
+            
             self.color_theme = new_value
+            
+            # Save the new theme to settings
+            if hasattr(self, 'save_settings'):
+                self.save_settings()
+                
+            # DEFER the massive reload by 100ms so the dropdown menu can close safely!
             self.after(100, self._master_reload_pipeline)
+
+    def change_scaling_event(self, new_scaling: str):
+        """Saves the scaling, enforces limits, and triggers a full UI rebuild."""
+        
+        # Změněno na 50 a 200
+        raw_val = int(new_scaling.replace("%", ""))
+        clamped_val = max(50, min(200, raw_val))
+        final_scaling_str = f"{clamped_val}%"
+        
+        self.scaling = final_scaling_str
+        if hasattr(self, 'save_settings'):
+            self.save_settings()
+
+        self.after(100, self._master_reload_pipeline)
 
     def _setup_main_containers(self):
         # --- ROOT CONTAINER ---
         # Transparent and sharp
-        self.main_frame = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
+        self.main_frame = ctk.CTkFrame(self, corner_radius=0)
         self.main_frame.pack(fill="both", expand=True)
         
         self.main_frame.grid_columnconfigure(0, weight=0)
@@ -238,7 +554,7 @@ class SeparationApp(ctk.CTk):
         self.sidebar.grid_rowconfigure(3, weight=1)
         
         # --- NAVIGATION BUTTONS ---
-        btn_width = 120
+        btn_width = 135  # Made slightly wider to fit the new text
 
         self.input_button = ctk.CTkButton(
             self.sidebar, text="Input", width=btn_width, corner_radius=0,
@@ -246,21 +562,30 @@ class SeparationApp(ctk.CTk):
         )
         self.input_button.grid(row=0, column=0, padx=10, pady=(20, 10), sticky="ew")
         
-        self.output_button = ctk.CTkButton(
-            self.sidebar, text="Output", width=btn_width, corner_radius=0,
-            command=lambda: self._switch_tab(self.output_frame, self.output_button, "output")
+        self.sep_out_button = ctk.CTkButton(
+            self.sidebar, text="Separated Output", width=btn_width, corner_radius=0,
+            command=lambda: self._switch_tab(self.sep_out_frame, self.sep_out_button, "sep_out")
         )
-        self.output_button.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
+        self.sep_out_button.grid(row=1, column=0, padx=10, pady=5, sticky="ew")
+
+        self.trans_out_button = ctk.CTkButton(
+            self.sidebar, text="Transcribed Output", width=btn_width, corner_radius=0,
+            command=lambda: self._switch_tab(self.trans_out_frame, self.trans_out_button, "trans_out")
+        )
+        self.trans_out_button.grid(row=2, column=0, padx=10, pady=5, sticky="ew")
+
+        # THE MAGIC SPACER: Row 3 acts as an invisible spring pushing row 4+ to the bottom
+        self.sidebar.grid_rowconfigure(3, weight=1)
 
         self.settings_button = ctk.CTkButton(
             self.sidebar, text="Settings", width=btn_width, corner_radius=0,
             command=lambda: self._switch_tab(self.settings_frame, self.settings_button, "settings")
         )
-        self.settings_button.grid(row=2, column=0, padx=10, pady=(10, 20), sticky="ew")
+        self.settings_button.grid(row=4, column=0, padx=10, pady=(10, 20), sticky="ew")
 
         # --- Appearance Mode (Light/Dark) ---
         appearance_mode_label = ctk.CTkLabel(self.sidebar, text="Appearance Mode:", anchor="w")
-        appearance_mode_label.grid(row=4, column=0, padx=10, pady=(10, 0), sticky="w")
+        appearance_mode_label.grid(row=6, column=0, padx=10, pady=(10, 0), sticky="w")
         
         self.appearance_var = ctk.StringVar(value=self.appearance_mode)
         self.appearance_menu = ctk.CTkOptionMenu(
@@ -269,11 +594,11 @@ class SeparationApp(ctk.CTk):
             corner_radius=0, # Removed corners
             command=lambda val: self.update_theme_settings(val, "mode")
         )
-        self.appearance_menu.grid(row=5, column=0, padx=10, pady=(5, 10), sticky="ew")
+        self.appearance_menu.grid(row=7, column=0, padx=10, pady=(5, 10), sticky="ew")
 
         # --- Color Theme (Blue, Green, etc.) ---
         color_theme_label = ctk.CTkLabel(self.sidebar, text="Color Theme:", anchor="w")
-        color_theme_label.grid(row=6, column=0, padx=10, pady=(10, 0), sticky="w")
+        color_theme_label.grid(row=8, column=0, padx=10, pady=(10, 0), sticky="w")
 
         self.color_var = ctk.StringVar(value=self.color_theme)
         self.color_menu = ctk.CTkOptionMenu(
@@ -282,23 +607,39 @@ class SeparationApp(ctk.CTk):
             corner_radius=0, # Removed corners
             command=lambda val: self.update_theme_settings(val, "theme")
         )
-        self.color_menu.grid(row=7, column=0, padx=10, pady=(5, 10), sticky="ew")
+        self.color_menu.grid(row=9, column=0, padx=10, pady=(5, 10), sticky="ew")
 
         # --- UI SCALING (Dynamic 5-Step Carousel) ---
         scaling_label = ctk.CTkLabel(self.sidebar, text="UI Scaling:", anchor="w")
-        scaling_label.grid(row=8, column=0, padx=10, pady=(10, 0), sticky="w")
+        scaling_label.grid(row=10, column=0, padx=10, pady=(10, 0), sticky="w")
 
+        # 1. Získej aktuální hodnotu a omez ji
         base = int(self.scaling.replace("%", ""))
-        base = max(70, min(180, base)) 
-        new_values = [f"{base - 20}%", f"{base - 10}%", f"{base}%", f"{base + 10}%", f"{base + 20}%"]
+        base = max(50, min(200, base)) 
+
+        # 2. Vypočítej hodnotu PRVNÍHO tlačítka (posuvné okno)
+        # Běžně začíná o 20 menší než base, ale:
+        # - nesmí jít pod 50
+        # - nesmí jít nad 160 (protože 160 + 40 = 200, což je maximum)
+        start_val = max(50, min(160, base - 20))
+
+        # 3. Vygeneruj 5 tlačítek od start_val nahoru
+        new_values = [
+            f"{start_val}%", 
+            f"{start_val + 10}%", 
+            f"{start_val + 20}%", 
+            f"{start_val + 30}%", 
+            f"{start_val + 40}%"
+        ]
 
         self.scaling_menu = ctk.CTkSegmentedButton(
             self.sidebar, 
             values=new_values,
-            corner_radius=0 # Removed corners
+            corner_radius=0
         )
-        self.scaling_menu.grid(row=9, column=0, padx=10, pady=(5, 20), sticky="ew")
+        self.scaling_menu.grid(row=11, column=0, padx=10, pady=(5, 20), sticky="ew")
         
+        # Vyber tu správnou hodnotu (i když není uprostřed)
         self.scaling_menu.set(f"{base}%")
         self.scaling_menu.configure(command=self.change_scaling_event)
 
@@ -308,29 +649,50 @@ class SeparationApp(ctk.CTk):
         self.content_frame.grid_rowconfigure(0, weight=1)
         self.content_frame.grid_columnconfigure(0, weight=1)
 
-        # --- THE 3 MAIN TABS (These get the background colors!) ---
-        # "gray85" is for light mode, "gray17" is for dark mode.
+        # --- THE 4 MAIN TABS (These get the background colors!) ---
         tab_bg = ("gray85", "gray17")
         self.input_frame = ctk.CTkFrame(self.content_frame, fg_color=tab_bg, corner_radius=0)
-        self.output_frame = ctk.CTkFrame(self.content_frame, fg_color=tab_bg, corner_radius=0)
+        self.sep_out_frame = ctk.CTkFrame(self.content_frame, fg_color=tab_bg, corner_radius=0)
+        self.trans_out_frame = ctk.CTkFrame(self.content_frame, fg_color=tab_bg, corner_radius=0)
         self.settings_frame = ctk.CTkFrame(self.content_frame, fg_color=tab_bg, corner_radius=0)
 
         # Initialize empty tab contents
         self.create_input_tab()
-        self.create_output_tab()
-        self.create_settings_tab()
+        self.create_sep_out_tab()
+        self.create_trans_out_tab()
+        if hasattr(self, 'create_settings_tab'):
+            self.create_settings_tab()
 
         # --- PROGRESS BAR (Bottom) ---
         self.setup_progress_bar(self.main_frame)
 
     def _master_reload_pipeline(self):
+       # 0. PREVENT SHRINKING: Hard-lock the window size BEFORE destroying anything
+        current_width = self.winfo_width()
+        current_height = self.winfo_height()
+        
+        # Force the OS to lock this geometry right now
+        self.geometry(f"{current_width}x{current_height}")
+        self.update_idletasks() 
+
         # 1. Save settings and remember current tab
-        self.save_settings()
         current_tab = "input"
-        if hasattr(self, "output_frame") and self.output_frame.winfo_ismapped():
-            current_tab = "output"
-        elif hasattr(self, "settings_frame") and self.settings_frame.winfo_ismapped():
-            current_tab = "settings"
+        if hasattr(self, "sep_out_frame") and self.sep_out_frame.winfo_ismapped():
+            current_tab = "sep_out"
+        elif hasattr(self, "trans_out_frame") and self.trans_out_frame.winfo_ismapped():
+            current_tab = "trans_out"
+
+        # 1.5. KILL THE SIDEBAR GHOSTS (Prevents CustomTkinter OptionMenu crashes)
+        # We MUST destroy the floating dropdowns before destroying the main frame!
+        if hasattr(self, 'appearance_menu') and hasattr(self.appearance_menu, '_dropdown_menu'):
+            try:
+                if self.appearance_menu._dropdown_menu: self.appearance_menu._dropdown_menu.destroy()
+            except Exception: pass
+            
+        if hasattr(self, 'color_menu') and hasattr(self.color_menu, '_dropdown_menu'):
+            try:
+                if self.color_menu._dropdown_menu: self.color_menu._dropdown_menu.destroy()
+            except Exception: pass
 
         # 2. Destroy the UI cleanly in one shot
         if hasattr(self, "main_frame"):
@@ -355,46 +717,16 @@ class SeparationApp(ctk.CTk):
         # 6. Restore active tab (This automatically triggers lazy-loading!)
         tab_map = {
             "input": (self.input_frame, self.input_button),
-            "output": (self.output_frame, self.output_button),
+            "sep_out": (self.sep_out_frame, self.sep_out_button),
+            "trans_out": (self.trans_out_frame, self.trans_out_button),
             "settings": (self.settings_frame, self.settings_button)
         }
         f, b = tab_map.get(current_tab, (self.input_frame, self.input_button))
         self._switch_tab(f, b, current_tab)
 
-    def _safe_rebuild_ui(self):
-        # 1. Remember the current tab
-        current_tab = "input"
-        if hasattr(self, "output_frame") and self.output_frame.winfo_ismapped():
-            current_tab = "output"
-        elif hasattr(self, "settings_frame") and self.settings_frame.winfo_ismapped():
-            current_tab = "settings"
+        # 7. LOCK THE WINDOW SIZE (Restores the size we captured in Step 0)
+        self.geometry(f"{current_width}x{current_height}")
 
-        # 2. Destroy the visible UI instantly (Stops visual jumps/tearing!)
-        if hasattr(self, "main_frame"):
-            self.main_frame.destroy()
-        
-        self.update() # Force Tkinter to process the deletion
-
-        # 3. Apply the new scale and themes globally WHILE the screen is clear
-        scaling_float = int(self.scaling.replace("%", "")) / 100
-        ctk.set_widget_scaling(scaling_float)
-        ctk.set_appearance_mode(self.appearance_mode)
-        ctk.set_default_color_theme(self.color_theme)
-
-        # 4. Rebuild everything with the new scale/theme perfectly applied
-        self._setup_main_containers()
-        self.load_input()
-        self.load_outputs()
-
-        # 5. Restore the active tab
-        tab_map = {
-            "input": (self.input_frame, self.input_button),
-            "output": (self.output_frame, self.output_button),
-            "settings": (self.settings_frame, self.settings_button)
-        }
-        f, b = tab_map.get(current_tab, (self.input_frame, self.input_button))
-        self._switch_tab(f, b, current_tab)
-        
     def create_input_tab(self):
         for widget in self.input_frame.winfo_children():
             widget.destroy()
@@ -404,24 +736,14 @@ class SeparationApp(ctk.CTk):
         frame.grid_columnconfigure(1, weight=0) 
         frame.grid_rowconfigure(0, weight=0)
         frame.grid_rowconfigure(1, weight=1)
-        frame.grid_rowconfigure(2, weight=0) # NEW: Row for pagination controls
+        frame.grid_rowconfigure(2, weight=0)
 
-        self.input_selection_dict = {}
-        
-        # Make sure we have a tracker for input files and pages
-        if not hasattr(self, 'input_files'):
-            self.input_files = []
-            
-        # Safely create the dictionary if it doesn't exist yet
-        if not hasattr(self, 'current_pages'):
-            self.current_pages = {}
-            
-        if "input" not in self.current_pages:
-            self.current_pages["input"] = 0
-            
-        # Make sure ITEMS_PER_PAGE is set early too, just in case!
-        if not hasattr(self, 'ITEMS_PER_PAGE'):
-            self.ITEMS_PER_PAGE = 10
+        # Basic Tracking Init
+        if not hasattr(self, 'input_selection_dict'): self.input_selection_dict = {} # <--- ADD THIS LINE BACK
+        if not hasattr(self, 'input_files'): self.input_files = []
+        if not hasattr(self, 'current_pages'): self.current_pages = {}
+        if "input" not in self.current_pages: self.current_pages["input"] = 0
+        self.ITEMS_PER_PAGE = getattr(self, 'ITEMS_PER_PAGE_TRANS', 10)
 
         # ==========================================
         # LEFT COLUMN: BROWSER AND LIST
@@ -431,7 +753,6 @@ class SeparationApp(ctk.CTk):
         path_frame.grid_columnconfigure(1, weight=1)
 
         ctk.CTkLabel(path_frame, text="Current Folder:", anchor="w").grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 5))
-
         self.path_var = tk.StringVar(value=self.input_folder)
         self.path_entry = ctk.CTkEntry(path_frame, textvariable=self.path_var)
         self.path_entry.grid(row=0, column=1, sticky="ew", padx=(0, 10), pady=(10, 5))
@@ -441,193 +762,170 @@ class SeparationApp(ctk.CTk):
         btn_frame.grid(row=1, column=0, columnspan=2, sticky="ew", padx=5, pady=(0, 10))
         
         ctk.CTkButton(btn_frame, text="Back", command=getattr(self, "go_back", None), width=80, corner_radius=0).pack(side="left", padx=5)
-        ctk.CTkButton(btn_frame, text="Change / New Folder", command=getattr(self, "change_input_folder", None), corner_radius=0).pack(side="left", padx=5)
-        ctk.CTkButton(btn_frame, text="Add Song", command=getattr(self, "add_song", None), corner_radius=0).pack(side="right", padx=5)
-        
+        self.input_browse_btn = ctk.CTkButton(btn_frame, text="Change / New Folder", command=getattr(self, "change_input_folder", None), corner_radius=0)
+        self.input_browse_btn.pack(side="left", padx=5)
+        self.add_file_btn = ctk.CTkButton(btn_frame, text="Add Song", command=getattr(self, "add_song", None), corner_radius=0)
+        self.add_file_btn.pack(side="right", padx=5)
+
         self.songs_list_frame = ctk.CTkScrollableFrame(frame, corner_radius=0)
         self.songs_list_frame.grid(row=1, column=0, sticky="nsew", padx=10, pady=(25, 10))
 
-        # --- NEW: INPUT PAGINATION CONTROLS ---
         self.input_page_frame = ctk.CTkFrame(frame, fg_color="transparent")
         self.input_page_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=(0, 10))
-
+        
         self.input_btn_prev = ctk.CTkButton(self.input_page_frame, text="<", width=30, command=lambda: self.change_page("input", -1))
         self.input_btn_prev.pack(side="left", padx=5)
-
+        
         self.input_lbl_page = ctk.CTkLabel(self.input_page_frame, text="Page 1 of 1")
         self.input_lbl_page.pack(side="left", padx=10, expand=True)
-
+        
         self.input_btn_next = ctk.CTkButton(self.input_page_frame, text=">", width=30, command=lambda: self.change_page("input", 1))
         self.input_btn_next.pack(side="right", padx=5)
-
         # ==========================================
         # RIGHT COLUMN: SEPARATION MENU
         # ==========================================
-        self.frame_width = 200
-
-        sep_scrollable = ctk.CTkScrollableFrame(
-            frame, corner_radius=0,
-            width=self.frame_width, 
-            fg_color=("gray90", "gray16") 
-        )
+        sep_scrollable = ctk.CTkScrollableFrame(frame, corner_radius=0, width=200, fg_color=("gray90", "gray16"))
         sep_scrollable.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=10, pady=10)
         sep_scrollable.propagate(False)
-        
-        # NEW: Force the inner column to stretch, allowing sticky="ew" to work perfectly
         sep_scrollable.grid_columnconfigure(0, weight=1)
 
-        # Slightly reduced font size to ensure it fits
         ctk.CTkLabel(sep_scrollable, text="Separation Menu", font=ctk.CTkFont(size=18, weight="bold")).grid(row=0, column=0, pady=(10,20))
 
-        # AI Tool selection (Reduced padx to 10)
+        # --- Base Settings ---
         self.ai_tool_var = tk.StringVar(value="Spleeter")
-        ctk.CTkRadioButton(sep_scrollable, text="Spleeter", variable=self.ai_tool_var, value="Spleeter", command=self.on_tool_change).grid(row=1, column=0, sticky="w", padx=10, pady=5)
-        ctk.CTkRadioButton(sep_scrollable, text="Demucs", variable=self.ai_tool_var, value="Demucs", command=self.on_tool_change).grid(row=2, column=0, sticky="w", padx=10, pady=5)
-        ctk.CTkRadioButton(sep_scrollable, text="OpenUnmix", variable=self.ai_tool_var, value="OpenUnmix", command=self.on_tool_change).grid(row=3, column=0, sticky="w", padx=10, pady=5)
+        for i, tool in enumerate(["Spleeter", "Demucs", "OpenUnmix"], start=1):
+            ctk.CTkRadioButton(sep_scrollable, text=tool, variable=self.ai_tool_var, value=tool, command=self.update_ui_state).grid(row=i, column=0, sticky="w", padx=10, pady=5)
 
-        self.model_label = ctk.CTkLabel(sep_scrollable, text="Model:", anchor="w")
-        self.model_label.grid(row=4, column=0, sticky="w", padx=10, pady=(10,0))
-        
-        # Removed hardcoded width, relying on sticky="ew"
+        # Model Frame (Dynamic)
+        self.model_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        self.model_frame.grid(row=4, column=0, sticky="ew")
+        ctk.CTkLabel(self.model_frame, text="Model:", anchor="w").pack(fill="x", padx=10, pady=(10,0))
         self.model_var = tk.StringVar(value="umxl")
-        self.model_menu = ctk.CTkOptionMenu(sep_scrollable, variable=self.model_var, corner_radius=0, values=["umxl", "umxhq", "umx"])
-        self.model_menu.grid(row=5, column=0, sticky="ew", padx=10, pady=5)
+        self.model_menu = ctk.CTkOptionMenu(self.model_frame, variable=self.model_var, corner_radius=0)
+        self.model_menu.pack(fill="x", padx=10, pady=5)
 
-        ctk.CTkLabel(sep_scrollable, text="Output Format:", anchor="w").grid(row=6, column=0, sticky="w", padx=10, pady=(10,0))
+        # Format 
+        ctk.CTkLabel(sep_scrollable, text="Output Format:", anchor="w").grid(row=5, column=0, sticky="w", padx=10, pady=(10,0))
         self.format_var = tk.StringVar(value="wav")
-        self.format_menu = ctk.CTkOptionMenu(sep_scrollable, variable=self.format_var, corner_radius=0, values=["wav", "mp3", "flac"], command=self.on_format_change)
-        self.format_menu.grid(row=7, column=0, sticky="ew", padx=10, pady=5)
+        ctk.CTkOptionMenu(sep_scrollable, variable=self.format_var, corner_radius=0, values=["wav", "mp3", "flac"], command=self.update_ui_state).grid(row=6, column=0, sticky="ew", padx=10, pady=5)
 
-        self.wav_flac_frame = ctk.CTkFrame(sep_scrollable)
-        self.wav_flac_frame.grid(row=8, column=0, sticky="ew", padx=10, pady=5)
-        self.wav_flac_frame.grid_remove() 
-
-        self.channel_frame = ctk.CTkFrame(self.wav_flac_frame, fg_color="transparent")
-        self.channel_frame.pack(fill="x", padx=5, pady=10)
-
-        # Tightened the spacing on the Mono/Stereo toggle
+        # --- Common Audio Settings ---
+        common_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        common_frame.grid(row=7, column=0, sticky="ew", padx=5, pady=0)
+        
+        channel_frame = ctk.CTkFrame(common_frame, fg_color="transparent")
+        channel_frame.pack(fill="x", padx=5, pady=10)
         self.channel_var = tk.StringVar(value="Stereo")
-        self.mono_label = ctk.CTkLabel(self.channel_frame, text="Mono", text_color="gray")
+        self.mono_label = ctk.CTkLabel(channel_frame, text="Mono", text_color="gray")
         self.mono_label.pack(side="left", padx=(0, 5))
-
+        
         def on_channel_toggle():
-            if self.channel_switch_var.get() == "Stereo":
-                self.channel_var.set("Stereo")
-                self.mono_label.configure(text_color="gray")
-                self.stereo_label.configure(text_color=("black", "white"))
-            else:
-                self.channel_var.set("Mono")
-                self.mono_label.configure(text_color=("black", "white"))
-                self.stereo_label.configure(text_color="gray")
+            is_stereo = self.channel_switch_var.get() == "Stereo"
+            self.channel_var.set("Stereo" if is_stereo else "Mono")
+            self.mono_label.configure(text_color="gray" if is_stereo else ("black", "white"))
+            self.stereo_label.configure(text_color=("black", "white") if is_stereo else "gray")
 
         self.channel_switch_var = ctk.StringVar(value="Stereo")
-        self.channel_switch = ctk.CTkSwitch(self.channel_frame, text="", variable=self.channel_switch_var, onvalue="Stereo", offvalue="Mono", command=on_channel_toggle, width=35)
-        self.channel_switch.pack(side="left")
-
-        self.stereo_label = ctk.CTkLabel(self.channel_frame, text="Stereo", text_color=("black", "white"))
+        ctk.CTkSwitch(channel_frame, text="", variable=self.channel_switch_var, onvalue="Stereo", offvalue="Mono", command=on_channel_toggle, width=35).pack(side="left")
+        self.stereo_label = ctk.CTkLabel(channel_frame, text="Stereo", text_color=("black", "white"))
         self.stereo_label.pack(side="left", padx=(5, 0))
 
-        ctk.CTkLabel(self.wav_flac_frame, text="Sample Rate (Hz):", anchor="w").pack(anchor="w", padx=10, pady=(10,0))
+        ctk.CTkLabel(common_frame, text="Sample Rate (Hz):", anchor="w").pack(anchor="w", padx=5, pady=(5,0))
         self.sr_var = tk.StringVar(value="44100")
-        self.sr_entry = ctk.CTkEntry(self.wav_flac_frame, textvariable=self.sr_var, placeholder_text="44100")
-        self.sr_entry.pack(fill="x", padx=10, pady=5)
+        ctk.CTkEntry(common_frame, textvariable=self.sr_var, placeholder_text="44100").pack(fill="x", padx=5, pady=5)
 
-        self.bit_depth_frame = ctk.CTkFrame(self.wav_flac_frame)
-        self.bit_depth_frame.pack(fill="x", padx=10, pady=5)
-        self.bit_depth_frame.pack_forget()
+        # ==========================================
+        # DYNAMIC SETTINGS BLOCKS
+        # ==========================================
 
+        # Bit Depth Block
+        self.bit_depth_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        self.bit_depth_frame.grid(row=8, column=0, sticky="ew")
         self.bit_depth_var = tk.BooleanVar(value=True)
         ctk.CTkRadioButton(self.bit_depth_frame, text="24-bit", variable=self.bit_depth_var, value=True).pack(anchor="w", padx=10, pady=5)
         ctk.CTkRadioButton(self.bit_depth_frame, text="Float32", variable=self.bit_depth_var, value=False).pack(anchor="w", padx=10, pady=5)
 
-        self.mp3_frame = ctk.CTkFrame(sep_scrollable)
-        self.mp3_frame.grid(row=9, column=0, sticky="ew", padx=10, pady=5)
-        self.mp3_frame.grid_remove()
+        # FLAC Block
+        self.flac_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        self.flac_frame.grid(row=9, column=0, sticky="ew")
+        ctk.CTkLabel(self.flac_frame, text="FLAC Compression (0-8):", anchor="w").pack(anchor="w", padx=10, pady=(5,0))
+        self.flac_slider = ctk.CTkSlider(self.flac_frame, from_=0, to=8, number_of_steps=8, command=getattr(self, "update_flac_label", None))
+        self.flac_slider.set(5)
+        self.flac_slider.pack(fill="x", padx=10, pady=5)
+        self.flac_value_label = ctk.CTkLabel(self.flac_frame, text="Current: 5", anchor="w")
+        self.flac_value_label.pack(anchor="w", padx=10, pady=(0,5))
 
-        self.bitrate_frame = ctk.CTkFrame(self.mp3_frame, fg_color="transparent")
-        self.bitrate_frame.pack(fill="x", padx=10, pady=(5, 10))
-
-        ctk.CTkLabel(self.bitrate_frame, text="Bitrate:").pack(side="left")
+        # MP3 Bitrate Block
+        self.mp3_bitrate_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        self.mp3_bitrate_frame.grid(row=10, column=0, sticky="ew")
+        ctk.CTkLabel(self.mp3_bitrate_frame, text="Bitrate:").pack(side="left", padx=10, pady=10)
         self.bitrate_var = tk.StringVar(value="192")
-        self.bitrate_entry = ctk.CTkEntry(self.bitrate_frame, textvariable=self.bitrate_var, width=60, placeholder_text="192")
-        self.bitrate_entry.pack(side="right")
+        ctk.CTkEntry(self.mp3_bitrate_frame, textvariable=self.bitrate_var, width=60).pack(side="right", padx=10, pady=10)
 
-        self.mp3_preset_label = ctk.CTkLabel(self.mp3_frame, text="MP3 Preset (2=Best):", anchor="w")
-        self.mp3_preset_label.pack(anchor="w", padx=10, pady=(10,0))
-        
-        self.mp3_preset_slider = ctk.CTkSlider(self.mp3_frame, from_=2, to=7, number_of_steps=5, command=getattr(self, "update_mp3_preset_label", None))
+        # MP3 Preset Block
+        self.mp3_preset_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        self.mp3_preset_frame.grid(row=11, column=0, sticky="ew")
+        ctk.CTkLabel(self.mp3_preset_frame, text="MP3 Preset (2=Best):", anchor="w").pack(anchor="w", padx=10, pady=(5,0))
+        self.mp3_preset_slider = ctk.CTkSlider(self.mp3_preset_frame, from_=2, to=7, number_of_steps=5, command=getattr(self, "update_mp3_preset_label", None))
         self.mp3_preset_slider.set(2)
         self.mp3_preset_slider.pack(fill="x", padx=10, pady=5)
-        
-        self.mp3_preset_value_label = ctk.CTkLabel(self.mp3_frame, text="Current: 2", anchor="w")
-        self.mp3_preset_value_label.pack(anchor="w", padx=10, pady=5)
+        self.mp3_preset_value_label = ctk.CTkLabel(self.mp3_preset_frame, text="Current: 2", anchor="w")
+        self.mp3_preset_value_label.pack(anchor="w", padx=10, pady=(0,5))
 
-        self.shifts_frame = ctk.CTkFrame(sep_scrollable)
-        self.shifts_frame.grid(row=10, column=0, sticky="ew", padx=10, pady=5)
-        self.shifts_frame.grid_remove()
-
-        ctk.CTkLabel(self.shifts_frame, text="Shifts (qual/speed):", anchor="w").pack(anchor="w", padx=10, pady=5)
+        # Demucs Specific Block
+        self.demucs_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        self.demucs_frame.grid(row=12, column=0, sticky="ew")
+        ctk.CTkLabel(self.demucs_frame, text="Shifts (qual/speed):", anchor="w").pack(anchor="w", padx=10, pady=(5,0))
         self.shifts_var = tk.StringVar(value="1")
-        ctk.CTkEntry(self.shifts_frame, textvariable=self.shifts_var, placeholder_text="1").pack(fill="x", padx=10, pady=5)
+        ctk.CTkEntry(self.demucs_frame, textvariable=self.shifts_var).pack(fill="x", padx=10, pady=5)
+        ctk.CTkLabel(self.demucs_frame, text="Overlap (0.1 - 0.99):", anchor="w").pack(anchor="w", padx=10, pady=(10,0))
+        self.overlap_slider = ctk.CTkSlider(self.demucs_frame, from_=0.1, to=0.99, command=getattr(self, "update_overlap_label", None))
+        self.overlap_slider.set(0.25)
+        self.overlap_slider.pack(fill="x", padx=10, pady=5)
+        self.overlap_value_label = ctk.CTkLabel(self.demucs_frame, text="Current: 0.25", anchor="w")
+        self.overlap_value_label.pack(anchor="w", padx=10, pady=(0,5))
 
-        # Removed hardcoded width here too
-        self.separate_button = ctk.CTkButton(sep_scrollable, text="Start Batch Separation", height=40, corner_radius=0, font=ctk.CTkFont(weight="bold"), command=self.separate_audio)
-        self.separate_button.grid(row=11, column=0, sticky="ew", padx=10, pady=(30,10))
+        # Execute visibility logic right away to hide what shouldn't be seen on launch
+        self.update_ui_state()
 
-        if hasattr(self, 'on_tool_change'): self.on_tool_change()
+        # Separate Button
+        ctk.CTkButton(sep_scrollable, text="Start Batch Separation", height=40, corner_radius=0, font=ctk.CTkFont(weight="bold"), command=self.separate_audio).grid(row=13, column=0, sticky="ew", padx=10, pady=(30,10))
 
-    def create_output_tab(self):
-        for widget in self.output_frame.winfo_children():
+    def create_sep_out_tab(self):
+        for widget in getattr(self, "sep_out_frame", self.main_frame).winfo_children():
             widget.destroy()
 
-        frame = self.output_frame
-        frame.grid_columnconfigure(0, weight=1)
+        frame = self.sep_out_frame
+        
+        # Configure Columns: Left side expands (Lists), Right side stays fixed (Menu)
+        frame.grid_columnconfigure(0, weight=1) 
         frame.grid_columnconfigure(1, weight=0) 
-        # We need more rows now: Header(0), List(1), Page(2), Header(3), List(4), Page(5)...
-        frame.grid_rowconfigure((1, 4, 7), weight=1) 
+        
+        # Configure Rows: Row 1 (Vocals) and Row 4 (Instrumentals) will expand equally
+        frame.grid_rowconfigure(1, weight=1)  
+        frame.grid_rowconfigure(4, weight=1)  
 
-        # --- NEW: PAGINATION TRACKERS ---
-        self.ITEMS_PER_PAGE = 10
-        self.current_pages = {"trans": 0, "vocals": 0, "instr": 0}
-
-        # Dictionaries to track selection states for batch processing
-        self.trans_selection_dict = {}
+        # --- PAGINATION TRACKERS ---
+        if not hasattr(self, 'current_pages'):
+            self.current_pages = {"trans": 0, "vocals": 0, "instr": 0}
+        
+        self.ITEMS_PER_PAGE = getattr(self, 'ITEMS_PER_PAGE_SEP', 10)
         self.vocals_selection_dict = {}
         self.instr_selection_dict = {}
 
         # ==========================================
-        # LEFT COLUMN: OUTPUT LISTS & PAGINATION
+        # LEFT COLUMN (TOP): VOCALS
         # ==========================================
-        
-        # --- 1. Transcriptions ---
-        header_frame1 = ctk.CTkFrame(frame, fg_color="transparent")
-        header_frame1.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 0))
-        ctk.CTkLabel(header_frame1, text="Transcriptions", font=ctk.CTkFont(size=18, weight="bold")).pack(side="left")
-        ctk.CTkButton(header_frame1, text="Change Folder", width=100, corner_radius=0, command=lambda: self.change_output_folder("transcriptions")).pack(side="right")
-        
-        self.trans_list_frame = ctk.CTkScrollableFrame(frame, corner_radius=0, height=100)
-        self.trans_list_frame.grid(row=1, column=0, sticky="nsew", padx=10, pady=(5, 5))
-
-        self.trans_page_frame = ctk.CTkFrame(frame, fg_color="transparent", height=30)
-        self.trans_page_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=(0, 15))
-        self.trans_btn_prev = ctk.CTkButton(self.trans_page_frame, text="<", width=30, corner_radius=0, command=lambda: self.change_page("trans", -1))
-        self.trans_btn_prev.pack(side="left")
-        self.trans_lbl_page = ctk.CTkLabel(self.trans_page_frame, text="Page 1 of 1", font=ctk.CTkFont(weight="bold"))
-        self.trans_lbl_page.pack(side="left", expand=True)
-        self.trans_btn_next = ctk.CTkButton(self.trans_page_frame, text=">", width=30, corner_radius=0, command=lambda: self.change_page("trans", 1))
-        self.trans_btn_next.pack(side="right")
-
-        # --- 2. Vocals ---
         header_frame2 = ctk.CTkFrame(frame, fg_color="transparent")
-        header_frame2.grid(row=3, column=0, sticky="ew", padx=10)
+        header_frame2.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 0))
         ctk.CTkLabel(header_frame2, text="Vocals", font=ctk.CTkFont(size=18, weight="bold")).pack(side="left")
         ctk.CTkButton(header_frame2, text="Change Folder", width=100, corner_radius=0, command=lambda: self.change_output_folder("vocals")).pack(side="right")
         
-        self.vocals_list_frame = ctk.CTkScrollableFrame(frame, corner_radius=0, height=100)        
-        self.vocals_list_frame.grid(row=4, column=0, sticky="nsew", padx=10, pady=(5, 5))
+        self.vocals_list_frame = ctk.CTkScrollableFrame(frame, corner_radius=0)        
+        self.vocals_list_frame.grid(row=1, column=0, sticky="nsew", padx=10, pady=(5, 5))
 
         self.vocals_page_frame = ctk.CTkFrame(frame, fg_color="transparent", height=30)
-        self.vocals_page_frame.grid(row=5, column=0, sticky="ew", padx=10, pady=(0, 15))
+        self.vocals_page_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=(0, 15))
         self.vocals_btn_prev = ctk.CTkButton(self.vocals_page_frame, text="<", width=30, corner_radius=0, command=lambda: self.change_page("vocals", -1))
         self.vocals_btn_prev.pack(side="left")
         self.vocals_lbl_page = ctk.CTkLabel(self.vocals_page_frame, text="Page 1 of 1", font=ctk.CTkFont(weight="bold"))
@@ -635,17 +933,19 @@ class SeparationApp(ctk.CTk):
         self.vocals_btn_next = ctk.CTkButton(self.vocals_page_frame, text=">", width=30, corner_radius=0, command=lambda: self.change_page("vocals", 1))
         self.vocals_btn_next.pack(side="right")
 
-        # --- 3. Instrumentals ---
+        # ==========================================
+        # LEFT COLUMN (BOTTOM): INSTRUMENTALS
+        # ==========================================
         header_frame3 = ctk.CTkFrame(frame, fg_color="transparent")
-        header_frame3.grid(row=6, column=0, sticky="ew", padx=10)
+        header_frame3.grid(row=3, column=0, sticky="ew", padx=10, pady=(10, 0))
         ctk.CTkLabel(header_frame3, text="Instrumentals", font=ctk.CTkFont(size=18, weight="bold")).pack(side="left")
         ctk.CTkButton(header_frame3, text="Change Folder", width=100, corner_radius=0, command=lambda: self.change_output_folder("instrumentals")).pack(side="right")
         
-        self.instr_list_frame = ctk.CTkScrollableFrame(frame, corner_radius=0, height=100)
-        self.instr_list_frame.grid(row=7, column=0, sticky="nsew", padx=10, pady=(5, 5))
+        self.instr_list_frame = ctk.CTkScrollableFrame(frame, corner_radius=0)
+        self.instr_list_frame.grid(row=4, column=0, sticky="nsew", padx=10, pady=(5, 5))
 
         self.instr_page_frame = ctk.CTkFrame(frame, fg_color="transparent", height=30)
-        self.instr_page_frame.grid(row=8, column=0, sticky="ew", padx=10, pady=(0, 10))
+        self.instr_page_frame.grid(row=5, column=0, sticky="ew", padx=10, pady=(0, 15))
         self.instr_btn_prev = ctk.CTkButton(self.instr_page_frame, text="<", width=30, corner_radius=0, command=lambda: self.change_page("instr", -1))
         self.instr_btn_prev.pack(side="left")
         self.instr_lbl_page = ctk.CTkLabel(self.instr_page_frame, text="Page 1 of 1", font=ctk.CTkFont(weight="bold"))
@@ -656,14 +956,12 @@ class SeparationApp(ctk.CTk):
         # ==========================================
         # RIGHT COLUMN: TRANSCRIPTION MENU
         # ==========================================
-        # Adjusted rowspan to 9 to match the new left column layout
-        trans_menu = ctk.CTkScrollableFrame(frame, width=self.frame_width, corner_radius=0, fg_color=("gray90", "gray16"))
-        trans_menu.grid(row=0, column=1, rowspan=9, sticky="nsew", padx=10, pady=10) 
+        # We set rowspan=6 so it stretches alongside both lists beautifully
+        trans_menu = ctk.CTkScrollableFrame(frame, width=250, corner_radius=0, fg_color=("gray90", "gray16"))
+        trans_menu.grid(row=0, column=1, rowspan=6, sticky="nsew", padx=10, pady=10) 
         trans_menu.grid_columnconfigure(0, weight=1)
-        trans_menu.grid_columnconfigure(1, weight=0)
         trans_menu.propagate(False)
 
-        # Reduced font size slightly to match the Separation Menu
         ctk.CTkLabel(trans_menu, text="Transcription Menu", font=ctk.CTkFont(size=18, weight="bold")).grid(row=0, column=0, pady=(10, 20))
         
         ctk.CTkLabel(trans_menu, text="Tool:", anchor="w").grid(row=1, column=0, sticky="w", padx=10)
@@ -677,7 +975,6 @@ class SeparationApp(ctk.CTk):
         self.trans_model_label.grid(row=5, column=0, sticky="w", padx=10, pady=(10, 0))
         
         self.trans_model_var = tk.StringVar()
-        # Removed hardcoded width, relying on sticky="ew"
         self.trans_model_menu = ctk.CTkOptionMenu(trans_menu, variable=self.trans_model_var, corner_radius=0, values=[])
         self.trans_model_menu.grid(row=6, column=0, sticky="ew", padx=10, pady=5)
 
@@ -685,7 +982,6 @@ class SeparationApp(ctk.CTk):
         self.trans_lang_label.grid(row=7, column=0, sticky="w", padx=10, pady=(10, 0))
         
         self.trans_lang_var = tk.StringVar(value="auto")
-        # Removed hardcoded width, relying on sticky="ew"
         self.trans_lang_menu = ctk.CTkOptionMenu(trans_menu, variable=self.trans_lang_var, corner_radius=0, values=["auto", "cs", "en", "fr", "de", "es"])
         self.trans_lang_menu.grid(row=8, column=0, sticky="ew", padx=10, pady=5)
 
@@ -694,77 +990,313 @@ class SeparationApp(ctk.CTk):
         self.spk_toggle.grid(row=9, column=0, sticky="w", padx=10, pady=10)
         self.spk_toggle.grid_remove() 
         
-        # Removed hardcoded width, relying on sticky="ew"
         self.trans_button = ctk.CTkButton(trans_menu, text="Transcribe", height=40, font=ctk.CTkFont(weight="bold"), command=getattr(self, "run_standalone_transcription", None), corner_radius=0)
         self.trans_button.grid(row=10, column=0, sticky="ew", padx=10, pady=(30, 10))
         
-        ctk.CTkLabel(trans_menu, text="Turn ON switches in 'Vocals' to process.", font=ctk.CTkFont(size=11, slant="italic")).grid(row=11, column=0, padx=10)
+        ctk.CTkLabel(trans_menu, text="Turn ON switches in\nVocals or Instrumentals\nto process.", font=ctk.CTkFont(size=11, slant="italic")).grid(row=11, column=0, padx=10)
 
         if hasattr(self, 'on_trans_tool_change'): self.on_trans_tool_change()
 
+    def create_trans_out_tab(self):
+        for widget in getattr(self, "trans_out_frame", self.main_frame).winfo_children():
+            widget.destroy()
+
+        frame = self.trans_out_frame
+        frame.grid_columnconfigure(0, weight=1)
+        frame.grid_rowconfigure(1, weight=1) # Expand the scrollable list
+
+        # --- PAGINATION TRACKERS ---
+        if not hasattr(self, 'current_pages'):
+            self.current_pages = {"trans": 0}
+            
+        self.ITEMS_PER_PAGE = getattr(self, 'ITEMS_PER_PAGE_TRANS', 10)
+        self.trans_selection_dict = {}
+
+        # ==========================================
+        # FULL WIDTH: TRANSCRIPTIONS LIST
+        # ==========================================
+        header_frame1 = ctk.CTkFrame(frame, fg_color="transparent")
+        header_frame1.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 0))
+        ctk.CTkLabel(header_frame1, text="Transcriptions", font=ctk.CTkFont(size=18, weight="bold")).pack(side="left")
+        ctk.CTkButton(header_frame1, text="Change Folder", width=100, corner_radius=0, command=lambda: self.change_output_folder("transcriptions")).pack(side="right")
+        
+        self.trans_list_frame = ctk.CTkScrollableFrame(frame, corner_radius=0)
+        self.trans_list_frame.grid(row=1, column=0, sticky="nsew", padx=10, pady=(5, 5))
+
+        self.trans_page_frame = ctk.CTkFrame(frame, fg_color="transparent", height=30)
+        self.trans_page_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=(0, 15))
+        self.trans_btn_prev = ctk.CTkButton(self.trans_page_frame, text="<", width=30, corner_radius=0, command=lambda: self.change_page("trans", -1))
+        self.trans_btn_prev.pack(side="left")
+        self.trans_lbl_page = ctk.CTkLabel(self.trans_page_frame, text="Page 1 of 1", font=ctk.CTkFont(weight="bold"))
+        self.trans_lbl_page.pack(side="left", expand=True)
+        self.trans_btn_next = ctk.CTkButton(self.trans_page_frame, text=">", width=30, corner_radius=0, command=lambda: self.change_page("trans", 1))
+        self.trans_btn_next.pack(side="right")
+
     def create_file_row(self, parent_frame, file_name, file_path, item_idx, selection_dict, is_folder=False):
-        # --- NEW: Determine if the file is a text document ---
         is_txt = file_name.lower().endswith('.txt')
 
-        # 1. Flat base for maximum performance
+        is_input_tab = (parent_frame == self.songs_list_frame) 
+
+        # 1. Flat base 
         row_frame = ctk.CTkFrame(parent_frame, corner_radius=0, fg_color=("gray85", "gray20"))
         row_frame.pack(fill="x", padx=2, pady=2)
         
-        # 2. Selection checkbox (Far left)
-        # --- NEW: We only create and show the checkbox if it is NOT a .txt file ---
+        # 2. Selection checkbox
         if not is_txt:
             if item_idx not in selection_dict:
                 var = tk.BooleanVar(value=False)
-                item_type = 'folder' if is_folder else 'song'
-                item_data = {'name': file_name, 'path': file_path} 
-                
                 selection_dict[item_idx] = {
                     "var": var,
-                    "type": item_type,
-                    "data": item_data
+                    "type": 'folder' if is_folder else 'song',
+                    "data": {'name': file_name, 'path': file_path} 
                 }
-                
             chk = ctk.CTkCheckBox(row_frame, text="", variable=selection_dict[item_idx]["var"], width=24, corner_radius=0)
             chk.pack(side="left", padx=(5, 5))
-        else:
-            # --- NEW: Invisible spacer ---
-            # We pack an empty label of the exact same width (24) so the Book buttons 
-            # stay perfectly aligned with the Play buttons in mixed folders.
-            spacer = ctk.CTkLabel(row_frame, text="", width=24)
-            spacer.pack(side="left", padx=(5, 5))
             
-        # 3. Play / Open buttons (Right next to the checkbox)
+        # 3. Action Buttons
         if is_folder:
-            open_btn = ctk.CTkButton(row_frame, text="Open", width=50, corner_radius=0, 
+            open_btn = ctk.CTkButton(row_frame, text="Open", width=65, corner_radius=0, 
                                      command=lambda p=file_path: self.enter_folder(p))
             open_btn.pack(side="left", padx=(0, 5))
         elif is_txt:
-            # --- NEW: Book button for text files ---
-            read_btn = ctk.CTkButton(row_frame, text="📖", width=30, corner_radius=0,
+            read_btn = ctk.CTkButton(row_frame, text="📖", width=54, corner_radius=0,
                                      command=lambda p=file_path: self.play_audio(p))
             read_btn.pack(side="left", padx=(0, 5))
         else:
             play_btn = ctk.CTkButton(row_frame, text="▶", width=30, corner_radius=0,
                                      command=lambda p=file_path: self.play_audio(p))
             play_btn.pack(side="left", padx=(0, 5))
+            
+            info_btn = ctk.CTkButton(row_frame, text="\u2139", width=30, corner_radius=0,
+                                     command=lambda p=file_path, n=file_name: self.show_audio_info(p, n, show_sync_controls=is_input_tab))
+            info_btn.pack(side="left", padx=(0, 5))
 
-        # 4. File icon and name (Middle, expands and pushes the rest to the right)
-        # --- NEW: Different icons for different file types ---
-        if is_folder:
-            display_text = f"📁 {file_name}"
-        elif is_txt:
-            display_text = f"📝 {file_name}"
-        else:
-            display_text = f"🎵 {file_name}"
+        # 4. File icon and name
+        if is_folder: display_text = f"📁 {file_name}"
+        elif is_txt: display_text = f"📝 {file_name}"
+        else: display_text = f"🎵 {file_name}"
             
         lbl = ctk.CTkLabel(row_frame, text=display_text, anchor="w")
         lbl.pack(side="left", fill="x", expand=True, padx=5) 
         
-        # 5. Delete button (Stays on the far right)
+        # 5. Delete button
         if not is_folder:
             del_btn = ctk.CTkButton(row_frame, text="🗑", width=30, corner_radius=0, fg_color="#a83232", hover_color="#8a2929",
                                     command=lambda p=file_path: self.delete_file(p))
             del_btn.pack(side="right", padx=5)
+
+        # 6. Stats Label
+        if is_folder:
+            stats_lbl = ctk.CTkLabel(row_frame, text="Calculating...", text_color="gray", font=ctk.CTkFont(size=12))
+            stats_lbl.pack(side="right", padx=(10, 15))
+            self.calculate_folder_size_async(file_path, stats_lbl) 
+        else:
+            stats_text = self.get_file_stats(file_path, is_folder, is_txt)
+            stats_lbl = ctk.CTkLabel(row_frame, text=stats_text, text_color="gray", font=ctk.CTkFont(size=12))
+            stats_lbl.pack(side="right", padx=(10, 15))
+
+    def get_file_stats(self, file_path, is_folder, is_txt):
+        """Returns a formatted string with duration (if audio) and file size."""
+        if is_folder:
+            return "Folder" # Keeping it safe and fast!
+            
+        try:
+            # 1. Calculate File Size
+            size_bytes = os.path.getsize(file_path)
+            if size_bytes == 0:
+                size_str = "0 B"
+            else:
+                size_name = ("B", "KB", "MB", "GB", "TB")
+                i = int(math.floor(math.log(size_bytes, 1024)))
+                p = math.pow(1024, i)
+                
+                # NEW: Drop the decimal if the unit is Bytes (i == 0)
+                if i == 0:
+                    size_str = f"{int(size_bytes)} B"
+                else:
+                    s = round(size_bytes / p, 1)
+                    size_str = f"{s} {size_name[i]}"
+                
+            # 2. Calculate Audio Duration (Skip if it's a text document)
+            if not is_txt:
+                try:
+                    import torchaudio
+                    # torchaudio.info is very fast as it only reads the metadata header
+                    metadata = torchaudio.info(file_path)
+                    seconds = int(metadata.num_frames / metadata.sample_rate)
+                    mins, secs = divmod(seconds, 60)
+                    duration_str = f"{mins}:{secs:02d}"
+                    return f"{duration_str}  •  {size_str}"
+                except Exception:
+                    pass # If torchaudio fails (e.g. unsupported format), just fall back to size
+
+            return size_str
+        except Exception:
+            return "Unknown"
+        
+    def show_audio_info(self, file_path, file_name, show_sync_controls=True):
+        """Displays advanced technical metadata with grid alignment and safe syncing."""
+        try:
+            import torchaudio
+            import os
+            metadata = torchaudio.info(file_path)
+            
+            sr = metadata.sample_rate
+            channels = metadata.num_channels
+            frames = metadata.num_frames
+            bits = getattr(metadata, 'bits_per_sample', 0) 
+            
+            channel_str = "Stereo" if channels == 2 else "Mono" if channels == 1 else f"{channels} Ch"
+            ext = os.path.splitext(file_path)[1].lower().replace(".", "")
+            
+            # Calculate Duration (Needed for Bitrate math)
+            duration_sec = frames / sr if sr > 0 else 0
+            
+            # Calculate Bitrate (kbps) = (File Size in bits) / (Duration in seconds * 1000)
+            if duration_sec > 0:
+                file_size_bytes = os.path.getsize(file_path)
+                bitrate_kbps = int((file_size_bytes * 8) / (duration_sec * 1000))
+                
+                # Round to nearest common standard (optional, but looks cleaner)
+                standard_bitrates = [64, 96, 128, 192, 256, 320]
+                closest_bitrate = min(standard_bitrates, key=lambda x: abs(x - bitrate_kbps))
+                
+                # If it's VBR (Variable Bitrate) it might be an odd number, so we use the raw calculation if it's far off
+                if abs(closest_bitrate - bitrate_kbps) < 15:
+                    bitrate_kbps = closest_bitrate
+                    
+                bitrate_str = f"{bitrate_kbps} kbps"
+            else:
+                bitrate_kbps = 0
+                bitrate_str = "Unknown"
+            
+            bit_depth_str = f"{bits}-bit" if bits > 0 else "N/A"
+            
+        except Exception as e:
+            print(f"Could not read metadata: {e}")
+            return
+
+        # --- Pop-up Dialog ---
+        dialog = ctk.CTkToplevel(self)
+        dialog.title("Audio Inspector")
+        dialog.geometry("380x280") 
+        dialog.attributes("-topmost", True)
+        
+        content = ctk.CTkFrame(dialog, fg_color="transparent")
+        content.pack(fill="both", expand=True, padx=20, pady=20)
+        
+        ctk.CTkLabel(content, text=file_name, font=ctk.CTkFont(weight="bold", size=16), wraplength=340).pack(pady=(0, 15))
+        
+        # --- Grid Layout for Perfect Alignment ---
+        grid_frame = ctk.CTkFrame(content, fg_color="transparent")
+        grid_frame.pack(fill="x")
+        
+        # Safe sync functions
+        def sync_format():
+            if hasattr(self, 'format_var') and ext in ["wav", "mp3", "flac"]:
+                self.format_var.set(ext)
+                if hasattr(self, 'update_ui_state'): 
+                    self.update_ui_state()
+
+        def sync_sample_rate():
+            if hasattr(self, 'sr_var'):
+                self.sr_var.set(str(sr))
+
+        def sync_channels():
+            if hasattr(self, 'channel_switch_var') and channel_str in ["Mono", "Stereo"]:
+                self.channel_switch_var.set(channel_str)
+                if channel_str == "Stereo":
+                    self.mono_label.configure(text_color="gray")
+                    self.stereo_label.configure(text_color=("black", "white"))
+                else:
+                    self.mono_label.configure(text_color=("black", "white"))
+                    self.stereo_label.configure(text_color="gray")
+
+        def sync_bit_depth():
+            if hasattr(self, 'bit_depth_var') and bits in [24, 32]:
+                self.bit_depth_var.set(bits == 24)
+
+        def sync_bitrate():
+            if hasattr(self, 'bitrate_var') and bitrate_kbps > 0:
+                self.bitrate_var.set(str(bitrate_kbps))
+
+        def sync_all():
+            sync_format()
+            sync_sample_rate()
+            sync_channels()
+            if ext == "mp3":
+                sync_bitrate()
+            else:
+                sync_bit_depth()
+            sync_all_btn.configure(text="All Synced! ✓", fg_color="#2b7a4b")
+
+        # Define our base rows
+        details = [
+            ("Format:", ext.upper(), sync_format),
+            ("Sample Rate:", f"{sr} Hz", sync_sample_rate),
+            ("Channels:", channel_str, sync_channels)
+        ]
+        
+        # Dynamically append Bitrate OR Bit Depth based on format!
+        if ext == "mp3":
+            details.append(("Bitrate:", bitrate_str, sync_bitrate if bitrate_kbps > 0 else None))
+        else:
+            details.append(("Bit Depth:", bit_depth_str, sync_bit_depth if bits in [24, 32] else None))
+        
+        # Build the grid
+        for i, (lbl_text, val_text, sync_cmd) in enumerate(details):
+            ctk.CTkLabel(grid_frame, text=lbl_text, text_color="gray").grid(row=i, column=0, sticky="e", padx=(0, 10), pady=5)
+            ctk.CTkLabel(grid_frame, text=val_text, font=ctk.CTkFont(weight="bold")).grid(row=i, column=1, sticky="w", padx=(0, 15), pady=5)
+            
+            if show_sync_controls and sync_cmd:
+                ctk.CTkButton(grid_frame, text="Sync", width=40, height=24, command=sync_cmd).grid(row=i, column=2, padx=5, pady=5)
+                
+        grid_frame.grid_columnconfigure(1, weight=1)
+
+        # Main Sync All Button 
+        if show_sync_controls:
+            sync_all_btn = ctk.CTkButton(dialog, text="Sync All to Output", command=sync_all)
+            sync_all_btn.pack(side="bottom", pady=10, padx=20, fill="x")
+
+    def calculate_folder_size_async(self, folder_path, label_widget):
+        """Calculates folder size safely in a background thread."""
+        def calc_size():
+            total_size = 0
+            try:
+                for dirpath, _, filenames in os.walk(folder_path):
+                    for f in filenames:
+                        fp = os.path.join(dirpath, f)
+                        if not os.path.islink(fp):
+                            total_size += os.path.getsize(fp)
+                
+                if total_size == 0:
+                    size_str = "0 B"
+                else:
+                    size_name = ("B", "KB", "MB", "GB", "TB")
+                    i = int(math.floor(math.log(total_size, 1024)))
+                    p = math.pow(1024, i)
+                    s = round(total_size / p, 1)
+                    size_str = f"{s} {size_name[i]}"
+                
+                # SAFE WAY: Put the result in the queue instead of touching the UI directly
+                self.folder_size_queue.put((label_widget, f"{size_str}"))
+            except Exception:
+                self.folder_size_queue.put((label_widget, "Size Unknown"))
+
+        threading.Thread(target=calc_size, daemon=True).start()
+
+    def _check_size_queue(self):
+        """Safely updates the UI on the main thread without crashing."""
+        try:
+            # Process everything currently in the queue
+            while True:
+                label_widget, text = self.folder_size_queue.get_nowait()
+                label_widget.configure(text=text)
+        except queue.Empty:
+            pass
+        finally:
+            # Check the queue again in 100 milliseconds
+            self.after(100, self._check_size_queue)
 
     def enter_folder(self, folder_path):
         """Enters the selected subfolder and redraws the UI."""
@@ -800,11 +1332,15 @@ class SeparationApp(ctk.CTk):
         if messagebox.askyesno("Delete File", f"Are you sure you want to permanently delete:\n{file_name}?"):
             try:
                 os.remove(file_path)
+                
                 # Refresh the correct tab so the deleted file disappears from the list
                 if tab_to_reload == "input":
                     self.load_input()
-                else:
-                    self.load_outputs()
+                elif tab_to_reload == "sep_out":
+                    self.load_separation_outputs()
+                elif tab_to_reload == "trans_out":
+                    self.load_transcription_outputs()
+                    
             except Exception as e:
                 messagebox.showerror("Error", f"Failed to delete file: {e}")
 
@@ -812,9 +1348,6 @@ class SeparationApp(ctk.CTk):
         """!
         @brief Populates the Settings tab with directory configurations, a Model Manager, 
                and system resource controls.
-        
-        This redesign removes manual CSV typing in favor of one-click downloads 
-        and clear status indications, providing a premium user experience.
         """
         # 1. Clear existing widgets
         for widget in self.settings_frame.winfo_children():
@@ -832,14 +1365,13 @@ class SeparationApp(ctk.CTk):
         
         ctk.CTkLabel(dir_frame, text="Folder Directories", font=ctk.CTkFont(size=16, weight="bold")).pack(anchor="w", padx=15, pady=(15, 10))
 
-        # Setup StringVars (PŘIDÁNA PROMĚNNÁ PRO MODELY)
+        # Setup StringVars 
         self.settings_models_var = tk.StringVar(value=self.models_dir)
         self.settings_input_var = tk.StringVar(value=self.input_folder)
         self.settings_vocals_var = tk.StringVar(value=self.output_folders["vocals"])
         self.settings_instr_var = tk.StringVar(value=self.output_folders["instrumentals"])
         self.settings_trans_var = tk.StringVar(value=self.output_folders["transcriptions"])
 
-        # PŘIDÁNO DO SEZNAMU (hned na první místo)
         folders = [
             ("AI Models Folder:", self.settings_models_var),
             ("Input Folder:", self.settings_input_var),
@@ -855,8 +1387,17 @@ class SeparationApp(ctk.CTk):
             
             ctk.CTkLabel(row_frame, text=text, width=130, anchor="w").pack(side="left")
             ctk.CTkEntry(row_frame, textvariable=var).pack(side="left", fill="x", expand=True)
-            ctk.CTkButton(row_frame, text="Browse", width=70, corner_radius=0,
-                          command=lambda v=var: self._browse_folder(v)).pack(side="right", padx=(10, 0))
+            
+            # --- CHANGED: Create button, pack it, and save it to a variable based on its text ---
+            btn = ctk.CTkButton(row_frame, text="Browse", width=70, corner_radius=0,
+                                command=lambda v=var: self._browse_folder(v))
+            btn.pack(side="right", padx=(10, 0))
+            
+            if text == "AI Models Folder:": self.models_browse_btn = btn
+            elif text == "Input Folder:": self.input_browse_btn = btn
+            elif text == "Vocals Folder:": self.vocals_browse_btn = btn
+            elif text == "Instrumentals:": self.instr_browse_btn = btn
+            elif text == "Transcriptions:": self.trans_browse_btn = btn
 
         # ==========================================
         # SECTION 2: AI MODELS (CSV Format)
@@ -873,7 +1414,6 @@ class SeparationApp(ctk.CTk):
         def list_to_csv(model_list):
             return ", ".join(model_list)
 
-        # Updated descriptions for better UX
         models_setup = [
             ("Demucs:", "demucs", self.separator_models.get("Demucs", []), "High quality separation (Downloads automatically on first use)"),
             ("OpenUnmix:", "openunmix", self.separator_models.get("OpenUnmix", []), "Alternative separation models"),
@@ -883,31 +1423,31 @@ class SeparationApp(ctk.CTk):
         ]
 
         for text, dict_key, model_list, desc in models_setup:
-            # Row container
             row_frame = ctk.CTkFrame(mod_frame, fg_color="transparent")
             row_frame.pack(fill="x", padx=15, pady=5)
             
             self.model_vars[dict_key] = tk.StringVar(value=list_to_csv(model_list))
             
-            # Label and Entry
             input_frame = ctk.CTkFrame(row_frame, fg_color="transparent")
             input_frame.pack(side="top", fill="x")
             
             ctk.CTkLabel(input_frame, text=text, width=100, anchor="w").pack(side="left")
             ctk.CTkEntry(input_frame, textvariable=self.model_vars[dict_key]).pack(side="left", fill="x", expand=True, padx=(5, 5))
             
-            # Description text below the entry
             ctk.CTkLabel(row_frame, text=desc, text_color="gray", font=ctk.CTkFont(size=10)).pack(side="top", anchor="w", padx=(105, 0))
 
         # Action Buttons for Models
         action_mod_frame = ctk.CTkFrame(mod_frame, fg_color="transparent")
         action_mod_frame.pack(fill="x", padx=15, pady=15)
 
-        ctk.CTkButton(action_mod_frame, text="Download Default Models", width=180,
-                      command=self.download_default_models).pack(side="left", padx=(0, 10))
+        # --- CHANGED: Assigned the download button to a variable ---
+        self.download_models_btn = ctk.CTkButton(action_mod_frame, text="Download Default Models", width=180,
+                                                 command=self.download_default_models)
+        self.download_models_btn.pack(side="left", padx=(0, 10))
                       
-        ctk.CTkButton(action_mod_frame, text="Scan Directory", width=120, fg_color="gray40", hover_color="gray30",
-                      command=self.scan_models_directory).pack(side="left", padx=(0, 10))
+        self.scan_models_btn = ctk.CTkButton(action_mod_frame, text="Scan Directory", width=120, fg_color="gray40", hover_color="gray30",
+                                             command=self.scan_models_directory)
+        self.scan_models_btn.pack(side="left", padx=(0, 10))
 
         # ==========================================
         # SECTION 3: SYSTEM ACTIONS & MEMORY
@@ -915,7 +1455,6 @@ class SeparationApp(ctk.CTk):
         action_frame = ctk.CTkFrame(scroll_frame, fg_color="transparent")
         action_frame.pack(fill="x", padx=10, pady=(10, 20))
         
-        # Top Row of Action Frame: Memory Management
         memory_row = ctk.CTkFrame(action_frame, fg_color="transparent")
         memory_row.pack(fill="x", pady=(0, 15))
         
@@ -935,17 +1474,20 @@ class SeparationApp(ctk.CTk):
         )
         self.device_dropdown.pack(side="left", padx=5)
 
-        # Bottom Row of Action Frame: Save/Restore Buttons
-        button_row = ctk.CTkFrame(action_frame, fg_color="transparent")
+        button_row = ctk.CTkFrame(scroll_frame, fg_color="transparent")
         button_row.pack(fill="x", pady=(15, 0))
         
-        ctk.CTkButton(button_row, text="Save Settings", height=40, font=ctk.CTkFont(weight="bold"), corner_radius=0, 
-                      command=self.save_settings_changes).pack(side="right", padx=(10, 0))
+        ctk.CTkButton(button_row, text="Show Tutorial", height=40, corner_radius=0,
+                      command=self.show_welcome_tutorial).pack(side="left", padx=(0, 5))
         
+        # Original Save and Restore buttons
         ctk.CTkButton(button_row, text="Restore Defaults", height=40, fg_color="transparent", corner_radius=0, 
                       border_width=1, text_color=("gray10", "gray90"), 
-                      command=self.restore_defaults).pack(side="right", padx=5)
+                      command=self.restore_defaults).pack(side="left", padx=5)
         
+        ctk.CTkButton(button_row, text="Save Settings", height=40, font=ctk.CTkFont(weight="bold"), corner_radius=0, 
+                      command=self.save_settings_changes).pack(side="left", padx=(10, 0))
+         
     def load_settings(self):
         defaults = self.DEFAULT_SETTINGS
         if not os.path.exists(self.settings_file):
@@ -974,6 +1516,7 @@ class SeparationApp(ctk.CTk):
         
         # 1. Directories
         self.input_folder = data.get("input_folder", "input")
+        self.models_dir = data.get("models_dir", "") 
         
         # Combine the output paths into the dictionary your app expects
         self.output_folders = {
@@ -993,6 +1536,9 @@ class SeparationApp(ctk.CTk):
         # 4. AI Models
         self.separator_models = data.get("separator_models", {})
         self.transcription_models = data.get("transcription_models", {})
+
+        # 5. First Run Flag
+        self.is_first_run = data.get("is_first_run", True)
 
     def restore_defaults(self):
         """Wipes current settings back to factory state."""
@@ -1039,14 +1585,16 @@ class SeparationApp(ctk.CTk):
     def save_settings(self):
         """Writes current state to disk."""
         data = {
+            "is_first_run": getattr(self, "is_first_run", False), # <-- FIXED: Now saves the first-run flag
+            "models_dir": getattr(self, "models_dir", ""),        # <-- FIXED: Now saves the models directory
             "input_folder": self.input_folder,
             "vocals_folder": self.output_folders["vocals"],
             "instrumentals_folder": self.output_folders["instrumentals"],
             "transcriptions_folder": self.output_folders["transcriptions"],
             "appearance_mode": getattr(self, "appearance_mode", "Dark"),
-            "color_theme": getattr(self, "color_theme", "blue"), # <-- NEW: Saves the color theme
+            "color_theme": getattr(self, "color_theme", "blue"),
             "scaling": getattr(self, "scaling", "100%"),
-            "auto_flush_memory": self.auto_flush_memory, 
+            "auto_flush_memory": getattr(self, "auto_flush_memory", True), 
             "separator_models": self.separator_models,
             "transcription_models": self.transcription_models
         }
@@ -1060,12 +1608,14 @@ class SeparationApp(ctk.CTk):
     def DEFAULT_SETTINGS(self):
         """Centralized defaults so we only ever write this once."""
         return {
+            "is_first_run": True,                 
+            "models_dir": "",                      
             "input_folder": "input",
             "vocals_folder": "output/vocals",
             "instrumentals_folder": "output/instrumentals",
             "transcriptions_folder": "output/text",
             "appearance_mode": "Dark",
-            "color_theme": "blue", # <-- NEW: Default color theme fallback
+            "color_theme": "blue", 
             "scaling": "100%",
             "auto_flush_memory": True,
             "separator_models": {
@@ -1091,92 +1641,47 @@ class SeparationApp(ctk.CTk):
                 ]
             }
         }
-        """Writes current state to disk."""
-        data = {
-            "input_folder": self.input_folder,
-            "vocals_folder": self.output_folders["vocals"],
-            "instrumentals_folder": self.output_folders["instrumentals"],
-            "transcriptions_folder": self.output_folders["transcriptions"],
-            "appearance_mode": self.appearance_mode,
-            "scaling": self.scaling,
-            # Note: "font_size" has been permanently removed since it scales automatically
-            "auto_flush_memory": self.auto_flush_memory, 
-            "separator_models": self.separator_models,
-            "transcription_models": self.transcription_models
-        }
-        try:
-            with open(self.settings_file, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=4)
-        except Exception as e:
-            logging.error(f"Error saving settings: {e}")
-
+    
     def update_mp3_preset_label(self, value):
         self.mp3_preset_value_label.configure(text=f"Current: {int(value)}")
 
-    def on_tool_change(self, *args):
-        # 1. SAFETY CHECK: Skip visual updates if the UI tab hasn't been drawn yet
-        if not (hasattr(self, 'model_label') and self.model_label.winfo_exists()):
-            return
+    def update_flac_label(self, value):
+        if hasattr(self, 'flac_value_label'):
+            self.flac_value_label.configure(text=f"Current: {int(value)}")
+
+    def update_overlap_label(self, value):
+        if hasattr(self, 'overlap_value_label'):
+            self.overlap_value_label.configure(text=f"Current: {value:.2f}")
+
+    def update_ui_state(self, *args):
+        if not hasattr(self, 'model_frame'): 
+            return # Safety check: wait until UI is drawn
 
         tool = self.ai_tool_var.get()
-        try:
-            if tool == "Spleeter":
-                self.model_label.grid_remove()
-                self.model_menu.grid_remove()  # Hide model selection for Spleeter
-            else:
-                # Handle both Demucs and OpenUnmix dynamically
-                default_models = ["mdx", "mdx_extra", "htdemucs"] if tool == "Demucs" else ["umxl", "umxhq", "umx"]
-                values = self.separator_models.get(tool, default_models)
-                if not values: values = default_models # Failsafe if JSON list is empty
-                
-                self.model_menu.configure(values=values)
-                self.model_var.set(values[0])
-                self.model_label.grid()
-                self.model_menu.grid()
-        except Exception as e:
-            import logging
-            logging.error(f"Error updating separator models: {e}", exc_info=True)
-
-        self.on_format_change()  # Refresh format options depending on the new tool
-
-    def on_format_change(self, *args):
-        # 1. SAFETY CHECK: Skip visual updates if the UI tab hasn't been drawn yet
-        if not (hasattr(self, 'wav_flac_frame') and self.wav_flac_frame.winfo_exists()):
-            return
-
         fmt = self.format_var.get()
-        tool = self.ai_tool_var.get()
 
-        # 1. Main Format Frames (Using Grid)
-        if fmt in ["wav", "flac"]:
-            self.wav_flac_frame.grid() 
-            if hasattr(self, 'mp3_frame'): self.mp3_frame.grid_remove() 
-        elif fmt == "mp3":
-            self.wav_flac_frame.grid_remove() 
-            if hasattr(self, 'mp3_frame'): self.mp3_frame.grid() 
+        # 1. Update Model Options dynamically based on the tool
+        if tool != "Spleeter":
+            default_models = ["mdx", "mdx_extra", "htdemucs"] if tool == "Demucs" else ["umxl", "umxhq", "umx"]
+            values = getattr(self, "separator_models", {}).get(tool, default_models) or default_models
+            self.model_menu.configure(values=values)
+            if self.model_var.get() not in values: 
+                self.model_var.set(values[0])
 
-        # 2. Bit Depth (Inside wav_flac_frame, using Pack)
-        if tool == "Demucs" and fmt == "wav":
-            if hasattr(self, 'bit_depth_frame'): self.bit_depth_frame.pack(fill="x", padx=20, pady=5)
-        else:
-            if hasattr(self, 'bit_depth_frame'): self.bit_depth_frame.pack_forget()
+        # 2. Define UI Visibility Rules (True = Show, False = Hide)
+        visibility_rules = {
+            self.model_frame: tool != "Spleeter",
+            self.bit_depth_frame: tool == "Demucs" and fmt in ["wav", "flac"],
+            self.flac_frame: fmt == "flac",
+            self.mp3_bitrate_frame: fmt == "mp3",
+            self.mp3_preset_frame: tool == "Demucs" and fmt == "mp3",
+            self.demucs_frame: tool == "Demucs"
+        }
 
-        # 3. MP3 Preset Sliders (Inside mp3_frame, using Pack)
-        if tool == "Demucs" and fmt == "mp3":
-            if hasattr(self, 'mp3_preset_label'): self.mp3_preset_label.pack(fill="x", padx=20, pady=5)
-            if hasattr(self, 'mp3_preset_slider'): self.mp3_preset_slider.pack(fill="x", padx=20, pady=5)
-            if hasattr(self, 'mp3_preset_value_label'): self.mp3_preset_value_label.pack(anchor="w", padx=20, pady=5)
-        else:
-            if hasattr(self, 'mp3_preset_label'): self.mp3_preset_label.pack_forget()
-            if hasattr(self, 'mp3_preset_slider'): self.mp3_preset_slider.pack_forget()
-            if hasattr(self, 'mp3_preset_value_label'): self.mp3_preset_value_label.pack_forget()
+        # 3. Apply all rules instantly
+        for frame, should_show in visibility_rules.items():
+            frame.grid() if should_show else frame.grid_remove()
 
-        # 4. Shifts (Main scrollable frame, using Grid)
-        if tool == "Demucs":
-            if hasattr(self, 'shifts_frame'): self.shifts_frame.grid() 
-        else:
-            if hasattr(self, 'shifts_frame'): self.shifts_frame.grid_remove()
-    
     def on_trans_tool_change(self, *args):
         """
         Complete logic for UI visibility and model population.
@@ -1314,42 +1819,50 @@ class SeparationApp(ctk.CTk):
                 messagebox.showerror("Error", f"Failed to copy {path}:\n{e}")
         self.load_input()
 
-    def load_outputs(self):
-        # 1. Clear previous UI selection states
+    def load_separation_outputs(self):
+        """Only loads Vocals and Instrumentals."""
         self.vocals_selection_dict.clear()
         self.instr_selection_dict.clear()
-        self.trans_selection_dict.clear()
-
-        # 2. Clear old data and read the hard drive
         self.vocals.clear()
         self.instrumentals.clear()
-        self.transcriptions.clear()
 
+        # Load Vocals
         vocals_dir = self.output_folders.get("vocals", "")
         if os.path.isdir(vocals_dir):
             for f in sorted(os.listdir(vocals_dir)):
                 if f.lower().endswith(('.mp3', '.wav', '.flac', '.m4a')):
                     self.vocals.append({'path': os.path.join(vocals_dir, f), 'name': f})
 
+        # Load Instrumentals
         instr_dir = self.output_folders.get("instrumentals", "")
         if os.path.isdir(instr_dir):
             for f in sorted(os.listdir(instr_dir)):
                 if f.lower().endswith(('.mp3', '.wav', '.flac', '.m4a')):
                     self.instrumentals.append({'path': os.path.join(instr_dir, f), 'name': f})
 
+        # Reset pagination and draw UI
+        self.current_pages["vocals"] = 0
+        self.current_pages["instr"] = 0
+        
+        self.after(10, lambda: self.render_page("vocals"))
+        self.after(50, lambda: self.render_page("instr"))
+
+    def load_transcription_outputs(self):
+        """Only loads Transcriptions."""
+        self.trans_selection_dict.clear()
+        self.transcriptions.clear()
+
+        # Load Transcriptions
         trans_dir = self.output_folders.get("transcriptions", "")
         if os.path.isdir(trans_dir):
             for f in sorted(os.listdir(trans_dir)):
                 if f.lower().endswith(('.txt', '.lrc')):
                     self.transcriptions.append({'path': os.path.join(trans_dir, f), 'name': f})
 
-        # 3. Reset page trackers
-        self.current_pages = {"trans": 0, "vocals": 0, "instr": 0}
+        # Reset pagination and draw UI
+        self.current_pages["trans"] = 0
         
-        # 4. Stagger the UI drawing
         self.after(10, lambda: self.render_page("trans"))
-        self.after(50, lambda: self.render_page("vocals"))
-        self.after(100, lambda: self.render_page("instr"))
 
     def change_page(self, category: str, delta: int):
         """Triggered by the < and > buttons to change the page number."""
@@ -1388,23 +1901,32 @@ class SeparationApp(ctk.CTk):
         else:
             return
 
-        # Destroy old widgets
+        # Silently abort rendering this list if we are on a different tab and it doesn't exist
+        if list_frame is None or not list_frame.winfo_exists():
+            return  
+
+        # Clear the frame to draw the new items
         for widget in list_frame.winfo_children():
             widget.destroy()
 
-        # Math to determine pages
+        # --- 1. CORE MATH ---
         total_items = len(data_list)
-        total_pages = max(1, (total_items + getattr(self, "ITEMS_PER_PAGE", 10) - 1) // getattr(self, "ITEMS_PER_PAGE", 10))
+        
+        # ALWAYS calculate total_pages up here first!
+        total_pages = max(1, (total_items + self.ITEMS_PER_PAGE - 1) // self.ITEMS_PER_PAGE)
         
         # Safely get current page
-        if not hasattr(self, 'current_pages'): self.current_pages = {}
+        if not hasattr(self, 'current_pages'): 
+            self.current_pages = {}
+            
+        # Clamp the current page so it never goes out of bounds
         curr_page = max(0, min(self.current_pages.get(category, 0), total_pages - 1))
         self.current_pages[category] = curr_page
 
+        # --- 2. DRAW ROWS ---
         start_idx = curr_page * getattr(self, "ITEMS_PER_PAGE", 10)
         end_idx = min(start_idx + getattr(self, "ITEMS_PER_PAGE", 10), total_items)
 
-        # Draw the specific rows
         for i in range(start_idx, end_idx):
             item = data_list[i]
             self.create_file_row(
@@ -1416,110 +1938,155 @@ class SeparationApp(ctk.CTk):
                 is_folder=item.get('is_folder', False) # Safely pass is_folder for inputs
             )
 
-        # Update button states
-        lbl_page.configure(text=f"Page {curr_page + 1} of {total_pages}")
-        btn_prev.configure(state="normal" if curr_page > 0 else "disabled")
-        btn_next.configure(state="normal" if curr_page < total_pages - 1 else "disabled")
+        # --- 3. UPDATE UI LABELS & BUTTONS ---
+        if self.ITEMS_PER_PAGE == 9999:
+            # FULL SCREEN: Hide buttons and show total count
+            lbl_page.configure(text=f"Loaded {total_items} files")
+            btn_prev.pack_forget() 
+            btn_next.pack_forget()
+        else:
+            # NORMAL WINDOW: Show buttons, update text, and configure button states
+            lbl_page.configure(text=f"Page {curr_page + 1} of {total_pages}")
+            
+            # Pack the buttons back onto the screen
+            btn_prev.pack(side="left", padx=10) 
+            btn_next.pack(side="right", padx=10)
+            
+            # Enable/Disable buttons based on the current page
+            btn_prev.configure(state="normal" if curr_page > 0 else "disabled")
+            btn_next.configure(state="normal" if curr_page < total_pages - 1 else "disabled")
+            
+    def _on_window_configure(self, event):
+        """Filters window events so we only rebuild UI when resizing STOPS."""
+        # We ONLY care about the main application window resizing
+        if event.widget != self:
+            return
 
+        current_width = self.winfo_width()
+        current_height = self.winfo_height()
+
+        # GUARD: Did the window actually change size? 
+        # (If it only moved X/Y coordinates, do absolutely nothing!)
+        if current_width == self._last_width and current_height == self._last_height:
+            return
+
+        # Update our trackers
+        self._last_width = current_width
+        self._last_height = current_height
+
+        # --- THE DEBOUNCER ---
+        # Cancel the previous timer if the user is still actively dragging the edge
+        if self._resize_timer is not None:
+            self.after_cancel(self._resize_timer)
+
+        # Set a new timer. If the user stops dragging for 250 milliseconds, trigger the rebuild!
+        self._resize_timer = self.after(250, self._recalculate_pagination)
+
+    def _recalculate_pagination(self, is_initialization=False):
+        """Dynamically calculates ITEMS_PER_PAGE. Disables pagination if full screen."""
+        
+        is_fullscreen = self.state() == 'zoomed'
+        
+        if is_fullscreen:
+            # If full screen, set to a massive number so everything fits on page 1
+            self.ITEMS_PER_PAGE_SEP = 9999
+            self.ITEMS_PER_PAGE_TRANS = 9999
+        else:
+            # --- NORMAL WINDOW MATH ---
+            window_height = self.winfo_height()
+            if window_height < 100: window_height = 700 
+                
+            row_height = 35 
+            
+            # Separation Tab Math (Divided by 2)
+            available_height_sep = (window_height - 320) / 2
+            self.ITEMS_PER_PAGE_SEP = max(4, min(25, int(available_height_sep / row_height) + 1))
+
+            # Transcription Tab Math (Full size)
+            available_height_trans = window_height - 250
+            self.ITEMS_PER_PAGE_TRANS = max(8, min(40, int(available_height_trans / row_height) + 1))
+
+
+        # --- TRIGGER RE-RENDER ---
+        if is_initialization:
+            return
+
+        # Trigger Separation Tab Update
+        if getattr(self, 'sep_out_tab_loaded', False) and self.sep_out_frame.winfo_ismapped():
+            if getattr(self, 'ITEMS_PER_PAGE', 0) != self.ITEMS_PER_PAGE_SEP:
+                self.ITEMS_PER_PAGE = self.ITEMS_PER_PAGE_SEP
+                self.current_pages["vocals"] = 0
+                self.current_pages["instr"] = 0
+                self.render_page("vocals")
+                self.render_page("instr")
+                
+        # Trigger Transcription Tab Update
+        elif getattr(self, 'trans_out_tab_loaded', False) and self.trans_out_frame.winfo_ismapped():
+            if getattr(self, 'ITEMS_PER_PAGE', 0) != self.ITEMS_PER_PAGE_TRANS:
+                self.ITEMS_PER_PAGE = self.ITEMS_PER_PAGE_TRANS
+                self.current_pages["trans"] = 0
+                self.render_page("trans")
+            
     def change_output_folder(self, filetype):
         folder = filedialog.askdirectory(title=f"Select {filetype.capitalize()} Output Folder")
         if folder:
             self.output_folders[filetype] = folder
-            self.load_outputs()
             # Prompt to save as default
             if messagebox.askyesno("Save as Default", f"Save this folder as the new default {filetype} folder?"):
                 # Refresh Settings tab variables than save
                 if filetype == "vocals":
                     self.settings_vocals_var.set(self.output_folders["vocals"])
+                    self.load_separation_outputs()
                 elif filetype == "instrumentals":
                     self.settings_instr_var.set(self.output_folders["instrumentals"])
+                    self.load_separation_outputs()
                 elif filetype == "transcriptions":
                     self.settings_trans_var.set(self.output_folders["transcriptions"])
+                    self.load_transcription_outputs()
                 self.save_settings()
 
     def check_models_directory(self):
-        """!
-        @brief Checks for the AI models directory on startup.
-        
-        Reads 'settings.json'. If missing, prompts the user to select or 
-        auto-create a directory. Offers to download default models.
         """
-        self.models_dir = ""
+        Silently sets up the default AI models directory on startup.
+        Defaults to an app-local 'Models' folder unless the user changed it in Settings.
+        """
+        app_dir = get_app_dir()
+        default_models_dir = os.path.join(app_dir, "Models")
+        self.models_dir = default_models_dir
+        
+        # 1. Check if the user has a custom path saved in settings.json
         if os.path.exists(self.settings_file):
             try:
                 with open(self.settings_file, "r") as f:
                     settings = json.load(f)
-                    self.models_dir = settings.get("models_dir", "")
+                    # Get the saved path. If it doesn't exist OR is an empty string, use default
+                    saved_dir = settings.get("models_dir", "")
+                    if not saved_dir:  # This catches the "" empty string!
+                        self.models_dir = default_models_dir
+                    else:
+                        self.models_dir = saved_dir
             except json.JSONDecodeError:
-                pass # Corrupted or empty file
+                pass # Corrupted file, fallback to default
                 
-        if not self.models_dir or not os.path.exists(self.models_dir):
-            dialog = ctk.CTkToplevel(self)
-            dialog.title("Initial Setup")
-            dialog.geometry("550x350") # Made slightly taller to fit 3 buttons
-            dialog.attributes("-topmost", True)
-            dialog.grab_set()
-
-            ctk.CTkLabel(dialog, text="Welcome! Where would you like to store AI models?", font=ctk.CTkFont(size=16, weight="bold")).pack(pady=(20, 5))
-            ctk.CTkLabel(dialog, text="Models can take up several gigabytes of space. Choose a suitable location.", text_color="gray").pack(pady=(0, 20))
-
-            download_var = ctk.BooleanVar(value=True)
-
-            def set_folder_and_close(selected_path):
-                self.models_dir = selected_path
-                os.makedirs(self.models_dir, exist_ok=True)
-                
-                # Save safely
-                curr_settings = {}
-                if os.path.exists(self.settings_file):
-                    with open(self.settings_file, "r") as f:
-                        try: curr_settings = json.load(f)
-                        except json.JSONDecodeError: pass
-                            
-                curr_settings["models_dir"] = self.models_dir
-                with open(self.settings_file, "w") as f:
-                    json.dump(curr_settings, f, indent=4)
-                
-                os.environ["TORCH_HOME"] = self.models_dir
-                os.environ["HF_HOME"] = self.models_dir
-                os.environ["MODEL_PATH"] = self.models_dir
-
-                dialog.destroy()
-                
-                # wait for the progress bar to be initialized
-                if download_var.get():
-                    self.after(500, self.download_default_models)
-
-            # --- NEW: App Folder Logic ---
-            def use_app_folder():
-                # Now it perfectly targets the .exe folder every time
-                local_path = os.path.join(get_app_dir(), "Models")
-                set_folder_and_close(local_path)
-
-            def use_auto_folder():
-                auto_path = os.path.join(os.path.expanduser("~"), "Documents", "AudioSeparatorModels")
-                set_folder_and_close(auto_path)
-
-            def select_folder():
-                folder = filedialog.askdirectory(title="Select AI Models Directory")
-                if folder:
-                    set_folder_and_close(folder)
-
-            btn_frame = ctk.CTkFrame(dialog, fg_color="transparent")
-            btn_frame.pack(fill="x", padx=30, pady=10)
-
-            # --- UPDATED: 3 Stacked Buttons ---
-            ctk.CTkButton(btn_frame, text="Current App Folder (Next to .exe)", height=40, command=use_app_folder).pack(fill="x", pady=(0, 10))
-            ctk.CTkButton(btn_frame, text="Automatic (Documents)", height=40, command=use_auto_folder).pack(fill="x", pady=(0, 10))
-            ctk.CTkButton(btn_frame, text="Select Custom Folder", height=40, fg_color="gray40", hover_color="gray30", command=select_folder).pack(fill="x")
-
-            ctk.CTkCheckBox(dialog, text="Download default models after setup", variable=download_var).pack(pady=20)
-
-            self.wait_window(dialog)
-        else:
-            os.environ["TORCH_HOME"] = self.models_dir
-            os.environ["HF_HOME"] = self.models_dir
-            os.environ["MODEL_PATH"] = self.models_dir
+        # 2. Auto-create the directory if it doesn't exist
+        os.makedirs(self.models_dir, exist_ok=True)
+        
+        # 3. Lock in the environment variables BEFORE any AI libraries load
+        os.environ["TORCH_HOME"] = self.models_dir
+        os.environ["HF_HOME"] = self.models_dir
+        os.environ["MODEL_PATH"] = self.models_dir
+        
+        # 4. Save the confirmed path back to settings
+        curr_settings = {}
+        if os.path.exists(self.settings_file):
+            try:
+                with open(self.settings_file, "r") as f:
+                    curr_settings = json.load(f)
+            except: pass
+            
+        curr_settings["models_dir"] = self.models_dir
+        with open(self.settings_file, "w") as f:
+            json.dump(curr_settings, f, indent=4)
 
     def download_default_models(self):
         """!
@@ -1847,15 +2414,14 @@ class SeparationApp(ctk.CTk):
             return  # Do nothing if set to manual
             
         # 2. Safety Check: Don't mess with memory or UI text if a task is actively running!
-        if self.abort_button.winfo_ismapped():
+        if hasattr(self, 'abort_button') and self.abort_button.winfo_ismapped():
             return 
 
-        import gc
-        import torch
         freed_something = False
 
-        # --- CLEAR SEPARATION MODELS (If going to Output or Settings) ---
-        if active_tab in ["output", "settings"]:
+        # --- CLEAR SEPARATION MODELS ---
+        # Clear if we switch to Transcriptions or Settings
+        if active_tab in ["trans_out", "settings"]:
             if getattr(self, 'spleeter_sep', None) is not None:
                 del self.spleeter_sep; self.spleeter_sep = None; freed_something = True
             if getattr(self, 'demucs_sep', None) is not None:
@@ -1863,8 +2429,9 @@ class SeparationApp(ctk.CTk):
             if getattr(self, 'openunmix_sep', None) is not None:
                 del self.openunmix_sep; self.openunmix_sep = None; freed_something = True
 
-        # --- CLEAR TRANSCRIPTION MODELS (If going to Input or Settings) ---
-        if active_tab in ["input", "settings"]:
+        # --- CLEAR TRANSCRIPTION MODELS ---
+        # Clear if we switch to Input, Separated Output, or Settings
+        if active_tab in ["input", "sep_out", "settings"]:
             if getattr(self, 'whisper_trans', None) is not None:
                 del self.whisper_trans; self.whisper_trans = None; freed_something = True
             if getattr(self, 'wav2vec2_trans', None) is not None:
@@ -1872,14 +2439,36 @@ class SeparationApp(ctk.CTk):
             if getattr(self, 'vosk_trans', None) is not None:
                 del self.vosk_trans; self.vosk_trans = None; freed_something = True
 
-        # 3. Perform the flush and update the UI
+        # 3. Perform the flush and update the UI (ONLY if something was actually deleted!)
         if freed_something:
+            import sys
+            import gc
+            
             print(f"[INFO] Switched to '{active_tab}'. Cleared inactive models.")
-            # ... (gc.collect() and empty_cache() logic) ...
+            
+            # Force Python's Garbage Collector to clean up standard memory
+            gc.collect()
+            
+            # ONLY interact with PyTorch if an AI tool has already loaded it!
+            if 'torch' in sys.modules:
+                import torch
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
             
             # Update the progress text to inform the user!
-            self.progress_bar.set(0)
-            self.progress_text.configure(text=f"Ready. RAM cleared for {active_tab.capitalize()} workspace.")
+            if hasattr(self, 'progress_bar') and hasattr(self, 'progress_text'):
+                self.progress_bar.set(0)
+                
+                # Make the tab names look pretty for the UI text
+                display_names = {
+                    "input": "Input",
+                    "sep_out": "Separation",
+                    "trans_out": "Transcription",
+                    "settings": "Settings"
+                }
+                pretty_name = display_names.get(active_tab, active_tab)
+                
+                self.progress_text.configure(text=f"Ready. RAM cleared for {pretty_name} workspace.")
 
     def show_batch_summary_window(self, title, details):
         """Creates a non-blocking, floating window to display batch results."""
@@ -1900,64 +2489,94 @@ class SeparationApp(ctk.CTk):
         close_btn = ctk.CTkButton(summary_win, text="Close", corner_radius=0, command=summary_win.destroy)
         close_btn.pack(pady=(0, 20))
 
+    def setup_progress_bar(self, parent):
+        progress_frame = ctk.CTkFrame(parent, height=40, corner_radius=0)
+        # Keep the frame itself on the grid of the main window
+        progress_frame.grid(row=1, column=1, sticky="ew", padx=(10, 0), pady=(0, 10))
+        # Important: prevents the frame from shrinking vertically when empty
+        progress_frame.pack_propagate(False) 
+
+        # 1. Pack the button to the far right
+        self.abort_button = ctk.CTkButton(progress_frame, text="Abort", command=self.abort_separation_process, width=80, height=24, corner_radius=0)
+        self.abort_button.pack(side="right", padx=(0, 10))
+        self.abort_button.pack_forget()
+
+        # 2. Pack the progress bar to the left, and tell it to fill empty space
+        self.progress_bar = ctk.CTkProgressBar(progress_frame, mode="determinate", height=12)
+        self.progress_bar.pack(side="left", fill="x", expand=True, padx=(10, 10))
+        self.progress_bar.set(0)
+        self.progress_bar.pack_forget()
+
+        # 3. Pack the text to the left. 
+        # When the bar is hidden, this text will slide to the far left automatically!
+        self.progress_text = ctk.CTkLabel(progress_frame, text="Ready", font=ctk.CTkFont(size=12))
+        self.progress_text.pack(side="left", padx=(10, 10))
+
+    def update_task_progress(self, percent, message, file_index, total_files, task_name="Task"):
+        """
+        @brief Unified progress updater for background tasks (Separation, Transcription, etc.)
+        """
+        if getattr(self, 'abort_separation', False):
+            self.after(0, lambda: self.progress_text.configure(text=f"{task_name} aborted by user. (Ready)"))
+            self.after(0, lambda: self.progress_bar.configure(mode="indeterminate"))
+            self.after(0, lambda: self.progress_bar.pack_forget())
+            self.after(0, lambda: self.abort_button.pack_forget())
+            raise RuntimeError("ABORT_REQUESTED")
+
+        # Calculate batch progress locally
+        file_weight = 100.0 / total_files if total_files > 0 else 100.0
+        base_progress = (file_index - 1) * file_weight
+        current_file_progress = (percent / 100.0) * file_weight
+        total_batch_percent = base_progress + current_file_progress
+
+        # Format display message
+        display_msg = f"[{file_index}/{total_files}] {message}" if total_files > 1 else message
+
+        # Update UI safely
+        self.after(0, lambda: self.progress_bar.pack(side="left", fill="x", expand=True, padx=(10, 10), before=self.progress_text)) 
+        self.after(0, lambda: self.progress_bar.set(total_batch_percent / 100.0))
+        self.after(0, lambda: self.progress_text.configure(text=display_msg))
+
     def abort_separation_process(self):
         self.abort_separation = True
-        self.progress_text.configure(text="Aborting separation...")
-        self.abort_button.grid_remove()
+        self.progress_text.configure(text="Aborting process, please wait...")
+        self.abort_button.pack_forget()
 
     def separate_audio(self):
         """
         @brief Prepares a batch of selected files and folders for audio separation.
-        
-        This method iterates through the user's selection in the GUI. If a folder 
-        is selected, it automatically scrapes the directory for valid audio files 
-        (.wav, .mp3, .flac, .ogg, .m4a, .aac) while using a set to prevent duplicate 
-        file processing. It then retrieves all active UI parameters (AI tool, format, 
-        bitrates, device, etc.) and spawns a daemon thread to execute the batch 
-        separation without freezing the main application window.
-        
-        @note Displays a warning messagebox if no valid files/folders are selected, 
-              or if numerical inputs (like sample rate or shifts) contain invalid characters.
-              
-        @return None
         """
-        import os # Ensure os is imported if not already at the top
+        import os 
         
         # 1. Gather all selected files
         selected_files = []
-        selected_paths = set() # To prevent duplicates if user checks folder AND song
-        
-        # Define what audio files we want to grab from folders
+        selected_paths = set() 
+
         valid_extensions = {".wav", ".mp3", ".flac", ".ogg", ".m4a", ".aac"}
 
         for idx, info in self.input_selection_dict.items():
             if info["var"].get():  # If checked
                 
-                # Handle individual songs
                 if info["type"] == 'song':
                     file_path = info["data"]["path"]
                     if file_path not in selected_paths:
                         selected_files.append(info["data"])
                         selected_paths.add(file_path)
                         
-                # Handle folders
                 elif info["type"] == 'folder':
                     folder_path = info["data"]["path"]
                     try:
-                        # Look directly inside the folder (no subfolders)
-                        for filename in os.listdir(folder_path):
-                            file_path = os.path.join(folder_path, filename)
-                            
-                            # If it's a file and has a valid audio extension
-                            if os.path.isfile(file_path):
-                                ext = os.path.splitext(filename)[1].lower()
-                                if ext in valid_extensions and file_path not in selected_paths:
-                                    
-                                    # Create a mock data dictionary so it matches the song format
-                                    song_data = {"name": filename, "path": file_path}
-                                    selected_files.append(song_data)
-                                    selected_paths.add(file_path)
-                                    
+                        for root, dirs, files in os.walk(folder_path):
+                            for filename in files:
+                                file_path = os.path.join(root, filename)
+                                
+                                if os.path.isfile(file_path):
+                                    ext = os.path.splitext(filename)[1].lower()
+                                    if ext in valid_extensions and file_path not in selected_paths:
+                                        song_data = {"name": filename, "path": file_path}
+                                        selected_files.append(song_data)
+                                        selected_paths.add(file_path)
+                                        
                     except Exception as e:
                         import logging
                         logging.error(f"Error reading folder {folder_path}: {e}")
@@ -1968,98 +2587,72 @@ class SeparationApp(ctk.CTk):
             return
 
         # 2. Gather UI params
-        ai_tool = self.ai_tool_var.get()
-        model = self.model_var.get()
-        channels = self.channel_var.get() 
-        fmt = self.format_var.get()
-        vocals_folder = self.output_folders["vocals"]
-        instr_folder = self.output_folders["instrumentals"]
-        device = self.device_var.get()
-
         try:
+            fmt = self.format_var.get()
+            ai_tool = self.ai_tool_var.get()
+            
             sr = int(self.sr_var.get()) if fmt in ["wav", "flac"] else 44100
             shifts = int(self.shifts_var.get()) if ai_tool == "Demucs" else 1
-            mp3_preset = int(self.mp3_preset_slider.get()) if fmt == "mp3" and ai_tool == "Demucs" else 2
             bitrate = f"{int(self.bitrate_var.get())}k" if fmt == "mp3" else "192k"
+            mp3_preset = int(self.mp3_preset_slider.get()) if fmt == "mp3" and ai_tool == "Demucs" else 2
+            flac_compression = int(self.flac_slider.get()) if fmt == "flac" else 5
+            overlap = float(self.overlap_slider.get()) if ai_tool == "Demucs" else 0.25
         except ValueError:
             from tkinter import messagebox
-            self.after(0, lambda: messagebox.showwarning("Invalid Input", "Please ensure parameters contain only numbers. Using defaults."))
-            sr, shifts, mp3_preset, bitrate = 44100, 1, 2, "192k"
+            self.after(0, lambda: messagebox.showwarning("Invalid Input", "Using default parameters."))
+            sr, shifts, mp3_preset, bitrate, flac_compression, overlap = 44100, 1, 2, "192k", 5, 0.25
 
-        bit_depth = self.bit_depth_var.get() if fmt == "wav" and ai_tool == "Demucs" else None
-        
-        # 3. Start the thread, passing the LIST of selected files PLUS 'device'
+        # 3. PACK THE DATACLASS
+        config = SeparationSettings(
+            ai_tool=self.ai_tool_var.get(),
+            model=self.model_var.get(),
+            channels=self.channel_var.get(),
+            fmt=fmt,
+            sr=sr,
+            bitrate=bitrate,
+            bit_depth=self.bit_depth_var.get() if fmt in ["wav", "flac"] and ai_tool == "Demucs" else None,
+            mp3_preset=mp3_preset,
+            shifts=shifts,
+            overlap=overlap,
+            flac_compression=flac_compression,
+            device=self.device_var.get(),
+            vocals_folder=self.output_folders["vocals"],
+            instr_folder=self.output_folders["instrumentals"]
+        )
+
+        # 4. Start the thread, passing just the files list and the config object
         import threading
-        thread = threading.Thread(target=self._run_separation, args=(
-            selected_files, vocals_folder, instr_folder, ai_tool, model, channels, 
-            fmt, sr, bitrate, bit_depth, mp3_preset, shifts, device 
-        ))
+        thread = threading.Thread(target=self._run_separation, args=(selected_files, config))
         thread.daemon = True
         thread.start()
 
-    def _run_separation(self, selected_files, vocals_folder, instr_folder,
-                        ai_tool, model, channels, fmt, sr, bitrate, bit_depth, mp3_preset, shifts, device): 
+    def _run_separation(self, selected_files, config: SeparationSettings): 
         """
         @brief Executes audio separation on a batch of files iteratively in a background thread.
-        
-        This method handles the heavy lifting of the separation process. It safely manages 
-        lazy loading of the requested AI model, iterates through the provided batch of files, 
-        tracks success/failure states, and securely updates the GUI main thread using Tkinter's 
-        `after()` method.
-        
-        @param selected_files (list) A list of dictionaries, each containing 'name' and 'path' of the audio file.
-        @param vocals_folder (str) Directory path to save the extracted vocal tracks.
-        @param instr_folder (str) Directory path to save the extracted instrumental tracks.
-        @param ai_tool (str) The AI framework being used (e.g., "Demucs", "Spleeter").
-        @param model (str) The specific model variant to load.
-        @param channels (int) The number of separation stems (e.g., 2, 4, 6).
-        @param fmt (str) The desired output audio format (e.g., "mp3", "wav").
-        @param sr (int) Sample rate for the output audio.
-        @param bitrate (str) Target bitrate for compressed formats (e.g., "192k").
-        @param bit_depth (int) Bit depth for lossless formats like WAV.
-        @param mp3_preset (int) Encoding preset specifically for Demucs MP3 output.
-        @param shifts (int) Number of random shifts for Demucs to improve quality.
-        @param device (str) Hardware acceleration choice ("Auto", "CPU", "GPU").
-        
-        @note Monitors `self.abort_separation` to gracefully halt the batch loop if the user cancels.
-        
-        @return None
         """
+        import os
+        import logging
         total_files = len(selected_files)
+        file_weight = 100.0 / total_files
 
-        def update_progress(percent, message, file_index):
-            if self.abort_separation:
-                self.after(0, lambda: self.progress_text.configure(text="Separation aborted by user."))
-                self.after(0, lambda: self.progress_bar.configure(mode="indeterminate"))
-                self.after(0, lambda: self.progress_bar.grid_remove())
-                self.after(0, lambda: self.abort_button.grid_remove())
-                raise RuntimeError("ABORT_REQUESTED") 
-            
-            # Format message with batch progress (e.g., "[1/3] Demucs separating...")
-            batch_msg = f"[{file_index}/{total_files}] {message}"
-            
-            self.after(0, lambda: self.abort_button.grid())
-            self.after(0, lambda: self.progress_bar.configure(mode="determinate"))
-            self.after(0, lambda: self.progress_bar.set(percent / 100.0))
-            self.after(0, lambda: self.progress_bar.grid())
-            self.after(0, lambda: self.progress_text.configure(text=batch_msg))
+        self.after(0, lambda: self.abort_button.pack(side="right", padx=(0, 10)))
 
         try:
             # --- LAZY LOADING BLOCK ---
-            update_progress(5, f"Loading {ai_tool} model...", 1)
-            # Force CPU environment variable BEFORE loading TensorFlow API if needed
-            if device == "CPU":
+            self.update_task_progress(5, f"Loading {config.ai_tool} model...", 1, total_files, "Separation")  
+
+            if config.device == "CPU":
                 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-            elif device == "GPU" and "CUDA_VISIBLE_DEVICES" in os.environ and os.environ["CUDA_VISIBLE_DEVICES"] == "-1":
+            elif config.device == "GPU" and "CUDA_VISIBLE_DEVICES" in os.environ and os.environ["CUDA_VISIBLE_DEVICES"] == "-1":
                 del os.environ["CUDA_VISIBLE_DEVICES"]
 
-            if ai_tool == "Spleeter" and getattr(self, "spleeter_sep", None) is None:
+            if config.ai_tool == "Spleeter" and getattr(self, "spleeter_sep", None) is None:
                 import separators.spleeter_separator as spleeter_sep
                 self.spleeter_sep = spleeter_sep.SpleeterSeparator()
-            elif ai_tool == "Demucs" and getattr(self, "demucs_sep", None) is None:
+            elif config.ai_tool == "Demucs" and getattr(self, "demucs_sep", None) is None:
                 import separators.demucs_separator as demucs_sep
                 self.demucs_sep = demucs_sep.DemucsSeparator()
-            elif ai_tool == "OpenUnmix" and getattr(self, "openunmix_sep", None) is None:
+            elif config.ai_tool == "OpenUnmix" and getattr(self, "openunmix_sep", None) is None:
                 import separators.openunmix_separator as openunmix_sep
                 self.openunmix_sep = openunmix_sep.OpenUnmixSeparator()
 
@@ -2073,54 +2666,72 @@ class SeparationApp(ctk.CTk):
 
                 input_path = song['path']
                 song_name = os.path.splitext(song['name'])[0]
+                cb = lambda p, m: self.update_task_progress(p, m, i, total_files, task_name="Separation")
                 
-                # Callback specifically tied to the current file's index
-                cb = lambda p, m: update_progress(p, m, i)
+                if config.ai_tool == "Spleeter":
+                    result = self.spleeter_sep.separate(
+                        input_path, song_name, config.vocals_folder, config.instr_folder, 
+                        config.channels, config.fmt, config.sr, config.bitrate, 
+                        config.device, flac_compression=config.flac_compression, progress_callback=cb
+                    )
+                elif config.ai_tool == "Demucs":
+                    result = self.demucs_sep.separate(
+                        input_path, song_name, config.vocals_folder, config.instr_folder, 
+                        config.model, config.channels, config.fmt, config.sr, config.bitrate, 
+                        config.bit_depth, config.mp3_preset, config.shifts, config.overlap, 
+                        config.device, flac_compression=config.flac_compression, progress_callback=cb
+                    )
+                elif config.ai_tool == "OpenUnmix":
+                    result = self.openunmix_sep.separate(
+                        input_path, song_name, config.vocals_folder, config.instr_folder, 
+                        config.model, config.channels, config.fmt, config.sr, config.bitrate, 
+                        config.device, flac_compression=config.flac_compression, progress_callback=cb
+                    )
                 
-                if ai_tool == "Spleeter":
-                    result = self.spleeter_sep.separate(input_path, song_name, vocals_folder, instr_folder, channels, fmt, sr, bitrate, device, progress_callback=cb)
-                elif ai_tool == "Demucs":
-                    result = self.demucs_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, channels, fmt, sr, bitrate, bit_depth, mp3_preset, shifts, device, progress_callback=cb)
-                elif ai_tool == "OpenUnmix":
-                    result = self.openunmix_sep.separate(input_path, song_name, vocals_folder, instr_folder, model, channels, fmt, sr, bitrate, device, progress_callback=cb)
-                
-                # Check if the tuple returned success (True) and has the output names
                 if isinstance(result, tuple) and len(result) >= 3 and result[0]:
                     vocals_name = result[1]
                     instr_name = result[2]
-                    successful_files.extend([vocals_name, instr_name]) # Add the saved file names to our list
+                    successful_files.extend([vocals_name, instr_name]) 
                 else:
                     logging.error(f"Failed to separate: {song_name}")
-                    failed_files.append(song_name) # Add the original song name to the failed list
+                    failed_files.append(song_name) 
 
             # --- COMPLETION ---
             if not self.abort_separation:
                 success_count = len(successful_files) // 2 
-                self.after(0, lambda: self.progress_text.configure(text=f"Batch complete! {success_count}/{total_files} processed successfully."))
-                self.after(0, lambda: self.progress_bar.grid_remove())
-                self.after(0, self.load_outputs) 
+                
+                if total_files == 1:
+                    completion_text = "Separation complete! (Ready)" if success_count == 1 else "Separation failed. (Ready)"
+                else:
+                    completion_text = f"Batch complete! {success_count}/{total_files} processed successfully. (Ready)"
 
-                # Build the detailed message
+                self.after(500, lambda: self.progress_bar.pack_forget())
+                self.after(1000, lambda: self.progress_text.configure(text=completion_text))
+
                 details = ""
                 if successful_files:
                     details += "✅ Successfully generated:\n" + "\n".join(successful_files) + "\n\n"
                 if failed_files:
                     details += "❌ Failed to process:\n" + "\n".join(failed_files) + "\n\nCheck the terminal for detailed error logs."
 
-                title = "Batch Finished with Errors" if failed_files else "Batch Finished Successfully"
+                if total_files == 1:
+                    title = "Separation Finished with Errors" if failed_files else "Separation Finished Successfully"
+                else:
+                    title = "Batch Finished with Errors" if failed_files else "Batch Finished Successfully"
                 
-                # Show our custom, non-blocking window!
                 self.after(0, lambda: self.show_batch_summary_window(title, details))
 
         except Exception as e:
             if str(e) == "ABORT_REQUESTED":
+                import logging
                 logging.info("Separation aborted by user.")
             else:
-                self.after(0, lambda: self.progress_text.configure(text=f"Error: {str(e)}"))
+                self.after(0, lambda: self.progress_text.configure(text=f"Error: {str(e)} (Ready)"))
+                import logging
                 logging.error(f"Thread error: {e}", exc_info=True)
         finally:
             self.abort_separation = False
-            self.after(0, lambda: self.abort_button.grid_remove())
+            self.after(0, lambda: self.abort_button.pack_forget())
 
     def run_standalone_transcription(self):
         """
@@ -2158,61 +2769,58 @@ class SeparationApp(ctk.CTk):
         lang = self.trans_lang_var.get()
         use_spk = self.use_spk_id_var.get() if tool == "vosk" else False
         out_folder = self.output_folders["transcriptions"]
-        
-        # --- NEW: Get the device from the UI ---
         device = self.device_var.get()
 
-        # 3. Start thread
+        # 3. PACK THE DATACLASS
+        config = TranscriptionSettings(
+            tool=self.trans_tool_var.get(),
+            model=self.trans_model_var.get(),
+            lang=self.trans_lang_var.get(),
+            use_spk=self.use_spk_id_var.get() if self.trans_tool_var.get() == "vosk" else False,
+            device=self.device_var.get(),
+            output_folder=self.output_folders["transcriptions"]
+        )
+
+        # 4. Start thread
+        import threading
         threading.Thread(
             target=self._exec_standalone_trans, 
-            # --- NEW: Pass device to args ---
-            args=(selected_audio_files, out_folder, tool, model, lang, use_spk, device), 
+            args=(selected_audio_files, config), 
             daemon=True
         ).start()
 
-    def _exec_standalone_trans(self, selected_vocals, output_folder, tool, model, lang, use_spk, device):
+    def _exec_standalone_trans(self, selected_vocals, config: TranscriptionSettings):
         """
         @brief Executes batch transcription on selected audio files in a background thread.
         
         Manages the lazy loading of transcription models (Whisper, Vosk, Wav2Vec2) and 
         iterates over the selected batch. It tracks successful and failed operations, 
         formats output file names, and safely pushes UI updates to the main thread.
-        
-        @param selected_vocals (list) List of dictionaries containing file data to transcribe.
-        @param output_folder (str) Directory path to save the generated text/subtitle files.
-        @param tool (str) The specific transcription tool to use (e.g., "whisper", "vosk").
-        @param model (str) The specific model tier/variant selected.
-        @param lang (str) Target language for transcription models that support it.
-        @param use_spk (bool) Flag indicating whether to use Speaker Diarization (Vosk only).
-        @param device (str) Hardware acceleration choice ("Auto", "CPU", "GPU").
-        
-        @note Updates a summary UI window at the completion of the batch process.
-        @return None
         """
+        import os
+        import logging
         total_files = len(selected_vocals)
+        file_weight = 100.0 / total_files  # Needed for batch progress calculation
 
-        def update_trans_progress(percent, message, file_index):
-            batch_msg = f"[{file_index}/{total_files}] {message}"
-            self.after(0, lambda: self.progress_bar.grid())
-            self.after(0, lambda: self.progress_bar.set(percent / 100.0))
-            self.after(0, lambda: self.progress_text.configure(text=batch_msg))
+        self.after(0, lambda: self.abort_button.pack(side="right", padx=(0, 10)))
 
         try:
-            # --- NEW: Apply environment variables for strict CPU fallback ---
-            if device == "CPU":
+            # --- LAZY LOADING ---
+            self.update_task_progress(5, f"Initializing {config.tool}...", 1, total_files, "Transcription")
+
+            # --- Apply environment variables for strict CPU fallback ---
+            if config.device == "CPU":
                 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-            elif device == "GPU" and "CUDA_VISIBLE_DEVICES" in os.environ and os.environ["CUDA_VISIBLE_DEVICES"] == "-1":
+            elif config.device == "GPU" and "CUDA_VISIBLE_DEVICES" in os.environ and os.environ["CUDA_VISIBLE_DEVICES"] == "-1":
                 del os.environ["CUDA_VISIBLE_DEVICES"]
 
-            # --- LAZY LOADING ---
-            update_trans_progress(10, f"Initializing {tool}...", 1)
-            if tool == "whisper" and getattr(self, "whisper_trans", None) is None:
+            if config.tool == "whisper" and getattr(self, "whisper_trans", None) is None:
                 import separators.whisper_transcription as whisper_trans
                 self.whisper_trans = whisper_trans.WhisperTranscription()
-            elif tool == "vosk" and getattr(self, "vosk_trans", None) is None:
+            elif config.tool == "vosk" and getattr(self, "vosk_trans", None) is None:
                 import separators.vosk_transcription as vosk_trans
                 self.vosk_trans = vosk_trans.VoskTranscription()
-            elif tool == "wav2vec2" and getattr(self, "wav2vec2_trans", None) is None:
+            elif config.tool == "wav2vec2" and getattr(self, "wav2vec2_trans", None) is None:
                 import separators.wav2vec2_transcription as w2v2_trans 
                 self.wav2vec2_trans = w2v2_trans.Wav2Vec2Transcription()
 
@@ -2222,58 +2830,62 @@ class SeparationApp(ctk.CTk):
 
             # --- BATCH LOOP ---
             for i, vocal in enumerate(selected_vocals, 1):
+                # 3. Check for abort signal at the start of each new file
+                if getattr(self, 'abort_separation', False): break
+
                 vocal_path = vocal['path']
                 filename = vocal['name']
                 
                 # Create output name
                 base_name = os.path.splitext(filename)[0]
-                out_name = f"{base_name}_{tool}_{model.replace('/', '_')}.txt"
-                out_path = os.path.join(output_folder, out_name)
+                out_name = f"{base_name}_{config.tool}_{config.model.replace('/', '_')}.txt"
+                out_path = os.path.join(config.output_folder, out_name)
 
-                cb = lambda p, m: update_trans_progress(p, m, i)
+                cb = lambda p, m: self.update_task_progress(p, m, i, total_files, task_name="Transcription")
 
-                # --- NEW: Pass device=device to your transcribe methods ---
-                if tool == "whisper":
-                    result = self.whisper_trans.transcribe(vocal_path, out_path, model, lang, device_choice=device, progress_callback=cb)
-                elif tool == "wav2vec2":
-                    result = self.wav2vec2_trans.transcribe(vocal_path, out_path, model, device_choice=device, progress_callback=cb)
-                elif tool == "vosk":
-                    result = self.vosk_trans.transcribe(vocal_path, out_path, model, use_spk, device_choice=device, progress_callback=cb)
+                if config.tool == "whisper":
+                    result = self.whisper_trans.transcribe(vocal_path, out_path, config.model, config.lang, device_choice=config.device, progress_callback=cb)
+                elif config.tool == "wav2vec2":
+                    result = self.wav2vec2_trans.transcribe(vocal_path, out_path, config.model, device_choice=config.device, progress_callback=cb)
+                elif config.tool == "vosk":
+                    result = self.vosk_trans.transcribe(vocal_path, out_path, config.model, config.use_spk, device_choice=config.device, progress_callback=cb)
                 
-                # Check results and append to our lists instead of just counting!
+                # Check results and append to our lists
                 if isinstance(result, tuple) and len(result) == 2 and result[0]:
-                    successful_files.append(result[1]) # Add the saved filename
-                elif result is True: # Fallback
+                    successful_files.append(result[1]) 
+                elif result is True: 
                     successful_files.append(out_name)
                 else:
-                    failed_files.append(filename) # Add the original vocal name that failed
+                    failed_files.append(filename) 
                     logging.error(f"Failed to transcribe: {filename}")
 
             # --- COMPLETION ---
-            self.after(0, lambda: self.progress_text.configure(text=f"Batch complete! {len(successful_files)}/{total_files} saved."))
-            self.after(3000, lambda: self.progress_bar.grid_remove()) 
-            self.after(0, self.load_outputs)
+            if not getattr(self, 'abort_separation', False):
+                self.after(500, lambda: self.progress_bar.pack_forget())
+                self.after(1000, lambda: self.progress_text.configure(text=f"Batch complete! {len(successful_files)}/{total_files} saved. (Ready)"))
+                
+                # Build the detailed message
+                details = ""
+                if successful_files:
+                    details += "✅ Successfully transcribed:\n" + "\n".join(successful_files) + "\n\n"
+                if failed_files:
+                    details += "❌ Failed to transcribe:\n" + "\n".join(failed_files) + "\n\nCheck the terminal for detailed error logs."
 
-            # Build the detailed message
-            details = ""
-            if successful_files:
-                details += "✅ Successfully transcribed:\n" + "\n".join(successful_files) + "\n\n"
-            if failed_files:
-                details += "❌ Failed to transcribe:\n" + "\n".join(failed_files) + "\n\nCheck the terminal for detailed error logs."
-
-            title = "Transcription Finished with Errors" if failed_files else "Transcription Finished Successfully"
-            
-            self.after(0, lambda: self.show_batch_summary_window(title, details))
+                title = "Transcription Finished with Errors" if failed_files else "Transcription Finished Successfully"
+                self.after(0, lambda: self.show_batch_summary_window(title, details))
 
         except Exception as e:
-            logging.error(f"Standalone trans error: {e}", exc_info=True)
-            # Capture the error message as a string right now
-            err_msg = str(e) 
-            # Pass the captured string into the lambda as a default argument
-            self.after(0, lambda msg=err_msg: self.progress_text.configure(text=f"Error: {msg}"))
+            if str(e) == "ABORT_REQUESTED":
+                logging.info("Transcription aborted by user.")
+            else:
+                logging.error(f"Standalone trans error: {e}", exc_info=True)
+                err_msg = str(e) 
+                self.after(0, lambda msg=err_msg: self.progress_text.configure(text=f"Error: {msg} (Ready)"))
+        finally:
+            self.abort_separation = False
+            self.after(0, lambda: self.abort_button.pack_forget())
 
 if __name__ == "__main__":
-    # MUST BE THE VERY FIRST THING UNDER __main__
     multiprocessing.freeze_support()
 
     app = SeparationApp()

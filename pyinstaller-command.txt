@@ -1,7 +1,0 @@
-pyinstaller --noconfirm --onedir --windowed \
---add-data "separators:separators" \
---collect-all customtkinter \
---hidden-import "spleeter.separator" \
---hidden-import "librosa" \
---hidden-import "numba" \
-"separation_app.py"

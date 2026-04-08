@@ -1,0 +1,1 @@
+pyinstaller --clean --noconfirm --distpath "D:\AudioSeparatorApp" separation_app.spec

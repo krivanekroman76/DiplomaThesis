@@ -1,3 +1,6 @@
+# --- PyTorch CUDA Index (Crucial for Windows/Linux GPU support) ---
+--extra-index-url https://download.pytorch.org/whl/cu118
+
 # GUI and Environment
 wheel==0.46.3
 darkdetect==0.8.0
@@ -5,17 +8,21 @@ packaging==26.0
 setuptools<60.0.0
 customtkinter==5.2.2
 
-# Suporting libraries
+# --- Supporting Libraries ---
+
 # TensorFlow for Windows / Linux (Standard)
 tensorflow==2.12.0; sys_platform == 'win32' or sys_platform == 'linux'
 # TensorFlow for macOS (Apple Silicon/Intel)
-# Note: On macOS, we often use tensorflow-macos for optimized performance
 tensorflow-macos==2.12.0; sys_platform == 'darwin'
 tensorflow-metal==0.8.0; sys_platform == 'darwin'
-
 keras==2.12.0
-#llvmlite==0.43.0
-#numba==0.60.0
+
+# PyTorch Ecosystem (GPU supported via the extra-index-url above)
+torch>=2.0.0
+torchaudio>=2.0.0
+transformers[torch] 
+
+# Audio & Data Processing
 numpy>=1.21.2,<1.24.0
 librosa==0.8.1
 resampy==0.3.1
@@ -30,9 +37,15 @@ protobuf==3.20.3
 ffmpeg-python==0.2.0
 pydub
 soxr
-transformers[torch] #wav2vec2 is part of the transformers, not standalone library
 
-# Main libraries
+# Note for macOS users: 
+# llvmlite and numba (required by librosa/resampy) often fail via pip on macOS.
+# They may need to be installed manually, or LLVM installed via Homebrew first.
+# libsndfile is also required via Homebrew (brew install libsndfile).
+#llvmlite==0.43.0
+#numba==0.60.0
+
+# --- Main Libraries ---
 spleeter==2.3.2
 demucs==4.0.1
 openunmix==1.3.0

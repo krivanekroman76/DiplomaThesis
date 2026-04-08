@@ -115,7 +115,15 @@ If you plan to use the application without an internet connection, you need to p
 * **Interactive Tutorial:** Need a refresher on how to navigate the app? Go to the **Settings** tab and click **Show Tutorial** to view the welcome screen and UI highlights at any time!
 * **Input Quality:** Always use high-quality, lossless audio files (WAV/FLAC) as inputs for the cleanest separation and transcription results.
 * **First-Time Setup:** The first time you run a specific AI model, it will take extra time to download the necessary weights. Please be patient!
-    
+
+💡 Tip for Non-NVIDIA / CPU-Only Users (Save Download Size)
+By default, the `requirements.txt` file is configured to download the CUDA-enabled (GPU) version of PyTorch, which provides massive speed boosts but is quite large (over 2 GB). If you do not have an NVIDIA graphics card, the app will still work perfectly on your CPU, but you can skip the large download.
+
+Before running `pip install -r requirements.txt`, open the text file and **delete this line at the very top:**
+`--extra-index-url https://download.pytorch.org/whl/cu118`
+
+This will tell `pip` to download the standard CPU version of PyTorch instead, saving you a significant amount of time and disk space!
+
 ## 📸 Screenshots & Features
 
 ### Welcome Tutorial Screen

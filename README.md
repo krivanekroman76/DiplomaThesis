@@ -37,7 +37,7 @@ Choose the installation method that best fits your needs. The pre-packaged Windo
 
 ### Method 1: Portable Windows Release (Easiest)
 No Python or prerequisite installations required. This is a standalone version.
-* **Step 1:** Download the latest `AudioSeparatorApp.rar` from the [Releases page]([text](https://github.com/krivanekroman76/DiplomaThesis/releases/tag/v0.9)).
+* **Step 1:** Download the latest `AudioSeparatorApp.rar` from the [Releases page]([text](https://github.com/krivanekroman76/DiplomaThesis/releases/tag/v0.9.1)).
 * **Step 2:** Extract the archive using WinRAR or 7-Zip to your desired location.
 * **Step 3:** Open the extracted folder and double-click the executable to launch the app.
 

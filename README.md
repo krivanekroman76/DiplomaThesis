@@ -91,6 +91,7 @@ If you plan to use the application without an internet connection, you need to p
 
 ### Troubleshooting
 * **FFmpeg Issues:** For Windows users, `ffmpeg.exe` is already included in the repository folder. If you encounter audio processing errors, you may need to update this executable by downloading a fresh static build from [ffmpeg.org](https://ffmpeg.org/download.html) and replacing the one in the folder. Older versions of this repository code may require adding FFmpeg manually to your system's PATH.
+* If windows doesnt trust the app click **More details** and **run** button will appear. If the app doesn't work after that, open the app with right click and **run as administrator** button.
 * **Module Not Found:** Ensure your virtual environment is activated before running `pip install` or starting the app. Start only the `separation_app.py`for the GUI.
 * **Linux GUI Errors:** You may need to install Tkinter. Run `sudo apt install python3-tk` (Ubuntu/Debian).
 

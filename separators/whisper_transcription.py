@@ -1,4 +1,5 @@
 import os
+import sys
 import whisper
 import librosa
 import math
@@ -6,9 +7,18 @@ import logging
 from .utils import resolve_torch_device, clear_memory_cache, save_transcription_to_file
 
 class WhisperTranscription:
-    def __init__(self):
+    # Accept custom_models_dir just like Vosk!
+    def __init__(self, custom_models_dir=None):
         self.current_model_name = None
         self.model = None
+        
+        # Mimic your Vosk logic to find the base directory
+        if getattr(sys, 'frozen', False):
+            base_project_dir = os.path.dirname(sys.executable)
+        else:
+            base_project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            
+        self.models_dir = custom_models_dir if custom_models_dir else os.path.join(base_project_dir, "Models")
 
     def load_model(self, model_name: str, device_choice: str, progress_callback=None):
         target_device = resolve_torch_device(device_choice, return_string=True)
@@ -19,15 +29,15 @@ class WhisperTranscription:
                 self.model = None
                 clear_memory_cache()
 
-            import sys
-            base_dir = sys._MEIPASS if hasattr(sys, '_MEIPASS') else os.path.abspath(".")
-            whisper_path = os.path.join(base_dir, "pretrained_models", "whisper")
+            # --- THE FIX: Point exactly to the Models/whisper folder ---
+            whisper_path = os.path.join(self.models_dir, "whisper")
             os.makedirs(whisper_path, exist_ok=True)
             
             if progress_callback:
                 progress_callback(5, f"[{target_device.upper()}] Whisper: Downloading/Loading model...")
             
-            logging.info(f"Whisper: Loading '{model_name}' on {target_device.upper()}...")
+            logging.info(f"Whisper: Loading '{model_name}' on {target_device.upper()} from {whisper_path}...")
+            # Now download_root perfectly matches your download script
             self.model = whisper.load_model(model_name, device=target_device, download_root=whisper_path)
             self.current_model_name = model_name
 

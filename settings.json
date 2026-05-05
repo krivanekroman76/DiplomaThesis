@@ -6,7 +6,7 @@
     "instrumentals_folder": "output/instrumentals",
     "transcriptions_folder": "output/text",
     "appearance_mode": "Dark",
-    "color_theme": "blue",
+    "color_theme": "green",
     "scaling": "100%",
     "auto_flush_memory": true,
     "separator_models": {

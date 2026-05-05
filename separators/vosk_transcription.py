@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import logging
 import numpy as np
@@ -15,7 +16,14 @@ class VoskTranscription:
         self.loaded_models = {}
         self.spk_model = None
         
-        base_project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        # --- THE FIX: Check if frozen (compiled) or running from source ---
+        if getattr(sys, 'frozen', False):
+            # If compiled to .exe, base directory is where the .exe lives
+            base_project_dir = os.path.dirname(sys.executable)
+        else:
+            # If running from script, go up one directory from the /separators folder
+            base_project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        
         self.models_dir = custom_models_dir if custom_models_dir else os.path.join(base_project_dir, "Models")
         
         if not os.path.exists(self.models_dir):

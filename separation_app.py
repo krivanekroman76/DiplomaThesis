@@ -77,6 +77,7 @@ def setup_ffmpeg_environment():
         # Set the lock so it never runs again
         os.environ["FFMPEG_INJECTED"] = "TRUE"
 
+
 # --- CALL IT IMMEDIATELY ---
 setup_ffmpeg_environment()
 
@@ -540,18 +541,14 @@ class SeparationApp(ctk.CTk):
         self.main_frame.grid_rowconfigure(0, weight=1)
         self.main_frame.grid_rowconfigure(1, weight=0)
 
-        # --- SMART SIDEBAR (Replaces the old "NORMAL SIDEBAR") ---
         base_scale = int(self.scaling.replace("%", ""))
         
-        if base_scale >= 150:
-            self.sidebar = ctk.CTkScrollableFrame(self.main_frame, width=160, corner_radius=0, fg_color="transparent")
+        if base_scale >= 100:
+            self.sidebar = ctk.CTkScrollableFrame(self.main_frame, corner_radius=0, fg_color="transparent")
         else:
-            self.sidebar = ctk.CTkFrame(self.main_frame, width=160, corner_radius=0, fg_color="transparent")
+            self.sidebar = ctk.CTkScrollableFrame(self.main_frame, corner_radius=0, fg_color="transparent")
             
         self.sidebar.grid(row=0, column=0, sticky="nsew", rowspan=2)
-        
-        # THE MAGIC SPACER: Row 3 acts as an invisible spring pushing row 4+ to the bottom
-        self.sidebar.grid_rowconfigure(3, weight=1)
         
         # --- NAVIGATION BUTTONS ---
         btn_width = 135  # Made slightly wider to fit the new text
@@ -618,9 +615,6 @@ class SeparationApp(ctk.CTk):
         base = max(50, min(200, base)) 
 
         # 2. Vypočítej hodnotu PRVNÍHO tlačítka (posuvné okno)
-        # Běžně začíná o 20 menší než base, ale:
-        # - nesmí jít pod 50
-        # - nesmí jít nad 160 (protože 160 + 40 = 200, což je maximum)
         start_val = max(50, min(160, base - 20))
 
         # 3. Vygeneruj 5 tlačítek od start_val nahoru
@@ -1562,6 +1556,24 @@ class SeparationApp(ctk.CTk):
         self.output_folders["instrumentals"] = self.settings_instr_var.get()
         self.output_folders["transcriptions"] = self.settings_trans_var.get()
         
+        # ---> ADD THIS: Capture the updated models directory from your UI
+        # (Assuming you named the UI variable `self.settings_models_var`)
+        if hasattr(self, 'settings_models_var'):
+            self.models_dir = self.settings_models_var.get()
+        
+        # ---> ADD THIS: Update the environment variables instantly for lazy-loaded modules
+        os.environ["HF_HOME"] = os.path.join(self.models_dir, "huggingface")
+        os.environ["HF_HUB_CACHE"] = os.path.join(self.models_dir, "huggingface", "hub")
+        os.environ["TORCH_HOME"] = os.path.join(self.models_dir, "hub")
+        os.environ["MODEL_PATH"] = self.models_dir
+
+        # ---> ADD THIS: Even with lazy loading, if they already ran a task this session, 
+        # the class exists. We need to update its internal path.
+        if getattr(self, 'whisper_trans', None):
+            self.whisper_trans.models_dir = self.models_dir
+        if getattr(self, 'vosk_trans', None):
+            self.vosk_trans.models_dir = self.models_dir
+        
         # Save the current state of the Auto-Flush switch
         self.auto_flush_memory = bool(self.flush_switch.get())
         
@@ -1573,6 +1585,7 @@ class SeparationApp(ctk.CTk):
         self.transcription_models["vosk"] = parse_csv(self.model_vars["vosk"])
 
         # Ensure folders physically exist
+        os.makedirs(self.models_dir, exist_ok=True) # Ensure the models folder exists too!
         os.makedirs(self.input_folder, exist_ok=True)
         for folder in self.output_folders.values():
             os.makedirs(folder, exist_ok=True)
@@ -2054,6 +2067,16 @@ class SeparationApp(ctk.CTk):
         default_models_dir = os.path.join(app_dir, "Models")
         self.models_dir = default_models_dir
         
+        # Force HuggingFace (Wav2Vec2) to use your Models folder globally
+        os.environ["HF_HOME"] = os.path.join(self.models_dir, "huggingface")
+        os.environ["HF_HUB_CACHE"] = os.path.join(self.models_dir, "huggingface", "hub")
+
+        # Force PyTorch (Demucs & OpenUnmix) to use your Models folder globally
+        os.environ["TORCH_HOME"] = os.path.join(self.models_dir, "hub")
+
+        # Force Spleeter to use your Models folder globally
+        os.environ["MODEL_PATH"] = self.models_dir
+
         # 1. Check if the user has a custom path saved in settings.json
         if os.path.exists(self.settings_file):
             try:

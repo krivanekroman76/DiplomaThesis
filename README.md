@@ -37,7 +37,7 @@ Choose the installation method that best fits your needs. The pre-packaged Windo
 
 ### Method 1: Portable Windows Release (Easiest)
 No Python or prerequisite installations required. This is a standalone version.
-* **Step 1:** Download the latest `AudioSeparatorApp.rar` from the [Releases page]([text](https://github.com/krivanekroman76/DiplomaThesis/releases/tag/v0.9)).
+* **Step 1:** Download the latest `AudioSeparatorApp.rar` from the [Releases page](https://github.com/krivanekroman76/DiplomaThesis/releases/latest).
 * **Step 2:** Extract the archive using WinRAR or 7-Zip to your desired location.
 * **Step 3:** Open the extracted folder and double-click the executable to launch the app.
 
@@ -91,6 +91,7 @@ If you plan to use the application without an internet connection, you need to p
 
 ### Troubleshooting
 * **FFmpeg Issues:** For Windows users, `ffmpeg.exe` is already included in the repository folder. If you encounter audio processing errors, you may need to update this executable by downloading a fresh static build from [ffmpeg.org](https://ffmpeg.org/download.html) and replacing the one in the folder. Older versions of this repository code may require adding FFmpeg manually to your system's PATH.
+* If windows doesnt trust the app click **More details** and **run** button will appear. If the app doesn't work after that, open the app with right click and **run as administrator** button.
 * **Module Not Found:** Ensure your virtual environment is activated before running `pip install` or starting the app. Start only the `separation_app.py`for the GUI.
 * **Linux GUI Errors:** You may need to install Tkinter. Run `sudo apt install python3-tk` (Ubuntu/Debian).
 
@@ -115,7 +116,15 @@ If you plan to use the application without an internet connection, you need to p
 * **Interactive Tutorial:** Need a refresher on how to navigate the app? Go to the **Settings** tab and click **Show Tutorial** to view the welcome screen and UI highlights at any time!
 * **Input Quality:** Always use high-quality, lossless audio files (WAV/FLAC) as inputs for the cleanest separation and transcription results.
 * **First-Time Setup:** The first time you run a specific AI model, it will take extra time to download the necessary weights. Please be patient!
-    
+
+💡 Tip for Non-NVIDIA / CPU-Only Users (Save Download Size)
+By default, the `requirements.txt` file is configured to download the CUDA-enabled (GPU) version of PyTorch, which provides massive speed boosts but is quite large (over 2 GB). If you do not have an NVIDIA graphics card, the app will still work perfectly on your CPU, but you can skip the large download.
+
+Before running `pip install -r requirements.txt`, open the text file and **delete this line at the very top:**
+`--extra-index-url https://download.pytorch.org/whl/cu118`
+
+This will tell `pip` to download the standard CPU version of PyTorch instead, saving you a significant amount of time and disk space!
+
 ## 📸 Screenshots & Features
 
 ### Welcome Tutorial Screen

@@ -5,8 +5,6 @@
 /__pycache__
 /pretrained_models
 
-/separated_musdb
-
 /separation_app.spec
 /separation_app.exe
 /dist
@@ -18,3 +16,8 @@ ffmpeg.exe
 ffplay.exe
 ffprobe.exe
 Models
+
+# Dataset - Do not upload (Academic license + large size)
+musdb18_test_samples/
+separated_musdb/
+dataset_muni/audio

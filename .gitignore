@@ -18,6 +18,6 @@ ffprobe.exe
 Models
 
 # Dataset - Do not upload (Academic license + large size)
-musdb18_test_samples/
+Evaluation/musdb18_test_samples/
 separated_musdb/
-dataset_muni/audio
+Evaluation/dataset_muni/audio

@@ -8,16 +8,22 @@ Spleeter, Demucs (htdemucs), and OpenUnmix (umxl), and saves them for transcript
 
 USAGE:
 1. Ensure your separators (spleeter_separator.py, etc.) are in the same directory.
-2. Place raw audio in: ./dataset_muni/audio/{Artist}/{Album}/*
-3. Run: python prepare_muni.py
+2. Place raw audio in: Evaluation/dataset_muni/audio/{Artist}/{Album}/*
+3. Run: python Evaluation/prepare_muni.py
 ================================================================================
 """
 
 import os
+import sys
 import gc
 import torch
 from pathlib import Path
 from tqdm import tqdm
+
+# Ensure the repository root is on sys.path when executed from Evaluation/
+REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 # Import your existing separator classes
 from separators.spleeter_separator import SpleeterSeparator
@@ -25,14 +31,15 @@ from separators.demucs_separator import DemucsSeparator
 from separators.openunmix_separator import OpenUnmixSeparator
 
 # --- Configuration ---
-RAW_AUDIO_ROOT = Path("./dataset_muni/audio")
-SEPARATED_ROOT = Path("./dataset_muni/separated")
+EVAL_ROOT = Path(__file__).resolve().parent
+RAW_AUDIO_ROOT = EVAL_ROOT / "dataset_muni" / "audio"
+SEPARATED_ROOT = EVAL_ROOT / "dataset_muni" / "separated"
 DEVICE = "GPU" # Set to "CPU" if no GPU is available
 FORCE_REPROCESS = False
 
 # Models to use for the "High-Middle-Low" evaluation
 MODELS = {
-    "Spleeter",
+    "Spleeter": "2stems",
     "Demucs": "htdemucs", # Recommended SOTA
     "OpenUnmix": "umxl"
 }

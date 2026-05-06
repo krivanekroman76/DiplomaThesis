@@ -4,8 +4,9 @@ import jiwer # pip install jiwer
 import librosa
 
 # Paths
-GT_DIR = Path("./dataset_muni/ground_truth")
-TRANS_DIR = Path("./transcriptions")
+EVAL_ROOT = Path(__file__).resolve().parent
+GT_DIR = EVAL_ROOT / "dataset_muni" / "ground_truth"
+TRANS_DIR = EVAL_ROOT / "transcriptions"
 STATS_FILE = TRANS_DIR / "transcription_metadata.json"
 
 def clean_text(text):

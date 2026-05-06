@@ -28,14 +28,28 @@ def get_app_dir():
 def setup_ffmpeg_environment():
     """Injects the local ffmpeg path into the system's PATH variable temporarily."""
     app_dir = get_app_dir()
-    
+    repo_root = os.path.abspath(os.path.join(app_dir, os.pardir))
+    cwd = os.path.abspath(os.getcwd())
+    candidate_dirs = [app_dir, repo_root]
+    if cwd not in candidate_dirs:
+        candidate_dirs.append(cwd)
+
     if os.environ.get("FFMPEG_INJECTED") != "TRUE":
-        if os.path.exists(os.path.join(app_dir, "ffmpeg.exe")):
-            os.environ["PATH"] = app_dir + os.pathsep + os.environ.get("PATH", "")
-            logging.info(f"FFmpeg path injected from: {app_dir}")
-        else:
-            logging.warning("ffmpeg.exe not found next to the app! Audio processing may fail if not installed system-wide.")
-            
+        injected = False
+        for candidate in candidate_dirs:
+            ffmpeg_path = os.path.join(candidate, "ffmpeg.exe")
+            if os.path.exists(ffmpeg_path):
+                os.environ["PATH"] = candidate + os.pathsep + os.environ.get("PATH", "")
+                logging.info(f"FFmpeg path injected from: {candidate}")
+                injected = True
+                break
+
+        if not injected:
+            logging.warning(
+                "ffmpeg.exe not found in app, repository root, or current working directory! "
+                "Audio processing may fail if not installed system-wide."
+            )
+
         os.environ["FFMPEG_INJECTED"] = "TRUE"
 
 def get_unique_filename(base_path):

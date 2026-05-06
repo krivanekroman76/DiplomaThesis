@@ -1,9 +1,15 @@
 import os
+import sys
 import time
 import json
 import logging
 from pathlib import Path
 from tqdm import tqdm
+
+# Ensure the repository root is on sys.path when executed from Evaluation/
+REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 # === Import your custom classes ===
 from separators.whisper_transcription import WhisperTranscription
@@ -11,11 +17,12 @@ from separators.wav2vec2_transcription import Wav2Vec2Transcription
 from separators.vosk_transcription import VoskTranscription
 
 # --- Configuration ---
-MUNI_BASE = Path("./dataset_muni")
+EVAL_ROOT = Path(__file__).resolve().parent
+MUNI_BASE = EVAL_ROOT / "dataset_muni"
 RAW_DIR = MUNI_BASE / "audio"
 SEP_DIR = MUNI_BASE / "separated"
-OUT_DIR = Path("./transcriptions")
-OUT_DIR.mkdir(exist_ok=True)
+OUT_DIR = EVAL_ROOT / "transcriptions"
+OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Define the sources we are testing
 DATA_SOURCES = {

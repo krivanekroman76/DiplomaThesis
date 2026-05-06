@@ -17,8 +17,12 @@ HOW TO REPRODUCE THE RESULTS:
 3. EXECUTION:
    - To run the full benchmark (all tracks, CPU & GPU):
      python separate_musdb.py
+     or
+     python Evaluation/separate_musdb.py
    - To run a quick test (e.g., first 2 tracks):
      python separate_musdb.py --num_tracks 2
+     or
+     python Evaluation/separate_musdb.py --num_tracks 2
 4. OUTPUTS:
    - Timings: Saved to './separated_musdb/separation_times.json'
    - Stems:   Saved to './separated_musdb/vocals' and '.../instrumentals'
@@ -36,12 +40,21 @@ warnings.simplefilter('ignore')
 import argparse
 import os
 import shutil
+import sys
 import tempfile
 import time
 import json
 import gc
+import platform
 from pathlib import Path
 from tqdm import tqdm
+import logging
+import torch
+
+# Ensure the repository root is on sys.path when executed from Evaluation/
+REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 try:
     import torch
@@ -57,8 +70,9 @@ from separators.openunmix_separator import OpenUnmixSeparator
 # Configuration
 # =========================
 
-MUSDB_ROOT = Path("./musdb18_test_samples")
-OUTPUT_ROOT = Path("./separated_musdb")
+EVAL_ROOT = Path(__file__).resolve().parent
+MUSDB_ROOT = EVAL_ROOT / "musdb18_test_samples"
+OUTPUT_ROOT = EVAL_ROOT / "separated_musdb"
 VOCALS_DIR = OUTPUT_ROOT / "vocals"
 INSTR_DIR = OUTPUT_ROOT / "instrumentals"
 TIMES_JSON_PATH = OUTPUT_ROOT / "separation_times.json"
@@ -83,6 +97,16 @@ def free_memory():
     gc.collect()
     if 'torch' in globals() and torch.cuda.is_available():
         torch.cuda.empty_cache()
+
+def get_cpu_name() -> str:
+    """Detect the CPU model name."""
+    try:
+        # Try using cpuinfo if available
+        import cpuinfo
+        return cpuinfo.get_cpu_info().get('brand_raw', platform.processor())
+    except ImportError:
+        # Fallback to platform module
+        return platform.processor()
 
 def find_musdb_tracks(root: Path):
     tracks = []
@@ -111,12 +135,24 @@ def get_output_paths(tool_name, song_name, device, model_name=None):
     instr_path = INSTR_DIR / f"{song_name}{suffix}_instrumental.wav"
     return vocals_path, instr_path
 
-def save_time_to_json(song_name, tool, model, device, time_taken):
+def get_audio_duration(audio_path: Path) -> float:
+    """Get audio duration in seconds from mixture.wav."""
+    try:
+        import librosa
+        duration = librosa.get_duration(filename=str(audio_path))
+        return round(duration, 2)
+    except Exception as e:
+        logging.warning(f"Could not get duration for {audio_path}: {e}")
+        return 0.0
+
+def save_time_to_json(song_name, tool, model, device, time_taken, audio_duration=0.0, load_time=None):
     """
-    Checks for hardware availability and logs benchmark results.
+    Logs benchmark results with timing, load time, and audio duration for RTF calculation.
     'device' is the requested device (GPU/CPU).
+    'load_time' is the model initialization time (optional, for first-use tracking).
     """
-    actual_hw = "CPU"
+
+    actual_hw = get_cpu_name()
     try:
         import torch
         # If GPU was requested, check if it was actually available
@@ -124,7 +160,7 @@ def save_time_to_json(song_name, tool, model, device, time_taken):
             if torch.cuda.is_available():
                 actual_hw = torch.cuda.get_device_name(0)
             else:
-                actual_hw = "CPU (Fallback - CUDA not found)"
+                actual_hw = get_cpu_name() +"(Fallback - CUDA not found)"
     except ImportError:
         actual_hw = "CPU (torch not installed)"
 
@@ -136,15 +172,21 @@ def save_time_to_json(song_name, tool, model, device, time_taken):
             except json.JSONDecodeError:
                 pass
             
-    data.append({
+    entry = {
         "song": song_name,
         "tool": tool,
         "model": model,
         "requested_backend": device,
         "actual_hardware_used": actual_hw,
-        "time_seconds": round(time_taken, 2),
+        "separation_time_seconds": round(time_taken, 2),
+        "audio_duration_seconds": audio_duration,
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
-    })
+    }
+    
+    if load_time is not None:
+        entry["model_load_time_seconds"] = round(load_time, 2)
+    
+    data.append(entry)
     
     with open(TIMES_JSON_PATH, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
@@ -174,12 +216,29 @@ def main(num_tracks=None):
 
     print(f"[INFO] Found {len(tracks)} tracks. Starting Benchmark.")
 
-    # Initialize once
+    # Track which tool/model combos have been initialized to measure load times
+    load_times = {}
+    
+    # Initialize once (measure load time)
+    print("[INFO] Initializing separators...")
+    start_load = time.time()
     spleeter = SpleeterSeparator()
+    load_times[("Spleeter", "2stems")] = time.time() - start_load
+    
+    start_load = time.time()
     demucs = DemucsSeparator()
+    load_times[("Demucs", "init")] = time.time() - start_load
+    
+    start_load = time.time()
     openunmix = OpenUnmixSeparator()
+    load_times[("OpenUnmix", "init")] = time.time() - start_load
+    
+    print(f"[INFO] Separators initialized. Demucs model loading will be measured per-model.")
 
     for song_name, mixture_path in tqdm(tracks, desc="Tracks"):
+        # Get audio duration once per song
+        audio_duration = get_audio_duration(mixture_path)
+        
         # Spleeter needs a specific folder structure sometimes, 
         # so we use your helper
         spleeter_input = prepare_named_input(mixture_path, song_name)
@@ -200,7 +259,10 @@ def main(num_tracks=None):
                     instr_folder=str(INSTR_DIR), 
                     device_choice=target_hw  # Matches your module
                 )
-                save_time_to_json(song_name, "Spleeter", "2stems", device, time.time() - start)
+                sep_time = time.time() - start
+                # Log Spleeter load time only on first song
+                spleeter_load = load_times.get(("Spleeter", "2stems")) if song_name == tracks[0][0] else None
+                save_time_to_json(song_name, "Spleeter", "2stems", device, sep_time, audio_duration, spleeter_load)
                 free_memory()
 
             # --- 2. Demucs ---
@@ -218,7 +280,8 @@ def main(num_tracks=None):
                         device_choice=target_hw, # Matches your module
                         shifts=1
                     )
-                    save_time_to_json(song_name, "Demucs", model, device, time.time() - start)
+                    sep_time = time.time() - start
+                    save_time_to_json(song_name, "Demucs", model, device, sep_time, audio_duration)
                     free_memory()
 
             # --- 3. OpenUnmix ---
@@ -235,7 +298,10 @@ def main(num_tracks=None):
                         model=model, 
                         device_choice=target_hw # Matches your module
                     )
-                    save_time_to_json(song_name, "OpenUnmix", model, device, time.time() - start)
+                    sep_time = time.time() - start
+                    # Log OpenUnmix load time only on first song
+                    unmix_load = load_times.get(("OpenUnmix", "init")) if song_name == tracks[0][0] else None
+                    save_time_to_json(song_name, "OpenUnmix", model, device, sep_time, audio_duration, unmix_load)
                     free_memory()
 
 if __name__ == "__main__":

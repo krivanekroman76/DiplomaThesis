@@ -1,107 +1,136 @@
 import os
 import tempfile
 import logging
-import gc
 import torch
 import librosa
 import soundfile as sf
 import numpy as np
+from typing import Optional, List
 from pydub import AudioSegment
-
 from openunmix import predict
-from .utils import setup_ffmpeg_environment, get_unique_filename
+
+from .utils import (
+    setup_ffmpeg_environment, 
+    get_unique_filename, 
+    resolve_torch_device,
+    get_audio_metadata, 
+    prepare_stem_metadata,
+    finalize_metadata,
+    clear_memory_cache
+)
 
 class OpenUnmixSeparator:
     def __init__(self):
         setup_ffmpeg_environment()
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu')
-        logging.info(f"OpenUnmix initialized on {self.device}")
+        logging.info("OpenUnmix initialized (RAM-Safety Chunking Mode)")
 
-    def separate(self, input_path: str, song_name: str, vocals_folder: str, instr_folder: str, model="umxl", channels="Stereo", fmt="wav", sr=44100, bitrate="128k", device_choice="Auto", flac_compression=5, progress_callback=None):  
+    def separate(self, input_path: str, song_name: str, vocals_folder: str, instr_folder: str, 
+                 model="umx", channels="Stereo", fmt="wav", sr=44100, bitrate="128k", 
+                 device_choice="Auto", flac_compression=5, progress_callback=None, **kwargs):  
         try:
             if not os.path.exists(input_path): return False, None, None
 
-            target_device = "cpu"
-            if device_choice in ["Auto", "GPU"]:
-                if torch.cuda.is_available(): target_device = "cuda"
-                elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available(): target_device = "mps"
+            # 1. Initialization
+            original_tags = get_audio_metadata(input_path)
+            v_tags = finalize_metadata(prepare_stem_metadata(original_tags, "Vocals"), "Vocals", "OpenUnmix")
+            i_tags = finalize_metadata(prepare_stem_metadata(original_tags, "Instrumental"), "Instrumental", "OpenUnmix")
 
-            prefix = f"[{target_device.upper()}]"
+            target_device = resolve_torch_device(device_choice, return_string=True)
+            prefix = f"[{str(target_device).upper()}]"
+            
+            if progress_callback: progress_callback(5, f"{prefix} OpenUnmix: Loading Audio...")
 
-            if progress_callback: progress_callback(10, f"{prefix} OpenUnmix: Initializing...")
+            # Load audio with pydub for easy chunking
+            full_audio = AudioSegment.from_file(input_path)
+            duration_ms = len(full_audio)
+            chunk_length_ms = 30 * 1000  # 30-second chunks for high safety
+            
+            # Calculate chunks
+            chunks = [full_audio[i:i + chunk_length_ms] for i in range(0, duration_ms, chunk_length_ms)]
+            num_chunks = len(chunks)
+            
+            v_final: Optional[AudioSegment] = None
+            i_final: Optional[AudioSegment] = None
 
-            audio, original_sr = librosa.load(input_path, sr=44100, mono=False)
-            if audio.ndim == 1: audio = np.stack([audio, audio], axis=-1)
-
-            if progress_callback: progress_callback(30, f"{prefix} OpenUnmix: Running separation...")
+            model_to_load = os.path.abspath(model) if os.path.isdir(model) else model
 
             with tempfile.TemporaryDirectory() as temp_dir:
-                estimates = predict.separate(
-                        audio=torch.as_tensor(audio).float(),
-                        rate=original_sr,
-                        model_str_or_path=model,
+                for idx, chunk in enumerate(chunks):
+                    # Update progress dynamically based on chunk index
+                    # Range: 10% to 85%
+                    percent = 10 + int((idx / num_chunks) * 75)
+                    if progress_callback:
+                        progress_callback(percent, f"{prefix} OpenUnmix: Processing Segment {idx+1}/{num_chunks}...")
+
+                    # Export chunk to temp wav for librosa/umx
+                    chunk_path = os.path.join(temp_dir, f"c_{idx}.wav")
+                    chunk.export(chunk_path, format="wav")
+                    
+                    # Load into numpy for UMX
+                    audio_np, _ = librosa.load(chunk_path, sr=44100, mono=False)
+                    if audio_np.ndim == 1: 
+                        audio_np = np.stack([audio_np, audio_np], axis=0)
+
+                    # Neural Prediction
+                    estimates = predict.separate(
+                        audio=torch.as_tensor(audio_np).float(),
+                        rate=44100,
+                        model_str_or_path=model_to_load,
                         targets=['vocals'], 
                         residual=True, 
                         device=target_device 
                     )
 
-                if progress_callback: progress_callback(60, f"{prefix} OpenUnmix: Processing and saving files...")
+                    # Convert back to AudioSegments
+                    v_raw = estimates['vocals'].detach().cpu().numpy().squeeze()
+                    i_raw = estimates['residual'].detach().cpu().numpy().squeeze()
+                    
+                    v_tmp_p = os.path.join(temp_dir, f"v_{idx}.wav")
+                    i_tmp_p = os.path.join(temp_dir, f"i_{idx}.wav")
+                    sf.write(v_tmp_p, v_raw.T, 44100)
+                    sf.write(i_tmp_p, i_raw.T, 44100)
+                    
+                    v_seg_chunk = AudioSegment.from_wav(v_tmp_p)
+                    i_seg_chunk = AudioSegment.from_wav(i_tmp_p)
 
-                vocals_raw = estimates['vocals'].detach().cpu().numpy()
-                vocals_estimate = self._prepare_audio_for_save(vocals_raw, sr)
-                
-                if 'residual' in estimates:
-                    instr_raw = estimates['residual'].detach().cpu().numpy()
-                else:
-                    non_vocals = [estimates[target].detach().cpu().numpy() for target in estimates if target != 'vocals']
-                    instr_raw = np.sum(non_vocals, axis=0)
-                instr_estimate = self._prepare_audio_for_save(instr_raw, sr)
-                
-                vocals_temp_path = os.path.join(temp_dir, 'vocals_temp.wav')
-                instr_temp_path = os.path.join(temp_dir, 'instrumental_temp.wav')
-                sf.write(vocals_temp_path, vocals_estimate, original_sr)
-                sf.write(instr_temp_path, instr_estimate, original_sr)
-                
-                os.makedirs(vocals_folder, exist_ok=True)
-                os.makedirs(instr_folder, exist_ok=True)
+                    # Merge with final audio using a small crossfade to prevent pops
+                    if v_final is None or i_final is None:
+                        v_final, i_final = v_seg_chunk, i_seg_chunk
+                    else:
+                        v_final = v_final.append(v_seg_chunk, crossfade=200)
+                        i_final = i_final.append(i_seg_chunk, crossfade=200) 
 
-                vocals_dest = get_unique_filename(os.path.join(vocals_folder, f"{song_name}_OpenUnmix_{model}_vocals.{fmt}"))
-                instr_dest = get_unique_filename(os.path.join(instr_folder, f"{song_name}_OpenUnmix_{model}_instrumental.{fmt}"))
+                    # Periodic cache clearing within the loop
+                    clear_memory_cache()
+
+                # 2. Post-Processing & Export
+                if v_final is None or i_final is None: return False, None, None
                 
-                audio_vocals, audio_instr = AudioSegment.from_wav(vocals_temp_path), AudioSegment.from_wav(instr_temp_path)
-                
+                if progress_callback: progress_callback(90, f"{prefix} OpenUnmix: Exporting Stems...")
+
                 if channels == "Mono":
-                    audio_vocals, audio_instr = audio_vocals.set_channels(1), audio_instr.set_channels(1)
-                
-                export_kwargs = {"format": fmt}
-                if fmt == "mp3": export_kwargs["bitrate"] = bitrate
-                elif fmt == "flac": export_kwargs["parameters"] = ["-compression_level", str(flac_compression)]
+                    v_final, i_final = v_final.set_channels(1), i_final.set_channels(1)
+                if v_final.frame_rate != sr:
+                    v_final, i_final = v_final.set_frame_rate(sr), i_final.set_frame_rate(sr)
 
-                audio_vocals.export(vocals_dest, **export_kwargs)
-                audio_instr.export(instr_dest, **export_kwargs)
-                
-                # Cleanup
-                del audio_vocals, audio_instr, audio, vocals_raw, instr_raw, estimates
-                gc.collect()
-                if torch.cuda.is_available(): torch.cuda.empty_cache()
-                elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available(): torch.mps.empty_cache()
+                v_dest = get_unique_filename(os.path.join(vocals_folder, f"{song_name}_OpenUnmix_vocals.{fmt}"))
+                i_dest = get_unique_filename(os.path.join(instr_folder, f"{song_name}_OpenUnmix_instrumental.{fmt}"))
 
-                if progress_callback: progress_callback(100, f"{prefix} OpenUnmix: Complete!")
-                
-                return True, os.path.basename(vocals_dest), os.path.basename(instr_dest)
+                # Reusable export params
+                def final_export(seg, path, tags):
+                    params = {"out_f": path, "format": fmt, "tags": tags}
+                    if fmt == "mp3": params["bitrate"] = bitrate
+                    elif fmt == "flac": params["parameters"] = ["-compression_level", str(flac_compression)]
+                    seg.export(**params)
+
+                final_export(v_final, v_dest, v_tags)
+                final_export(i_final, i_dest, i_tags)
+
+                if progress_callback: progress_callback(100, f"{prefix} OpenUnmix: Success!")
+                return True, os.path.basename(v_dest), os.path.basename(i_dest)
 
         except Exception as e:
-            logging.error(f"OpenUnmix error: {e}", exc_info=True)
+            logging.error(f"OpenUnmix Error: {e}", exc_info=True)
             return False, None, None
-
-    def _prepare_audio_for_save(self, estimate, sr):
-        estimate = np.squeeze(estimate)
-        if estimate.ndim == 2 and estimate.shape[0] < estimate.shape[1]: estimate = estimate.T
-        if estimate.ndim == 2 and estimate.shape[1] == 1: estimate = estimate[:, 0]
-            
-        if sr != 44100:
-            if estimate.ndim == 2:
-                estimate = librosa.resample(y=estimate.T, orig_sr=44100, target_sr=sr).T
-            else:
-                estimate = librosa.resample(y=estimate, orig_sr=44100, target_sr=sr)
-        return estimate
+        finally:
+            clear_memory_cache()

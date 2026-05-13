@@ -1,0 +1,17 @@
+Transcription (Model: vosk-model-small-fr-0.22):
+veux hum bob nul hey hey délicieux j'ai sur les cieux les cieux les yeux les yeux non comme le veut se les gens me dévisage comme si j'étais un de que j'avais des nibards de leur donne à mon goût pour le vide avec un rose vert au mur de marine en liga je voulais les gens me regard bizarre désolé mais je n'ai pas l'humour de et monsieur jack me dis que je suis mineur que pour m'en sortir il faudrait un miracle il valait mieux qu'on après la vie creavea l'un de nos pays il a aux amis vous ouvrez donc horny car je veux juste savoir où est leur vie ou à la comédie on dit ou a rien de juste on y croire on y croire qu'on lui le dos le monde dit bla bla tout le monde des blagues bla tout le monde dit black un j'ai dit tout le monde holly black flag tout le monde black black tout le monde voit black tout le monde black un dit tout le monde blague
+
+Timestamps:
+023.52s - 023.73s [Vocal]: veux
+028.23s - 028.44s [Vocal]: hum
+032.94s - 033.33s [Vocal]: bob
+035.34s - 035.58s [Vocal]: nul
+037.77s - 039.29s [Vocal]: hey hey
+042.42s - 042.99s [Vocal]: délicieux
+047.13s - 048.87s [Vocal]: j'ai sur les cieux
+051.99s - 052.56s [Vocal]: les cieux
+059.19s - 060.56s [Vocal]: les yeux les yeux
+064.02s - 064.34s [Vocal]: non
+077.22s - 096.00s [Vocal]: comme le veut se les gens me dévisage comme si j'étais un de que j'avais des nibards de leur donne à mon goût pour le vide avec un rose vert au mur de marine en liga je voulais les gens me regard bizarre désolé mais je n'ai pas l'humour de et monsieur jack me dis que je suis mineur que pour m'en sortir il faudrait un miracle il valait mieux qu'on après la vie creavea l'un de nos pays il a aux amis vous ouvrez donc
+096.24s - 102.90s [Vocal]: horny car je veux juste savoir où est leur vie ou à la comédie on dit ou a rien de juste on y croire on y croire qu'on lui
+104.22s - 117.69s [Vocal]: le dos le monde dit bla bla tout le monde des blagues bla tout le monde dit black un j'ai dit tout le monde holly black flag tout le monde black black tout le monde voit black tout le monde black un dit tout le monde blague

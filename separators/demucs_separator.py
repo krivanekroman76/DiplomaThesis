@@ -1,123 +1,148 @@
 import os
+import gc
 import sys
-import subprocess
-import tempfile
 import shutil
-import re
 import logging
 import torch
+from typing import Optional, Tuple
 from pydub import AudioSegment
+from demucs.separate import main as demucs_main
 
-from .utils import setup_ffmpeg_environment, get_unique_filename
+from .utils import (
+    setup_ffmpeg_environment, 
+    get_unique_filename, 
+    resolve_torch_device, 
+    get_audio_metadata, 
+    prepare_stem_metadata,
+    finalize_metadata,
+    clear_memory_cache,
+    ProgressInterceptor,
+    LogStreamer
+)
 
 class DemucsSeparator:
     def __init__(self):
         setup_ffmpeg_environment()
-        logging.info("Demucs Subprocess Wrapper initialized")
+        logging.info("Demucs API Wrapper initialized (With OOM Fallback)")
 
-    def separate(self, input_path: str, song_name: str, vocals_folder: str, instr_folder: str, model="mdx", channels="Stereo", fmt="wav", sr=44100, bitrate="128k", bit_depth=True, mp3_preset=2, shifts=1, overlap=0.25, device_choice="Auto", flac_compression=5, progress_callback=None):
+    def separate(self, input_path: str, song_name: str, vocals_folder: str, instr_folder: str, 
+                 model="htdemucs", channels="Stereo", fmt="wav", sr=44100, 
+                 bitrate="128k", bit_depth="16-bit", shifts=1, 
+                 overlap=0.1, device_choice="Auto", flac_compression=5,
+                 progress_callback=None, **kwargs) -> Tuple[bool, Optional[str], Optional[str]]:
+        
+        # Resolve initial device
+        target_device = resolve_torch_device(device_choice, return_string=True)
+        
         try:
-            if not os.path.exists(input_path): raise FileNotFoundError("Input file not found.")
-            
-            target_device = "cpu"
-            if device_choice in ["Auto", "GPU"]:
-                if torch.cuda.is_available(): target_device = "cuda"
-                elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available(): target_device = "mps"
-            prefix = f"[{target_device.upper()}]"
-
-            if progress_callback: progress_callback(10, f"{prefix} Demucs: Preparing...")
-
-            with tempfile.TemporaryDirectory() as temp_dir:
-                cmd = [
-                    sys.executable, "-m", "demucs.separate",
-                    "--two-stems=vocals", "-n", model, "--out", temp_dir,
-                    "--shifts", str(shifts), "--overlap", str(overlap), "-d", target_device 
-                ]
-                
-                if fmt == "flac": cmd.append("--flac")
-                elif fmt == "mp3": cmd.extend(["--mp3", "--mp3-bitrate", str(bitrate).lower().replace('k', ''), "--mp3-preset", str(mp3_preset)])
-                elif fmt == "wav": cmd.append("--int24" if bit_depth else "--float32")
-                cmd.append(input_path)
-
-                if progress_callback: progress_callback(20, f"{prefix} Demucs: Starting engine...")
-
-                process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1, universal_newlines=True)
-
-                total_models = 4 if "mdx" in model.lower() else 1
-                current_model_idx, last_percent = 0, 0
-                
-                # --- NEW: Ring buffer to hold the last 20 lines of console output ---
-                debug_log = []
-
-                for line in process.stdout:
-                    # Save the line for debugging, keep only the last 20 lines to avoid memory bloat
-                    clean_line = line.strip()
-                    if clean_line:
-                        debug_log.append(clean_line)
-                        if len(debug_log) > 20:
-                            debug_log.pop(0)
-
-                    match = re.search(r'(\d{1,3})%', line)
-                    if match:
-                        raw_percent = int(match.group(1))
-                        if raw_percent < 10 and last_percent > 80: current_model_idx += 1
-                        last_percent = raw_percent
-                        safe_idx = min(current_model_idx, total_models - 1)
-                        global_percent = ((safe_idx * 100) + raw_percent) / total_models
-                        scaled_percent = 20 + (global_percent * 0.65)
-                        
-                        try:
-                            if progress_callback: progress_callback(scaled_percent, f"{prefix} Demucs: Separating (Model {safe_idx + 1}/{total_models}) {raw_percent}%")                        
-                        except RuntimeError as e:
-                            if str(e) == "ABORT_REQUESTED":
-                                process.kill() 
-                                raise e 
-
-                process.wait()
-                
-                # --- NEW: Expose the captured error! ---
-                if process.returncode != 0: 
-                    error_details = "\n".join(debug_log)
-                    logging.error(f"Demucs crashed! Last 20 lines of console output:\n{error_details}")
-                    # Passing a short version of the error up to the GUI
-                    raise RuntimeError(f"Demucs failed: {error_details[-150:]}") 
-                
-                if progress_callback: progress_callback(85, f"{prefix} Demucs: Moving files...")
-
-                output_subdir = os.path.join(temp_dir, model, os.path.splitext(os.path.basename(input_path))[0])
-                vocals_src, instr_src = os.path.join(output_subdir, f"vocals.{fmt}"), os.path.join(output_subdir, f"no_vocals.{fmt}")
-
-                if not os.path.exists(vocals_src) or not os.path.exists(instr_src): raise FileNotFoundError("Demucs output files missing.")
-
-                os.makedirs(vocals_folder, exist_ok=True)
-                os.makedirs(instr_folder, exist_ok=True)
-
-                vocals_dest = get_unique_filename(os.path.join(vocals_folder, f"{song_name}_Demucs_{model}_vocals.{fmt}"))
-                instr_dest = get_unique_filename(os.path.join(instr_folder, f"{song_name}_Demucs_{model}_instrumental.{fmt}"))
-                
-                if progress_callback: progress_callback(90, f"{prefix} Demucs: Processing audio format/channels...")
-                
-                if channels == "Mono" or ((fmt == "wav" or fmt == "flac") and sr != 44100) or fmt == "flac":
-                    v_audio, i_audio = AudioSegment.from_file(vocals_src), AudioSegment.from_file(instr_src)
-
-                    if channels == "Mono":
-                        v_audio, i_audio = v_audio.set_channels(1), i_audio.set_channels(1)
-                    if sr != 44100:
-                        v_audio, i_audio = v_audio.set_frame_rate(sr), i_audio.set_frame_rate(sr)
-
-                    export_kwargs = {"format": fmt}
-                    if fmt == "mp3": export_kwargs["bitrate"] = bitrate
-                    elif fmt == "flac": export_kwargs["parameters"] = ["-compression_level", str(flac_compression)]
-
-                    v_audio.export(vocals_dest, **export_kwargs)
-                    i_audio.export(instr_dest, **export_kwargs)
-                else:
-                    shutil.move(vocals_src, vocals_dest)
-                    shutil.move(instr_src, instr_dest)
-
-                if progress_callback: progress_callback(100, f"{prefix} Demucs: Complete!")
-                return True, os.path.basename(vocals_dest), os.path.basename(instr_dest)
-
+            # Attempt separation
+            return self._run_separation_logic(
+                input_path, song_name, vocals_folder, instr_folder,
+                model, channels, fmt, sr, bitrate, bit_depth, shifts,
+                overlap, target_device, flac_compression, progress_callback
+            )
         except Exception as e:
-            logging.error(f"Demucs error: {e}", exc_info=True)
-            return False, None, None
+            error_msg = str(e).lower()
+            # Check specifically for CUDA/MPS Out of Memory
+            if ("out of memory" in error_msg or "alloc" in error_msg) and target_device != "cpu":
+                logging.warning(f"Demucs OOM on {target_device}. Falling back to CPU...")
+                
+                if progress_callback:
+                    progress_callback(15, f"[CPU FALLBACK] VRAM Full. Restarting on CPU (Slow)...")
+                
+                # Full system flush before retry
+                clear_memory_cache()
+                
+                # Retry specifically on CPU
+                return self._run_separation_logic(
+                    input_path, song_name, vocals_folder, instr_folder,
+                    model, channels, fmt, sr, bitrate, bit_depth, shifts,
+                    overlap, "cpu", flac_compression, progress_callback
+                )
+            else:
+                logging.error(f"Demucs Critical Error: {e}", exc_info=True)
+                return False, None, None
+
+    def _run_separation_logic(self, input_path, song_name, vocals_folder, instr_folder, 
+                             model, channels, fmt, sr, bitrate, bit_depth, shifts, 
+                             overlap, device, flac_compression, progress_callback):
+        
+        base_temp_out = os.path.join(os.getcwd(), f"temp_demucs_{song_name}")
+        prefix = f"[{str(device).upper()}]"
+        
+        # Setup Interceptor
+        demucs_logger = logging.getLogger("demucs")
+        handler = ProgressInterceptor(progress_callback, prefix)
+        demucs_logger.addHandler(handler)
+
+        try:
+            if not os.path.exists(input_path): return False, None, None
+
+            # 1. Metadata Preparation
+            original_tags = get_audio_metadata(input_path)
+            v_tags = finalize_metadata(prepare_stem_metadata(original_tags, "Vocals"), "Vocals", "Demucs")
+            i_tags = finalize_metadata(prepare_stem_metadata(original_tags, "Instrumental"), "Instrumental", "Demucs")
+
+            # 2. Argument Construction
+            demucs_args = [
+                "-n", model, "-o", base_temp_out, input_path,
+                "--shifts", str(shifts), "--overlap", str(overlap),
+                "--two-stems", "vocals", "-d", device, "--clip-mode", "rescale"
+            ]
+            
+            # Format Logic
+            if fmt == "mp3":
+                demucs_args.extend(["--mp3", "--mp3-bitrate", bitrate.replace("k", "")])
+            elif fmt == "flac":
+                demucs_args.append("--flac")
+            
+            if bit_depth == "24-bit": demucs_args.append("--int24")
+            elif bit_depth == "32-bit": demucs_args.append("--float32")
+            
+            if progress_callback: progress_callback(10, f"{prefix} Demucs: Initializing AI Model...")
+            
+            # 3. Execute Demucs Core
+            original_stderr = sys.stderr
+            sys.stderr = LogStreamer(demucs_logger)
+            try:
+                demucs_main(demucs_args)
+            finally:
+                sys.stderr = original_stderr
+
+            # 4. Finalizing & Export
+            input_base = os.path.splitext(os.path.basename(input_path))[0]
+            sep_folder = os.path.join(base_temp_out, model, input_base)
+            
+            # Demucs uses 'no_vocals' for the instrumental stem in --two-stems mode
+            stems = [
+                (os.path.join(sep_folder, f"vocals.{fmt}"), f"{song_name}_Demucs_vocals.{fmt}", v_tags, vocals_folder),
+                (os.path.join(sep_folder, f"no_vocals.{fmt}"), f"{song_name}_Demucs_instrumental.{fmt}", i_tags, instr_folder)
+            ]
+
+            final_paths = []
+            for src, filename, tags, folder in stems:
+                if not os.path.exists(src):
+                    # Fallback check: some models use 'instrumental' instead of 'no_vocals'
+                    alt_src = src.replace("no_vocals", "instrumental")
+                    if os.path.exists(alt_src): src = alt_src
+
+                seg = AudioSegment.from_file(src)
+                if channels == "Mono": seg = seg.set_channels(1)
+                if seg.frame_rate != sr: seg = seg.set_frame_rate(sr)
+                
+                dest = get_unique_filename(os.path.join(folder, filename))
+                
+                export_params = {"out_f": dest, "format": fmt, "tags": tags}
+                if fmt == "flac": export_params["parameters"] = ["-compression_level", str(flac_compression)]
+                
+                seg.export(**export_params)
+                final_paths.append(os.path.basename(dest))
+
+            return True, final_paths[0], final_paths[1]
+
+        finally:
+            # Cleanup
+            demucs_logger.removeHandler(handler)
+            if os.path.exists(base_temp_out): 
+                shutil.rmtree(base_temp_out, ignore_errors=True)
+            clear_memory_cache()

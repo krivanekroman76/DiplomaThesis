@@ -35,7 +35,8 @@ if %errorlevel% neq 0 (
 echo Creating environment and installing libraries...
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install --upgrade pip
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install wheel setuptools
+.\.venv\Scripts\python.exe -m pip install --default-timeout=1000 -r requirements.txt
 
 echo Installation done!
 

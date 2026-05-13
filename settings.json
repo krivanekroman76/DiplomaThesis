@@ -1,7 +1,7 @@
 {
     "is_first_run": false,
     "models_dir": "d:\\DiplomaThesis\\Models",
-    "input_folder": "input",
+    "input_folder": "input\\FLAC",
     "vocals_folder": "output/vocals",
     "instrumentals_folder": "output/instrumentals",
     "transcriptions_folder": "output/text",
@@ -12,29 +12,24 @@
     "separator_models": {
         "Spleeter": [],
         "Demucs": [
+            "htdemucs",
             "mdx",
-            "mdx_extra",
-            "htdemucs"
+            "mdx_extra"
         ],
         "OpenUnmix": [
-            "umxl",
+            "umx",
             "umxhq",
-            "umx"
+            "umxl"
         ]
     },
     "transcription_models": {
         "whisper": [
-            "large",
-            "medium",
-            "small",
-            "tiny",
             "base",
-            "turbo"
+            "large-v3",
+            "small"
         ],
         "wav2vec2": [
             "facebook/wav2vec2-base-960h",
-            "facebook/wav2vec2-large-960h",
-            "facebook/wav2vec2-large-xlsr-53-czech",
             "facebook/wav2vec2-large-xlsr-53-french"
         ],
         "vosk": [

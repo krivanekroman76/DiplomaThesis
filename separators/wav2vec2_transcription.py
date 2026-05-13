@@ -1,9 +1,9 @@
 import os
-import logging
 import torch
 import librosa
 import math
-from transformers import Wav2Vec2Processor, Wav2Vec2ForCTC
+import logging
+from transformers import Wav2Vec2Processor, Wav2Vec2ForCTC, Wav2Vec2FeatureExtractor, Wav2Vec2CTCTokenizer
 from .utils import resolve_torch_device, clear_memory_cache, save_transcription_to_file
 
 class Wav2Vec2Transcription:
@@ -13,69 +13,88 @@ class Wav2Vec2Transcription:
         self.model = None
 
     def transcribe(self, audio_path: str, output_path: str, model_name: str, device_choice="Auto", progress_callback=None):
+        # Determine initial device
+        target_device = resolve_torch_device(device_choice, return_string=True)
+        
         try:
-            target_device = resolve_torch_device(device_choice, return_string=False)
-            prefix = f"[{target_device.type.upper()}]"
-
-            if model_name != self.current_model_name or self.model is None or self.model.device.type != target_device.type:
-                if progress_callback:
-                    progress_callback(5, f"{prefix} Wav2Vec2: Downloading/Loading weights...")
-                
-                logging.info(f"Wav2Vec2: Loading '{model_name}' on {target_device.type.upper()}...")
-                if self.model is not None:
-                    del self.model
-                    del self.processor
-                    clear_memory_cache()
-
-                self.processor = Wav2Vec2Processor.from_pretrained(model_name)
-                self.model = Wav2Vec2ForCTC.from_pretrained(model_name).to(target_device)
-                self.current_model_name = model_name
-
-            if not os.path.exists(audio_path):
+            return self._run_inference(audio_path, output_path, model_name, target_device, progress_callback)
+        except Exception as e:
+            # OOM Fallback logic
+            if "out of memory" in str(e).lower() and target_device != "cpu":
+                logging.warning("Wav2Vec2 OOM on GPU. Falling back to CPU...")
+                clear_memory_cache()
+                return self._run_inference(audio_path, output_path, model_name, "cpu", progress_callback)
+            else:
+                logging.error(f"Wav2Vec2 Error: {e}")
                 return False, None
 
-            audio, sr = librosa.load(audio_path, sr=16000)
-            chunk_length_s = 10
-            chunk_size = chunk_length_s * 16000
-            total_samples = len(audio)
-            total_chunks = math.ceil(total_samples / chunk_size)
+    def _run_inference(self, audio_path, output_path, model_name, device, progress_callback):
+        prefix = f"[{str(device).upper()}]"
+        
+        # 1. Load Model & Processor
+        if model_name != self.current_model_name or self.model is None:
+            if progress_callback: progress_callback(5, f"{prefix} Wav2Vec2: Loading weights...")
+            self.processor = Wav2Vec2Processor.from_pretrained(model_name)            
+            self.model = Wav2Vec2ForCTC.from_pretrained(model_name).to(device)
+            self.current_model_name = model_name
+            # Explicitly assign these so Pylance "sees" them
+            self.feature_extractor = Wav2Vec2FeatureExtractor.from_pretrained(model_name)
+            self.tokenizer = Wav2Vec2CTCTokenizer.from_pretrained(model_name)
 
-            full_transcription = []
-            all_segments = []
+        # Type Guard for Pylance
+        if self.processor is None or self.model is None:
+            raise RuntimeError("Failed to initialize Wav2Vec2 components.")
 
-            with torch.no_grad():
-                for chunk_index, i in enumerate(range(0, total_samples, chunk_size)):
-                    if progress_callback:
-                        percent_done = (chunk_index / total_chunks) * 80
-                        progress_callback(10 + percent_done, f"{prefix} Wav2Vec2: Transcribing chunk {chunk_index + 1} of {total_chunks}...")
+        # 2. Prepare Audio
+        audio, _ = librosa.load(audio_path, sr=16000)
+        
+        # Precision Settings
+        chunk_len = 20  # seconds
+        overlap = 2     # seconds buffer
+        sr = 16000
+        
+        total_samples = len(audio)
+        step = chunk_len * sr
+        
+        full_transcription = []
+        all_segments = []
 
-                    audio_chunk = audio[i : i + chunk_size]
-                    inputs = self.processor(audio_chunk, sampling_rate=16000, return_tensors="pt", padding=True)
-                    logits = self.model(inputs.input_values.to(target_device)).logits
-                    
-                    predicted_ids = torch.argmax(logits, dim=-1)
-                    chunk_text = self.processor.batch_decode(predicted_ids)[0]
-                    
-                    if chunk_text:
-                        text_lower = chunk_text.lower()
-                        full_transcription.append(text_lower)
-                        start_t = chunk_index * chunk_length_s
-                        all_segments.append({"start": start_t, "end": start_t + chunk_length_s, "text": text_lower})
+        # 3. Processing Loop with Overlap
+        with torch.no_grad():
+            for start_sample in range(0, total_samples, step):
+                end_sample = min(start_sample + step + (overlap * sr), total_samples)
+                chunk = audio[start_sample:end_sample]
 
-            if progress_callback: progress_callback(95, f"{prefix} Wav2Vec2: Saving transcription...")
+                if progress_callback:
+                    percent = (start_sample / total_samples) * 85
+                    progress_callback(10 + percent, f"{prefix} Wav2Vec2: Processing...")
 
-            save_transcription_to_file(output_path, model_name, full_transcription, all_segments)
+                # Pylance Fix: Access feature_extractor directly
+                inputs = self.feature_extractor(
+                    chunk, 
+                    sampling_rate=sr, 
+                    return_tensors="pt", 
+                    padding=True
+                )
+                
+                input_values = inputs.input_values.to(device)
+                logits = self.model(input_values).logits
+                
+                predicted_ids = torch.argmax(logits, dim=-1)
+                text = self.tokenizer.batch_decode(predicted_ids)[0].lower()
+                
+                if text.strip():
+                    full_transcription.append(text)
+                    all_segments.append({
+                        "start": start_sample / sr,
+                        "end": (start_sample + step) / sr,
+                        "text": text
+                    })
 
-            del audio
-            del inputs
-            del logits
-            clear_memory_cache()
-            
-            if progress_callback: progress_callback(100, f"{prefix} Wav2Vec2: Complete!")
-            logging.info(f"Wav2Vec2: Transcription saved to {output_path}")
-            return True, os.path.basename(output_path)
-            
-        except Exception as e:
-            logging.error(f"Wav2Vec2 Error: {e}", exc_info=True)
-            if progress_callback: progress_callback(0, f"Error: {str(e)}")
-            return False, None
+        # 4. Finalize
+        if progress_callback: progress_callback(95, f"{prefix} Wav2Vec2: Saving...")
+        save_transcription_to_file(output_path, model_name, full_transcription, all_segments)
+        
+        clear_memory_cache()
+        if progress_callback: progress_callback(100, f"{prefix} Wav2Vec2: Complete!")
+        return True, os.path.basename(output_path)

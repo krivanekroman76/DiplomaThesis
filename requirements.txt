@@ -1,4 +1,4 @@
-# --- PyTorch CUDA Index (Crucial for Windows/Linux GPU support) ---
+# --- PyTorch CUDA Index ---
 --extra-index-url https://download.pytorch.org/whl/cu118
 
 # GUI and Environment
@@ -8,50 +8,45 @@ packaging==26.0
 setuptools<60.0.0
 customtkinter==5.2.2
 
+# --- The "Golden Bridge" (Math & Audio Libraries) ---
+numpy==1.22.4
+numba==0.55.2
+librosa==0.8.1  # Downgraded to satisfy Spleeter
+resampy==0.3.1       # Matched to Librosa 0.8.1
+llvmlite>=0.38.0,<0.39.0  # Matched to Numba 0.55.2
+
 # --- Supporting Libraries ---
-
-# TensorFlow for Windows / Linux (Standard)
 tensorflow==2.12.0; sys_platform == 'win32' or sys_platform == 'linux'
-# TensorFlow for macOS (Apple Silicon/Intel)
-tensorflow-macos==2.12.0; sys_platform == 'darwin'
-tensorflow-metal==0.8.0; sys_platform == 'darwin'
-keras==2.12.0
-
-# PyTorch Ecosystem (GPU supported via the extra-index-url above)
-torch>=2.0.0
-torchaudio>=2.0.0
-transformers[torch] 
-
-# Audio & Data Processing
-numpy>=1.21.2,<1.24.0
-librosa==0.8.1
-resampy==0.3.1
+torch==2.2.2
+torchaudio==2.2.2
+transformers[torch]
 soundfile==0.13.1
 audioread==3.1.0
 pandas==1.5.3
-scipy==1.13.1
+scipy==1.10.1
 srt==3.5.3
 websockets==15.0.1
-h5py==3.14.0
+h5py==3.10.0
 protobuf==3.20.3
 ffmpeg-python==0.2.0
 pydub
 soxr
 
-# Note for macOS users: 
-# llvmlite and numba (required by librosa/resampy) often fail via pip on macOS.
-# They may need to be installed manually, or LLVM installed via Homebrew first.
-# libsndfile is also required via Homebrew (brew install libsndfile).
-#llvmlite==0.43.0
-#numba==0.60.0
-
-# --- Main Libraries ---
+# --- Main AI Libraries ---
 spleeter==2.3.2
 demucs==4.0.1
 openunmix==1.3.0
 openai-whisper==20250625
 vosk==0.3.45
 
-# Libraries for evaluation
-# museval
-# jiwer
+# --- Evaluation & CLI (The Problem Area - Fixed) ---
+py-cpuinfo
+matplotlib<3.6.0
+seaborn==0.11.2
+museval==0.4.1
+jiwer==2.5.1         # FIXED: Use 2.5.1 to support Click 7.x
+typer==0.3.2         # Required for Spleeter
+click==7.1.2         # Required for Typer 0.3.2
+# transcription evaluation
+tinytag==1.9.0
+lyricsgenius==3.0.1

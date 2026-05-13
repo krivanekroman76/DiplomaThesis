@@ -4,6 +4,8 @@ import os
 # STRICT GAG ORDER FOR TENSORFLOW (Must be set before any AI imports)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # 0=DEBUG, 1=INFO, 2=WARNING, 3=ERROR
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0' # Hides oneDNN custom operations warnings
+# Force Numba to use a stable threading layer before librosa is even imported
+os.environ['NUMBA_THREADING_LAYER'] = 'workqueue'
 import logging
 import sys
 import shutil
@@ -23,6 +25,8 @@ import math
 import queue
 from dataclasses import dataclass
 from typing import Optional
+import torch
+import gc
 # The separators and transcription tools are lazy loaded to save RAM
 
 ctk.set_appearance_mode("System")
@@ -39,11 +43,14 @@ logging.getLogger('numba').setLevel(logging.WARNING)
 logging.getLogger('matplotlib').setLevel(logging.WARNING)
 logging.getLogger('tensorflow').setLevel(logging.ERROR)
 logging.getLogger('absl').setLevel(logging.ERROR) # TensorFlow's internal abseil logger
-
+SpleeterSeparator = None
+DemucsSeparator = None
+OpenUnmixSeparator = None
 def get_app_dir():
     """Always returns the directory containing the .exe or the main .py script.
        Use this for saving settings.json or user output files!"""
     if getattr(sys, 'frozen', False):
+        os.environ['NUMBA_CACHE_DIR'] = os.path.join(os.environ.get('TEMP', os.getcwd()), 'numba_cache')
         return os.path.dirname(sys.executable)
     else:
         return os.path.dirname(os.path.abspath(__file__))
@@ -76,7 +83,6 @@ def setup_ffmpeg_environment():
             
         # Set the lock so it never runs again
         os.environ["FFMPEG_INJECTED"] = "TRUE"
-
 
 # --- CALL IT IMMEDIATELY ---
 setup_ffmpeg_environment()
@@ -163,38 +169,73 @@ class SeparationApp(ctk.CTk):
         # 2. Set Theme and Scaling (Global)
         ctk.set_appearance_mode(self.appearance_mode)
         ctk.set_default_color_theme(self.color_theme)
-        ctk.set_widget_scaling(int(self.scaling.replace("%", "")) / 100)
+        # Calculate scaling safely
+        try:
+            scaling_float = int(self.scaling.replace("%", "")) / 100
+            ctk.set_widget_scaling(scaling_float)
+        except (ValueError, AttributeError):
+            ctk.set_widget_scaling(1.0)
+
+        self.update() # Forces Windows to create the window handle and initialize fonts
 
         # 3. BUILD UI (The Body)
         self._setup_main_containers()
 
-        # 4. Initial tab loading based on First Run flag
-        if getattr(self, "is_first_run", False):
-            # First time ever opening the app! Go to Settings.
-            self._switch_tab(self.settings_frame, self.settings_button, "settings")
-            
-            # Show a welcome tutorial shortly after the UI loads
-            self.after(500, self.show_welcome_tutorial)
-            
-            # Flip the flag so this never happens again, and save it silently
-            self.is_first_run = False
-            self.save_settings()
-        else:
-            # Normal boot, go to input
-            self._switch_tab(self.input_frame, self.input_button, "input")  
+        # 4. Initial tab loading is deferred until the main window is fully rendered to avoid heavy processing during startup
+        self.after(200, self._initial_startup_sequence)
 
         self._last_width = self.winfo_width()
         self._last_height = self.winfo_height()
-        self._resize_timer = None
         
         # Bind the configure event
-        self.bind("<Configure>", self._on_window_configure)
+        self.bind("<Configure>", self._handle_resize)
+        self._resize_timer = None
 
         # Force Tkinter to finish drawing the initial window geometry (e.g., 1200x700)
         self.update_idletasks() 
-        
-        # Run the pagination math immediately for the initial setup
+
+        # Intercept the "X" close button
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+    def on_closing(self):
+            """Standard cleanup before exiting."""
+            # 1. Stop any active AI separation
+            self.abort_separation = True 
+
+            # 2. Clear AI models from RAM/VRAM
+            self.spleeter_sep = None
+            self.demucs_sep = None
+            self.openunmix_sep = None
+
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+                
+            gc.collect()
+
+            # 3. Destroy the UI and exit
+            self.destroy()
+    
+    def _initial_startup_sequence(self):
+        """Handles heavy UI math after the main window is actually visible."""
+        # 1. Decide which tab to show
+        if getattr(self, "is_first_run", False):
+            self._switch_tab(self.settings_frame, self.settings_button, "settings")
+            self.after(500, self.show_welcome_tutorial)
+            self.is_first_run = False
+            self.save_settings()
+        else:
+            self._switch_tab(self.input_frame, self.input_button, "input")
+
+        # 2. Now that the window is rendered, calculate the layout
         self._recalculate_pagination(is_initialization=True)
+
+    def _handle_resize(self, event):
+        # Only trigger if the main window was resized, not a sub-widget
+        if event.widget == self:
+            if self._resize_timer:
+                self.after_cancel(self._resize_timer)
+            # Wait 250ms after the last move before recalculating
+            self._resize_timer = self.after(250, self._recalculate_pagination)
 
     def show_welcome_tutorial(self):
         """Displays a paginated interactive tutorial for first-time users."""
@@ -340,7 +381,7 @@ class SeparationApp(ctk.CTk):
                         self.after(flash_duration, lambda: self.flash_highlight(self.trans_list_frame))
                     
             except Exception as e:
-                print(f"Tutorial Navigation Warning: {e}")
+                logging.info(f"Tutorial Navigation Warning: {e}")
 
             # --- BUTTON STATE MANAGEMENT ---
             if self.tutorial_page == 0:
@@ -411,7 +452,7 @@ class SeparationApp(ctk.CTk):
                 
             toggle(flashes * 2)
         except Exception as e:
-            print(f"Highlight warning: {e}")
+            logging.info(f"Highlight warning: {e}")
 
     def _switch_tab(self, active_frame, active_button, tab_name):
         frames = [self.input_frame, self.sep_out_frame, self.trans_out_frame, self.settings_frame]
@@ -481,7 +522,7 @@ class SeparationApp(ctk.CTk):
         # --- FIXED: Added Lazy Loading Check for Settings ---
         elif tab_name == "settings" and not getattr(self, 'settings_tab_loaded', False):
             if hasattr(self, 'create_settings_tab'):
-                self.create_settings_tab() 
+                self.after(100, self.create_settings_tab())
             self.settings_tab_loaded = True
 
         if hasattr(self, '_free_inactive_models'):
@@ -519,7 +560,6 @@ class SeparationApp(ctk.CTk):
     def change_scaling_event(self, new_scaling: str):
         """Saves the scaling, enforces limits, and triggers a full UI rebuild."""
         
-        # Změněno na 50 a 200
         raw_val = int(new_scaling.replace("%", ""))
         clamped_val = max(50, min(200, raw_val))
         final_scaling_str = f"{clamped_val}%"
@@ -543,15 +583,15 @@ class SeparationApp(ctk.CTk):
 
         base_scale = int(self.scaling.replace("%", ""))
         
-        if base_scale >= 100:
-            self.sidebar = ctk.CTkScrollableFrame(self.main_frame, corner_radius=0, fg_color="transparent")
+        if base_scale >= 120:
+            self.sidebar = ctk.CTkScrollableFrame(self.main_frame, corner_radius=0, fg_color="transparent", width=170)
         else:
-            self.sidebar = ctk.CTkScrollableFrame(self.main_frame, corner_radius=0, fg_color="transparent")
+            self.sidebar = ctk.CTkFrame(self.main_frame, corner_radius=0, fg_color="transparent", width=170)
             
         self.sidebar.grid(row=0, column=0, sticky="nsew", rowspan=2)
         
         # --- NAVIGATION BUTTONS ---
-        btn_width = 135  # Made slightly wider to fit the new text
+        btn_width = 135
 
         self.input_button = ctk.CTkButton(
             self.sidebar, text="Input", width=btn_width, corner_radius=0,
@@ -563,15 +603,15 @@ class SeparationApp(ctk.CTk):
             self.sidebar, text="Separated Output", width=btn_width, corner_radius=0,
             command=lambda: self._switch_tab(self.sep_out_frame, self.sep_out_button, "sep_out")
         )
-        self.sep_out_button.grid(row=1, column=0, padx=10, pady=5, sticky="ew")
+        self.sep_out_button.grid(row=1, column=0, padx=10, pady=(20, 10), sticky="ew")
 
         self.trans_out_button = ctk.CTkButton(
             self.sidebar, text="Transcribed Output", width=btn_width, corner_radius=0,
             command=lambda: self._switch_tab(self.trans_out_frame, self.trans_out_button, "trans_out")
         )
-        self.trans_out_button.grid(row=2, column=0, padx=10, pady=5, sticky="ew")
+        self.trans_out_button.grid(row=2, column=0, padx=10, pady=(20, 10), sticky="ew")
 
-        # THE MAGIC SPACER: Row 3 acts as an invisible spring pushing row 4+ to the bottom
+        # 2. THE SPACER (This pushes everything below row 3 to the bottom, only when using a non-scrollable sidebar)
         self.sidebar.grid_rowconfigure(3, weight=1)
 
         self.settings_button = ctk.CTkButton(
@@ -582,7 +622,7 @@ class SeparationApp(ctk.CTk):
 
         # --- Appearance Mode (Light/Dark) ---
         appearance_mode_label = ctk.CTkLabel(self.sidebar, text="Appearance Mode:", anchor="w")
-        appearance_mode_label.grid(row=6, column=0, padx=10, pady=(10, 0), sticky="w")
+        appearance_mode_label.grid(row=6, column=0, padx=10, pady=(10, 20), sticky="w")
         
         self.appearance_var = ctk.StringVar(value=self.appearance_mode)
         self.appearance_menu = ctk.CTkOptionMenu(
@@ -591,11 +631,11 @@ class SeparationApp(ctk.CTk):
             corner_radius=0, # Removed corners
             command=lambda val: self.update_theme_settings(val, "mode")
         )
-        self.appearance_menu.grid(row=7, column=0, padx=10, pady=(5, 10), sticky="ew")
+        self.appearance_menu.grid(row=7, column=0, padx=10, pady=(10, 20), sticky="ew")
 
         # --- Color Theme (Blue, Green, etc.) ---
         color_theme_label = ctk.CTkLabel(self.sidebar, text="Color Theme:", anchor="w")
-        color_theme_label.grid(row=8, column=0, padx=10, pady=(10, 0), sticky="w")
+        color_theme_label.grid(row=8, column=0, padx=10, pady=(10, 20), sticky="w")
 
         self.color_var = ctk.StringVar(value=self.color_theme)
         self.color_menu = ctk.CTkOptionMenu(
@@ -604,20 +644,20 @@ class SeparationApp(ctk.CTk):
             corner_radius=0, # Removed corners
             command=lambda val: self.update_theme_settings(val, "theme")
         )
-        self.color_menu.grid(row=9, column=0, padx=10, pady=(5, 10), sticky="ew")
+        self.color_menu.grid(row=9, column=0, padx=10, pady=(10, 20), sticky="ew")
 
         # --- UI SCALING (Dynamic 5-Step Carousel) ---
         scaling_label = ctk.CTkLabel(self.sidebar, text="UI Scaling:", anchor="w")
-        scaling_label.grid(row=10, column=0, padx=10, pady=(10, 0), sticky="w")
+        scaling_label.grid(row=10, column=0, padx=10, pady=(10, 20), sticky="w")
 
-        # 1. Získej aktuální hodnotu a omez ji
+        # 1. Get the current scaling value and ensure it's within reasonable limits
         base = int(self.scaling.replace("%", ""))
         base = max(50, min(200, base)) 
 
-        # 2. Vypočítej hodnotu PRVNÍHO tlačítka (posuvné okno)
+        # 2. Calculate the value of the FIRST button (scrolling window)
         start_val = max(50, min(160, base - 20))
 
-        # 3. Vygeneruj 5 tlačítek od start_val nahoru
+        # 3. Generate 5 buttons from start_val upwards
         new_values = [
             f"{start_val}%", 
             f"{start_val + 10}%", 
@@ -631,9 +671,9 @@ class SeparationApp(ctk.CTk):
             values=new_values,
             corner_radius=0
         )
-        self.scaling_menu.grid(row=11, column=0, padx=10, pady=(5, 20), sticky="ew")
+        self.scaling_menu.grid(row=11, column=0, padx=10, pady=(10, 20), sticky="ew")
         
-        # Vyber tu správnou hodnotu (i když není uprostřed)
+        # Select the correct value (even if it's not in the middle)
         self.scaling_menu.set(f"{base}%")
         self.scaling_menu.configure(command=self.change_scaling_event)
 
@@ -655,7 +695,7 @@ class SeparationApp(ctk.CTk):
         self.create_sep_out_tab()
         self.create_trans_out_tab()
         if hasattr(self, 'create_settings_tab'):
-            self.create_settings_tab()
+            self.after(100, self.create_settings_tab)
 
         # --- PROGRESS BAR (Bottom) ---
         self.setup_progress_bar(self.main_frame)
@@ -835,10 +875,13 @@ class SeparationApp(ctk.CTk):
         # Bit Depth Block
         self.bit_depth_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
         self.bit_depth_frame.grid(row=8, column=0, sticky="ew")
-        self.bit_depth_var = tk.BooleanVar(value=True)
-        ctk.CTkRadioButton(self.bit_depth_frame, text="24-bit", variable=self.bit_depth_var, value=True).pack(anchor="w", padx=10, pady=5)
-        ctk.CTkRadioButton(self.bit_depth_frame, text="Float32", variable=self.bit_depth_var, value=False).pack(anchor="w", padx=10, pady=5)
-
+        self.bit_depth_var = tk.StringVar(value="16-bit")
+        ctk.CTkRadioButton(self.bit_depth_frame, text="16-bit", 
+                        variable=self.bit_depth_var, value="16-bit").pack(anchor="w", padx=10, pady=2)
+        ctk.CTkRadioButton(self.bit_depth_frame, text="24-bit", 
+                        variable=self.bit_depth_var, value="24-bit").pack(anchor="w", padx=10, pady=2)
+        ctk.CTkRadioButton(self.bit_depth_frame, text="Float32", 
+                        variable=self.bit_depth_var, value="32-bit").pack(anchor="w", padx=10, pady=2)
         # FLAC Block
         self.flac_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
         self.flac_frame.grid(row=9, column=0, sticky="ew")
@@ -884,6 +927,7 @@ class SeparationApp(ctk.CTk):
 
         # Separate Button
         ctk.CTkButton(sep_scrollable, text="Start Batch Separation", height=40, corner_radius=0, font=ctk.CTkFont(weight="bold"), command=self.separate_audio).grid(row=13, column=0, sticky="ew", padx=10, pady=(30,10))
+        ctk.CTkLabel(sep_scrollable, text="Turn ON switches \nnext to input songs\nto separate audio.", font=ctk.CTkFont(size=11, slant="italic")).grid(row=14, column=0, padx=10)
 
     def create_sep_out_tab(self):
         for widget in getattr(self, "sep_out_frame", self.main_frame).winfo_children():
@@ -1167,7 +1211,7 @@ class SeparationApp(ctk.CTk):
             bit_depth_str = f"{bits}-bit" if bits > 0 else "N/A"
             
         except Exception as e:
-            print(f"Could not read metadata: {e}")
+            logging.info(f"Could not read metadata: {e}")
             return
 
         # --- Pop-up Dialog ---
@@ -1206,9 +1250,15 @@ class SeparationApp(ctk.CTk):
                     self.mono_label.configure(text_color=("black", "white"))
                     self.stereo_label.configure(text_color="gray")
 
-        def sync_bit_depth():
-            if hasattr(self, 'bit_depth_var') and bits in [24, 32]:
-                self.bit_depth_var.set(bits == 24)
+        def sync_bit_depth(bits):
+            """Updates the UI radio buttons based on detected file bit depth."""
+            if hasattr(self, 'bit_depth_var'):
+                if bits == 16:
+                    self.bit_depth_var.set("16-bit")
+                elif bits == 24:
+                    self.bit_depth_var.set("24-bit")
+                elif bits == 32:
+                    self.bit_depth_var.set("32-bit")
 
         def sync_bitrate():
             if hasattr(self, 'bitrate_var') and bitrate_kbps > 0:
@@ -1235,7 +1285,7 @@ class SeparationApp(ctk.CTk):
         if ext == "mp3":
             details.append(("Bitrate:", bitrate_str, sync_bitrate if bitrate_kbps > 0 else None))
         else:
-            details.append(("Bit Depth:", bit_depth_str, sync_bit_depth if bits in [24, 32] else None))
+            details.append(("Bit Depth:", bit_depth_str, sync_bit_depth if bits in [16, 24, 32] else None))
         
         # Build the grid
         for i, (lbl_text, val_text, sync_cmd) in enumerate(details):
@@ -1318,7 +1368,7 @@ class SeparationApp(ctk.CTk):
                 subprocess.Popen(["xdg-open", abs_path])
         except Exception as e:
             # Translated the error message as well for consistency
-            print(f"Error playing file: {e}")
+            logging.info(f"Error playing file: {e}")
 
     def delete_file(self, file_path, tab_to_reload="input"):
         """Deletes a file directly from the app and refreshes the UI."""
@@ -1382,7 +1432,6 @@ class SeparationApp(ctk.CTk):
             ctk.CTkLabel(row_frame, text=text, width=130, anchor="w").pack(side="left")
             ctk.CTkEntry(row_frame, textvariable=var).pack(side="left", fill="x", expand=True)
             
-            # --- CHANGED: Create button, pack it, and save it to a variable based on its text ---
             btn = ctk.CTkButton(row_frame, text="Browse", width=70, corner_radius=0,
                                 command=lambda v=var: self._browse_folder(v))
             btn.pack(side="right", padx=(10, 0))
@@ -1439,9 +1488,13 @@ class SeparationApp(ctk.CTk):
                                                  command=self.download_default_models)
         self.download_models_btn.pack(side="left", padx=(0, 10))
                       
-        self.scan_models_btn = ctk.CTkButton(action_mod_frame, text="Scan Directory", width=120, fg_color="gray40", hover_color="gray30",
+        self.scan_models_btn = ctk.CTkButton(action_mod_frame, text="Scan availeble Transciption models", width=120,
                                              command=self.scan_models_directory)
         self.scan_models_btn.pack(side="left", padx=(0, 10))
+        
+        self.import_custom_model_btn = ctk.CTkButton(action_mod_frame, text="Import Custom Model", width=120,
+                                                     command=self.import_custom_model)
+        self.import_custom_model_btn.pack(side="left", padx=(0, 10))
 
         # ==========================================
         # SECTION 3: SYSTEM ACTIONS & MEMORY
@@ -1501,7 +1554,7 @@ class SeparationApp(ctk.CTk):
             self._apply_dict_to_state(data)
             
         except (json.JSONDecodeError, KeyError) as e:
-            print(f"Settings file corrupted: {e}. Restoring defaults.")
+            logging.info(f"Settings file corrupted: {e}. Restoring defaults.")
             self._apply_dict_to_state(defaults)
             self.save_settings()
 
@@ -1883,6 +1936,9 @@ class SeparationApp(ctk.CTk):
         self.render_page(category)
 
     def render_page(self, category: str):
+        self.progress_text.configure(text="Loading library and scanning files...")
+        self.update_idletasks() # Force UI to show this text
+
         if category == "vocals":
             data_list = self.vocals
             list_frame = self.vocals_list_frame
@@ -1923,10 +1979,12 @@ class SeparationApp(ctk.CTk):
             widget.destroy()
 
         # --- 1. CORE MATH ---
+        # Use the recently calculated value
+        items_per_page = getattr(self, "ITEMS_PER_PAGE", 10)
         total_items = len(data_list)
-        
-        # ALWAYS calculate total_pages up here first!
-        total_pages = max(1, (total_items + self.ITEMS_PER_PAGE - 1) // self.ITEMS_PER_PAGE)
+
+        # Calculate total pages based on current capacity
+        total_pages = max(1, (total_items + items_per_page - 1) // items_per_page)
         
         # Safely get current page
         if not hasattr(self, 'current_pages'): 
@@ -1937,8 +1995,8 @@ class SeparationApp(ctk.CTk):
         self.current_pages[category] = curr_page
 
         # --- 2. DRAW ROWS ---
-        start_idx = curr_page * getattr(self, "ITEMS_PER_PAGE", 10)
-        end_idx = min(start_idx + getattr(self, "ITEMS_PER_PAGE", 10), total_items)
+        start_idx = curr_page * items_per_page
+        end_idx = min(start_idx + items_per_page, total_items)
 
         for i in range(start_idx, end_idx):
             item = data_list[i]
@@ -1996,50 +2054,56 @@ class SeparationApp(ctk.CTk):
         self._resize_timer = self.after(250, self._recalculate_pagination)
 
     def _recalculate_pagination(self, is_initialization=False):
-        """Dynamically calculates ITEMS_PER_PAGE. Disables pagination if full screen."""
-        
+        """Dynamically calculates ITEMS_PER_PAGE based on window height."""
         is_fullscreen = self.state() == 'zoomed'
+        window_height = self.winfo_height()
         
+        # Fallback for startup
+        if window_height < 100: window_height = 800 
+        row_height = 35 
+
         if is_fullscreen:
-            # If full screen, set to a massive number so everything fits on page 1
+            # Force reset to page 0 so items aren't hidden on a "ghost" page
+            self.current_pages["input"] = 0
+            self.current_pages["vocals"] = 0
+            self.current_pages["instr"] = 0
+            self.current_pages["trans"] = 0
+            # In fullscreen mode, we can show all items without pagination
             self.ITEMS_PER_PAGE_SEP = 9999
             self.ITEMS_PER_PAGE_TRANS = 9999
+            self.ITEMS_PER_PAGE_INPUT = 9999
         else:
             # --- NORMAL WINDOW MATH ---
             window_height = self.winfo_height()
-            if window_height < 100: window_height = 700 
-                
-            row_height = 35 
+            if window_height < 100: window_height = 800 
+            row_height = 38 
+
+            # Separation Tab (Vocals/Instr stacked)
+            avail_sep = (window_height - 240) / 2 
+            self.ITEMS_PER_PAGE_SEP = max(4, int(avail_sep / row_height))
+
+            # Transcription/Input Tab (One tall list)
+            avail_input = window_height - 200
+            self.ITEMS_PER_PAGE_INPUT = max(6, int(avail_input / row_height))
+            self.ITEMS_PER_PAGE_TRANS = self.ITEMS_PER_PAGE_INPUT
+
+        if is_initialization: return
+
+        # --- APPLY CHANGES TO ACTIVE TAB ---
+        # Determine which tab is currently visible and update it
+        if hasattr(self, 'input_frame') and self.input_frame.winfo_ismapped():
+            self.ITEMS_PER_PAGE = self.ITEMS_PER_PAGE_INPUT
+            self.render_page("input")
             
-            # Separation Tab Math (Divided by 2)
-            available_height_sep = (window_height - 320) / 2
-            self.ITEMS_PER_PAGE_SEP = max(4, min(25, int(available_height_sep / row_height) + 1))
-
-            # Transcription Tab Math (Full size)
-            available_height_trans = window_height - 250
-            self.ITEMS_PER_PAGE_TRANS = max(8, min(40, int(available_height_trans / row_height) + 1))
-
-
-        # --- TRIGGER RE-RENDER ---
-        if is_initialization:
-            return
-
-        # Trigger Separation Tab Update
-        if getattr(self, 'sep_out_tab_loaded', False) and self.sep_out_frame.winfo_ismapped():
-            if getattr(self, 'ITEMS_PER_PAGE', 0) != self.ITEMS_PER_PAGE_SEP:
-                self.ITEMS_PER_PAGE = self.ITEMS_PER_PAGE_SEP
-                self.current_pages["vocals"] = 0
-                self.current_pages["instr"] = 0
-                self.render_page("vocals")
-                self.render_page("instr")
-                
-        # Trigger Transcription Tab Update
-        elif getattr(self, 'trans_out_tab_loaded', False) and self.trans_out_frame.winfo_ismapped():
-            if getattr(self, 'ITEMS_PER_PAGE', 0) != self.ITEMS_PER_PAGE_TRANS:
-                self.ITEMS_PER_PAGE = self.ITEMS_PER_PAGE_TRANS
-                self.current_pages["trans"] = 0
-                self.render_page("trans")
+        elif hasattr(self, 'sep_out_frame') and self.sep_out_frame.winfo_ismapped():
+            self.ITEMS_PER_PAGE = self.ITEMS_PER_PAGE_SEP
+            self.render_page("vocals")
+            self.render_page("instr")
             
+        elif hasattr(self, 'trans_out_frame') and self.trans_out_frame.winfo_ismapped():
+            self.ITEMS_PER_PAGE = self.ITEMS_PER_PAGE_TRANS
+            self.render_page("trans")
+
     def change_output_folder(self, filetype):
         folder = filedialog.askdirectory(title=f"Select {filetype.capitalize()} Output Folder")
         if folder:
@@ -2067,24 +2131,13 @@ class SeparationApp(ctk.CTk):
         default_models_dir = os.path.join(app_dir, "Models")
         self.models_dir = default_models_dir
         
-        # Force HuggingFace (Wav2Vec2) to use your Models folder globally
-        os.environ["HF_HOME"] = os.path.join(self.models_dir, "huggingface")
-        os.environ["HF_HUB_CACHE"] = os.path.join(self.models_dir, "huggingface", "hub")
-
-        # Force PyTorch (Demucs & OpenUnmix) to use your Models folder globally
-        os.environ["TORCH_HOME"] = os.path.join(self.models_dir, "hub")
-
-        # Force Spleeter to use your Models folder globally
-        os.environ["MODEL_PATH"] = self.models_dir
-
         # 1. Check if the user has a custom path saved in settings.json
-        if os.path.exists(self.settings_file):
+        if hasattr(self, 'settings_file') and os.path.exists(self.settings_file):
             try:
                 with open(self.settings_file, "r") as f:
                     settings = json.load(f)
-                    # Get the saved path. If it doesn't exist OR is an empty string, use default
                     saved_dir = settings.get("models_dir", "")
-                    if not saved_dir:  # This catches the "" empty string!
+                    if not saved_dir:  
                         self.models_dir = default_models_dir
                     else:
                         self.models_dir = saved_dir
@@ -2094,224 +2147,75 @@ class SeparationApp(ctk.CTk):
         # 2. Auto-create the directory if it doesn't exist
         os.makedirs(self.models_dir, exist_ok=True)
         
-        # 3. Lock in the environment variables BEFORE any AI libraries load
-        os.environ["TORCH_HOME"] = self.models_dir
-        os.environ["HF_HOME"] = self.models_dir
+        # 3. Lock in the environment variables globally BEFORE any AI libraries load
+        os.environ["TORCH_HOME"] = os.path.join(self.models_dir, "hub")
+        os.environ["HF_HOME"] = os.path.join(self.models_dir, "huggingface")
+        os.environ["HF_HUB_CACHE"] = os.path.join(self.models_dir, "huggingface", "hub")
+        os.environ["TRANSFORMERS_CACHE"] = os.path.join(self.models_dir, "huggingface")
         os.environ["MODEL_PATH"] = self.models_dir
         
         # 4. Save the confirmed path back to settings
         curr_settings = {}
-        if os.path.exists(self.settings_file):
+        if hasattr(self, 'settings_file') and os.path.exists(self.settings_file):
             try:
                 with open(self.settings_file, "r") as f:
                     curr_settings = json.load(f)
             except: pass
             
-        curr_settings["models_dir"] = self.models_dir
-        with open(self.settings_file, "w") as f:
-            json.dump(curr_settings, f, indent=4)
+            curr_settings["models_dir"] = self.models_dir
+            with open(self.settings_file, "w") as f:
+                json.dump(curr_settings, f, indent=4)
 
     def download_default_models(self):
-        """!
-        @brief Unified function to download essential default models in the background.
-        Includes a status tracker and spawns a summary popup when finished.
         """
-        self.progress_bar.set(0)
-        self.progress_bar.grid()
-        self.progress_bar.configure(mode="indeterminate")
-        self.progress_bar.start()
+        Unified function to download essential default models in the background 
+        using the external util. Includes a status tracker and spawns a summary popup.
+        """
+        if hasattr(self, 'progress_bar'):
+            self.progress_bar.set(0)
+            self.progress_bar.grid()
+            self.progress_bar.configure(mode="indeterminate")
+            self.progress_bar.start()
 
-        # ==========================================
-        # SAFE ZONE (Main Thread)
-        # ==========================================
-        demucs_csv = ""
-        if hasattr(self, 'model_vars') and "demucs" in self.model_vars:
-            demucs_csv = self.model_vars["demucs"].get()
-        elif hasattr(self, 'separator_models'):
-            demucs_csv = ", ".join(self.separator_models.get("Demucs", ["htdemucs"]))
-            
-        demucs_models = [m.strip() for m in demucs_csv.split(",") if m.strip()]
-
-        default_vosk = "vosk-model-small-en-us-0.15"
-        vosk_dir = os.path.join(self.models_dir, "vosk")
-        vosk_path = os.path.join(vosk_dir, default_vosk)
-        vosk_needs_download = not os.path.exists(vosk_path)
+        def update_ui(tool_name, status):
+            # Update the UI text safely from the background thread
+            if hasattr(self, 'progress_text'):
+                self.after(0, lambda: self.progress_text.configure(text=f"{tool_name}: {status}"))
 
         def download_thread():
-            # Dictionary to track the status of EVERY tool
-            status_report = {
-                "Spleeter": "Pending ⏭️",
-                "Demucs": "Skipped ⏳",
-                "OpenUnmix": "Pending ⏳",
-                "Whisper": "Pending ⏳",
-                "Wav2Vec2": "Pending ⏳",
-                "Vosk": "Pending ⏳"
-            }
-
-            # ==========================================
-            # DANGEROUS ZONE (Background Thread)
-            # ==========================================
+            from separators.utils import download_required_models
             
-            # 1. Spleeter
-            try:
-                self.after(0, lambda: self.progress_text.configure(text="Verifying Spleeter model..."))
-                
-                # FORCE Spleeter to use your specific Models folder
-                os.environ["MODEL_PATH"] = self.models_dir
-                
-                # When MODEL_PATH is set, Spleeter saves it as Models/2stems 
-                # (instead of the default pretrained_models/2stems)
-                spleeter_check = os.path.join(self.models_dir, "2stems")
-                
-                if os.path.exists(spleeter_check):
-                    status_report["Spleeter"] = "Found 🔍"
-                else:
-                    status_report["Spleeter"] = "Downloaded ✅"
-                    
-                from spleeter.separator import Separator
-                # This will now download into your Models folder if missing, or skip if found
-                Separator('spleeter:2stems')
-                
-            except ImportError:
-                status_report["Spleeter"] = "Not Installed ❌"
-            except Exception as e:
-                status_report["Spleeter"] = "Error ❌"
-                print(f"Spleeter Error: {e}")
-
-            # 2. Demucs
-            if demucs_models:
-                try:
-                    import demucs.pretrained
-                    # Demucs saves .th files with hashes in the checkpoints folder
-                    checkpoints_dir = os.path.join(self.models_dir, "hub", "checkpoints")
-                    if os.path.exists(checkpoints_dir) and any(f.endswith('.th') for f in os.listdir(checkpoints_dir)):
-                        status_report["Demucs"] = "Found 🔍"
-                    else:
-                        status_report["Demucs"] = "Downloaded ✅"
-                        
-                    for m in demucs_models:
-                        self.after(0, lambda mod=m: self.progress_text.configure(text=f"Verifying Demucs: {mod}..."))
-                        demucs.pretrained.get_model(m)
-                except Exception as e:
-                    status_report["Demucs"] = "Error ❌"
-                    print(f"Demucs Error: {e}")
-
-            # 3. OpenUnmix
-            try:
-                self.after(0, lambda: self.progress_text.configure(text="Verifying OpenUnmix model..."))
-                hub_dir = os.path.join(self.models_dir, "hub")
-                # PyTorch hub creates a folder with "open-unmix" in the name
-                if os.path.exists(hub_dir) and any("open-unmix" in d.lower() for d in os.listdir(hub_dir)):
-                    status_report["OpenUnmix"] = "Found 🔍"
-                else:
-                    status_report["OpenUnmix"] = "Downloaded ✅"
-                    
-                import torch
-                torch.hub.load('sigsep/open-unmix-pytorch', 'umxhq', trust_repo=True)
-            except Exception as e:
-                status_report["OpenUnmix"] = "Error ❌"
-                print(f"OpenUnmix Error: {e}")
-
-            # 4. Whisper
-            try:
-                self.after(0, lambda: self.progress_text.configure(text="Verifying Whisper model..."))
-                import whisper
-                whisper_dir = os.path.join(self.models_dir, "whisper")
-                os.makedirs(whisper_dir, exist_ok=True)
-                
-                # Whisper usually names the base model file "base.pt"
-                expected_model = os.path.join(whisper_dir, "base.pt")
-                if not os.path.exists(expected_model):
-                    status_report["Whisper"] = "Downloaded ✅"
-                else:
-                    status_report["Whisper"] = "Found 🔍"
-                
-                # Force whisper to download directly into your Models folder
-                whisper.load_model("base", download_root=whisper_dir)
-            except Exception as e:
-                status_report["Whisper"] = "Error ❌"
-                print(f"Whisper Error: {e}")
-
-            # 5. Wav2Vec2
-            try:
-                self.after(0, lambda: self.progress_text.configure(text="Verifying Wav2Vec2 model..."))
-                
-                # We MUST set HuggingFace environments BEFORE importing transformers
-                hf_dir = os.path.join(self.models_dir, "huggingface")
-                os.environ["HF_HOME"] = hf_dir
-                os.environ["HF_HUB_CACHE"] = os.path.join(hf_dir, "hub")
-                
-                from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
-                
-                hf_hub_dir = os.path.join(hf_dir, "hub")
-                # HF uses folders formatted like "models--facebook--wav2vec2..."
-                if os.path.exists(hf_hub_dir) and any("models--facebook--wav2vec2" in d for d in os.listdir(hf_hub_dir)):
-                    status_report["Wav2Vec2"] = "Found 🔍"
-                else:
-                    status_report["Wav2Vec2"] = "Downloaded ✅"
-                
-                model_name = "facebook/wav2vec2-base-960h"
-                Wav2Vec2Processor.from_pretrained(model_name)
-                Wav2Vec2ForCTC.from_pretrained(model_name)
-            except Exception as e:
-                status_report["Wav2Vec2"] = "Error ❌"
-                print(f"Wav2Vec2 Error: {e}")
-
-            # 6. Vosk
-            try:
-                if vosk_needs_download:
-                    self.after(0, lambda: self.progress_text.configure(text="Downloading Vosk model..."))
-                    url = f"https://alphacephei.com/vosk/models/{default_vosk}.zip"
-                    os.makedirs(vosk_dir, exist_ok=True)
-                    self._download_and_extract_sync(url, vosk_dir)
-                    status_report["Vosk"] = "Downloaded ✅"
-                else:
-                    status_report["Vosk"] = "Found 🔍"
-            except Exception as e:
-                status_report["Vosk"] = "Error ❌"
-                print(f"Vosk Error: {e}")
-
-            # ==========================================
-            # CLEANUP & UI UPDATE
-            # ==========================================
-            self.after(0, lambda: self.progress_text.configure(text="✅ Background setup complete!"))
+            # Fetch your model lists from settings or state (Examples below)
+            # You should adapt these lists based on how you load them in your app
+            demucs_list = ["htdemucs"] 
+            whisper_list = ["base"]
+            wav2vec2_list = ["facebook/wav2vec2-base-960h"]
             
-            if hasattr(self, 'scan_models_directory'):
-                self.after(0, self.scan_models_directory)
+            # Call the utils function
+            final_status = download_required_models(
+                models_dir=self.models_dir, 
+                demucs_models=demucs_list,
+                whisper_models=whisper_list,
+                wav2vec2_models=wav2vec2_list,
+                status_callback=update_ui
+            )
+            
+            # Stop progress bar
+            if hasattr(self, 'progress_bar'):
+                self.after(0, self.progress_bar.stop)
+                self.after(0, lambda: self.progress_bar.configure(mode="determinate"))
+                self.after(0, lambda: self.progress_bar.set(1.0))
+                self.after(3000, getattr(self.progress_bar, 'grid_remove', lambda: None))
 
-            # Stop Progress Bar
-            self.after(0, self.progress_bar.stop)
-            self.after(0, lambda: self.progress_bar.configure(mode="determinate"))
-            self.after(0, lambda: self.progress_bar.set(1.0)) # <--- Fixed line
-            self.after(3000, getattr(self.progress_bar, 'grid_remove', lambda: None))
+            # Rescan models to update UI, then show popup
+            self.after(0, self.scan_models_directory)
+            self.after(500, lambda: self.show_model_summary(final_status))
 
-            # SHOW THE SUMMARY POPUP (Wait a tiny bit so the UI has time to catch up)
-            self.after(500, lambda: self.show_model_summary(status_report))
-
-        # Start the background thread
         threading.Thread(target=download_thread, daemon=True).start()
 
-    def _download_and_extract_sync(self, download_url, extract_path):
-        """!
-        @brief Helper for synchronous download & extract (should be called inside a thread).
-        """
-        temp_dir = tempfile.gettempdir()
-        zip_path = os.path.join(temp_dir, "temp_model_download.zip")
-        
-        import urllib.request
-        import zipfile
-        
-        urllib.request.urlretrieve(download_url, zip_path)
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            # FIX: Extracts exactly to the path we provide
-            zip_ref.extractall(extract_path) 
-            
-        if os.path.exists(zip_path):
-            os.remove(zip_path)
-
     def show_model_summary(self, status_report):
-        """!
-        @brief Displays a popup window summarizing the results of the model download thread.
+        """
+        Displays a popup window summarizing the results of the model download thread.
         """
         dialog = ctk.CTkToplevel(self)
         dialog.title("Setup Summary")
@@ -2319,19 +2223,13 @@ class SeparationApp(ctk.CTk):
         dialog.attributes("-topmost", True)
         dialog.grab_set()
 
-        # Header
         ctk.CTkLabel(dialog, text="Model Setup Results", font=ctk.CTkFont(size=18, weight="bold")).pack(pady=(20, 15))
 
-        # Dynamically create labels for each tool's status
         for tool, status in status_report.items():
-            # Pick a color based on the status emoji
-            text_color = "white" # Default
-            if "❌" in status:
-                text_color = "#ff6666" # Light Red
-            elif "✅" in status:
-                text_color = "#66ff66" # Light Green
-            elif "🔍" in status:
-                text_color = "#66ccff" # Light Blue
+            text_color = "white"
+            if "❌" in status: text_color = "#ff6666" 
+            elif "✅" in status: text_color = "#66ff66" 
+            elif "🔍" in status: text_color = "#66ccff" 
 
             row_frame = ctk.CTkFrame(dialog, fg_color="transparent")
             row_frame.pack(fill="x", padx=40, pady=5)
@@ -2339,73 +2237,203 @@ class SeparationApp(ctk.CTk):
             ctk.CTkLabel(row_frame, text=f"{tool}:", font=ctk.CTkFont(size=14, weight="bold")).pack(side="left")
             ctk.CTkLabel(row_frame, text=status, text_color=text_color, font=ctk.CTkFont(size=14)).pack(side="right")
 
-        # Close button
         ctk.CTkButton(dialog, text="Awesome!", command=dialog.destroy, width=120).pack(pady=(25, 10))
 
     def scan_models_directory(self):
-        """!
-        @brief Scans the models_dir and smartly finds downloaded models for vosk only.
-        Updates UI entries for Vosk, but ignores PyTorch hashed files for Demucs/OpenUnmix.
         """
-        if not self.models_dir or not os.path.exists(self.models_dir):
+        Scans the selected directory for strictly physical models (Vosk, Whisper, Wav2Vec2).
+        Injects the required API strings for PyTorch Hub tools (Demucs, OpenUnmix).
+        Saves the results directly to settings.json.
+        """
+        if hasattr(self, 'settings_models_var'):
+            scan_dir = self.settings_models_var.get()
+            self.models_dir = scan_dir  
+        else:
+            scan_dir = self.models_dir
+
+        if not scan_dir or not os.path.exists(scan_dir):
             if hasattr(self, 'progress_text'):
                 self.progress_text.configure(text="❌ Models directory not found.")
             return
 
-        # 1. Define where Vosk stores its files
-        vosk_path = os.path.join(self.models_dir, "vosk")
+        found_models = {
+            "vosk": [],
+            "whisper": [],
+            "wav2vec2": [],
+            "demucs": [],
+            "openunmix": []
+        }
 
-        # 2. Scan for Vosk (Look for subfolders)
-        found_vosk = []
+        # 1. GROUP A: STRICTLY PHYSICAL SCANS
+        # Vosk
+        vosk_path = os.path.join(scan_dir, "vosk")
         if os.path.exists(vosk_path):
-            found_vosk = [d for d in os.listdir(vosk_path) if os.path.isdir(os.path.join(vosk_path, d))]
+            found_models["vosk"] = [d for d in os.listdir(vosk_path) if os.path.isdir(os.path.join(vosk_path, d))]
 
-        # 3. Safely update ONLY the Vosk UI text entry
+        # Whisper
+        whisper_path = os.path.join(scan_dir, "whisper")
+        if os.path.exists(whisper_path):
+            found_models["whisper"] = [f.replace('.pt', '') for f in os.listdir(whisper_path) if f.endswith('.pt')]
+
+        # Wav2Vec2
+        hf_hub_paths = [os.path.join(scan_dir, "huggingface", "hub"), os.path.join(scan_dir, "hub")]
+        for hf_path in hf_hub_paths:
+            if os.path.exists(hf_path):
+                for d in os.listdir(hf_path):
+                    if os.path.isdir(os.path.join(hf_path, d)) and d.startswith("models--"):
+                        clean_name = d.replace("models--", "").replace("--", "/")
+                        found_models["wav2vec2"].append(clean_name)
+
+        # 2. GROUP B: CUSTOM MODEL SCANS (Official models injected below)
+        demucs_path = os.path.join(scan_dir, "demucs_custom")
+        if os.path.exists(demucs_path):
+            found_models["demucs"] = [os.path.join(demucs_path, d).replace("\\", "/") for d in os.listdir(demucs_path) if os.path.isdir(os.path.join(demucs_path, d))]
+
+        umx_path = os.path.join(scan_dir, "openunmix_custom")
+        if os.path.exists(umx_path):
+            found_models["openunmix"] = [os.path.join(umx_path, d).replace("\\", "/") for d in os.listdir(umx_path) if os.path.isdir(os.path.join(umx_path, d))]
+
+        # 3. UPDATE UI VARIABLES (Smart Merge vs. Hard Sync)
         if hasattr(self, 'model_vars'):
-            if found_vosk and "vosk" in self.model_vars:
-                self.model_vars["vosk"].set(", ".join(sorted(list(set(found_vosk)))))
-                self.transcription_models["vosk"] = sorted(list(set(found_vosk)))
+            
+            # Group definitions
+            sync_tools = ["vosk", "whisper", "wav2vec2"]
+            merge_tools = ["demucs", "openunmix"]
 
-        # 4. Refresh the dropdown menus in the Input/Output tabs (Safely)
+            for tool in found_models.keys():
+                if tool in self.model_vars:
+                    # Logic for Vosk/Whisper/Wav2vec2: Wipe and match disk
+                    if tool in sync_tools:
+                        combined = sorted(list(set(found_models[tool])))
+                    
+                    # Logic for Demucs/OpenUnmix: Merge with existing UI text
+                    else:
+                        # Grab what's currently in the text box and split by comma
+                        current_text = self.model_vars[tool].get()
+                        existing_list = [x.strip() for x in current_text.split(",") if x.strip()]
+                        
+                        # Add the "Official" safety net just in case they cleared the box
+                        officials = ["htdemucs", "mdx", "mdx_extra"] if tool == "demucs" else ["umx", "umxl", "umxhq"]
+                        
+                        # Merge: Existing + Officials + Newly Scanned Folders
+                        combined = sorted(list(set(existing_list + officials + found_models[tool])))
+                    
+                    # Update the UI text box
+                    self.model_vars[tool].set(", ".join(combined))
+                    
+                    # Update internal tracking for dropdowns
+                    if hasattr(self, 'transcription_models') and tool in sync_tools:
+                        self.transcription_models[tool] = combined
+                    if hasattr(self, 'separator_models'):
+                        if tool == "demucs": self.separator_models["Demucs"] = combined
+                        if tool == "openunmix": self.separator_models["OpenUnmix"] = combined
+
+        # 4. AUTO-SAVE
+        if hasattr(self, 'save_settings_changes'):
+            original_showinfo = messagebox.showinfo
+            messagebox.showinfo = lambda *args, **kwargs: None 
+            try:
+                self.save_settings_changes()
+            finally:
+                messagebox.showinfo = original_showinfo
+        elif hasattr(self, 'save_settings'):
+            self.save_settings()
+
+        # 5. REFRESH UI
         try:
-            if hasattr(self, 'on_tool_change'): 
-                self.on_tool_change()
-            if hasattr(self, 'on_trans_tool_change'): 
-                self.on_trans_tool_change()
-        except Exception as e:
-            # If the separation tabs aren't loaded yet, ignore the visual update
+            if hasattr(self, 'on_trans_tool_change'): self.on_trans_tool_change()
+        except Exception:
             pass
 
+        # 6. EDUCATE THE USER via Popup
         if hasattr(self, 'progress_text'):
-            self.progress_text.configure(text="🔍 Available models scanned and updated.")
+            self.progress_text.configure(text="✅ Models updated and saved.")
 
     def import_custom_model(self):
-        """!
-        @brief Safely copies a user-selected custom model folder into the app's models directory.
         """
-        source_dir = filedialog.askdirectory(title="Select Custom Model Folder (e.g., OpenUnmix)")
-        if not source_dir: return 
+        Spawns a small popup to ask the user which tool the custom model is for,
+        then opens the file/folder picker and copies it to the correct directory.
+        """
+        # 1. Create a tiny popup window
+        dialog = ctk.CTkToplevel(self)
+        dialog.title("Import Custom Model")
+        dialog.geometry("320x220")
+        dialog.attributes("-topmost", True)
+        dialog.grab_set()
+
+        ctk.CTkLabel(dialog, text="Which tool is this model for?", font=ctk.CTkFont(weight="bold")).pack(pady=(20, 10))
+
+        # We exclude Spleeter here
+        tools = ["Vosk", "Whisper", "Wav2Vec2", "Demucs", "OpenUnmix"]
+        selected_tool = ctk.StringVar(value=tools[0])
+        ctk.CTkOptionMenu(dialog, variable=selected_tool, values=tools).pack(pady=10)
+
+        def proceed():
+            tool = selected_tool.get()
+            dialog.destroy()
+            self._execute_import(tool) # Pass the choice to the actual copy logic
+
+        ctk.CTkButton(dialog, text="Next", command=proceed).pack(pady=20)
+
+    def _execute_import(self, tool):
+        """Handles the actual file dialog and copying based on the selected tool."""
+        if tool == "Whisper":
+            source_path = filedialog.askopenfilename(
+                title="Select Custom Whisper Model (.pt)", 
+                filetypes=[("PyTorch Models", "*.pt")]
+            )
+            is_file = True
+        else:
+            source_path = filedialog.askdirectory(title=f"Select Custom {tool} Model Folder")
+            is_file = False
+
+        if not source_path: 
+            return 
             
-        folder_name = os.path.basename(source_dir)
-        destination_dir = os.path.join(self.models_dir, folder_name)
+        item_name = os.path.basename(source_path)
         
-        if os.path.exists(destination_dir):
-            messagebox.showwarning("Model Exists", f"A model named '{folder_name}' is already in the models folder.")
+        if tool == "Vosk":
+            dest_path = os.path.join(self.models_dir, "vosk", item_name)
+        elif tool == "Whisper":
+            dest_path = os.path.join(self.models_dir, "whisper", item_name)
+        elif tool == "Wav2Vec2":
+            dest_path = os.path.join(self.models_dir, "huggingface", "hub", f"models--custom--{item_name}")
+        elif tool == "Demucs":
+            dest_path = os.path.join(self.models_dir, "demucs_custom", item_name)
+        elif tool == "OpenUnmix":
+            dest_path = os.path.join(self.models_dir, "openunmix_custom", item_name)
+
+        if os.path.exists(dest_path):
+            messagebox.showwarning("Model Exists", f"A model named '{item_name}' is already installed for {tool}.")
             return
             
-        has_model_files = any(f.endswith(('.pth', '.pt', '.bin', '.onnx', '.json', '.yaml')) for f in os.listdir(source_dir))
-        
-        if not has_model_files:
-            if not messagebox.askyesno("Suspicious Folder", "This folder doesn't seem to contain standard AI model files.\n\nAre you sure you want to import it?"):
-                return
-
         try:
-            self.progress_text.configure(text=f"Importing {folder_name}...")
-            shutil.copytree(source_dir, destination_dir)
-            self.scan_models_directory() # Auto-scan after import
-            messagebox.showinfo("Success", f"Model '{folder_name}' imported successfully!")
+            if hasattr(self, 'progress_text'):
+                self.progress_text.configure(text=f"Importing {item_name} for {tool}...")
+            
+            if is_file:
+                os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+                shutil.copy2(source_path, dest_path)
+            else:
+                shutil.copytree(source_path, dest_path)
+                
+            # ---> AUTOMATICALLY UPDATE UI AND JSON HERE <---
+            self.scan_models_directory() 
+            
+            # Since scan_models_directory updates self.model_vars, we can just call your 
+            # save_settings_changes() function to push those UI variables straight into the JSON file
+            if hasattr(self, 'save_settings_changes'):
+                self.save_settings_changes()
+            elif hasattr(self, 'save_settings'):
+                self.save_settings() # Fallback if save_settings_changes isn't available
+
+            messagebox.showinfo("Success", f"Custom {tool} model '{item_name}' imported successfully!")
+            
+            if hasattr(self, 'progress_text'):
+                self.progress_text.configure(text="✅ Import complete.")
+                
         except Exception as e:
-            messagebox.showerror("Import Error", f"Failed to copy model directory.\n\nDetails: {str(e)}")
+            messagebox.showerror("Import Error", f"Failed to import model.\n\nDetails: {str(e)}")
 
     def _browse_folder(self, string_var):
         """Helper to let users click a button instead of typing a path."""
@@ -2467,7 +2495,7 @@ class SeparationApp(ctk.CTk):
             import sys
             import gc
             
-            print(f"[INFO] Switched to '{active_tab}'. Cleared inactive models.")
+            logging.info(f"[INFO] Switched to '{active_tab}'. Cleared inactive models.")
             
             # Force Python's Garbage Collector to clean up standard memory
             gc.collect()
@@ -2477,7 +2505,7 @@ class SeparationApp(ctk.CTk):
                 import torch
                 if torch.cuda.is_available():
                     torch.cuda.empty_cache()
-            
+
             # Update the progress text to inform the user!
             if hasattr(self, 'progress_bar') and hasattr(self, 'progress_text'):
                 self.progress_bar.set(0)
@@ -2610,10 +2638,9 @@ class SeparationApp(ctk.CTk):
             return
 
         # 2. Gather UI params
-        try:
-            fmt = self.format_var.get()
-            ai_tool = self.ai_tool_var.get()
-            
+        fmt = self.format_var.get()
+        ai_tool = self.ai_tool_var.get()
+        try:            
             sr = int(self.sr_var.get()) if fmt in ["wav", "flac"] else 44100
             shifts = int(self.shifts_var.get()) if ai_tool == "Demucs" else 1
             bitrate = f"{int(self.bitrate_var.get())}k" if fmt == "mp3" else "192k"
@@ -2662,11 +2689,18 @@ class SeparationApp(ctk.CTk):
 
         try:
             # --- LAZY LOADING BLOCK ---
-            self.update_task_progress(5, f"Loading {config.ai_tool} model...", 1, total_files, "Separation")  
+            # 1. Enforce CPU for Spleeter
+            actual_device = config.device
+            if config.ai_tool == "Spleeter":
+                actual_device = "CPU"
+                self.update_task_progress(5, f"Loading Spleeter (Forced to CPU)...", 1, total_files, "Separation")  
+            else:
+                self.update_task_progress(5, f"Loading {config.ai_tool} model on {actual_device}...", 1, total_files, "Separation")  
 
-            if config.device == "CPU":
+            # 2. Apply environment variables based on the actual_device
+            if actual_device == "CPU":
                 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-            elif config.device == "GPU" and "CUDA_VISIBLE_DEVICES" in os.environ and os.environ["CUDA_VISIBLE_DEVICES"] == "-1":
+            elif actual_device == "GPU" and "CUDA_VISIBLE_DEVICES" in os.environ and os.environ["CUDA_VISIBLE_DEVICES"] == "-1":
                 del os.environ["CUDA_VISIBLE_DEVICES"]
 
             if config.ai_tool == "Spleeter" and getattr(self, "spleeter_sep", None) is None:
@@ -2695,20 +2729,19 @@ class SeparationApp(ctk.CTk):
                     result = self.spleeter_sep.separate(
                         input_path, song_name, config.vocals_folder, config.instr_folder, 
                         config.channels, config.fmt, config.sr, config.bitrate, 
-                        config.device, flac_compression=config.flac_compression, progress_callback=cb
+                        actual_device, flac_compression=config.flac_compression, progress_callback=cb
                     )
                 elif config.ai_tool == "Demucs":
-                    result = self.demucs_sep.separate(
-                        input_path, song_name, config.vocals_folder, config.instr_folder, 
-                        config.model, config.channels, config.fmt, config.sr, config.bitrate, 
-                        config.bit_depth, config.mp3_preset, config.shifts, config.overlap, 
-                        config.device, flac_compression=config.flac_compression, progress_callback=cb
-                    )
+                    result = self.demucs_sep.separate(input_path=input_path, song_name=song_name, vocals_folder=config.vocals_folder, 
+                        instr_folder=config.instr_folder, model=config.model, channels=config.channels, fmt=config.fmt, 
+                        sr=config.sr, bitrate=config.bitrate, bit_depth=config.bit_depth, shifts=config.shifts, 
+                        overlap=config.overlap, device_choice=actual_device, flac_compression=config.flac_compression, 
+                        progress_callback=cb)
                 elif config.ai_tool == "OpenUnmix":
                     result = self.openunmix_sep.separate(
                         input_path, song_name, config.vocals_folder, config.instr_folder, 
                         config.model, config.channels, config.fmt, config.sr, config.bitrate, 
-                        config.device, flac_compression=config.flac_compression, progress_callback=cb
+                        actual_device, flac_compression=config.flac_compression, progress_callback=cb
                     )
                 
                 if isinstance(result, tuple) and len(result) >= 3 and result[0]:
@@ -2829,12 +2862,18 @@ class SeparationApp(ctk.CTk):
 
         try:
             # --- LAZY LOADING ---
-            self.update_task_progress(5, f"Initializing {config.tool}...", 1, total_files, "Transcription")
+            # 1. Enforce CPU for Vosk
+            actual_device = config.device
+            if config.tool == "vosk":
+                actual_device = "CPU"
+                self.update_task_progress(5, f"Initializing Vosk (Forced to CPU)...", 1, total_files, "Transcription")
+            else:
+                self.update_task_progress(5, f"Initializing {config.tool} on {actual_device}...", 1, total_files, "Transcription")
 
             # --- Apply environment variables for strict CPU fallback ---
-            if config.device == "CPU":
+            if actual_device == "CPU":
                 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-            elif config.device == "GPU" and "CUDA_VISIBLE_DEVICES" in os.environ and os.environ["CUDA_VISIBLE_DEVICES"] == "-1":
+            elif actual_device == "GPU" and "CUDA_VISIBLE_DEVICES" in os.environ and os.environ["CUDA_VISIBLE_DEVICES"] == "-1":
                 del os.environ["CUDA_VISIBLE_DEVICES"]
 
             if config.tool == "whisper" and getattr(self, "whisper_trans", None) is None:
@@ -2865,14 +2904,14 @@ class SeparationApp(ctk.CTk):
                 out_path = os.path.join(config.output_folder, out_name)
 
                 cb = lambda p, m: self.update_task_progress(p, m, i, total_files, task_name="Transcription")
-
+                result = None
                 if config.tool == "whisper":
-                    result = self.whisper_trans.transcribe(vocal_path, out_path, config.model, config.lang, device_choice=config.device, progress_callback=cb)
+                    result = self.whisper_trans.transcribe(vocal_path, out_path, config.model, config.lang, device_choice=actual_device, progress_callback=cb)
                 elif config.tool == "wav2vec2":
-                    result = self.wav2vec2_trans.transcribe(vocal_path, out_path, config.model, device_choice=config.device, progress_callback=cb)
+                    result = self.wav2vec2_trans.transcribe(vocal_path, out_path, config.model, device_choice=actual_device, progress_callback=cb)
                 elif config.tool == "vosk":
-                    result = self.vosk_trans.transcribe(vocal_path, out_path, config.model, config.use_spk, device_choice=config.device, progress_callback=cb)
-                
+                    result = self.vosk_trans.transcribe(vocal_path, out_path, config.model, config.use_spk, device_choice=actual_device, progress_callback=cb)
+
                 # Check results and append to our lists
                 if isinstance(result, tuple) and len(result) == 2 and result[0]:
                     successful_files.append(result[1]) 
@@ -2911,5 +2950,12 @@ class SeparationApp(ctk.CTk):
 if __name__ == "__main__":
     multiprocessing.freeze_support()
 
-    app = SeparationApp()
-    app.mainloop()
+    try:
+        app = SeparationApp()
+        app.mainloop()
+    finally:
+        # This executes even if the app crashes
+        print("Cleaning up system resources...")
+        # Forcefully kill any remaining child processes of this script
+        for child in multiprocessing.active_children():
+            child.terminate()

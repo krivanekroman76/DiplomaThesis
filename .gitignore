@@ -17,7 +17,11 @@ ffplay.exe
 ffprobe.exe
 Models
 
-# Dataset - Do not upload (Academic license + large size)
+# Evaluation Folders to ignore
 Evaluation/musdb18_test_samples/
 separated_musdb/
-Evaluation/dataset_muni/audio
+Evaluation/evaluated_musdb
+
+Evaluation/dataset_muni/Black M
+Evaluation/dataset_muni/Soprano
+Evaluation/separated_muni

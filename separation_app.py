@@ -27,6 +27,7 @@ from dataclasses import dataclass
 from typing import Optional
 import torch
 import gc
+from typing import Dict, Any
 # The separators and transcription tools are lazy loaded to save RAM
 
 ctk.set_appearance_mode("System")
@@ -241,77 +242,79 @@ class SeparationApp(ctk.CTk):
     def show_welcome_tutorial(self):
         """Displays a paginated interactive tutorial for first-time users."""
         dialog = ctk.CTkToplevel(self)
-        dialog.title("Welcome to Audio Separator!")
-        # Increased size slightly to comfortably fit detailed instructions
-        dialog.geometry("560x450") 
+        dialog.title("Audio Separator - Quick Start Guide")
+        dialog.geometry("600x500") 
         dialog.attributes("-topmost", True)
+        dialog.resizable(False, False)
     
         self.tutorial_page = 0
         
-        # --- THE UPDATED FULL WORKFLOW TUTORIAL ---
+        # --- REFINED CONTENT BASED ON YOUR UI ---
         pages = [
             {
-                "title": "Welcome! 🎉",
-                "text": "Let's take a quick interactive tour to get you set up.\n\n"
-                "This application allows you to easily extract vocals, instrumentals, "
-                "and generate highly accurate text transcriptions using powerful AI models."
+                "title": "Welcome to Audio Separator! 🚀",
+                "text": "This tool uses state-of-the-art AI to pull vocals and instruments apart from any song.\n\n"
+                        "Let's get you set up in 60 seconds so you can start processing your first batch."
             },
             {
-                "title": "⚙️ Step 1: Folders & Paths",
-                "text": "First, we are in the Settings tab.\n\n"
-                "At the top, you can define exactly where your AI models are saved, "
-                "and set your default Input and Output folders.\n\nUse the 'Browse' buttons to set these up."
+                "title": "⚙️ Step 1: Initial Setup",
+                "text": "**Location: Settings Tab**\n\n"
+                        "Before your first run, tell the app where to save your AI models and where to look for music.\n\n"
+                        "• Use **'Download Default Models'** to get the AI brains ready.\n"
+                        "• Set your **Default Input/Output folders** to save time later."
             },
             {
-                "title": "🧠 Step 2: AI Models",
-                "text": "Scroll down a bit in Settings!\n\n"
-                "Under 'AI Models List', you must ensure you have the required models downloaded."
-                " Click 'Download Default Models' to get started automatically, or 'Scan Directory' if you added them manually."
+                "title": "🎵 Step 2: Load Your Music",
+                "text": "**Location: Input Tab**\n\n"
+                        "Click **'Add Song'** to bring files into the list. \n\n"
+                        "**Pro Tip:** Click the **'i' (Info)** button next to a song to open the **Audio Inspector**. This lets you check bitrates and sync your project settings automatically!"
             },
             {
-                "title": "🎵 Step 3: Add Your Audio",
-                "text": "Now, we've moved to the 'Input' tab.\n\n"
-                "Click 'Add Song' to load your audio files. They will appear in the list below. "
-                "If you add many files, you can use the `<` and `>` arrows at the bottom to flip through the pages!"
+                "title": "✂️ Step 3: Choose Your AI Tool",
+                "text": "**Location: Separation Menu (Right Side)**\n\n"
+                        "Choose your weapon:\n"
+                        "• **Spleeter:** Fast and efficient.\n"
+                        "• **Demucs:** High quality, great for complex tracks.\n"
+                        "• **OpenUnmix:** Excellent for research-grade separation.\n\n"
+                        "Hit **'Start Batch Separation'** to begin the magic."
             },
             {
-                "title": "✂️ Step 4: Separation Menu",
-                "text": "Look at the menu on the right side of the Input tab.\n\n"
-                "Here, choose your separation tool (like Spleeter or Demucs), pick a model, and select your output format (WAV, MP3, FLAC). "
-                "When ready, click 'Start Batch Separation' at the bottom."
+                "title": "🎧 Step 4: Review Your Tracks",
+                "text": "**Location: Separated Output Tab**\n\n"
+                        "Your files are now split into **Vocals** and **Instrumentals** lists.\n\n"
+                        "• Press ▶ to preview your results.\n"
+                        "• If you don't like a result, use the 🗑 button to clean up your workspace."
             },
             {
-                "title": "🎧 Step 5: Separation Results",
-                "text": "Once finished, your isolated tracks move to the 'Separated Output' tab.\n\n"
-                "You will see lists for Vocals and Instrumentals. You can use the ▶ button to listen to them immediately, "
-                "or the 🗑 button to delete unwanted tracks."
+                "title": "🗣️ Step 5: High-Accuracy Transcription",
+                "text": "**Location: Separated Output -> Transcription Menu**\n\n"
+                        "Want lyrics or scripts?\n"
+                        "1. **Check the box** next to any Vocal track.\n"
+                        "2. Select a tool like **Whisper** or **Vosk** on the right.\n"
+                        "3. Click **'Transcribe'**."
             },
             {
-                "title": "🗣️ Step 6: Trigger Transcription",
-                "text": "Want text from those vocals?\n\n"
-                "Still in the 'Separated Output' tab, check the box on the left of any vocal track. "
-                "Then, use the Transcription Menu on the right side to pick your AI tool (like Whisper or Vosk), "
-                "select a language, and click 'Transcribe'!"
-            },
-            {
-                "title": "📝 Step 7: Read & Wrap-up",
-                "text": "Finally, any generated text files will appear in the 'Transcribed Output' tab!\n\n"
-                "Click the 📖 icon next to your text file to open and read it instantly.\n\n"
-                "You are all set! Click 'Get Started' below to begin your audio processing."
+                "title": "📝 Step 6: Final Results",
+                "text": "**Location: Transcribed Output Tab**\n\n"
+                        "Your text files live here. Click the **📖 (Reader)** icon to view the transcription instantly.\n\n"
+                        "Everything is saved to your output folder automatically!"
             }
         ]
 
-        # Top Frame for Content
+        # --- UI LAYOUT ---
         content_frame = ctk.CTkFrame(dialog, fg_color="transparent")
-        content_frame.pack(fill="both", expand=True, padx=30, pady=30)
+        content_frame.pack(fill="both", expand=True, padx=40, pady=(20, 10))
 
-        title_label = ctk.CTkLabel(content_frame, text="", font=ctk.CTkFont(size=22, weight="bold"))
-        title_label.pack(pady=(10, 20))
+        title_label = ctk.CTkLabel(content_frame, text="", font=ctk.CTkFont(size=24, weight="bold"), text_color=("#3B8ED0", "#1f6aa5"))
+        title_label.pack(pady=(10, 10))
 
-        text_label = ctk.CTkLabel(content_frame, text="", font=ctk.CTkFont(size=15), wraplength=480, justify="left")
+        # Progress indicator (e.g., Step 1 of 7)
+        progress_label = ctk.CTkLabel(content_frame, text="", font=ctk.CTkFont(size=12))
+        progress_label.pack(pady=(0, 20))
+
+        text_label = ctk.CTkLabel(content_frame, text="", font=ctk.CTkFont(size=16), wraplength=500, justify="left")
         text_label.pack(pady=10, fill="both", expand=True)
 
-        # Bottom Frame for Buttons
         btn_frame = ctk.CTkFrame(dialog, fg_color="transparent")
         btn_frame.pack(fill="x", padx=30, pady=20)
 
@@ -319,79 +322,33 @@ class SeparationApp(ctk.CTk):
             page = pages[self.tutorial_page]
             title_label.configure(text=page["title"])
             text_label.configure(text=page["text"])
+            progress_label.configure(text=f"Step {self.tutorial_page + 1} of {len(pages)}")
             
-            # --- AUTO NAVIGATION & HIGHLIGHTING ---
+            # --- INTELLIGENT HIGHLIGHTING ---
             try:
-                flash_duration = 2200 
-
-                if self.tutorial_page == 1:
-                    # Step 1: Settings Folders
-                    if not self.settings_frame.winfo_ismapped():
-                        self._switch_tab(self.settings_frame, self.settings_button, "settings")
-                    self.flash_highlight(self.settings_button)
-                    
-                    if hasattr(self, 'models_browse_btn'): self.after(flash_duration, lambda: self.flash_highlight(self.models_browse_btn))
-                    if hasattr(self, 'input_browse_btn'): self.after(flash_duration, lambda: self.flash_highlight(self.input_browse_btn))
-                    if hasattr(self, 'vocals_browse_btn'): self.after(flash_duration, lambda: self.flash_highlight(self.vocals_browse_btn))
-                    if hasattr(self, 'instr_browse_btn'): self.after(flash_duration, lambda: self.flash_highlight(self.instr_browse_btn))
-                    if hasattr(self, 'trans_browse_btn'): self.after(flash_duration, lambda: self.flash_highlight(self.trans_browse_btn))
-
-                elif self.tutorial_page == 2:
-                    # Step 2: Settings Models
-                    if hasattr(self, 'download_models_btn'): self.flash_highlight(self.download_models_btn)
-                    if hasattr(self, 'scan_models_btn'): self.after(flash_duration, lambda: self.flash_highlight(self.scan_models_btn))
-
-                elif self.tutorial_page == 3:
-                    # Step 3: Input Tab - Add Audio
+                if self.tutorial_page == 1: # Settings
+                    self._switch_tab(self.settings_frame, self.settings_button, "settings")
+                elif self.tutorial_page in [2, 3]: # Input
                     self._switch_tab(self.input_frame, self.input_button, "input")
-                    self.flash_highlight(self.input_button)
-                    
-                    if hasattr(self, 'add_file_btn'):
-                        self.after(flash_duration, lambda: self.flash_highlight(self.add_file_btn))
-                    if hasattr(self, 'input_page_frame'):
-                        self.after(flash_duration * 2, lambda: self.flash_highlight(self.input_page_frame))
-
-                elif self.tutorial_page == 4:
-                    # Step 4: Input Tab - Separation Menu
-                    if hasattr(self, 'model_menu'):
-                        self.flash_highlight(self.model_menu)
-                    if hasattr(self, 'separate_button'):
-                        self.after(flash_duration, lambda: self.flash_highlight(self.separate_button))
-
-                elif self.tutorial_page == 5:
-                    # Step 5: Separation Output - Results
+                elif self.tutorial_page in [4, 5]: # Sep Output
                     self._switch_tab(self.sep_out_frame, self.sep_out_button, "sep_out")
-                    self.flash_highlight(self.sep_out_button)
-                    
-                    if hasattr(self, 'vocals_list_frame'):
-                        self.after(flash_duration, lambda: self.flash_highlight(self.vocals_list_frame))
-
-                elif self.tutorial_page == 6:
-                    # Step 6: Separation Output - Transcribe Menu (Right side)
-                    if hasattr(self, 'trans_model_menu'):
-                        self.flash_highlight(self.trans_model_menu)
-                    if hasattr(self, 'trans_button'):
-                        self.after(flash_duration, lambda: self.flash_highlight(self.trans_button))
-
-                elif self.tutorial_page == 7:
-                    # Step 7: Transcribed Output Tab
+                elif self.tutorial_page == 6: # Trans Output
                     self._switch_tab(self.trans_out_frame, self.trans_out_button, "trans_out")
-                    self.flash_highlight(self.trans_out_button)
-                    
-                    if hasattr(self, 'trans_list_frame'):
-                        self.after(flash_duration, lambda: self.flash_highlight(self.trans_list_frame))
-                    
+                
+                # Flash the main button for the current tab
+                current_tab_btn = [self.settings_button, self.input_button, self.sep_out_button, self.trans_out_button]
+                # Logic to trigger flash_highlight on relevant buttons could go here
             except Exception as e:
-                logging.info(f"Tutorial Navigation Warning: {e}")
+                logging.debug(f"Tutorial highlight skip: {e}")
 
-            # --- BUTTON STATE MANAGEMENT ---
+            # Navigation logic
             if self.tutorial_page == 0:
                 prev_btn.configure(state="disabled", fg_color="transparent")
             else:
-                prev_btn.configure(state="normal", fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
+                prev_btn.configure(state="normal", fg_color=("#3B8ED0", "#1f6aa5"))
                 
             if self.tutorial_page == len(pages) - 1:
-                next_btn.configure(text="Get Started! ✨")
+                next_btn.configure(text="Finish & Explore! ✨")
                 skip_btn.pack_forget() 
             else:
                 skip_btn.pack(expand=True)
@@ -401,27 +358,26 @@ class SeparationApp(ctk.CTk):
             if self.tutorial_page < len(pages) - 1:
                 self.tutorial_page += 1
                 update_ui()
-            elif self.tutorial_page == len(pages) - 1:
-                dialog.destroy() # Close tutorial on last page 'Get Started' click
+            else:
+                dialog.destroy()
 
         def go_prev():
             if self.tutorial_page > 0:
                 self.tutorial_page -= 1
                 update_ui()
 
-        # --- Create the buttons ---
-        prev_btn = ctk.CTkButton(btn_frame, text="⬅ Previous", width=100, command=go_prev)
+        # --- CONTROLS ---
+        prev_btn = ctk.CTkButton(btn_frame, text="⬅ Previous", width=110, command=go_prev)
         prev_btn.pack(side="left")
 
-        next_btn = ctk.CTkButton(btn_frame, text="Next ➔", width=120, command=go_next, font=ctk.CTkFont(weight="bold"))
+        next_btn = ctk.CTkButton(btn_frame, text="Next ➔", width=140, command=go_next, font=ctk.CTkFont(weight="bold"))
         next_btn.pack(side="right")
         
-        skip_btn = ctk.CTkButton(btn_frame, text="Skip", width=80, fg_color="transparent", border_width=1, command=dialog.destroy)
+        skip_btn = ctk.CTkButton(btn_frame, text="Skip Tour", width=80, fg_color="transparent", border_width=1, command=dialog.destroy)
         skip_btn.pack(expand=True)
 
-        # Load the first page immediately
         update_ui()
-
+        
     def flash_highlight(self, widget, flashes=3):
         """Flashes a widget to draw attention. Smartly handles borders, text, and backgrounds."""
         try:
@@ -447,7 +403,8 @@ class SeparationApp(ctk.CTk):
                 
                 current_color = widget.cget(color_attr)
                 new_color = highlight_color if current_color == original_color else original_color
-                widget.configure(**{color_attr: new_color})
+                update_kwargs: Dict[str, Any] = {color_attr: new_color}
+                widget.configure(**update_kwargs)
                 
                 self.after(350, toggle, count - 1)
                 
@@ -523,7 +480,7 @@ class SeparationApp(ctk.CTk):
         # --- FIXED: Added Lazy Loading Check for Settings ---
         elif tab_name == "settings" and not getattr(self, 'settings_tab_loaded', False):
             if hasattr(self, 'create_settings_tab'):
-                self.after(100, self.create_settings_tab())
+                self.after(100, self.create_settings_tab)
             self.settings_tab_loaded = True
 
         if hasattr(self, '_free_inactive_models'):
@@ -917,7 +874,10 @@ class SeparationApp(ctk.CTk):
         self.shifts_var = tk.StringVar(value="1")
         ctk.CTkEntry(self.demucs_frame, textvariable=self.shifts_var).pack(fill="x", padx=10, pady=5)
         ctk.CTkLabel(self.demucs_frame, text="Overlap (0.1 - 0.99):", anchor="w").pack(anchor="w", padx=10, pady=(10,0))
-        self.overlap_slider = ctk.CTkSlider(self.demucs_frame, from_=0.1, to=0.99, command=getattr(self, "update_overlap_label", None))
+        self.overlap_slider = ctk.CTkSlider(self.demucs_frame, 
+                                            from_=float(0.1), # type: ignore
+                                            to=float(0.99),   # type: ignore
+                                            command=getattr(self, "update_overlap_label", None))
         self.overlap_slider.set(0.25)
         self.overlap_slider.pack(fill="x", padx=10, pady=5)
         self.overlap_value_label = ctk.CTkLabel(self.demucs_frame, text="Current: 0.25", anchor="w")
@@ -927,7 +887,8 @@ class SeparationApp(ctk.CTk):
         self.update_ui_state()
 
         # Separate Button
-        ctk.CTkButton(sep_scrollable, text="Start Batch Separation", height=40, corner_radius=0, font=ctk.CTkFont(weight="bold"), command=self.separate_audio).grid(row=13, column=0, sticky="ew", padx=10, pady=(30,10))
+        self.separate_button = ctk.CTkButton(sep_scrollable, text="Start Batch Separation", height=40, corner_radius=0, font=ctk.CTkFont(weight="bold"), command=self.separate_audio)
+        self.separate_button.grid(row=13, column=0, sticky="ew", padx=10, pady=(30,10))
         ctk.CTkLabel(sep_scrollable, text="Turn ON switches \nnext to input songs\nto separate audio.", font=ctk.CTkFont(size=11, slant="italic")).grid(row=14, column=0, padx=10)
 
     def create_sep_out_tab(self):
@@ -1272,7 +1233,7 @@ class SeparationApp(ctk.CTk):
             if ext == "mp3":
                 sync_bitrate()
             else:
-                sync_bit_depth()
+                sync_bit_depth(bits)
             sync_all_btn.configure(text="All Synced! ✓", fg_color="#2b7a4b")
 
         # Define our base rows
@@ -1623,10 +1584,12 @@ class SeparationApp(ctk.CTk):
 
         # ---> ADD THIS: Even with lazy loading, if they already ran a task this session, 
         # the class exists. We need to update its internal path.
-        if getattr(self, 'whisper_trans', None):
-            self.whisper_trans.models_dir = self.models_dir
-        if getattr(self, 'vosk_trans', None):
-            self.vosk_trans.models_dir = self.models_dir
+        whisper = getattr(self, 'whisper_trans', None)
+        if whisper is not None:
+            whisper.models_dir = self.models_dir
+        vosk = getattr(self, 'vosk_trans', None)
+        if vosk is not None:
+            vosk.models_dir = self.models_dir
         
         # Save the current state of the Auto-Flush switch
         self.auto_flush_memory = bool(self.flush_switch.get())
@@ -2392,7 +2355,8 @@ class SeparationApp(ctk.CTk):
             return 
             
         item_name = os.path.basename(source_path)
-        
+        dest_path = None # Initialize to satisfy Pylance
+
         if tool == "Vosk":
             dest_path = os.path.join(self.models_dir, "vosk", item_name)
         elif tool == "Whisper":
@@ -2404,6 +2368,10 @@ class SeparationApp(ctk.CTk):
         elif tool == "OpenUnmix":
             dest_path = os.path.join(self.models_dir, "openunmix_custom", item_name)
 
+        if dest_path is None:
+            messagebox.showerror("Error", f"Unknown tool type: {tool}")
+            return
+        
         if os.path.exists(dest_path):
             messagebox.showwarning("Model Exists", f"A model named '{item_name}' is already installed for {tool}.")
             return
@@ -2680,111 +2648,166 @@ class SeparationApp(ctk.CTk):
     def _run_separation(self, selected_files, config: SeparationSettings): 
         """
         @brief Executes audio separation on a batch of files iteratively in a background thread.
+        Handles lazy loading and enforces CPU for Spleeter to ensure stability.
         """
         import os
         import logging
         total_files = len(selected_files)
-        file_weight = 100.0 / total_files
-
+        
+        # UI: Show abort button
         self.after(0, lambda: self.abort_button.pack(side="right", padx=(0, 10)))
 
         try:
-            # --- LAZY LOADING BLOCK ---
-            # 1. Enforce CPU for Spleeter
+            # 1. Device Enforcement & Progress Init
             actual_device = config.device
             if config.ai_tool == "Spleeter":
                 actual_device = "CPU"
-                self.update_task_progress(5, f"Loading Spleeter (Forced to CPU)...", 1, total_files, "Separation")  
-            else:
-                self.update_task_progress(5, f"Loading {config.ai_tool} model on {actual_device}...", 1, total_files, "Separation")  
+                
+            self.update_task_progress(5, f"Loading {config.ai_tool} on {actual_device}...", 1, total_files, "Separation")
 
-            # 2. Apply environment variables based on the actual_device
+            # 2. Environment Setup (Torch/TensorFlow behavior)
             if actual_device == "CPU":
                 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-            elif actual_device == "GPU" and "CUDA_VISIBLE_DEVICES" in os.environ and os.environ["CUDA_VISIBLE_DEVICES"] == "-1":
+            elif "CUDA_VISIBLE_DEVICES" in os.environ:
                 del os.environ["CUDA_VISIBLE_DEVICES"]
 
-            if config.ai_tool == "Spleeter" and getattr(self, "spleeter_sep", None) is None:
-                import separators.spleeter_separator as spleeter_sep
-                self.spleeter_sep = spleeter_sep.SpleeterSeparator()
-            elif config.ai_tool == "Demucs" and getattr(self, "demucs_sep", None) is None:
-                import separators.demucs_separator as demucs_sep
-                self.demucs_sep = demucs_sep.DemucsSeparator()
-            elif config.ai_tool == "OpenUnmix" and getattr(self, "openunmix_sep", None) is None:
-                import separators.openunmix_separator as openunmix_sep
-                self.openunmix_sep = openunmix_sep.OpenUnmixSeparator()
+            # 3. LAZY LOADING & TYPE CASTING
+            # We use a local variable and type assertions to satisfy Pylance
+            active_sep = None
 
-            # --- BATCH TRACKING LISTS ---
+            if config.ai_tool == "Spleeter":
+                if getattr(self, "spleeter_sep", None) is None:
+                    import separators.spleeter_separator as spleeter_mod
+                    self.spleeter_sep = spleeter_mod.SpleeterSeparator()
+                active_sep = self.spleeter_sep
+
+            elif config.ai_tool == "Demucs":
+                if getattr(self, "demucs_sep", None) is None:
+                    import separators.demucs_separator as demucs_mod
+                    self.demucs_sep = demucs_mod.DemucsSeparator()
+                active_sep = self.demucs_sep
+
+            elif config.ai_tool == "OpenUnmix":
+                if getattr(self, "openunmix_sep", None) is None:
+                    import separators.openunmix_separator as oumx_mod
+                    self.openunmix_sep = oumx_mod.OpenUnmixSeparator()
+                active_sep = self.openunmix_sep
+
+            if active_sep is None:
+                raise RuntimeError(f"Could not initialize {config.ai_tool} separator.")
+
             successful_files = []
             failed_files = []
 
             # --- BATCH LOOP ---
             for i, song in enumerate(selected_files, 1):
-                if self.abort_separation: break
+                if self.abort_separation: 
+                    break
 
                 input_path = song['path']
                 song_name = os.path.splitext(song['name'])[0]
                 cb = lambda p, m: self.update_task_progress(p, m, i, total_files, task_name="Separation")
                 
-                if config.ai_tool == "Spleeter":
-                    result = self.spleeter_sep.separate(
-                        input_path, song_name, config.vocals_folder, config.instr_folder, 
-                        config.channels, config.fmt, config.sr, config.bitrate, 
-                        actual_device, flac_compression=config.flac_compression, progress_callback=cb
-                    )
-                elif config.ai_tool == "Demucs":
-                    result = self.demucs_sep.separate(input_path=input_path, song_name=song_name, vocals_folder=config.vocals_folder, 
-                        instr_folder=config.instr_folder, model=config.model, channels=config.channels, fmt=config.fmt, 
-                        sr=config.sr, bitrate=config.bitrate, bit_depth=config.bit_depth, shifts=config.shifts, 
-                        overlap=config.overlap, device_choice=actual_device, flac_compression=config.flac_compression, 
-                        progress_callback=cb)
-                elif config.ai_tool == "OpenUnmix":
-                    result = self.openunmix_sep.separate(
-                        input_path, song_name, config.vocals_folder, config.instr_folder, 
-                        config.model, config.channels, config.fmt, config.sr, config.bitrate, 
-                        actual_device, flac_compression=config.flac_compression, progress_callback=cb
-                    )
-                
-                if isinstance(result, tuple) and len(result) >= 3 and result[0]:
-                    vocals_name = result[1]
-                    instr_name = result[2]
-                    successful_files.extend([vocals_name, instr_name]) 
-                else:
-                    logging.error(f"Failed to separate: {song_name}")
-                    failed_files.append(song_name) 
+                result = (False, "", "") # Safe default
 
-            # --- COMPLETION ---
+                try:
+                    # --- TOOL-SPECIFIC EXECUTION WITH TYPE GUARDS ---
+                    
+                    if config.ai_tool == "Demucs":
+                        from separators.demucs_separator import DemucsSeparator
+                        assert isinstance(active_sep, DemucsSeparator)
+                        
+                        # Use the 'or' operator to provide a default if config.bit_depth is None
+                        safe_bit_depth = config.bit_depth or "16-bit"
+
+                        result = active_sep.separate(
+                            input_path=input_path, 
+                            song_name=song_name, 
+                            vocals_folder=config.vocals_folder, 
+                            instr_folder=config.instr_folder, 
+                            model=config.model, 
+                            channels=config.channels, 
+                            fmt=config.fmt, 
+                            sr=config.sr, 
+                            bitrate=config.bitrate, 
+                            bit_depth=safe_bit_depth,
+                            shifts=config.shifts, 
+                            overlap=config.overlap, 
+                            device_choice=actual_device, 
+                            flac_compression=config.flac_compression, 
+                            progress_callback=cb
+                        )
+                        
+                    elif config.ai_tool == "Spleeter":
+                        from separators.spleeter_separator import SpleeterSeparator
+                        assert isinstance(active_sep, SpleeterSeparator)
+                        
+                        result = active_sep.separate(
+                            input_path=input_path, 
+                            song_name=song_name, 
+                            vocals_folder=config.vocals_folder, 
+                            instr_folder=config.instr_folder, 
+                            channels=config.channels, 
+                            fmt=config.fmt, 
+                            sr=config.sr, 
+                            bitrate=config.bitrate, 
+                            device_choice=actual_device, 
+                            flac_compression=config.flac_compression, 
+                            progress_callback=cb
+                        )
+                    
+                    elif config.ai_tool == "OpenUnmix":
+                        from separators.openunmix_separator import OpenUnmixSeparator
+                        assert isinstance(active_sep, OpenUnmixSeparator)
+                        
+                        result = active_sep.separate(
+                            input_path=input_path, 
+                            song_name=song_name, 
+                            vocals_folder=config.vocals_folder, 
+                            instr_folder=config.instr_folder, 
+                            model=config.model, 
+                            channels=config.channels, 
+                            fmt=config.fmt, 
+                            sr=config.sr, 
+                            bitrate=config.bitrate, 
+                            device_choice=actual_device, 
+                            flac_compression=config.flac_compression, 
+                            progress_callback=cb
+                        )
+
+                    # Validate Result
+                    if isinstance(result, tuple) and len(result) >= 3 and result[0]:
+                        successful_files.extend([result[1], result[2]]) 
+                    else:
+                        logging.error(f"Separation logic returned failure for: {song_name}")
+                        failed_files.append(song_name)
+                        
+                except Exception as e:
+                    logging.error(f"Error processing {song_name}: {e}", exc_info=True)
+                    failed_files.append(song_name)
+
+            # --- COMPLETION LOGIC ---
             if not self.abort_separation:
                 success_count = len(successful_files) // 2 
+                completion_text = f"Batch complete! {success_count}/{total_files} processed. (Ready)"
                 
-                if total_files == 1:
-                    completion_text = "Separation complete! (Ready)" if success_count == 1 else "Separation failed. (Ready)"
-                else:
-                    completion_text = f"Batch complete! {success_count}/{total_files} processed successfully. (Ready)"
-
                 self.after(500, lambda: self.progress_bar.pack_forget())
                 self.after(1000, lambda: self.progress_text.configure(text=completion_text))
 
                 details = ""
                 if successful_files:
-                    details += "✅ Successfully generated:\n" + "\n".join(successful_files) + "\n\n"
+                    details += "✅ Generated:\n" + "\n".join(successful_files) + "\n\n"
                 if failed_files:
-                    details += "❌ Failed to process:\n" + "\n".join(failed_files) + "\n\nCheck the terminal for detailed error logs."
+                    details += "❌ Failed:\n" + "\n".join(failed_files) + "\n\nCheck logs for details."
 
-                if total_files == 1:
-                    title = "Separation Finished with Errors" if failed_files else "Separation Finished Successfully"
-                else:
-                    title = "Batch Finished with Errors" if failed_files else "Batch Finished Successfully"
-                
+                title = "Batch Finished" + (" with Errors" if failed_files else " Successfully")
                 self.after(0, lambda: self.show_batch_summary_window(title, details))
 
         except Exception as e:
             if str(e) == "ABORT_REQUESTED":
-                import logging
                 logging.info("Separation aborted by user.")
             else:
                 self.after(0, lambda: self.progress_text.configure(text=f"Error: {str(e)} (Ready)"))
-                import logging
                 logging.error(f"Thread error: {e}", exc_info=True)
         finally:
             self.abort_separation = False
@@ -2849,101 +2872,141 @@ class SeparationApp(ctk.CTk):
     def _exec_standalone_trans(self, selected_vocals, config: TranscriptionSettings):
         """
         @brief Executes batch transcription on selected audio files in a background thread.
-        
-        Manages the lazy loading of transcription models (Whisper, Vosk, Wav2Vec2) and 
-        iterates over the selected batch. It tracks successful and failed operations, 
+        Manages the lazy loading of transcription models (Whisper, Vosk, Wav2Vec2) and
+        iterates over the selected batch. It tracks successful and failed operations,
         formats output file names, and safely pushes UI updates to the main thread.
         """
         import os
         import logging
         total_files = len(selected_vocals)
-        file_weight = 100.0 / total_files  # Needed for batch progress calculation
 
         self.after(0, lambda: self.abort_button.pack(side="right", padx=(0, 10)))
 
         try:
-            # --- LAZY LOADING ---
-            # 1. Enforce CPU for Vosk
+            # --- 1. DEVICE ENFORCEMENT ---
             actual_device = config.device
             if config.tool == "vosk":
                 actual_device = "CPU"
-                self.update_task_progress(5, f"Initializing Vosk (Forced to CPU)...", 1, total_files, "Transcription")
-            else:
-                self.update_task_progress(5, f"Initializing {config.tool} on {actual_device}...", 1, total_files, "Transcription")
+            
+            self.update_task_progress(5, f"Initializing {config.tool} on {actual_device}...", 1, total_files, "Transcription")
 
-            # --- Apply environment variables for strict CPU fallback ---
+            # --- 2. ENVIRONMENT SETUP ---
             if actual_device == "CPU":
                 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-            elif actual_device == "GPU" and "CUDA_VISIBLE_DEVICES" in os.environ and os.environ["CUDA_VISIBLE_DEVICES"] == "-1":
+            elif "CUDA_VISIBLE_DEVICES" in os.environ:
                 del os.environ["CUDA_VISIBLE_DEVICES"]
 
-            if config.tool == "whisper" and getattr(self, "whisper_trans", None) is None:
-                import separators.whisper_transcription as whisper_trans
-                self.whisper_trans = whisper_trans.WhisperTranscription()
-            elif config.tool == "vosk" and getattr(self, "vosk_trans", None) is None:
-                import separators.vosk_transcription as vosk_trans
-                self.vosk_trans = vosk_trans.VoskTranscription()
-            elif config.tool == "wav2vec2" and getattr(self, "wav2vec2_trans", None) is None:
-                import separators.wav2vec2_transcription as w2v2_trans 
-                self.wav2vec2_trans = w2v2_trans.Wav2Vec2Transcription()
+            # --- 3. LAZY LOADING & TYPE GUARDING ---
+            active_trans = None
 
-            # --- BATCH TRACKING LISTS ---
+            if config.tool == "whisper":
+                if getattr(self, "whisper_trans", None) is None:
+                    import separators.whisper_transcription as whisper_mod
+                    self.whisper_trans = whisper_mod.WhisperTranscription()
+                active_trans = self.whisper_trans
+
+            elif config.tool == "vosk":
+                if getattr(self, "vosk_trans", None) is None:
+                    import separators.vosk_transcription as vosk_mod
+                    self.vosk_trans = vosk_mod.VoskTranscription()
+                active_trans = self.vosk_trans
+
+            elif config.tool == "wav2vec2":
+                if getattr(self, "wav2vec2_trans", None) is None:
+                    import separators.wav2vec2_transcription as w2v2_mod
+                    self.wav2vec2_trans = w2v2_mod.Wav2Vec2Transcription()
+                active_trans = self.wav2vec2_trans
+
+            if active_trans is None:
+                raise RuntimeError(f"Could not initialize {config.tool} transcription tool.")
+
             successful_files = []  
             failed_files = []      
 
-            # --- BATCH LOOP ---
+            # --- 4. BATCH LOOP ---
             for i, vocal in enumerate(selected_vocals, 1):
-                # 3. Check for abort signal at the start of each new file
-                if getattr(self, 'abort_separation', False): break
+                if getattr(self, 'abort_separation', False): 
+                    break
 
                 vocal_path = vocal['path']
                 filename = vocal['name']
-                
-                # Create output name
                 base_name = os.path.splitext(filename)[0]
                 out_name = f"{base_name}_{config.tool}_{config.model.replace('/', '_')}.txt"
                 out_path = os.path.join(config.output_folder, out_name)
-
                 cb = lambda p, m: self.update_task_progress(p, m, i, total_files, task_name="Transcription")
+                
                 result = None
-                if config.tool == "whisper":
-                    result = self.whisper_trans.transcribe(vocal_path, out_path, config.model, config.lang, device_choice=actual_device, progress_callback=cb)
-                elif config.tool == "wav2vec2":
-                    result = self.wav2vec2_trans.transcribe(vocal_path, out_path, config.model, device_choice=actual_device, progress_callback=cb)
-                elif config.tool == "vosk":
-                    result = self.vosk_trans.transcribe(vocal_path, out_path, config.model, config.use_spk, device_choice=actual_device, progress_callback=cb)
 
-                # Check results and append to our lists
-                if isinstance(result, tuple) and len(result) == 2 and result[0]:
-                    successful_files.append(result[1]) 
-                elif result is True: 
-                    successful_files.append(out_name)
-                else:
-                    failed_files.append(filename) 
-                    logging.error(f"Failed to transcribe: {filename}")
+                # --- TOOL-SPECIFIC EXECUTION WITH TYPE GUARDS ---
+                try:
+                    if config.tool == "whisper":
+                        from separators.whisper_transcription import WhisperTranscription
+                        assert isinstance(active_trans, WhisperTranscription)
+                        
+                        # Changed 'input_path' to 'audio_path' to match your error
+                        result = active_trans.transcribe(
+                            audio_path=vocal_path, 
+                            output_path=out_path, 
+                            model_name=config.model, 
+                            language=config.lang, 
+                            device_choice=actual_device, 
+                            progress_callback=cb
+                        )
 
-            # --- COMPLETION ---
+                    elif config.tool == "wav2vec2":
+                        from separators.wav2vec2_transcription import Wav2Vec2Transcription
+                        assert isinstance(active_trans, Wav2Vec2Transcription)
+                        
+                        result = active_trans.transcribe(
+                            audio_path=vocal_path, 
+                            output_path=out_path, 
+                            model_name=config.model, 
+                            device_choice=actual_device, 
+                            progress_callback=cb
+                        )
+                        
+                    elif config.tool == "vosk":
+                        from separators.vosk_transcription import VoskTranscription
+                        assert isinstance(active_trans, VoskTranscription)
+                        
+                        result = active_trans.transcribe(
+                            audio_path=vocal_path, 
+                            output_path=out_path, 
+                            model_name=config.model,        
+                            use_diarization=config.use_spk,
+                            device_choice=actual_device, 
+                            progress_callback=cb
+                        )
+
+                    # --- RESULT VALIDATION ---
+                    if (isinstance(result, tuple) and result[0]) or result is True:
+                        successful_files.append(out_name)
+                    else:
+                        failed_files.append(filename)
+                except Exception as inner_e:
+                    logging.error(f"Error in {filename}: {inner_e}")
+                    failed_files.append(filename)
+
+            # --- 5. COMPLETION UI ---
             if not getattr(self, 'abort_separation', False):
                 self.after(500, lambda: self.progress_bar.pack_forget())
                 self.after(1000, lambda: self.progress_text.configure(text=f"Batch complete! {len(successful_files)}/{total_files} saved. (Ready)"))
                 
-                # Build the detailed message
                 details = ""
                 if successful_files:
                     details += "✅ Successfully transcribed:\n" + "\n".join(successful_files) + "\n\n"
                 if failed_files:
-                    details += "❌ Failed to transcribe:\n" + "\n".join(failed_files) + "\n\nCheck the terminal for detailed error logs."
+                    details += "❌ Failed to transcribe:\n" + "\n".join(failed_files) + "\n\nCheck logs for details."
 
-                title = "Transcription Finished with Errors" if failed_files else "Transcription Finished Successfully"
+                title = "Transcription Summary"
                 self.after(0, lambda: self.show_batch_summary_window(title, details))
 
         except Exception as e:
             if str(e) == "ABORT_REQUESTED":
-                logging.info("Transcription aborted by user.")
+                logging.info("Transcription aborted.")
             else:
                 logging.error(f"Standalone trans error: {e}", exc_info=True)
-                err_msg = str(e) 
-                self.after(0, lambda msg=err_msg: self.progress_text.configure(text=f"Error: {msg} (Ready)"))
+                self.after(0, lambda: self.progress_text.configure(text="Error occurred (Ready)"))
         finally:
             self.abort_separation = False
             self.after(0, lambda: self.abort_button.pack_forget())

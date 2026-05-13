@@ -57,10 +57,11 @@ def get_app_dir():
 
 def get_binaries_dir():
     """Returns the directory containing bundled files like ffmpeg.exe.
-       When compiled, this magically points to the '_internal' folder."""
+       When compiled, this magically points to the temporary folder."""
     if getattr(sys, 'frozen', False):
-        # sys._MEIPASS is a special PyInstaller variable pointing to the internal bundle
-        return sys._MEIPASS
+        # We use getattr to avoid Pylance "unknown attribute" warnings
+        # and provide a fallback to the current directory just in case.
+        return getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
     else:
         # When running uncompiled, everything is just in the same folder
         return os.path.dirname(os.path.abspath(__file__))

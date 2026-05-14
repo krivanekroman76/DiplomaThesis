@@ -60,7 +60,9 @@ class OpenUnmixSeparator:
                     # Range: 10% to 85%
                     percent = 10 + int((idx / num_chunks) * 75)
                     if progress_callback:
-                        progress_callback(percent, f"{prefix} OpenUnmix: Processing Segment {idx+1}/{num_chunks}...")
+                        # Manual formatting to match the interceptor's style
+                        display_text = f"{prefix} OpenUnmix Separating: {percent}%"
+                        progress_callback(percent, display_text)
 
                     # Export chunk to temp wav for librosa/umx
                     chunk_path = os.path.join(temp_dir, f"c_{idx}.wav")
@@ -113,8 +115,8 @@ class OpenUnmixSeparator:
                 if v_final.frame_rate != sr:
                     v_final, i_final = v_final.set_frame_rate(sr), i_final.set_frame_rate(sr)
 
-                v_dest = get_unique_filename(os.path.join(vocals_folder, f"{song_name}_OpenUnmix_vocals.{fmt}"))
-                i_dest = get_unique_filename(os.path.join(instr_folder, f"{song_name}_OpenUnmix_instrumental.{fmt}"))
+                v_dest = get_unique_filename(os.path.join(vocals_folder, f"{song_name}_OpenUnmix_{model}_vocals.{fmt}"))
+                i_dest = get_unique_filename(os.path.join(instr_folder, f"{song_name}_OpenUnmix_{model}_instrumental.{fmt}"))
 
                 # Reusable export params
                 def final_export(seg, path, tags):

@@ -155,7 +155,8 @@ class SeparationApp(ctk.CTk):
         self.abort_separation = False
         self.input_tab_loaded = False
         self.output_tab_loaded = False
-        
+        self.all_row_frames = [] # To keep track of all rows created
+
         # Set up the Threading Mailbox EARLY
         self.folder_size_queue = queue.Queue()
         self._check_size_queue()
@@ -167,7 +168,8 @@ class SeparationApp(ctk.CTk):
             "instr": 0, 
             "trans": 0
         }
-
+        self.current_tutorial_id = 0  # For choreograph_flash kill switch
+        self.duration = 300 # Default duration for flashes
         # 2. Set Theme and Scaling (Global)
         ctk.set_appearance_mode(self.appearance_mode)
         ctk.set_default_color_theme(self.color_theme)
@@ -243,7 +245,7 @@ class SeparationApp(ctk.CTk):
         """Displays a paginated interactive tutorial for first-time users."""
         dialog = ctk.CTkToplevel(self)
         dialog.title("Audio Separator - Quick Start Guide")
-        dialog.geometry("600x500") 
+        dialog.geometry("650x550") 
         dialog.attributes("-topmost", True)
         dialog.resizable(False, False)
     
@@ -253,50 +255,64 @@ class SeparationApp(ctk.CTk):
         pages = [
             {
                 "title": "Welcome to Audio Separator! 🚀",
-                "text": "This tool uses state-of-the-art AI to pull vocals and instruments apart from any song.\n\n"
-                        "Let's get you set up in 60 seconds so you can start processing your first batch."
+                "text": "This tool uses state-of-the-art AI tools to separate vocals and instruments from any song.\n\n"
+                        "Also you can transcribe isolated vocal tracks into text using powerful speech recognition models! \n\n"
+                        "Let's get you set up so you can start processing your first audio files."
             },
             {
                 "title": "⚙️ Step 1: Initial Setup",
-                "text": "**Location: Settings Tab**\n\n"
+                "text": "Location: Settings Tab\n\n"
                         "Before your first run, tell the app where to save your AI models and where to look for music.\n\n"
-                        "• Use **'Download Default Models'** to get the AI brains ready.\n"
-                        "• Set your **Default Input/Output folders** to save time later."
+                        "• You can customize the models lists to select your preferred options.\n"
+                        "• Use 'Download Default Models' to get the AI brains ready.\n"
+                        "• Set your Default Input/Output folders to save time later.\n"
             },
             {
                 "title": "🎵 Step 2: Load Your Music",
-                "text": "**Location: Input Tab**\n\n"
-                        "Click **'Add Song'** to bring files into the list. \n\n"
-                        "**Pro Tip:** Click the **'i' (Info)** button next to a song to open the **Audio Inspector**. This lets you check bitrates and sync your project settings automatically!"
+                "text": "Location: Input Tab\n\n"
+                        "If you haven't already set a default input folder, no worries! You can load your songs right here.\n\n"
+                        "• Navigate to your music folder using the 'Change / New Folder' button.\n"
+                        "or\n"
+                        "• Click 'Add Song' to copy files into the folder. \n\n"
+                        "Tip: The app supports batch processing, so feel free to load entire albums or playlists at once!\n"
+                        "Tip: You can play any song by clicking the ▶ button next to it.\n"
+                        "Tip: Click the 'i' (Info) button next to a song to open the Audio Inspector. This lets you check bitrates and sync your audio settings by one click!\n"
             },
             {
-                "title": "✂️ Step 3: Choose Your AI Tool",
-                "text": "**Location: Separation Menu (Right Side)**\n\n"
-                        "Choose your weapon:\n"
-                        "• **Spleeter:** Fast and efficient.\n"
-                        "• **Demucs:** High quality, great for complex tracks.\n"
-                        "• **OpenUnmix:** Excellent for research-grade separation.\n\n"
-                        "Hit **'Start Batch Separation'** to begin the magic."
+                "title": "✂️ Step 3: Separate audio into Vocals and Instrumentals",
+                "text": "Location: Separation Menu (Right Side)\n\n"
+                        "1. Check the box next to any Vocal track.\n\n"
+                        "2. Choose your tool:\n\ns"
+                        "• Spleeter: Fast and efficient.\n"
+                        "• Demucs: High quality, great for complex tracks.\n"
+                        "• OpenUnmix: Excellent for research-grade separation.\n\n"
+                        "3. Select your model and settings.\n\n"
+                        "4. Click 'Separate' and watch the magic happen! Your separated tracks will appear in the Separated Output tab.\n"                  
+                        "Tip: You can separate multiple songs at once by checking multiple boxes before hitting 'Separate'! Or just select the whole folder from the Input tab and separate in bulk.\n"
             },
             {
                 "title": "🎧 Step 4: Review Your Tracks",
-                "text": "**Location: Separated Output Tab**\n\n"
-                        "Your files are now split into **Vocals** and **Instrumentals** lists.\n\n"
+                "text": "Location: Separated Output Tab\n\n"
+                        "Your files are now split into Vocals and Instrumentals lists.\n\n"
                         "• Press ▶ to preview your results.\n"
-                        "• If you don't like a result, use the 🗑 button to clean up your workspace."
+                        "• If you don't like a result, use the 🗑 button to clean up your workspace.\n"
             },
             {
                 "title": "🗣️ Step 5: High-Accuracy Transcription",
-                "text": "**Location: Separated Output -> Transcription Menu**\n\n"
-                        "Want lyrics or scripts?\n"
-                        "1. **Check the box** next to any Vocal track.\n"
-                        "2. Select a tool like **Whisper** or **Vosk** on the right.\n"
-                        "3. Click **'Transcribe'**."
+                "text": "Location: Separated Output -> Transcription Menu\n\n"
+                        "Want lyrics or scripts?\n\n"
+                        "1. Check the box next to any Vocal track.\n\n"
+                        "2. Select a tool:\n\n"
+                        "• Whisper: Human-Like: The gold standard for lyrics. Understands accents and context perfectly.\n"
+                        "• Wav2vec2: Lightning Fast: Best for quick drafts or clear, isolated vocal tracks.\n"
+                        "• Vosk: Private & Offline: Ultra-lightweight. Great for large batches.\n\n"
+                        "3. Choose your model and language settings.\n\n"
+                        "4. Click 'Transcribe'.\n\n"
             },
             {
-                "title": "📝 Step 6: Final Results",
-                "text": "**Location: Transcribed Output Tab**\n\n"
-                        "Your text files live here. Click the **📖 (Reader)** icon to view the transcription instantly.\n\n"
+                "title": "📝 Step 6: Transcription Results",
+                "text": "Location: Transcribed Output Tab\n\n"
+                        "Your text files live here. Click the 📖 (Reader) icon to view the transcription instantly.\n\n"
                         "Everything is saved to your output folder automatically!"
             }
         ]
@@ -319,40 +335,91 @@ class SeparationApp(ctk.CTk):
         btn_frame.pack(fill="x", padx=30, pady=20)
 
         def update_ui():
-            page = pages[self.tutorial_page]
-            title_label.configure(text=page["title"])
-            text_label.configure(text=page["text"])
-            progress_label.configure(text=f"Step {self.tutorial_page + 1} of {len(pages)}")
+            idx = self.tutorial_page 
+            page_data = pages[idx]
+            title_label.configure(text=page_data["title"])
+            text_label.configure(text=page_data["text"])
+            progress_label.configure(text=f"Step {idx + 1} of {len(pages)}")
             
-            # --- INTELLIGENT HIGHLIGHTING ---
-            try:
-                if self.tutorial_page == 1: # Settings
+            BLINKS = 3 # Number of flashes for each widget
+            self.duration = 350 # Duration of each flash toggle in milliseconds
+            try:    
+                if idx == 1: # SETTINGS
                     self._switch_tab(self.settings_frame, self.settings_button, "settings")
-                elif self.tutorial_page in [2, 3]: # Input
-                    self._switch_tab(self.input_frame, self.input_button, "input")
-                elif self.tutorial_page in [4, 5]: # Sep Output
-                    self._switch_tab(self.sep_out_frame, self.sep_out_button, "sep_out")
-                elif self.tutorial_page == 6: # Trans Output
-                    self._switch_tab(self.trans_out_frame, self.trans_out_button, "trans_out")
-                
-                # Flash the main button for the current tab
-                current_tab_btn = [self.settings_button, self.input_button, self.sep_out_button, self.trans_out_button]
-                # Logic to trigger flash_highlight on relevant buttons could go here
-            except Exception as e:
-                logging.debug(f"Tutorial highlight skip: {e}")
+                    story = [
+                        self.settings_button, 
+                        [self.models_browse_btn, self.input_browse_btn, self.vocals_browse_btn, self.instr_browse_btn, self.trans_browse_btn],
+                        self.mod_frame,
+                        self.download_models_btn, 
+                        self.scan_models_btn, 
+                        self.save_settings_btn
+                    ]
+                    self.choreograph_flash(story, BLINKS)
 
-            # Navigation logic
-            if self.tutorial_page == 0:
-                prev_btn.configure(state="disabled", fg_color="transparent")
-            else:
-                prev_btn.configure(state="normal", fg_color=("#3B8ED0", "#1f6aa5"))
-                
-            if self.tutorial_page == len(pages) - 1:
+                elif idx == 2: # INPUT TAB
+                    self._switch_tab(self.input_frame, self.input_button, "input")
+                    story = [
+                        self.input_button,
+                        self.path_entry,
+                        self.input_browse_btn,
+                        self.add_file_btn,
+                        self.songs_list_frame
+                    ]
+                    self.choreograph_flash(story, BLINKS)
+
+                elif idx == 3: # SEPARATION TOOLS
+                    self._switch_tab(self.input_frame, self.input_button, "input")
+                    story = [
+                        #self.sep_scrollable,
+                        self.tools_container,
+                        self.model_menu,
+                        self.separate_button
+                    ]
+                    self.choreograph_flash(story, BLINKS)
+
+                elif idx == 4: # SEPARATED OUTPUT REVIEW
+                    self._switch_tab(self.sep_out_frame, self.sep_out_button, "sep_out")
+                    story = [
+                        self.sep_out_button,
+                        getattr(self, 'header_frame2', None), 
+                        self.vocals_list_frame,
+                        getattr(self, 'header_frame3', None), 
+                        self.instr_list_frame
+                    ]
+                    self.choreograph_flash(story, BLINKS)
+
+                elif idx == 5: # TRANSCRIPTION MENU
+                    self._switch_tab(self.sep_out_frame, self.sep_out_button, "sep_out")
+                    story = [ 
+                        self.tool_frame,
+                        self.trans_model_menu,
+                        self.trans_lang_menu
+                    ]
+                    self.choreograph_flash(story, BLINKS)
+
+                elif idx == 6: # TRANSCRIPTION OUTPUT
+                    self._switch_tab(self.trans_out_frame, self.trans_out_button, "trans_out")
+                    # Make sure these names exactly match your transcription frame variables
+                    story = [
+                        self.trans_out_button,
+                        getattr(self, 'header_frame1', None),
+                        self.trans_list_frame,
+                        self.read_btn,
+                        self.trans_page_frame
+                    ]
+                    self.choreograph_flash(story, BLINKS)
+
+            except Exception as e:
+                print(f"Animation Error: {e}")
+
+            # Nav Buttons Update...
+            prev_btn.configure(state="disabled" if idx == 0 else "normal")
+            if idx == len(pages) - 1:
                 next_btn.configure(text="Finish & Explore! ✨")
-                skip_btn.pack_forget() 
+                skip_btn.pack_forget()
             else:
-                skip_btn.pack(expand=True)
                 next_btn.configure(text="Next ➔")
+                skip_btn.pack(expand=True)
 
         def go_next():
             if self.tutorial_page < len(pages) - 1:
@@ -377,40 +444,80 @@ class SeparationApp(ctk.CTk):
         skip_btn.pack(expand=True)
 
         update_ui()
+
+    def choreograph_flash(self, widgets, blinks=3):
+        self.current_tutorial_id += 1
+        this_id = self.current_tutorial_id
         
-    def flash_highlight(self, widget, flashes=3):
-        """Flashes a widget to draw attention. Smartly handles borders, text, and backgrounds."""
-        try:
-            if not widget.winfo_exists():
+        #print(f"\n--- Starting Sequence ID: {this_id} ---")
+
+        valid_widgets = []
+        for w in widgets:
+            if isinstance(w, list):
+                sub_list = [item for item in w if item is not None and item.winfo_exists()]
+                if sub_list: valid_widgets.append(sub_list)
+            elif w is not None and hasattr(w, 'winfo_exists') and w.winfo_exists():
+                valid_widgets.append(w)
+            else:
+                print(f"DEBUG: Skipping invalid/missing widget: {w}")
+
+        def trigger_step(idx):
+            if this_id != self.current_tutorial_id:
+                print(f"DEBUG: Sequence {this_id} killed by Kill Switch.")
                 return
 
-            # Smart attribute targeting based on widget type
+            if idx < len(valid_widgets):
+                item = valid_widgets[idx]
+                #print(f"DEBUG: Flashing step {idx}: {item}")
+                if isinstance(item, list):
+                    for sub_item in item: self.flash_highlight(sub_item, this_id, flashes=blinks)
+                else:
+                    self.flash_highlight(item, this_id, flashes=blinks)
+                
+                # Math check: duration * blinks * 2 (on/off) + one extra duration for padding
+                wait_time = (self.duration * blinks * 2) + self.duration
+                self.after(wait_time, lambda: trigger_step(idx + 1))
+
+        trigger_step(0)
+
+    def flash_highlight(self, widget, anim_id, flashes=3):
+        try:
+            if not widget.winfo_exists(): return
+            
+            # IMPROVED VISIBILITY LOGIC
             if isinstance(widget, ctk.CTkEntry):
                 color_attr = "border_color"
-            elif isinstance(widget, ctk.CTkLabel):
-                color_attr = "text_color" # Flash the text color for labels!
+            elif isinstance(widget, ctk.CTkCheckBox):
+                # Flash the box itself (fg_color) because text_color is often invisible
+                color_attr = "fg_color" 
+            elif isinstance(widget, (ctk.CTkLabel, ctk.CTkRadioButton)):
+                color_attr = "text_color"
             else:
                 color_attr = "fg_color"
 
             original_color = widget.cget(color_attr)
-            highlight_color = "#D4AF37" # Gold/yellow highlight
-            
+            # Use a very high-contrast color for the flash
+            highlight_color = "#FFCC00" 
+
             def toggle(count):
-                if count <= 0 or not widget.winfo_exists():
-                    try: widget.configure(**{color_attr: original_color})
+                if anim_id != self.current_tutorial_id or count <= 0 or not widget.winfo_exists():
+                    try: 
+                        reset_kwargs: dict[str, Any] = {color_attr: original_color}
+                        widget.configure(**reset_kwargs)
                     except: pass
                     return
                 
                 current_color = widget.cget(color_attr)
                 new_color = highlight_color if current_color == original_color else original_color
-                update_kwargs: Dict[str, Any] = {color_attr: new_color}
+                
+                update_kwargs: dict[str, Any] = {color_attr: new_color}
                 widget.configure(**update_kwargs)
                 
-                self.after(350, toggle, count - 1)
+                self.after(self.duration, lambda: toggle(count - 1))
                 
             toggle(flashes * 2)
         except Exception as e:
-            logging.info(f"Highlight warning: {e}")
+            print(f"DEBUG ERROR: Flash failed: {e}")
 
     def _switch_tab(self, active_frame, active_button, tab_name):
         frames = [self.input_frame, self.sep_out_frame, self.trans_out_frame, self.settings_frame]
@@ -776,20 +883,24 @@ class SeparationApp(ctk.CTk):
         # ==========================================
         # RIGHT COLUMN: SEPARATION MENU
         # ==========================================
-        sep_scrollable = ctk.CTkScrollableFrame(frame, corner_radius=0, width=200, fg_color=("gray90", "gray16"))
-        sep_scrollable.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=10, pady=10)
-        sep_scrollable.propagate(False)
-        sep_scrollable.grid_columnconfigure(0, weight=1)
+        self.sep_scrollable = ctk.CTkScrollableFrame(frame, corner_radius=0, width=200, fg_color=("gray90", "gray16"))
+        self.sep_scrollable.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=10, pady=10)
+        self.sep_scrollable.propagate(False)
+        self.sep_scrollable.grid_columnconfigure(0, weight=1)
 
-        ctk.CTkLabel(sep_scrollable, text="Separation Menu", font=ctk.CTkFont(size=18, weight="bold")).grid(row=0, column=0, pady=(10,20))
+        ctk.CTkLabel(self.sep_scrollable, text="Separation Menu", font=ctk.CTkFont(size=18, weight="bold")).grid(row=0, column=0, pady=(10,20))
 
         # --- Base Settings ---
+        self.tools_container = ctk.CTkFrame(self.sep_scrollable, fg_color="transparent")
+        self.tools_container.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
+
         self.ai_tool_var = tk.StringVar(value="Spleeter")
-        for i, tool in enumerate(["Spleeter", "Demucs", "OpenUnmix"], start=1):
-            ctk.CTkRadioButton(sep_scrollable, text=tool, variable=self.ai_tool_var, value=tool, command=self.update_ui_state).grid(row=i, column=0, sticky="w", padx=10, pady=5)
+        ctk.CTkRadioButton(self.tools_container, text="Spleeter", variable=self.ai_tool_var, value="Spleeter", command=self.update_ui_state).grid(row=1, column=0, sticky="w", padx=10, pady=5)
+        ctk.CTkRadioButton(self.tools_container, text="Demucs", variable=self.ai_tool_var, value="Demucs", command=self.update_ui_state).grid(row=2, column=0, sticky="w", padx=10, pady=5)
+        ctk.CTkRadioButton(self.tools_container, text="OpenUnmix", variable=self.ai_tool_var, value="OpenUnmix", command=self.update_ui_state).grid(row=3, column=0, sticky="w", padx=10, pady=5)
 
         # Model Frame (Dynamic)
-        self.model_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        self.model_frame = ctk.CTkFrame(self.sep_scrollable, fg_color="transparent")
         self.model_frame.grid(row=4, column=0, sticky="ew")
         ctk.CTkLabel(self.model_frame, text="Model:", anchor="w").pack(fill="x", padx=10, pady=(10,0))
         self.model_var = tk.StringVar(value="umxl")
@@ -797,12 +908,12 @@ class SeparationApp(ctk.CTk):
         self.model_menu.pack(fill="x", padx=10, pady=5)
 
         # Format 
-        ctk.CTkLabel(sep_scrollable, text="Output Format:", anchor="w").grid(row=5, column=0, sticky="w", padx=10, pady=(10,0))
+        ctk.CTkLabel(self.sep_scrollable, text="Output Format:", anchor="w").grid(row=5, column=0, sticky="w", padx=10, pady=(10,0))
         self.format_var = tk.StringVar(value="wav")
-        ctk.CTkOptionMenu(sep_scrollable, variable=self.format_var, corner_radius=0, values=["wav", "mp3", "flac"], command=self.update_ui_state).grid(row=6, column=0, sticky="ew", padx=10, pady=5)
+        ctk.CTkOptionMenu(self.sep_scrollable, variable=self.format_var, corner_radius=0, values=["wav", "mp3", "flac"], command=self.update_ui_state).grid(row=6, column=0, sticky="ew", padx=10, pady=5)
 
         # --- Common Audio Settings ---
-        common_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        common_frame = ctk.CTkFrame(self.sep_scrollable, fg_color="transparent")
         common_frame.grid(row=7, column=0, sticky="ew", padx=5, pady=0)
         
         channel_frame = ctk.CTkFrame(common_frame, fg_color="transparent")
@@ -831,7 +942,7 @@ class SeparationApp(ctk.CTk):
         # ==========================================
 
         # Bit Depth Block
-        self.bit_depth_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        self.bit_depth_frame = ctk.CTkFrame(self.sep_scrollable, fg_color="transparent")
         self.bit_depth_frame.grid(row=8, column=0, sticky="ew")
         self.bit_depth_var = tk.StringVar(value="16-bit")
         ctk.CTkRadioButton(self.bit_depth_frame, text="16-bit", 
@@ -841,7 +952,7 @@ class SeparationApp(ctk.CTk):
         ctk.CTkRadioButton(self.bit_depth_frame, text="Float32", 
                         variable=self.bit_depth_var, value="32-bit").pack(anchor="w", padx=10, pady=2)
         # FLAC Block
-        self.flac_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        self.flac_frame = ctk.CTkFrame(self.sep_scrollable, fg_color="transparent")
         self.flac_frame.grid(row=9, column=0, sticky="ew")
         ctk.CTkLabel(self.flac_frame, text="FLAC Compression (0-8):", anchor="w").pack(anchor="w", padx=10, pady=(5,0))
         self.flac_slider = ctk.CTkSlider(self.flac_frame, from_=0, to=8, number_of_steps=8, command=getattr(self, "update_flac_label", None))
@@ -851,14 +962,14 @@ class SeparationApp(ctk.CTk):
         self.flac_value_label.pack(anchor="w", padx=10, pady=(0,5))
 
         # MP3 Bitrate Block
-        self.mp3_bitrate_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        self.mp3_bitrate_frame = ctk.CTkFrame(self.sep_scrollable, fg_color="transparent")
         self.mp3_bitrate_frame.grid(row=10, column=0, sticky="ew")
         ctk.CTkLabel(self.mp3_bitrate_frame, text="Bitrate:").pack(side="left", padx=10, pady=10)
         self.bitrate_var = tk.StringVar(value="192")
         ctk.CTkEntry(self.mp3_bitrate_frame, textvariable=self.bitrate_var, width=60).pack(side="right", padx=10, pady=10)
 
         # MP3 Preset Block
-        self.mp3_preset_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        self.mp3_preset_frame = ctk.CTkFrame(self.sep_scrollable, fg_color="transparent")
         self.mp3_preset_frame.grid(row=11, column=0, sticky="ew")
         ctk.CTkLabel(self.mp3_preset_frame, text="MP3 Preset (2=Best):", anchor="w").pack(anchor="w", padx=10, pady=(5,0))
         self.mp3_preset_slider = ctk.CTkSlider(self.mp3_preset_frame, from_=2, to=7, number_of_steps=5, command=getattr(self, "update_mp3_preset_label", None))
@@ -868,7 +979,7 @@ class SeparationApp(ctk.CTk):
         self.mp3_preset_value_label.pack(anchor="w", padx=10, pady=(0,5))
 
         # Demucs Specific Block
-        self.demucs_frame = ctk.CTkFrame(sep_scrollable, fg_color="transparent")
+        self.demucs_frame = ctk.CTkFrame(self.sep_scrollable, fg_color="transparent")
         self.demucs_frame.grid(row=12, column=0, sticky="ew")
         ctk.CTkLabel(self.demucs_frame, text="Shifts (qual/speed):", anchor="w").pack(anchor="w", padx=10, pady=(5,0))
         self.shifts_var = tk.StringVar(value="1")
@@ -887,9 +998,9 @@ class SeparationApp(ctk.CTk):
         self.update_ui_state()
 
         # Separate Button
-        self.separate_button = ctk.CTkButton(sep_scrollable, text="Start Batch Separation", height=40, corner_radius=0, font=ctk.CTkFont(weight="bold"), command=self.separate_audio)
+        self.separate_button = ctk.CTkButton(self.sep_scrollable, text="Start Batch Separation", height=40, corner_radius=0, font=ctk.CTkFont(weight="bold"), command=self.separate_audio)
         self.separate_button.grid(row=13, column=0, sticky="ew", padx=10, pady=(30,10))
-        ctk.CTkLabel(sep_scrollable, text="Turn ON switches \nnext to input songs\nto separate audio.", font=ctk.CTkFont(size=11, slant="italic")).grid(row=14, column=0, padx=10)
+        ctk.CTkLabel(self.sep_scrollable, text="Turn ON switches \nnext to input songs\nto separate audio.", font=ctk.CTkFont(size=11, slant="italic")).grid(row=14, column=0, padx=10)
 
     def create_sep_out_tab(self):
         for widget in getattr(self, "sep_out_frame", self.main_frame).winfo_children():
@@ -916,15 +1027,15 @@ class SeparationApp(ctk.CTk):
         # ==========================================
         # LEFT COLUMN (TOP): VOCALS
         # ==========================================
-        header_frame2 = ctk.CTkFrame(frame, fg_color="transparent")
-        header_frame2.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 0))
-        ctk.CTkLabel(header_frame2, text="Vocals", font=ctk.CTkFont(size=18, weight="bold")).pack(side="left")
-        ctk.CTkButton(header_frame2, text="Change Folder", width=100, corner_radius=0, command=lambda: self.change_output_folder("vocals")).pack(side="right")
+        self.header_frame2 = ctk.CTkFrame(frame)
+        self.header_frame2.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 0))
+        ctk.CTkLabel(self.header_frame2, text="Vocals", font=ctk.CTkFont(size=18, weight="bold")).pack(side="left")
+        ctk.CTkButton(self.header_frame2, text="Change Folder", width=100, corner_radius=0, command=lambda: self.change_output_folder("vocals")).pack(side="right")
         
         self.vocals_list_frame = ctk.CTkScrollableFrame(frame, corner_radius=0)        
         self.vocals_list_frame.grid(row=1, column=0, sticky="nsew", padx=10, pady=(5, 5))
 
-        self.vocals_page_frame = ctk.CTkFrame(frame, fg_color="transparent", height=30)
+        self.vocals_page_frame = ctk.CTkFrame(frame, height=30)
         self.vocals_page_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=(0, 15))
         self.vocals_btn_prev = ctk.CTkButton(self.vocals_page_frame, text="<", width=30, corner_radius=0, command=lambda: self.change_page("vocals", -1))
         self.vocals_btn_prev.pack(side="left")
@@ -936,15 +1047,15 @@ class SeparationApp(ctk.CTk):
         # ==========================================
         # LEFT COLUMN (BOTTOM): INSTRUMENTALS
         # ==========================================
-        header_frame3 = ctk.CTkFrame(frame, fg_color="transparent")
-        header_frame3.grid(row=3, column=0, sticky="ew", padx=10, pady=(10, 0))
-        ctk.CTkLabel(header_frame3, text="Instrumentals", font=ctk.CTkFont(size=18, weight="bold")).pack(side="left")
-        ctk.CTkButton(header_frame3, text="Change Folder", width=100, corner_radius=0, command=lambda: self.change_output_folder("instrumentals")).pack(side="right")
+        self.header_frame3 = ctk.CTkFrame(frame)
+        self.header_frame3.grid(row=3, column=0, sticky="ew", padx=10, pady=(10, 0))
+        ctk.CTkLabel(self.header_frame3, text="Instrumentals", font=ctk.CTkFont(size=18, weight="bold")).pack(side="left")
+        ctk.CTkButton(self.header_frame3, text="Change Folder", width=100, corner_radius=0, command=lambda: self.change_output_folder("instrumentals")).pack(side="right")
         
         self.instr_list_frame = ctk.CTkScrollableFrame(frame, corner_radius=0)
         self.instr_list_frame.grid(row=4, column=0, sticky="nsew", padx=10, pady=(5, 5))
 
-        self.instr_page_frame = ctk.CTkFrame(frame, fg_color="transparent", height=30)
+        self.instr_page_frame = ctk.CTkFrame(frame, height=30)
         self.instr_page_frame.grid(row=5, column=0, sticky="ew", padx=10, pady=(0, 15))
         self.instr_btn_prev = ctk.CTkButton(self.instr_page_frame, text="<", width=30, corner_radius=0, command=lambda: self.change_page("instr", -1))
         self.instr_btn_prev.pack(side="left")
@@ -957,43 +1068,45 @@ class SeparationApp(ctk.CTk):
         # RIGHT COLUMN: TRANSCRIPTION MENU
         # ==========================================
         # We set rowspan=6 so it stretches alongside both lists beautifully
-        trans_menu = ctk.CTkScrollableFrame(frame, width=250, corner_radius=0, fg_color=("gray90", "gray16"))
-        trans_menu.grid(row=0, column=1, rowspan=6, sticky="nsew", padx=10, pady=10) 
-        trans_menu.grid_columnconfigure(0, weight=1)
-        trans_menu.propagate(False)
+        self.trans_menu = ctk.CTkScrollableFrame(frame, width=250, corner_radius=0, fg_color=("gray90", "gray16"))
+        self.trans_menu.grid(row=0, column=1, rowspan=6, sticky="nsew", padx=10, pady=10) 
+        self.trans_menu.grid_columnconfigure(0, weight=1)
+        self.trans_menu.propagate(False)
 
-        ctk.CTkLabel(trans_menu, text="Transcription Menu", font=ctk.CTkFont(size=18, weight="bold")).grid(row=0, column=0, pady=(10, 20))
+        ctk.CTkLabel(self.trans_menu, text="Transcription Menu", font=ctk.CTkFont(size=18, weight="bold")).grid(row=0, column=0, pady=(10, 20))
         
-        ctk.CTkLabel(trans_menu, text="Tool:", anchor="w").grid(row=1, column=0, sticky="w", padx=10)
+        ctk.CTkLabel(self.trans_menu, text="Tool:", anchor="w").grid(row=1, column=0, sticky="w", padx=10)
+        self.tool_frame = ctk.CTkFrame(self.trans_menu, fg_color=("gray90", "gray16"))
+        self.tool_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=5)
+        
         self.trans_tool_var = tk.StringVar(value="whisper")
-        
-        ctk.CTkRadioButton(trans_menu, text="Whisper", variable=self.trans_tool_var, value="whisper", command=getattr(self, "on_trans_tool_change", None)).grid(row=2, column=0, sticky="w", padx=10, pady=5)
-        ctk.CTkRadioButton(trans_menu, text="Wav2Vec2", variable=self.trans_tool_var, value="wav2vec2", command=getattr(self, "on_trans_tool_change", None)).grid(row=3, column=0, sticky="w", padx=10, pady=5)
-        ctk.CTkRadioButton(trans_menu, text="Vosk", variable=self.trans_tool_var, value="vosk", command=getattr(self, "on_trans_tool_change", None)).grid(row=4, column=0, sticky="w", padx=10, pady=5)
+        ctk.CTkRadioButton(self.tool_frame, text="Whisper", variable=self.trans_tool_var, value="whisper", command=getattr(self, "on_trans_tool_change", None)).grid(row=0, column=0, padx=10, pady=(10, 0))
+        ctk.CTkRadioButton(self.tool_frame, text="Wav2Vec2", variable=self.trans_tool_var, value="wav2vec2", command=getattr(self, "on_trans_tool_change", None)).grid(row=1, column=0, padx=10, pady=(10, 0))
+        ctk.CTkRadioButton(self.tool_frame, text="Vosk", variable=self.trans_tool_var, value="vosk", command=getattr(self, "on_trans_tool_change", None)).grid(row=3, column=0, padx=10, pady=(10, 0))
 
-        self.trans_model_label = ctk.CTkLabel(trans_menu, text="Model:", anchor="w")
+        self.trans_model_label = ctk.CTkLabel(self.trans_menu, text="Model:", anchor="w")
         self.trans_model_label.grid(row=5, column=0, sticky="w", padx=10, pady=(10, 0))
         
         self.trans_model_var = tk.StringVar()
-        self.trans_model_menu = ctk.CTkOptionMenu(trans_menu, variable=self.trans_model_var, corner_radius=0, values=[])
+        self.trans_model_menu = ctk.CTkOptionMenu(self.trans_menu, variable=self.trans_model_var, corner_radius=0, values=[])
         self.trans_model_menu.grid(row=6, column=0, sticky="ew", padx=10, pady=5)
 
-        self.trans_lang_label = ctk.CTkLabel(trans_menu, text="Language:", anchor="w")
+        self.trans_lang_label = ctk.CTkLabel(self.trans_menu, text="Language:", anchor="w")
         self.trans_lang_label.grid(row=7, column=0, sticky="w", padx=10, pady=(10, 0))
         
         self.trans_lang_var = tk.StringVar(value="auto")
-        self.trans_lang_menu = ctk.CTkOptionMenu(trans_menu, variable=self.trans_lang_var, corner_radius=0, values=["auto", "cs", "en", "fr", "de", "es"])
+        self.trans_lang_menu = ctk.CTkOptionMenu(self.trans_menu, variable=self.trans_lang_var, corner_radius=0, values=["auto", "cs", "en", "fr", "de", "es"])
         self.trans_lang_menu.grid(row=8, column=0, sticky="ew", padx=10, pady=5)
 
         self.use_spk_id_var = tk.BooleanVar(value=False)
-        self.spk_toggle = ctk.CTkSwitch(trans_menu, text="Identify Speakers", variable=self.use_spk_id_var, progress_color="#1f538d")
+        self.spk_toggle = ctk.CTkSwitch(self.trans_menu, text="Identify Speakers", variable=self.use_spk_id_var, progress_color="#1f538d")
         self.spk_toggle.grid(row=9, column=0, sticky="w", padx=10, pady=10)
         self.spk_toggle.grid_remove() 
         
-        self.trans_button = ctk.CTkButton(trans_menu, text="Transcribe", height=40, font=ctk.CTkFont(weight="bold"), command=getattr(self, "run_standalone_transcription", None), corner_radius=0)
+        self.trans_button = ctk.CTkButton(self.trans_menu, text="Transcribe", height=40, font=ctk.CTkFont(weight="bold"), command=getattr(self, "run_standalone_transcription", None), corner_radius=0)
         self.trans_button.grid(row=10, column=0, sticky="ew", padx=10, pady=(30, 10))
         
-        ctk.CTkLabel(trans_menu, text="Turn ON switches in\nVocals or Instrumentals\nto process.", font=ctk.CTkFont(size=11, slant="italic")).grid(row=11, column=0, padx=10)
+        ctk.CTkLabel(self.trans_menu, text="Turn ON switches in\nVocals or Instrumentals\nto process.", font=ctk.CTkFont(size=11, slant="italic")).grid(row=11, column=0, padx=10)
 
         if hasattr(self, 'on_trans_tool_change'): self.on_trans_tool_change()
 
@@ -1015,15 +1128,15 @@ class SeparationApp(ctk.CTk):
         # ==========================================
         # FULL WIDTH: TRANSCRIPTIONS LIST
         # ==========================================
-        header_frame1 = ctk.CTkFrame(frame, fg_color="transparent")
-        header_frame1.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 0))
-        ctk.CTkLabel(header_frame1, text="Transcriptions", font=ctk.CTkFont(size=18, weight="bold")).pack(side="left")
-        ctk.CTkButton(header_frame1, text="Change Folder", width=100, corner_radius=0, command=lambda: self.change_output_folder("transcriptions")).pack(side="right")
+        self.header_frame1 = ctk.CTkFrame(frame)
+        self.header_frame1.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 0))
+        ctk.CTkLabel(self.header_frame1, text="Transcriptions", font=ctk.CTkFont(size=18, weight="bold")).pack(side="left")
+        ctk.CTkButton(self.header_frame1, text="Change Folder", width=100, corner_radius=0, command=lambda: self.change_output_folder("transcriptions")).pack(side="right")
         
         self.trans_list_frame = ctk.CTkScrollableFrame(frame, corner_radius=0)
         self.trans_list_frame.grid(row=1, column=0, sticky="nsew", padx=10, pady=(5, 5))
 
-        self.trans_page_frame = ctk.CTkFrame(frame, fg_color="transparent", height=30)
+        self.trans_page_frame = ctk.CTkFrame(frame, height=30)
         self.trans_page_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=(0, 15))
         self.trans_btn_prev = ctk.CTkButton(self.trans_page_frame, text="<", width=30, corner_radius=0, command=lambda: self.change_page("trans", -1))
         self.trans_btn_prev.pack(side="left")
@@ -1034,12 +1147,13 @@ class SeparationApp(ctk.CTk):
 
     def create_file_row(self, parent_frame, file_name, file_path, item_idx, selection_dict, is_folder=False):
         is_txt = file_name.lower().endswith('.txt')
-
-        is_input_tab = (parent_frame == self.songs_list_frame) 
-
-        # 1. Flat base 
+        is_input_tab = (parent_frame == self.songs_list_frame)
+        
+        # 1. Flat base
         row_frame = ctk.CTkFrame(parent_frame, corner_radius=0, fg_color=("gray85", "gray20"))
         row_frame.pack(fill="x", padx=2, pady=2)
+        self.checkbox_frame = ctk.CTkFrame(row_frame,fg_color=("gray85", "gray20"))
+        self.checkbox_frame.pack(side="left", padx=5, pady=5)
         
         # 2. Selection checkbox
         if not is_txt:
@@ -1048,37 +1162,35 @@ class SeparationApp(ctk.CTk):
                 selection_dict[item_idx] = {
                     "var": var,
                     "type": 'folder' if is_folder else 'song',
-                    "data": {'name': file_name, 'path': file_path} 
+                    "data": {'name': file_name, 'path': file_path}
                 }
-            chk = ctk.CTkCheckBox(row_frame, text="", variable=selection_dict[item_idx]["var"], width=24, corner_radius=0)
-            chk.pack(side="left", padx=(5, 5))
-            
+            self.chk = ctk.CTkCheckBox(self.checkbox_frame, text="", variable=selection_dict[item_idx]["var"], width=24, corner_radius=0)
+            self.chk.pack(side="left")
+
         # 3. Action Buttons
         if is_folder:
-            open_btn = ctk.CTkButton(row_frame, text="Open", width=65, corner_radius=0, 
+            self.open_btn = ctk.CTkButton(self.checkbox_frame, text="Open", width=65, corner_radius=0,
                                      command=lambda p=file_path: self.enter_folder(p))
-            open_btn.pack(side="left", padx=(0, 5))
+            self.open_btn.pack(side="left", padx=(0, 5))
         elif is_txt:
-            read_btn = ctk.CTkButton(row_frame, text="📖", width=54, corner_radius=0,
+            self.read_btn = ctk.CTkButton(self.checkbox_frame, text="📖", width=54, corner_radius=0,
                                      command=lambda p=file_path: self.play_audio(p))
-            read_btn.pack(side="left", padx=(0, 5))
+            self.read_btn.pack(side="left", padx=(0, 5))
         else:
-            play_btn = ctk.CTkButton(row_frame, text="▶", width=30, corner_radius=0,
+            self.play_btn = ctk.CTkButton(self.checkbox_frame, text="▶", width=30, corner_radius=0,
                                      command=lambda p=file_path: self.play_audio(p))
-            play_btn.pack(side="left", padx=(0, 5))
-            
-            info_btn = ctk.CTkButton(row_frame, text="\u2139", width=30, corner_radius=0,
+            self.play_btn.pack(side="left", padx=(0, 5))
+            self.info_btn = ctk.CTkButton(self.checkbox_frame, text="\u2139", width=30, corner_radius=0,
                                      command=lambda p=file_path, n=file_name: self.show_audio_info(p, n, show_sync_controls=is_input_tab))
-            info_btn.pack(side="left", padx=(0, 5))
+            self.info_btn.pack(side="left", padx=(0, 5))
 
         # 4. File icon and name
         if is_folder: display_text = f"📁 {file_name}"
         elif is_txt: display_text = f"📝 {file_name}"
         else: display_text = f"🎵 {file_name}"
-            
         lbl = ctk.CTkLabel(row_frame, text=display_text, anchor="w")
-        lbl.pack(side="left", fill="x", expand=True, padx=5) 
-        
+        lbl.pack(side="left", fill="x", expand=True, padx=5)
+
         # 5. Delete button
         if not is_folder:
             del_btn = ctk.CTkButton(row_frame, text="🗑", width=30, corner_radius=0, fg_color="#a83232", hover_color="#8a2929",
@@ -1089,7 +1201,7 @@ class SeparationApp(ctk.CTk):
         if is_folder:
             stats_lbl = ctk.CTkLabel(row_frame, text="Calculating...", text_color="gray", font=ctk.CTkFont(size=12))
             stats_lbl.pack(side="right", padx=(10, 15))
-            self.calculate_folder_size_async(file_path, stats_lbl) 
+            self.calculate_folder_size_async(file_path, stats_lbl)
         else:
             stats_text = self.get_file_stats(file_path, is_folder, is_txt)
             stats_lbl = ctk.CTkLabel(row_frame, text=stats_text, text_color="gray", font=ctk.CTkFont(size=12))
@@ -1407,11 +1519,11 @@ class SeparationApp(ctk.CTk):
         # ==========================================
         # SECTION 2: AI MODELS (CSV Format)
         # ==========================================
-        mod_frame = ctk.CTkFrame(scroll_frame)
-        mod_frame.pack(fill="x", padx=10, pady=(0, 20))
+        self.mod_frame = ctk.CTkFrame(scroll_frame)
+        self.mod_frame.pack(fill="x", padx=10, pady=(0, 20))
         
-        ctk.CTkLabel(mod_frame, text="AI Models List", font=ctk.CTkFont(size=16, weight="bold")).pack(anchor="w", padx=15, pady=(15, 5))
-        ctk.CTkLabel(mod_frame, text="Edit the lists below. The app will attempt to use these models when selected.", 
+        ctk.CTkLabel(self.mod_frame, text="AI Models List", font=ctk.CTkFont(size=16, weight="bold")).pack(anchor="w", padx=15, pady=(15, 5))
+        ctk.CTkLabel(self.mod_frame, text="Edit the lists below. The app will attempt to use these models when selected.", 
                      text_color="gray", font=ctk.CTkFont(size=11)).pack(anchor="w", padx=15, pady=(0, 10))
 
         self.model_vars = {}
@@ -1428,7 +1540,7 @@ class SeparationApp(ctk.CTk):
         ]
 
         for text, dict_key, model_list, desc in models_setup:
-            row_frame = ctk.CTkFrame(mod_frame, fg_color="transparent")
+            row_frame = ctk.CTkFrame(self.mod_frame, fg_color="transparent")
             row_frame.pack(fill="x", padx=15, pady=5)
             
             self.model_vars[dict_key] = tk.StringVar(value=list_to_csv(model_list))
@@ -1442,7 +1554,7 @@ class SeparationApp(ctk.CTk):
             ctk.CTkLabel(row_frame, text=desc, text_color="gray", font=ctk.CTkFont(size=10)).pack(side="top", anchor="w", padx=(105, 0))
 
         # Action Buttons for Models
-        action_mod_frame = ctk.CTkFrame(mod_frame, fg_color="transparent")
+        action_mod_frame = ctk.CTkFrame(self.mod_frame, fg_color="transparent")
         action_mod_frame.pack(fill="x", padx=15, pady=15)
 
         # --- CHANGED: Assigned the download button to a variable ---
@@ -1486,16 +1598,19 @@ class SeparationApp(ctk.CTk):
         button_row = ctk.CTkFrame(scroll_frame, fg_color="transparent")
         button_row.pack(fill="x", pady=(15, 0))
         
-        ctk.CTkButton(button_row, text="Show Tutorial", height=40, corner_radius=0,
-                      command=self.show_welcome_tutorial).pack(side="left", padx=(0, 5))
+        self.show_tutorial_btn = ctk.CTkButton(button_row, text="Show Tutorial", height=40, corner_radius=0,
+                      command=self.show_welcome_tutorial)
+        self.show_tutorial_btn.pack(side="left", padx=(0, 5))
         
         # Original Save and Restore buttons
-        ctk.CTkButton(button_row, text="Restore Defaults", height=40, fg_color="transparent", corner_radius=0, 
+        self.restore_defaults_btn = ctk.CTkButton(button_row, text="Restore Defaults", height=40, fg_color="transparent", corner_radius=0, 
                       border_width=1, text_color=("gray10", "gray90"), 
-                      command=self.restore_defaults).pack(side="left", padx=5)
+                      command=self.restore_defaults)
+        self.restore_defaults_btn.pack(side="left", padx=5)
         
-        ctk.CTkButton(button_row, text="Save Settings", height=40, font=ctk.CTkFont(weight="bold"), corner_radius=0, 
-                      command=self.save_settings_changes).pack(side="left", padx=(10, 0))
+        self.save_settings_btn = ctk.CTkButton(button_row, text="Save Settings", height=40, font=ctk.CTkFont(weight="bold"), corner_radius=0, 
+                      command=self.save_settings_changes)
+        self.save_settings_btn.pack(side="left", padx=(10, 0))
          
     def load_settings(self):
         defaults = self.DEFAULT_SETTINGS

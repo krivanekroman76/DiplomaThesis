@@ -351,30 +351,67 @@ def download_required_models(models_dir, tool_filter=None, demucs_models=None,
     return status_report
 
 class ProgressInterceptor(logging.Handler):
-    def __init__(self, callback, prefix):
+    def __init__(self, callback, device="CPU", tool_name="Process"):
         super().__init__()
         self.callback = callback
-        self.prefix = prefix
+        self.device = str(device).upper()
+        self.tool_name = tool_name
+        self.current_action = "Processing"
+        self.model_count = 1
+        self.current_model_idx = 1
 
     def emit(self, record):
         log_entry = record.getMessage()
-        # Universal regex for percentages
-        match = re.search(r'(\d{1,3})%', log_entry)
-        if match and self.callback:
-            raw_percent = int(match.group(1))
-            # You can customize scaling based on the tool if needed
-            self.callback(raw_percent, f"{self.prefix}: {raw_percent}%")
+        
+        # 1. Action Detection Logic
+        lower_entry = log_entry.lower()
+        if "download" in lower_entry:
+            self.current_action = "Downloading"
+        elif "separating" in lower_entry or "model" in lower_entry:
+            self.current_action = "Separating"
+        elif "transcrib" in lower_entry:
+            self.current_action = "Transcribing"
+
+        # 2. Demucs "Bag of Models" Tracking
+        # Detects: "Selected model is a bag of 4 models"
+        bag_match = re.search(r'bag of (\d+) models', lower_entry)
+        if bag_match:
+            self.model_count = int(bag_match.group(1))
+            self.current_model_idx = 1
+
+        # 3. Percentage Extraction
+        pct_match = re.search(r'(\d{1,3})%', log_entry)
+        if pct_match and self.callback:
+            raw_percent = int(pct_match.group(1))
+            
+            # Contextual formatting
+            action_str = f"{self.current_action}"
+            if self.model_count > 1 and self.current_action == "Separating":
+                action_str += f" (Model {self.current_model_idx}/{self.model_count})"
+            
+            # The final string you requested
+            # Example: [CUDA] Demucs Separating (Model 1/4): 84%
+            display_text = f"[{self.device}] {self.tool_name} {action_str}: {raw_percent}%"
+            
+            self.callback(raw_percent, display_text)
+            
+            # If a model hits 100%, increment the sub-model counter for Demucs
+            if raw_percent == 100 and self.current_model_idx < self.model_count:
+                self.current_model_idx += 1
 
 class LogStreamer:
-    """Redirects sys.stderr/stdout writes to a logger."""
+    """Redirects sys.stderr/stdout writes to a logger, handling progress bars."""
     def __init__(self, logger, level=logging.INFO):
         self.logger = logger
         self.level = level
 
     def write(self, buf):
-        for line in buf.rstrip().splitlines():
-            if line.strip():
-                self.logger.log(self.level, line.strip())
+        # Progress bars (tqdm) use \r to overwrite the same line.
+        # We replace \r with \n to ensure the logger treats each update as a record.
+        for line in buf.replace('\r', '\n').splitlines():
+            clean_line = line.strip()
+            if clean_line:
+                self.logger.log(self.level, clean_line)
 
     def flush(self):
         pass

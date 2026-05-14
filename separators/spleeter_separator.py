@@ -22,6 +22,13 @@ from .utils import (
 class SpleeterSeparator:
     def __init__(self):
         setup_ffmpeg_environment() 
+        # Create a 'models' folder in your app directory
+        model_dir = os.path.join(os.getcwd(), "models")
+        os.makedirs(model_dir, exist_ok=True)
+
+        # Force Spleeter to use this directory for its config and weights
+        os.environ['MODEL_PATH'] = model_dir
+        
         self.model = 'spleeter:2stems'
         logging.info("Spleeter Wrapper initialized (Full Safety & Logging Mode)")
 
@@ -46,7 +53,7 @@ class SpleeterSeparator:
             c_path = os.path.join(temp_dir, f"chunk_{idx}.wav")
             chunk.export(c_path, format="wav")
             
-            cmd = ['spleeter', 'separate', '-p', self.model, '-o', temp_dir, c_path]
+            cmd = [sys.executable, '-m', 'spleeter', 'separate', '-p', self.model, '-o', temp_dir, input_path]
             subprocess.run(cmd, capture_output=True, env=os.environ.copy(), creationflags=self.get_subprocess_flags())
 
             v_chunk_p = os.path.join(temp_dir, f"chunk_{idx}", "vocals.wav")
@@ -67,26 +74,32 @@ class SpleeterSeparator:
                   channels: str = "Stereo", fmt: str = "wav", sr: int = 44100, bitrate: str = "128k", 
                   device_choice: str = "Auto", flac_compression: int = 5, progress_callback: Any = None):
         
+        # 1. RESOLVE DEVICE FIRST
+        # We need this value to tell the Interceptor what to print in the UI
+        resolved_device = resolve_tensorflow_device(device_choice)
+        prefix = f"[{str(resolved_device).upper()}]"
+
+        # 2. SETUP LOGGING (Now we have 'resolved_device')
         spleeter_logger = logging.getLogger("spleeter")
         if not spleeter_logger.handlers:
-            spleeter_logger.addHandler(ProgressInterceptor(progress_callback, "[SPLEETER]"))
+            handler = ProgressInterceptor(progress_callback, device=resolved_device, tool_name="Spleeter")
+            spleeter_logger.addHandler(handler)
 
-        # Using Optional tells Pylance that None is allowed initially
         v_audio: Optional[AudioSegment] = None
         i_audio: Optional[AudioSegment] = None
 
         try:
             if not os.path.exists(input_path): return False, None, None
 
-            # 1. Metadata & Device
+            # 3. METADATA PREP
             original_tags = get_audio_metadata(input_path)
             v_tags = finalize_metadata(prepare_stem_metadata(original_tags, "Vocals"), "Vocals", "Spleeter")
             i_tags = finalize_metadata(prepare_stem_metadata(original_tags, "Instrumental"), "Instrumental", "Spleeter")
-            resolved_device = resolve_tensorflow_device(device_choice)
-            logging.info(f"[Spleeter] Separation is requesting device: {device_choice} -> Resolved to: {resolved_device}")
-            prefix = f"[{str(resolved_device).upper()}]"
-
-            if progress_callback: progress_callback(10, f"{prefix} Spleeter: Initializing...")
+            
+            logging.info(f"[Spleeter] Separation starting on: {resolved_device}")
+            
+            if progress_callback: 
+                progress_callback(10, f"{prefix} Spleeter: Initializing...")
 
             with tempfile.TemporaryDirectory() as temp_dir:
                 orig_stderr = sys.stderr
@@ -106,7 +119,8 @@ class SpleeterSeparator:
                     except Exception as api_err:
                         # PHASE B: CLI Fallback if API fails
                         logging.warning(f"Spleeter API failed ({api_err}), trying CLI fallback...")
-                        cmd = ['spleeter', 'separate', '-p', self.model, '-o', temp_dir, input_path]
+
+                        cmd = [sys.executable, '-m', 'spleeter', 'separate', '-p', self.model, '-o', temp_dir, input_path]
                         res = subprocess.run(cmd, capture_output=True, text=True, creationflags=self.get_subprocess_flags())
                         
                         if res.returncode != 0 and ("memory" in res.stderr.lower() or "oom" in res.stderr.lower()):
@@ -157,3 +171,4 @@ class SpleeterSeparator:
         except Exception as e:
             logging.error(f"Spleeter error: {e}", exc_info=True)
             return False, None, None
+        

@@ -72,7 +72,8 @@ class DemucsSeparator:
         
         # Setup Interceptor
         demucs_logger = logging.getLogger("demucs")
-        handler = ProgressInterceptor(progress_callback, prefix)
+        # Pass 'device' and 'tool_name' instead of just a prefix string
+        handler = ProgressInterceptor(progress_callback, device=device, tool_name="Demucs")
         demucs_logger.addHandler(handler)
 
         try:
@@ -115,8 +116,8 @@ class DemucsSeparator:
             
             # Demucs uses 'no_vocals' for the instrumental stem in --two-stems mode
             stems = [
-                (os.path.join(sep_folder, f"vocals.{fmt}"), f"{song_name}_Demucs_vocals.{fmt}", v_tags, vocals_folder),
-                (os.path.join(sep_folder, f"no_vocals.{fmt}"), f"{song_name}_Demucs_instrumental.{fmt}", i_tags, instr_folder)
+                (os.path.join(sep_folder, f"vocals.{fmt}"), f"{song_name}_Demucs_{model}_vocals.{fmt}", v_tags, vocals_folder),
+                (os.path.join(sep_folder, f"no_vocals.{fmt}"), f"{song_name}_Demucs_{model}_instrumental.{fmt}", i_tags, instr_folder)
             ]
 
             final_paths = []

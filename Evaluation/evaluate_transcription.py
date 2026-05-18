@@ -8,7 +8,7 @@ REQUIRED: A dataset folder containing audio files and optionally .txt lyrics.
 USAGE GUIDE:
 
 1. FETCH LYRICS (Genius.com API):
-    python Evaluation/evaluate_transcription.py --fetch_lyrics --genius_token YOUR_TOKEN # there might be a default token, but it's recommended to use your own for reliability
+    python Evaluation/evaluate_transcription.py --fetch_lyrics --genius_token YOUR_TOKEN
     NOTE: Lyrics are saved as .txt files. You can manually verify or edit these 
           files before running the evaluation to ensure "Ground Truth" accuracy.
 
@@ -17,37 +17,25 @@ USAGE GUIDE:
         (Uses default htdemucs)
     python Evaluation/evaluate_transcription.py --run_separation spleeter-2stems --num_tracks 5
         (Runs separation using Spleeter on only the first 5 tracks)
-    NOTE: without --run_separation, the script will skip directly to transcription evaluation using existing separated vocals in the specified separated_path.
 
-3. TARGETED EVALUATION (Specific Tools/Models):
-    python Evaluation/evaluate_transcription.py --tools Whisper --models medium
-    python Evaluation/evaluate_transcription.py --tools Wav2Vec2 Vosk --num_tracks 10
-    
-    NOTE: Default models for each tool are defined in the 'DEFAULT_CONFIG' 
-dictionary at the top of this script. Edit that section to change defaults.
-
-4. MULTILINGUAL EVALUATION:
-    python Evaluation/evaluate_transcription.py --whisper_langs fr --tools Whisper
-        (Tells Whisper to attempt forced French transcription)
-
-5. CLEAN RUN (Overwrite cached .txt and CSV results):
-    python Evaluation/evaluate_transcription.py --clean_run
-    NOTE: Transcription will be redone, and all previous results will be overwritten. If added --run_separation it will also be redone.
+3. TARGETED EVALUATION (Specific Tools/Models with Debugging):
+    python Evaluation/evaluate_transcription.py --tools Whisper --models medium --debug
 
 FLAGS SUMMARY:
---device [Auto|cuda|cpu] : Hardware acceleration (Default: Auto) Cuda means GPU
---model_path [Path]      : Local directory where model weights are stored or downloaded to (Default: ./Models)
---clean_run              : Deletes existing files and forces a fresh run of separation and/or transcription.
---skip_transcription     : Runs only separation/lyrics fetching phases
+--device [Auto|cuda|cpu] : Hardware acceleration (Default: Auto)
+--model_path [Path]      : Local directory for model weights (Default: ./Models)
+--clean_run              : Overwrites cached text files and forces fresh runs.
+--skip_transcription     : Runs only separation/lyrics fetching phases.
+--debug                  : Enters verbose mode displaying track processing times, 
+                           RTF, and fine-grained error metrics (Ins, Del, Sub).
 ================================================================================
 """
 DEFAULT_GENIUS_TOKEN = "q5ySfDNJOqsEoKB6H7ZE7iBxTXmT_JD7kKfJCwLJFE0FzOT6pIx-HNVaPnrgVL2a"
 
 # --- 1. USER CONFIGURATION (DEFAULT MODELS) ---
-# Point users here to change what runs by default
 DEFAULT_CONFIG = {
     "Whisper": ["small"],
-    "Vosk": ["default"],
+    "Vosk": ["vosk-model-small-fr-0.22", "vosk-model-fr-0.22"],
     "Wav2Vec2": ["facebook/wav2vec2-base-960h"],
     "Separation": "htdemucs"
 }
@@ -63,9 +51,6 @@ import shutil
 import logging
 import gc
 import unicodedata
-import zipfile
-import io
-import requests
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
@@ -80,11 +65,17 @@ import cpuinfo
 from tinytag import TinyTag
 
 # --- LOGGING SETUP ---
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 # --- SECURE IMPORTS & REGISTRY ---
-# We use a dictionary to store classes to avoid "Unbound" errors in static analysis
+script_dir = Path(__file__).resolve().parent
+project_root = script_dir.parent
+
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+# CRITICAL: This line must be exactly here (global scope, before the try block)
 STRATEGY_REGISTRY: Dict[str, Any] = {"separators": {}, "transcribers": {}}
 
 try:
@@ -111,6 +102,17 @@ class TranscriptionEvaluator:
         self.lyrics_dir = self.dataset_dir / "lyrics"
         self.separated_dir = Path(args.separated_path)
         self.results_dir = Path("Evaluation/transcription_results")
+        
+        # --- NEW DIRECTORY CLEANUP LOGIC ---
+        if args.clean_run and self.results_dir.exists():
+            logger.info("🧹 [--clean_run] Wiping transcription results directory...")
+            shutil.rmtree(self.results_dir, ignore_errors=True)
+            
+        if args.force_reseparate and self.separated_dir.exists():
+            logger.info("🧹 [--force_reseparate] Wiping separated audio directory...")
+            shutil.rmtree(self.separated_dir, ignore_errors=True)
+        # -----------------------------------
+
         self.txt_outputs_dir = self.results_dir / "txt_outputs"
         
         for p in [self.separated_dir, self.results_dir, self.txt_outputs_dir]:
@@ -119,6 +121,7 @@ class TranscriptionEvaluator:
         self.csv_path = self.results_dir / "raw_transcription_metrics.csv"
         self.json_path = self.results_dir / "summary_transcription.json"
         self.devices_to_test = self._resolve_devices(args.device)
+        self.hardware_name = self._get_cuda_name() if "cuda" in self.devices_to_test else self._get_cpu_name()
 
     def _resolve_devices(self, device_arg: str) -> List[str]:
         device_arg = device_arg.lower()
@@ -131,6 +134,11 @@ class TranscriptionEvaluator:
             return cpuinfo.get_cpu_info().get('brand_raw', 'Unknown CPU')
         except Exception:
             return platform.processor()
+
+    def _get_cuda_name(self) -> str:
+        if torch.cuda.is_available():
+            return torch.cuda.get_device_name(0)
+        return "N/A"
 
     def _parse_transcription_text(self, raw_output: str) -> str:
         if "Transcription (Model:" in raw_output and "Timestamps:" in raw_output:
@@ -214,11 +222,13 @@ class TranscriptionEvaluator:
         audio_files = list(self.dataset_dir.glob("**/*.mp3")) + list(self.dataset_dir.glob("**/*.wav"))
         if self.args.num_tracks: audio_files = audio_files[:self.args.num_tracks]
 
+        if self.args.debug:
+            logger.debug(f"[Separation Debug] Hardware target initialized: {self.hardware_name}")
+
         for track_path in audio_files:
             final_vocal_path = self.separated_dir / f"{track_path.stem}.wav"
             
-            if final_vocal_path.exists() and self.args.clean_run:
-                final_vocal_path.unlink()
+            # (Removed the old clean_run file unlinking here)
             
             if final_vocal_path.exists(): continue
 
@@ -233,7 +243,13 @@ class TranscriptionEvaluator:
                 }
                 if tool_key in ["demucs", "openunmix"]: kwargs["model_name"] = model_name
                 
+                start_sep = time.time()
                 result = separator.separate(**kwargs)
+                elapsed_sep = time.time() - start_sep
+
+                if self.args.debug:
+                    logger.debug(f"  [Separation Time] Tool: {tool_key} | Track: {track_path.stem} | Time: {elapsed_sep:.2f}s")
+
                 if result and result[0] and result[1]:
                     src = temp_out_dir / str(result[1])
                     if src.exists(): shutil.move(str(src), str(final_vocal_path))
@@ -243,9 +259,8 @@ class TranscriptionEvaluator:
                 print(f" [!] Error: {e}")
 
     def get_detailed_metrics(self, ref: str, est: str) -> Dict[str, Any]:
-        """Compatible with JiWER 2.5.1"""
+        """Compatible with JiWER 2.5.1 / 3.x"""
         measures = jiwer.compute_measures(ref, est)
-        # Manually calculate CER as JiWER 2.x doesn't have a direct compute_measures for chars
         cer = jiwer.cer(ref, est)
         
         return {
@@ -259,7 +274,6 @@ class TranscriptionEvaluator:
     def run_evaluation_pipeline(self):
         all_metrics: List[Any] = []
         transcriber: Any = None
-        device: str = "cpu"
 
         if self.csv_path.exists() and not self.args.clean_run:
             try:
@@ -282,37 +296,80 @@ class TranscriptionEvaluator:
             for model_name in models:
                 for device in self.devices_to_test:
                     langs = self.args.whisper_langs if tool_name == "Whisper" else [None]
-                    transcriber = transcriber_class(custom_models_dir=self.args.model_path)
+
+                    import inspect
+                    sig = inspect.signature(transcriber_class.__init__)
+                    
+                    if "custom_models_dir" in sig.parameters:
+                        transcriber = transcriber_class(custom_models_dir=self.args.model_path)
+                    elif "model_path" in sig.parameters:
+                        transcriber = transcriber_class(model_path=self.args.model_path)
+                    else:
+                        # Fallback if the class takes no path arguments in __init__
+                        transcriber = transcriber_class()
 
                     for lang in langs:
                         print(f"\n--- {tool_name} ({model_name}) | {device} | Lang: {lang} ---")
                         for track_path in test_samples:
                             wer, cer, rtf = 1.0, 1.0, 0.0
+                            w_sub, w_del, w_ins = 0, 0, 0
                             lang_tag = f"_{lang}" if lang else ""
                             cache_file = self.txt_outputs_dir / f"{tool_name}_{str(model_name).replace('/','_')}_{device}{lang_tag}_{track_path.stem}.txt"
 
                             try:
-                                duration = librosa.get_duration(path=str(track_path)) # type: ignore
-                            except:
+                                # Use soundfile instead of librosa for native WAV duration
+                                duration = sf.info(str(track_path)).duration
+                            except Exception as e:
+                                logger.error(f"  [!] Failed to get duration for {track_path.stem}: {e}")
                                 duration = 1.0
 
                             if cache_file.exists() and not self.args.clean_run:
                                 raw_out = cache_file.read_text(encoding="utf-8")
+                                if self.args.debug:
+                                    logger.debug(f"  [Cache Hit] Using execution file for track: {track_path.stem}")
                             else:
                                 start_t = time.time()
-                                success, _ = transcriber.transcribe(audio_path=str(track_path), output_path=str(cache_file), model_name=model_name, device_choice=device, **({"language": lang} if lang else {}))
-                                rtf = (time.time() - start_t) / duration if duration > 0 else 0
+                                success, _ = transcriber.transcribe(
+                                    audio_path=str(track_path), 
+                                    output_path=str(cache_file), 
+                                    model_name=model_name, 
+                                    device_choice=device, 
+                                    **({"language": lang} if lang else {})
+                                )
+                                elapsed_transcription = time.time() - start_t
+                                rtf = elapsed_transcription / duration if duration > 0 else 0
                                 raw_out = cache_file.read_text(encoding="utf-8") if success else ""
+
+                                if self.args.debug:
+                                    logger.debug(f"  [Timing] Track: {track_path.stem} | Duration: {duration:.2f}s | Transcription: {elapsed_transcription:.2f}s | RTF: {rtf:.4f}")
 
                             if raw_out.strip():
                                 ref_p = self.lyrics_dir / f"{track_path.stem}.txt"
                                 ref_raw = ref_p.read_text(encoding="utf-8") if ref_p.exists() else ""
                                 ref, est = self.robust_clean(ref_raw), self.robust_clean(raw_out)
+                                
                                 if ref and est:
                                     m = self.get_detailed_metrics(ref, est)
                                     wer, cer = m["wer"], m["cer"]
+                                    w_sub, w_del, w_ins = m["w_sub"], m["w_del"], m["w_ins"]
 
-                            row = {"tool": tool_name, "model": model_name, "lang": lang or "N/A", "device": device, "song": track_path.stem, "WER": wer, "CER": cer, "rtf": rtf}
+                                    if self.args.debug:
+                                        logger.debug(f"  [Metrics Summary] Substitutions: {w_sub} | Deletions: {w_del} | Insertions: {w_ins}")
+
+                            row = {
+                                "tool": tool_name, 
+                                "model": model_name, 
+                                "lang": lang or "N/A", 
+                                "device": device, 
+                                "song": track_path.stem, 
+                                "WER": wer, 
+                                "CER": cer, 
+                                "rtf": rtf,
+                                "substitutions": w_sub,
+                                "deletions": w_del,
+                                "insertions": w_ins
+                            }
+                            
                             all_metrics = [m for m in all_metrics if not (m.get('tool')==tool_name and m.get('model')==model_name and m.get('song')==track_path.stem and m.get('lang')==(lang or "N/A"))]
                             all_metrics.append(row)
                             pd.DataFrame(all_metrics).to_csv(self.csv_path, index=False)
@@ -336,17 +393,24 @@ if __name__ == "__main__":
     parser.add_argument("--separated_path", type=str, default="Evaluation/separated_muni")
     parser.add_argument("--device", type=str, default="Auto")
     parser.add_argument("--num_tracks", type=int, default=None)
-    parser.add_argument("--clean_run", action="store_true")
+    parser.add_argument("--clean_run", action="store_true", help="Deletes transcription_results and runs a fresh evaluation.")
+    parser.add_argument("--force_reseparate", action="store_true", help="Deletes the separated audio folder to force re-separation.")
     parser.add_argument("--model_path", type=str, default="./Models")
     parser.add_argument("--run_separation", nargs="?", const="demucs-htdemucs", default=None)
     parser.add_argument("--tools", nargs="+", default=None)
     parser.add_argument("--models", nargs="+", default=None)
-    parser.add_argument("--whisper_langs", nargs="+", default=["auto", "fr"], help="Languages to force Whisper to use. Defaults to both 'auto' and 'fr'.")
+    parser.add_argument("--whisper_langs", nargs="+", default=["auto", "fr"], help="Languages to force Whisper to use.")
     parser.add_argument("--skip_transcription", action="store_true")
     parser.add_argument("--fetch_lyrics", action="store_true")
     parser.add_argument("--genius_token", type=str, default="")
+    parser.add_argument("--debug", action="store_true", help="Print granular execution times and error diagnostics.")
     
     args = parser.parse_args()
+
+    if args.debug:
+        logger.setLevel(logging.DEBUG)
+        logging.getLogger().setLevel(logging.DEBUG)
+
     evaluator = TranscriptionEvaluator(args)
     
     if args.fetch_lyrics:

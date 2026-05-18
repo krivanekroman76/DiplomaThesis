@@ -1,25 +1,9 @@
 Transcription (Model: vosk-model-fr-0.22):
-ah hein hey de même non bob non hey vous êtes vicieux lis les cieux ici les cieux les cieux messieurs messieurs messieurs tout le monde messieurs vicieux ici justice questions un oui euh ceci dit pour les gens qui me dévisagent comme si j'étais un peu que j'avais des nibards de leur donner un bon coup pour le mid avec un peu austère aux murs de marine en car je voulais aider les gens me regardent bizarre désolé mais je n'aime pas l'humour de bigard et monsieur je me dis que jimmy n'a que pour m'en sortir il faudrait un miracle il fallait bien qu'on apprenne la vie crave l'un de nos pays il a aussi doué donc donc or ni car je veux juste savoir où est la diois alors l'après-midi moi andy roddick a rien de plus injuste on y croit on y croit tout le monde dit blague là tout le monde dit bla bla tout le monde dit black hein j'ai dit tout le monde dit bla bla tout le monde voit blague là tout le monde voit black black tout le monde voit un black hein j'ai dit tout le monde voit blague
+mais ceci c'est pour les gens qui me dévisagent comme si j'étais interloquée j'avais des nibards de leur donner un bon coup pour le mid avec un peu austère aux murs de maryland je vous l'ai dit les gens me regardent bizarre désolé mais je n'ai pas l'humour de bigard et monsieur jack me dit que je m'en sors qui irait dormir fallait bien qu'on apprenne la vie crave l'un de nos pays la océanie vous devez donc or ni car je veux juste savoir où est leur diois alors l'après-midi moi on dit qu'on a rien fait juste on y croit on y croit tout le monde dit blague tout le monde dit bla bla tout le monde dit black hein j'ai dit tout le monde dit bla bla tout le monde voit blague tout le monde voit black black tout le monde black hein j'ai dit tout le monde voit blague
 
 Timestamps:
-015.27s - 015.57s [Vocal]: ah
-017.76s - 018.21s [Vocal]: hein
-020.49s - 020.82s [Vocal]: hey
-023.55s - 026.04s [Vocal]: de même
-028.17s - 028.53s [Vocal]: non
-032.94s - 033.39s [Vocal]: bob
-035.31s - 035.61s [Vocal]: non
-037.74s - 038.25s [Vocal]: hey
-040.14s - 043.02s [Vocal]: vous êtes vicieux
-047.13s - 048.87s [Vocal]: lis les cieux
-049.44s - 053.70s [Vocal]: ici les cieux les cieux
-054.24s - 054.78s [Vocal]: messieurs
-059.16s - 060.90s [Vocal]: messieurs messieurs
-063.96s - 064.53s [Vocal]: tout le monde
-066.48s - 066.93s [Vocal]: messieurs
-067.44s - 068.04s [Vocal]: vicieux
-068.64s - 071.76s [Vocal]: ici justice questions
-076.23s - 077.40s [Vocal]: un oui
-078.06s - 097.92s [Vocal]: euh ceci dit pour les gens qui me dévisagent comme si j'étais un peu que j'avais des nibards de leur donner un bon coup pour le mid avec un peu austère aux murs de marine en car je voulais aider les gens me regardent bizarre désolé mais je n'aime pas l'humour de bigard et monsieur je me dis que jimmy n'a que pour m'en sortir il faudrait un miracle il fallait bien qu'on apprenne la vie crave l'un de nos pays il a aussi doué donc donc or ni car je veux juste savoir où est la
-098.01s - 102.60s [Vocal]: diois alors l'après-midi moi andy roddick a rien de plus injuste on y croit on y croit
-105.00s - 117.69s [Vocal]: tout le monde dit blague là tout le monde dit bla bla tout le monde dit black hein j'ai dit tout le monde dit bla bla tout le monde voit blague là tout le monde voit black black tout le monde voit un black hein j'ai dit tout le monde voit blague
+0.00s - 6.06s: mais ceci c'est pour les gens qui me dévisagent comme si j'étais interloquée j'avais des nibards de leur donner un bon coup pour le mid avec un peu austère aux murs de maryland
+6.72s - 12.69s: je vous l'ai dit les gens me regardent bizarre désolé mais je n'ai pas l'humour de bigard et monsieur jack me dit que je m'en sors qui irait dormir
+13.22s - 23.43s: fallait bien qu'on apprenne la vie crave l'un de nos pays la océanie vous devez donc or ni car je veux juste savoir où est leur diois alors l'après-midi moi on dit qu'on a rien fait juste on y croit on y croit
+25.83s - 27.12s: tout le monde dit blague
+27.39s - 38.52s: tout le monde dit bla bla tout le monde dit black hein j'ai dit tout le monde dit bla bla tout le monde voit blague tout le monde voit black black tout le monde black hein j'ai dit tout le monde voit blague

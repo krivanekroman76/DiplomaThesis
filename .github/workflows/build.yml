@@ -1,0 +1,73 @@
+name: Cross-Platform Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+
+      - name: Install System FFmpeg (Linux/Mac)
+        if: matrix.os != 'windows-latest'
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          else
+            brew install ffmpeg
+          fi
+          cp $(which ffmpeg) .
+          cp $(which ffprobe) .
+
+      - name: Install Dependencies (Windows - WITH CUDA)
+        if: matrix.os == 'windows-latest'
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller flake8 pytest
+
+      - name: Install Dependencies (Linux/Mac - CPU/MPS)
+        if: matrix.os != 'windows-latest'
+        run: |
+          python -m pip install --upgrade pip
+          # Remove CUDA index for Unix-like systems
+          sed -i '/--extra-index-url/d' requirements.txt || sed -i '' '/--extra-index-url/d' requirements.txt
+          pip install -r requirements.txt
+          pip install pyinstaller flake8 pytest
+
+      - name: Lint with flake8
+        run: |
+          # Fails if there are syntax errors (E9, F63, F7, F82)
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: Test with pytest
+        run: |
+          # Only runs if a 'tests' directory exists
+          if [ -d "tests" ]; then pytest; fi
+
+      - name: Build App with PyInstaller
+        run: |
+          pyinstaller separation_app.spec
+
+      - name: Upload Build Result
+        uses: actions/upload-artifact@v4
+        with:
+          name: AudioSeparator-${{ matrix.os }}
+          path: dist/AudioSeparatorApp/

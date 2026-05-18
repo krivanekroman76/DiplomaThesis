@@ -31,7 +31,7 @@ protobuf==3.20.3
 ffmpeg-python==0.2.0
 pydub
 soxr
-
+hf_xet==1.5.0
 # --- Main AI Libraries ---
 spleeter==2.3.2
 demucs==4.0.1

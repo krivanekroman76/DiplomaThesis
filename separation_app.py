@@ -1,11 +1,11 @@
+# libraries to load for pyinstaller to work?
+import unittest
+import unittest.mock
+import torch.testing
+
 import warnings
 warnings.simplefilter('ignore')  # Hide unnecessary warnings
 import os
-# STRICT GAG ORDER FOR TENSORFLOW (Must be set before any AI imports)
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # 0=DEBUG, 1=INFO, 2=WARNING, 3=ERROR
-os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0' # Hides oneDNN custom operations warnings
-# Force Numba to use a stable threading layer before librosa is even imported
-os.environ['NUMBA_THREADING_LAYER'] = 'workqueue'
 import logging
 import sys
 import shutil
@@ -28,25 +28,91 @@ from typing import Optional
 import torch
 import gc
 from typing import Dict, Any
+from datetime import datetime
+import time
 # The separators and transcription tools are lazy loaded to save RAM
 
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
 
-# Change this from DEBUG to INFO!
-logging.basicConfig(
-    level=logging.INFO, 
-    format="%(asctime)s [%(levelname)s] %(message)s"
-)
+# --- 1. GAG ORDERS (Safe at top level as they only set env vars) ---
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+os.environ['NUMBA_THREADING_LAYER'] = 'workqueue'
 
-# Explicitly silence noisy third-party libraries just in case
-logging.getLogger('numba').setLevel(logging.WARNING)
-logging.getLogger('matplotlib').setLevel(logging.WARNING)
-logging.getLogger('tensorflow').setLevel(logging.ERROR)
-logging.getLogger('absl').setLevel(logging.ERROR) # TensorFlow's internal abseil logger
-SpleeterSeparator = None
-DemucsSeparator = None
-OpenUnmixSeparator = None
+# --- 2. LOG STREAMER CLASS ---
+class LogStreamer:
+    def __init__(self, target_logger, level=logging.INFO):
+        self.logger = target_logger
+        self.level = level
+        self.is_logging = False 
+
+    def write(self, buf):
+        if self.is_logging: return
+        if "%|" in buf: return # Completely ignore progress bar lines in the log file
+        clean_buf = buf.strip()
+        if not clean_buf: return
+
+        self.is_logging = True
+        try:
+            # 1. Identify "Noise" (Diagnostic info that isn't a crash)
+            # We look for progress bar symbols or specific Demucs/Torch phrases
+            noise_indicators = ["%|", "it/s]", "Downloading", "Separating track", "Selected model", "Separated tracks will be stored in"]
+            is_noise = any(x in clean_buf for x in noise_indicators)
+
+            # 2. Logic: 
+            # If it's noise -> INFO
+            # If it contains "Error" or "Exception" -> ERROR
+            # Otherwise, keep as ERROR (safe for debugging)
+            if is_noise:
+                msg_level = logging.INFO
+            elif any(x in clean_buf.lower() for x in ["error", "exception", "failed"]):
+                msg_level = logging.ERROR
+            else:
+                msg_level = logging.ERROR # Keep stderr as Error by default for safety
+
+            for line in clean_buf.replace('\r', '\n').splitlines():
+                if line.strip():
+                    self.logger.log(msg_level, line.strip())
+        finally:
+            self.is_logging = False
+
+    def flush(self):
+        pass
+
+# --- 3. THE ONLY LOGGING SETUP YOU NEED ---
+def setup_logging():
+    log_dir = "logs"
+    os.makedirs(log_dir, exist_ok=True)
+    log_filename = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".log"
+    log_path = os.path.join(log_dir, log_filename)
+
+    # 1. Clear existing handlers if any (Prevents the "Empty Log" bug)
+    root = logging.getLogger()
+    if root.handlers:
+        for handler in root.handlers[:]:
+            time.sleep(0.1)
+            root.removeHandler(handler)
+
+    # 2. Configure with a FileHandler that has delay=False (forces immediate write)
+    file_handler = logging.FileHandler(log_path, mode='a', encoding='utf-8', delay=False)
+    file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
+    
+    root.setLevel(logging.INFO)
+    root.addHandler(file_handler)
+
+    # 3. Add StreamHandler only for Console
+    if not getattr(sys, 'frozen', False):
+        console_handler = logging.StreamHandler(sys.__stdout__)
+        console_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
+        root.addHandler(console_handler)
+
+    # 4. Silence background noise
+    for lib in ['numba', 'matplotlib', 'tensorflow', 'absl', 'h5py', 'torch']:
+        logging.getLogger(lib).setLevel(logging.ERROR)
+    
+    return log_path
+
 def get_app_dir():
     """Always returns the directory containing the .exe or the main .py script.
        Use this for saving settings.json or user output files!"""
@@ -120,6 +186,7 @@ class TranscriptionSettings:
     tool: str
     model: str
     lang: str
+    genre: str
     use_spk: bool
     device: str
     output_folder: str
@@ -135,6 +202,7 @@ class SeparationApp(ctk.CTk):
         # 1. Load Settings and Setup Data
         self.settings_file = os.path.join(get_app_dir(), "settings.json")
         self.load_settings()
+        self.is_separating = False  # The gatekeeper flag
         
         os.makedirs(self.input_folder, exist_ok=True)
         for folder in self.output_folders.values():
@@ -202,23 +270,14 @@ class SeparationApp(ctk.CTk):
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
 
     def on_closing(self):
-            """Standard cleanup before exiting."""
-            # 1. Stop any active AI separation
-            self.abort_separation = True 
+        """Standard window close handler."""
+        # No need for complex logic here if you have it in 'finally' below,
+        # but destroying the window triggers the exit flow.
+        self.destroy()
+        # Note: In some cases, destroy() isn't enough to break a subprocess.run
+        # so we force the exit here too.
+        os._exit(0)
 
-            # 2. Clear AI models from RAM/VRAM
-            self.spleeter_sep = None
-            self.demucs_sep = None
-            self.openunmix_sep = None
-
-            if torch.cuda.is_available():
-                torch.cuda.empty_cache()
-                
-            gc.collect()
-
-            # 3. Destroy the UI and exit
-            self.destroy()
-    
     def _initial_startup_sequence(self):
         """Handles heavy UI math after the main window is actually visible."""
         # 1. Decide which tab to show
@@ -245,9 +304,9 @@ class SeparationApp(ctk.CTk):
         """Displays a paginated interactive tutorial for first-time users."""
         dialog = ctk.CTkToplevel(self)
         dialog.title("Audio Separator - Quick Start Guide")
-        dialog.geometry("650x550") 
+        dialog.geometry("650x650") 
         dialog.attributes("-topmost", True)
-        dialog.resizable(False, False)
+        dialog.resizable(True, True)
     
         self.tutorial_page = 0
         
@@ -282,7 +341,7 @@ class SeparationApp(ctk.CTk):
                 "title": "✂️ Step 3: Separate audio into Vocals and Instrumentals",
                 "text": "Location: Separation Menu (Right Side)\n\n"
                         "1. Check the box next to any Vocal track.\n\n"
-                        "2. Choose your tool:\n\ns"
+                        "2. Choose your tool:\n"
                         "• Spleeter: Fast and efficient.\n"
                         "• Demucs: High quality, great for complex tracks.\n"
                         "• OpenUnmix: Excellent for research-grade separation.\n\n"
@@ -301,12 +360,12 @@ class SeparationApp(ctk.CTk):
                 "title": "🗣️ Step 5: High-Accuracy Transcription",
                 "text": "Location: Separated Output -> Transcription Menu\n\n"
                         "Want lyrics or scripts?\n\n"
-                        "1. Check the box next to any Vocal track.\n\n"
-                        "2. Select a tool:\n\n"
-                        "• Whisper: Human-Like: The gold standard for lyrics. Understands accents and context perfectly.\n"
-                        "• Wav2vec2: Lightning Fast: Best for quick drafts or clear, isolated vocal tracks.\n"
-                        "• Vosk: Private & Offline: Ultra-lightweight. Great for large batches.\n\n"
-                        "3. Choose your model and language settings.\n\n"
+                        "1. Check the box next to any Vocal track.\n"
+                        "2. Select a tool:\n"
+                        "   • Whisper: Human-Like: The gold standard for lyrics. Understands accents and context perfectly.\n"
+                        "   • Wav2vec2: Lightning Fast: Best for quick drafts or clear, isolated vocal tracks.\n"
+                        "   • Vosk: Private & Offline: Ultra-lightweight. Great for large batches.\n"
+                        "3. Choose your model and language settings.\n"
                         "4. Click 'Transcribe'.\n\n"
             },
             {
@@ -1095,18 +1154,25 @@ class SeparationApp(ctk.CTk):
         self.trans_lang_label.grid(row=7, column=0, sticky="w", padx=10, pady=(10, 0))
         
         self.trans_lang_var = tk.StringVar(value="auto")
-        self.trans_lang_menu = ctk.CTkOptionMenu(self.trans_menu, variable=self.trans_lang_var, corner_radius=0, values=["auto", "cs", "en", "fr", "de", "es"])
+        self.trans_lang_menu = ctk.CTkOptionMenu(self.trans_menu, variable=self.trans_lang_var, corner_radius=0, values=["auto", "cs", "en", "fr", "sk", "de", "es"])
         self.trans_lang_menu.grid(row=8, column=0, sticky="ew", padx=10, pady=5)
+
+        self.trans_genre_label = ctk.CTkLabel(self.trans_menu, text="Genre: (to help Whisper)", anchor="w")
+        self.trans_genre_label.grid(row=9, column=0, sticky="w", padx=10, pady=(10, 0))
+
+        self.trans_genre_var = tk.StringVar(value="Rap/Hip-Hop")
+        self.trans_genre_menu = ctk.CTkOptionMenu(self.trans_menu, variable=self.trans_genre_var, values=["Rap/Hip-Hop", "Rock/Metal", "Pop/Ballad", "Speech/Other"])
+        self.trans_genre_menu.grid(row=10, column=0, sticky="ew", padx=10, pady=5)
 
         self.use_spk_id_var = tk.BooleanVar(value=False)
         self.spk_toggle = ctk.CTkSwitch(self.trans_menu, text="Identify Speakers", variable=self.use_spk_id_var, progress_color="#1f538d")
-        self.spk_toggle.grid(row=9, column=0, sticky="w", padx=10, pady=10)
+        self.spk_toggle.grid(row=11, column=0, sticky="w", padx=10, pady=10)
         self.spk_toggle.grid_remove() 
         
         self.trans_button = ctk.CTkButton(self.trans_menu, text="Transcribe", height=40, font=ctk.CTkFont(weight="bold"), command=getattr(self, "run_standalone_transcription", None), corner_radius=0)
-        self.trans_button.grid(row=10, column=0, sticky="ew", padx=10, pady=(30, 10))
+        self.trans_button.grid(row=12, column=0, sticky="ew", padx=10, pady=(30, 10))
         
-        ctk.CTkLabel(self.trans_menu, text="Turn ON switches in\nVocals or Instrumentals\nto process.", font=ctk.CTkFont(size=11, slant="italic")).grid(row=11, column=0, padx=10)
+        ctk.CTkLabel(self.trans_menu, text="Turn ON switches in\nVocals or Instrumentals\nto process.", font=ctk.CTkFont(size=11, slant="italic")).grid(row=13, column=0, padx=10)
 
         if hasattr(self, 'on_trans_tool_change'): self.on_trans_tool_change()
 
@@ -1589,9 +1655,9 @@ class SeparationApp(ctk.CTk):
 
         ctk.CTkLabel(action_frame, text="Compute Device:", font=ctk.CTkFont(weight="bold")).pack(side="left", padx=5)
 
-        self.device_var = ctk.StringVar(value=getattr(self, 'device_var', ctk.StringVar(value="Auto")).get())
+        self.device_var = ctk.StringVar(value=getattr(self, 'device_var', ctk.StringVar(value="AUTO")).get())
         self.device_dropdown = ctk.CTkOptionMenu(
-            action_frame, values=["Auto", "GPU", "CPU"], variable=self.device_var
+            action_frame, values=["AUTO", "GPU", "CPU"], variable=self.device_var
         )
         self.device_dropdown.pack(side="left", padx=5)
 
@@ -1866,9 +1932,13 @@ class SeparationApp(ctk.CTk):
             if tool == "whisper":
                 if hasattr(self, 'trans_lang_label'): self.trans_lang_label.grid()
                 if hasattr(self, 'trans_lang_menu'): self.trans_lang_menu.grid()
+                if hasattr(self, 'trans_genre_label'): self.trans_genre_label.grid()
+                if hasattr(self, 'trans_genre_menu'): self.trans_genre_menu.grid()
             else:   
                 if hasattr(self, 'trans_lang_label'): self.trans_lang_label.grid_remove()
                 if hasattr(self, 'trans_lang_menu'): self.trans_lang_menu.grid_remove()
+                if hasattr(self, 'trans_genre_label'): self.trans_genre_label.grid_remove()
+                if hasattr(self, 'trans_genre_menu'): self.trans_genre_menu.grid_remove()
 
             # 4. SPEAKER ID (DIARIZATION) VISIBILITY
             if tool == "vosk":
@@ -2015,7 +2085,10 @@ class SeparationApp(ctk.CTk):
         self.render_page(category)
 
     def render_page(self, category: str):
-        self.progress_text.configure(text="Loading library and scanning files...")
+        # ONLY update the text if we aren't currently in the middle of a task
+        if not getattr(self, 'is_separating', False):
+            self.progress_text.configure(text="Loading library and scanning files...")
+
         self.update_idletasks() # Force UI to show this text
 
         if category == "vocals":
@@ -2651,7 +2724,11 @@ class SeparationApp(ctk.CTk):
         """
         @brief Unified progress updater for background tasks (Separation, Transcription, etc.)
         """
+        # Signal that we are busy so the refresh logic doesn't overwrite the text
+        self.is_separating = True
+
         if getattr(self, 'abort_separation', False):
+            self.is_separating = False # Release lock on abort
             self.after(0, lambda: self.progress_text.configure(text=f"{task_name} aborted by user. (Ready)"))
             self.after(0, lambda: self.progress_bar.configure(mode="indeterminate"))
             self.after(0, lambda: self.progress_bar.pack_forget())
@@ -2663,8 +2740,6 @@ class SeparationApp(ctk.CTk):
         base_progress = (file_index - 1) * file_weight
         current_file_progress = (percent / 100.0) * file_weight
         total_batch_percent = base_progress + current_file_progress
-
-        # Format display message
         display_msg = f"[{file_index}/{total_files}] {message}" if total_files > 1 else message
 
         # Update UI safely
@@ -2768,10 +2843,10 @@ class SeparationApp(ctk.CTk):
         import os
         import logging
         total_files = len(selected_files)
+        self.is_separating = True  # LOCK STATUS
         
         # UI: Show abort button
         self.after(0, lambda: self.abort_button.pack(side="right", padx=(0, 10)))
-
         try:
             # 1. Device Enforcement & Progress Init
             actual_device = config.device
@@ -2903,6 +2978,7 @@ class SeparationApp(ctk.CTk):
 
             # --- COMPLETION LOGIC ---
             if not self.abort_separation:
+                self.is_separating = False # UNLOCK BEFORE FINAL MESSAGE
                 success_count = len(successful_files) // 2 
                 completion_text = f"Batch complete! {success_count}/{total_files} processed. (Ready)"
                 
@@ -2919,12 +2995,14 @@ class SeparationApp(ctk.CTk):
                 self.after(0, lambda: self.show_batch_summary_window(title, details))
 
         except Exception as e:
+            self.is_separating = False # UNLOCK ON ERROR
             if str(e) == "ABORT_REQUESTED":
                 logging.info("Separation aborted by user.")
             else:
                 self.after(0, lambda: self.progress_text.configure(text=f"Error: {str(e)} (Ready)"))
                 logging.error(f"Thread error: {e}", exc_info=True)
         finally:
+            self.is_separating = False # FINAL UNLOCK
             self.abort_separation = False
             self.after(0, lambda: self.abort_button.pack_forget())
 
@@ -2971,6 +3049,7 @@ class SeparationApp(ctk.CTk):
             tool=self.trans_tool_var.get(),
             model=self.trans_model_var.get(),
             lang=self.trans_lang_var.get(),
+            genre=self.trans_genre_var.get(),
             use_spk=self.use_spk_id_var.get() if self.trans_tool_var.get() == "vosk" else False,
             device=self.device_var.get(),
             output_folder=self.output_folders["transcriptions"]
@@ -2994,7 +3073,7 @@ class SeparationApp(ctk.CTk):
         import os
         import logging
         total_files = len(selected_vocals)
-
+        self.is_separating = True
         self.after(0, lambda: self.abort_button.pack(side="right", padx=(0, 10)))
 
         try:
@@ -3063,7 +3142,8 @@ class SeparationApp(ctk.CTk):
                             audio_path=vocal_path, 
                             output_path=out_path, 
                             model_name=config.model, 
-                            language=config.lang, 
+                            language=config.lang,
+                            genre_hint=config.genre, 
                             device_choice=actual_device, 
                             progress_callback=cb
                         )
@@ -3106,7 +3186,8 @@ class SeparationApp(ctk.CTk):
             if not getattr(self, 'abort_separation', False):
                 self.after(500, lambda: self.progress_bar.pack_forget())
                 self.after(1000, lambda: self.progress_text.configure(text=f"Batch complete! {len(successful_files)}/{total_files} saved. (Ready)"))
-                
+                self.is_separating = False # UNLOCK BEFORE FINAL MESSAGE
+
                 details = ""
                 if successful_files:
                     details += "✅ Successfully transcribed:\n" + "\n".join(successful_files) + "\n\n"
@@ -3117,24 +3198,56 @@ class SeparationApp(ctk.CTk):
                 self.after(0, lambda: self.show_batch_summary_window(title, details))
 
         except Exception as e:
+            self.is_separating = False # UNLOCK ON ERROR
             if str(e) == "ABORT_REQUESTED":
                 logging.info("Transcription aborted.")
             else:
                 logging.error(f"Standalone trans error: {e}", exc_info=True)
                 self.after(0, lambda: self.progress_text.configure(text="Error occurred (Ready)"))
         finally:
+            self.is_separating = False # FINAL UNLOCK
             self.abort_separation = False
             self.after(0, lambda: self.abort_button.pack_forget())
 
 if __name__ == "__main__":
+    # 1. MANDATORY: Tells Windows how to handle the .exe / subprocesses
     multiprocessing.freeze_support()
+    
+    # 2. Setup Logging only once
+    log_path = setup_logging()
+    logger = logging.getLogger()
 
     try:
+        # 3. Redirect streams
+        sys.stdout = LogStreamer(logger, logging.INFO)
+        sys.stderr = LogStreamer(logger, logging.ERROR)
+        
+        logging.info(f"App Started - Logging to {log_path}")
+
+        # 4. Launch the GUI
         app = SeparationApp()
         app.mainloop()
+
+    except Exception as e:
+        # This captures crashes that happen during app.mainloop()
+        logging.critical(f"Application crashed: {e}", exc_info=True)
+    
     finally:
-        # This executes even if the app crashes
-        print("Cleaning up system resources...")
-        # Forcefully kill any remaining child processes of this script
+        # 5. SAFE CLEANUP
+        # Only the main GUI process should try to kill children.
+        # This prevents the PermissionError / WinError 5.
+        logging.info("Shutting down. Cleaning up processes...")
+        
+        # Get the current process name or ID to be sure
         for child in multiprocessing.active_children():
-            child.terminate()
+            try:
+                logging.debug(f"Terminating child process: {child.name}")
+                child.terminate()
+                child.join(timeout=0.5) # Give it a moment to die
+            except (PermissionError, AttributeError):
+                # If we don't have permission to kill a specific child, 
+                # we just skip it rather than crashing the whole exit.
+                pass
+        
+        # Use os._exit to release the console immediately
+        os._exit(0)

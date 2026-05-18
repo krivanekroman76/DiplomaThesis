@@ -1,12 +1,16 @@
 import os
-import gc
-import sys
-import shutil
 import logging
 import torch
+import tempfile
+import pathlib
+import time
+import soundfile as sf
+import librosa
+import music_tag
 from typing import Optional, Tuple
 from pydub import AudioSegment
 from demucs.separate import main as demucs_main
+import demucs.pretrained
 
 from .utils import (
     setup_ffmpeg_environment, 
@@ -14,136 +18,177 @@ from .utils import (
     resolve_torch_device, 
     get_audio_metadata, 
     prepare_stem_metadata,
-    finalize_metadata,
     clear_memory_cache,
-    ProgressInterceptor,
-    LogStreamer
+    ProgressInterceptor
 )
 
 class DemucsSeparator:
     def __init__(self):
         setup_ffmpeg_environment()
-        logging.info("Demucs API Wrapper initialized (With OOM Fallback)")
+        logging.getLogger("torch").setLevel(logging.ERROR)
+        logging.info("Demucs 4.0.1 (Hybrid Transformer) initialized.")
 
     def separate(self, input_path: str, song_name: str, vocals_folder: str, instr_folder: str, 
                  model="htdemucs", channels="Stereo", fmt="wav", sr=44100, 
                  bitrate="128k", bit_depth="16-bit", shifts=1, 
-                 overlap=0.1, device_choice="Auto", flac_compression=5,
+                 overlap=0.1, device_choice="AUTO", flac_compression=5,
                  progress_callback=None, **kwargs) -> Tuple[bool, Optional[str], Optional[str]]:
         
-        # Resolve initial device
-        target_device = resolve_torch_device(device_choice, return_string=True)
-        
+        target_device = resolve_torch_device(device_choice.upper(), return_string=True)
+        user_segment = kwargs.get('segment')
+
+        # --- FUTURE-PROOF METADATA QUERY ---
         try:
-            # Attempt separation
-            return self._run_separation_logic(
-                input_path, song_name, vocals_folder, instr_folder,
-                model, channels, fmt, sr, bitrate, bit_depth, shifts,
-                overlap, target_device, flac_compression, progress_callback
-            )
+            # We load the model metadata once to find the native segment limit
+            model_obj = demucs.pretrained.get_model(model)
+            native_segment = getattr(model_obj, 'segment', 7.8) 
+            logging.info(f"[Demucs] Model native segment limit: {native_segment}")
         except Exception as e:
-            error_msg = str(e).lower()
-            # Check specifically for CUDA/MPS Out of Memory
-            if ("out of memory" in error_msg or "alloc" in error_msg) and target_device != "cpu":
-                logging.warning(f"Demucs OOM on {target_device}. Falling back to CPU...")
-                
+            # Fallback if the API changes or model loading fails here
+            native_segment = 7.8 if "htdemucs" in model.lower() else 44.0
+            logging.warning(f"[Demucs] Could not query model metadata ({e}). Using fallback limit: {native_segment}")
+
+        # --- ADAPTIVE SEGMENT LOGIC ---
+        # If user didn't provide one, or provided one too high for the architecture
+        # Ensure all segment values are integers
+        if user_segment is None or user_segment > native_segment:
+            current_segment = int(native_segment) 
+        else:
+            current_segment = int(user_segment)
+
+        attempts = [
+            {"device": target_device, "seg": current_segment, "label": f"{target_device}"},
+            {"device": "cpu", "seg": current_segment, "label": "CPU Fallback"},
+            {"device": "cpu", "seg": min(current_segment, 4), "label": "CPU Safe-Mode"}
+        ]
+
+        last_exception = None
+        for attempt in attempts:
+            if attempt["label"] == "CPU Fallback" and target_device == "cpu":
+                continue
+
+            try:
+                logging.info(f"[Demucs] Attempting {attempt['label']} | Segment: {attempt['seg']}")
                 if progress_callback:
-                    progress_callback(15, f"[CPU FALLBACK] VRAM Full. Restarting on CPU (Slow)...")
-                
-                # Full system flush before retry
-                clear_memory_cache()
-                
-                # Retry specifically on CPU
-                return self._run_separation_logic(
+                    progress_callback(5, f"Demucs: Starting {attempt['label']}...")
+
+                return self._execute_core(
                     input_path, song_name, vocals_folder, instr_folder,
                     model, channels, fmt, sr, bitrate, bit_depth, shifts,
-                    overlap, "cpu", flac_compression, progress_callback
+                    overlap, attempt["device"], attempt["seg"], flac_compression, progress_callback
                 )
-            else:
-                logging.error(f"Demucs Critical Error: {e}", exc_info=True)
-                return False, None, None
 
-    def _run_separation_logic(self, input_path, song_name, vocals_folder, instr_folder, 
-                             model, channels, fmt, sr, bitrate, bit_depth, shifts, 
-                             overlap, device, flac_compression, progress_callback):
+            except Exception as e:
+                last_exception = e
+                err_msg = str(e).lower()
+                
+                # Fatal Transformer Limit Error (If our metadata query somehow missed it)
+                if "longer segment than it was trained for" in err_msg:
+                    logging.error("Segment length mismatch detected. Retrying with architecture-safe segment.")
+                    # Force a very safe segment for the next attempt
+                    for a in attempts: a["seg"] = 7.0 
+                    continue
+
+                if any(x in err_msg for x in ["out of memory", "alloc", "memory limit", "reallocate"]):
+                    logging.warning(f"Memory exhaustion during {attempt['label']}. Trying next fallback...")
+                    clear_memory_cache()
+                    time.sleep(1)
+                    continue
+                else:
+                    logging.error(f"Non-memory error in Demucs: {e}")
+                    break
+
+        logging.error(f"Demucs exhausted all fallback strategies. Final error: {last_exception}")
+        return False, None, None
+
+    def _execute_core(self, input_path, song_name, vocals_folder, instr_folder, 
+                      model, channels, fmt, sr, bitrate, bit_depth, shifts, 
+                      overlap, device, segment, flac_compression, progress_callback):
         
-        base_temp_out = os.path.join(os.getcwd(), f"temp_demucs_{song_name}")
-        prefix = f"[{str(device).upper()}]"
-        
-        # Setup Interceptor
-        demucs_logger = logging.getLogger("demucs")
-        # Pass 'device' and 'tool_name' instead of just a prefix string
+        root_logger = logging.getLogger()
         handler = ProgressInterceptor(progress_callback, device=device, tool_name="Demucs")
-        demucs_logger.addHandler(handler)
-
-        try:
-            if not os.path.exists(input_path): return False, None, None
-
-            # 1. Metadata Preparation
-            original_tags = get_audio_metadata(input_path)
-            v_tags = finalize_metadata(prepare_stem_metadata(original_tags, "Vocals"), "Vocals", "Demucs")
-            i_tags = finalize_metadata(prepare_stem_metadata(original_tags, "Instrumental"), "Instrumental", "Demucs")
-
-            # 2. Argument Construction
-            demucs_args = [
-                "-n", model, "-o", base_temp_out, input_path,
-                "--shifts", str(shifts), "--overlap", str(overlap),
-                "--two-stems", "vocals", "-d", device, "--clip-mode", "rescale"
-            ]
-            
-            # Format Logic
-            if fmt == "mp3":
-                demucs_args.extend(["--mp3", "--mp3-bitrate", bitrate.replace("k", "")])
-            elif fmt == "flac":
-                demucs_args.append("--flac")
-            
-            if bit_depth == "24-bit": demucs_args.append("--int24")
-            elif bit_depth == "32-bit": demucs_args.append("--float32")
-            
-            if progress_callback: progress_callback(10, f"{prefix} Demucs: Initializing AI Model...")
-            
-            # 3. Execute Demucs Core
-            original_stderr = sys.stderr
-            sys.stderr = LogStreamer(demucs_logger)
+        root_logger.addHandler(handler)
+        
+        with tempfile.TemporaryDirectory(prefix="demucs_v4_") as temp_dir:
             try:
+                # Metadata extraction for tags
+                original_tags = get_audio_metadata(input_path)
+                v_tags = prepare_stem_metadata(original_tags, "Vocals")
+                i_tags = prepare_stem_metadata(original_tags, "Instrumental")
+
+                # CLI Arguments for the main Demucs process
+                # Using --float32 to maintain the quality you need for your thesis
+                demucs_args = [
+                    "-n", model, 
+                    "-o", temp_dir, 
+                    input_path,
+                    "--shifts", str(shifts), 
+                    "--overlap", str(overlap),
+                    "--two-stems", "vocals", 
+                    "-d", device,
+                    "--segment", str(int(float(segment))),
+                    "--float32"
+                ]
+
                 demucs_main(demucs_args)
+
+                # Path resolution logic (Demucs appends the model name and file stem to output)
+                input_stem = pathlib.Path(input_path).stem
+                sep_folder = os.path.join(temp_dir, model, input_stem)
+                v_src = os.path.join(sep_folder, "vocals.wav")
+                i_src = os.path.join(sep_folder, "no_vocals.wav")
+                
+                if not os.path.exists(i_src): 
+                    i_src = os.path.join(sep_folder, "instrumental.wav")
+
+                if not os.path.exists(v_src) or not os.path.exists(i_src):
+                    raise RuntimeError("Demucs execution finished but files are missing.")
+
+                # Export Stems
+                stems = [
+                    (v_src, f"{song_name}_Demucs_{model}_vocals.{fmt}", v_tags, vocals_folder),
+                    (i_src, f"{song_name}_Demucs_{model}_instrumental.{fmt}", i_tags, instr_folder)
+                ]
+
+                final_filenames = []
+                for src, target_name, tag_dict, out_folder in stems:
+                    save_path = get_unique_filename(os.path.join(out_folder, target_name))
+                    
+                    if fmt.lower() in ['wav', 'flac']:
+                        data, native_sr = sf.read(src, dtype='float32')
+                        # Quality checks: Resample if native AI output differs from user choice
+                        if native_sr != sr:
+                            data = librosa.resample(data.T, orig_sr=native_sr, target_sr=sr).T
+                        if channels == "Mono" and data.ndim > 1:
+                            data = data.mean(axis=1)
+
+                        subtype = {"32-bit": "FLOAT", "24-bit": "PCM_24", "16-bit": "PCM_16"}.get(bit_depth, "PCM_16")
+                        sf.write(save_path, data, sr, subtype=subtype)
+                    else:
+                        audio = AudioSegment.from_file(src)
+                        if channels == "Mono": audio = audio.set_channels(1)
+                        if audio.frame_rate != sr: audio = audio.set_frame_rate(sr)
+                        audio.export(save_path, format=fmt, bitrate=bitrate)
+
+                    self._apply_tags(save_path, tag_dict, model)
+                    final_filenames.append(os.path.basename(save_path))
+
+                return True, final_filenames[0], final_filenames[1]
+
             finally:
-                sys.stderr = original_stderr
+                root_logger.removeHandler(handler)
+                clear_memory_cache()
 
-            # 4. Finalizing & Export
-            input_base = os.path.splitext(os.path.basename(input_path))[0]
-            sep_folder = os.path.join(base_temp_out, model, input_base)
-            
-            # Demucs uses 'no_vocals' for the instrumental stem in --two-stems mode
-            stems = [
-                (os.path.join(sep_folder, f"vocals.{fmt}"), f"{song_name}_Demucs_{model}_vocals.{fmt}", v_tags, vocals_folder),
-                (os.path.join(sep_folder, f"no_vocals.{fmt}"), f"{song_name}_Demucs_{model}_instrumental.{fmt}", i_tags, instr_folder)
-            ]
-
-            final_paths = []
-            for src, filename, tags, folder in stems:
-                if not os.path.exists(src):
-                    # Fallback check: some models use 'instrumental' instead of 'no_vocals'
-                    alt_src = src.replace("no_vocals", "instrumental")
-                    if os.path.exists(alt_src): src = alt_src
-
-                seg = AudioSegment.from_file(src)
-                if channels == "Mono": seg = seg.set_channels(1)
-                if seg.frame_rate != sr: seg = seg.set_frame_rate(sr)
-                
-                dest = get_unique_filename(os.path.join(folder, filename))
-                
-                export_params = {"out_f": dest, "format": fmt, "tags": tags}
-                if fmt == "flac": export_params["parameters"] = ["-compression_level", str(flac_compression)]
-                
-                seg.export(**export_params)
-                final_paths.append(os.path.basename(dest))
-
-            return True, final_paths[0], final_paths[1]
-
-        finally:
-            # Cleanup
-            demucs_logger.removeHandler(handler)
-            if os.path.exists(base_temp_out): 
-                shutil.rmtree(base_temp_out, ignore_errors=True)
-            clear_memory_cache()
+    def _apply_tags(self, file_path: str, tags: dict, model: str):
+        try:
+            f = music_tag.load_file(file_path)
+            if f:
+                f['title'] = tags.get('title', 'Unknown')
+                f['artist'] = tags.get('artist', 'Unknown')
+                f['album'] = tags.get('album', 'Separated Stems')
+                f['comment'] = f"Separated by Demucs {model}"
+                if tags.get('year'): f['year'] = tags['year']
+                if tags.get('genre'): f['genre'] = tags['genre']
+                f.save()
+        except Exception as e:
+            logging.warning(f"Metadata Tagging failed for {file_path}: {e}")

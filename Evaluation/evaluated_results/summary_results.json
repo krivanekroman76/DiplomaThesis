@@ -3,67 +3,43 @@
         "htdemucs": {
             "CUDA": {
                 "duration": 205.31627,
-                "download_time_sec": 10.237212896347046,
-                "model_load_time_sec": 0.0005009174346923828,
-                "pure_separation_time_sec": 22.992290496826172,
-                "rtf": 0.11206204858860609,
-                "SDR_vocals": 9.659789855088928,
-                "SDR_instr": 13.974742978879966,
-                "ISR_vocals": 16.11261508887374,
-                "ISR_instr": 21.626065627107543,
-                "SIR_vocals": 17.768876197166588,
-                "SIR_instr": 20.63365026867502,
-                "SAR_vocals": 9.90603423135551,
-                "SAR_instr": 14.784241155026244
+                "init_overhead_sec": 0.0,
+                "waking_time_sec": 0.19634544849395752,
+                "pure_sep_time_sec": 20.80666208267212,
+                "rtf": 0.1012215842235683,
+                "SDR_vocals": 9.730197028556567,
+                "SDR_instr": 14.129978843492065
             },
             "CPU": {
                 "duration": 205.31627,
-                "download_time_sec": 10.237212896347046,
-                "model_load_time_sec": 0.0005023479461669922,
-                "pure_separation_time_sec": 107.56297612190247,
-                "rtf": 0.5231367819246883,
-                "SDR_vocals": 9.685327730377487,
-                "SDR_instr": 14.071745320876428,
-                "ISR_vocals": 16.116076594801054,
-                "ISR_instr": 21.738681304985647,
-                "SIR_vocals": 17.89585265265058,
-                "SIR_instr": 20.626318797522295,
-                "SAR_vocals": 9.947272622373642,
-                "SAR_instr": 14.790852623120317
+                "init_overhead_sec": 0.0,
+                "waking_time_sec": 0.24074172973632812,
+                "pure_sep_time_sec": 218.82078897953033,
+                "rtf": 1.065114894065121,
+                "SDR_vocals": 9.690862185275073,
+                "SDR_instr": 14.10661809016868
             }
         }
     },
     "OpenUnmix": {
-        "umx": {
+        "umxhq": {
             "CUDA": {
                 "duration": 205.31627,
-                "download_time_sec": 32.01092743873596,
-                "model_load_time_sec": 0.0,
-                "pure_separation_time_sec": 8.755469799041748,
-                "rtf": 0.04239839829425589,
-                "SDR_vocals": 7.014367410155442,
-                "SDR_instr": 11.60271987106293,
-                "ISR_vocals": 12.87566870227106,
-                "ISR_instr": 20.092671421987195,
-                "SIR_vocals": 14.934354921862544,
-                "SIR_instr": 17.15030583488383,
-                "SAR_vocals": 7.48289183838036,
-                "SAR_instr": 12.547912416658153
+                "init_overhead_sec": 0.0,
+                "waking_time_sec": 0.0,
+                "pure_sep_time_sec": 7.147722363471985,
+                "rtf": 0.03478929358946191,
+                "SDR_vocals": 6.639502828900845,
+                "SDR_instr": 11.272810334302259
             },
             "CPU": {
                 "duration": 205.31627,
-                "download_time_sec": 32.01092743873596,
-                "model_load_time_sec": 0.0005000829696655273,
-                "pure_separation_time_sec": 28.913414001464844,
-                "rtf": 0.14122470260324843,
-                "SDR_vocals": 7.014369306725163,
-                "SDR_instr": 11.602718919511275,
-                "ISR_vocals": 12.875674517115609,
-                "ISR_instr": 20.09267836798097,
-                "SIR_vocals": 14.93435525300521,
-                "SIR_instr": 17.150309634582726,
-                "SAR_vocals": 7.482892408800232,
-                "SAR_instr": 12.547914341811804
+                "init_overhead_sec": 0.0,
+                "waking_time_sec": 0.0,
+                "pure_sep_time_sec": 25.65764629840851,
+                "rtf": 0.12494384013414714,
+                "SDR_vocals": 6.639502300730527,
+                "SDR_instr": 11.272806185915558
             }
         }
     },
@@ -71,18 +47,12 @@
         "2stems": {
             "CPU": {
                 "duration": 205.31627,
-                "download_time_sec": 0.052788734436035156,
-                "model_load_time_sec": 0.0,
-                "pure_separation_time_sec": 39.48929297924042,
-                "rtf": 0.1912950865126284,
+                "init_overhead_sec": 0.0,
+                "waking_time_sec": 0.0,
+                "pure_sep_time_sec": 28.91436541080475,
+                "rtf": 0.1408355409155318,
                 "SDR_vocals": 7.796215778950547,
-                "SDR_instr": 10.854026093363572,
-                "ISR_vocals": 13.210140523175156,
-                "ISR_instr": 17.073206142343725,
-                "SIR_vocals": 17.314335478442445,
-                "SIR_instr": 17.99975602521223,
-                "SAR_vocals": 8.102895300044784,
-                "SAR_instr": 12.527887673282814
+                "SDR_instr": 10.854026093363572
             }
         }
     }

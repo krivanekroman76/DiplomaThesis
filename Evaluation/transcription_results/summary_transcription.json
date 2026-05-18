@@ -1,0 +1,30 @@
+[
+    {
+        "tool":"Vosk",
+        "model":"vosk-model-fr-0.22",
+        "WER":1.4287342712,
+        "CER":1.1332655044,
+        "rtf":0.5424166355
+    },
+    {
+        "tool":"Vosk",
+        "model":"vosk-model-small-fr-0.22",
+        "WER":1.429719532,
+        "CER":1.1180242629,
+        "rtf":0.3097088343
+    },
+    {
+        "tool":"Wav2Vec2",
+        "model":"facebook\/wav2vec2-base-960h",
+        "WER":1.9525130779,
+        "CER":1.1843458855,
+        "rtf":0.2512804279
+    },
+    {
+        "tool":"Whisper",
+        "model":"small",
+        "WER":1.6059619327,
+        "CER":1.4522808736,
+        "rtf":0.5463115795
+    }
+]

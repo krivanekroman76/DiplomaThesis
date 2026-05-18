@@ -2,173 +2,123 @@ import os
 import sys
 import logging
 import tempfile
-import platform
+import pathlib
 import subprocess
-from typing import Optional, Dict, Any, Tuple
-from pydub import AudioSegment
+import time
+import soundfile as sf
+import librosa
+import music_tag
+import numpy as np
+from typing import Any
 from spleeter.separator import Separator
+from spleeter.audio.adapter import AudioAdapter
 
 from .utils import (
     setup_ffmpeg_environment, 
     get_unique_filename, 
     get_audio_metadata, 
     prepare_stem_metadata,
-    finalize_metadata,
     resolve_tensorflow_device,
     ProgressInterceptor,
-    LogStreamer
+    clear_memory_cache
 )
 
 class SpleeterSeparator:
     def __init__(self):
         setup_ffmpeg_environment() 
-        # Create a 'models' folder in your app directory
         model_dir = os.path.join(os.getcwd(), "models")
         os.makedirs(model_dir, exist_ok=True)
-
-        # Force Spleeter to use this directory for its config and weights
         os.environ['MODEL_PATH'] = model_dir
-        
-        self.model = 'spleeter:2stems'
-        logging.info("Spleeter Wrapper initialized (Full Safety & Logging Mode)")
-
-    def get_subprocess_flags(self) -> int:
-        return 0x08000000 if platform.system() == "Windows" else 0
-
-    def _process_manual_chunks(self, input_path: str, temp_dir: str, prefix: str, progress_callback: Any) -> Tuple[Optional[AudioSegment], Optional[AudioSegment]]:
-        """
-        Safety Layer: Processes audio in 60s segments to prevent system RAM exhaustion (OOM).
-        """
-        audio = AudioSegment.from_file(input_path)
-        chunk_length_ms = 60 * 1000 
-        chunks = [audio[i:i + chunk_length_ms] for i in range(0, len(audio), chunk_length_ms)]
-
-        final_vocals: Optional[AudioSegment] = None
-        final_instr: Optional[AudioSegment] = None
-
-        for idx, chunk in enumerate(chunks):
-            if progress_callback: 
-                progress_callback(30 + int(40 * (idx / len(chunks))), f"{prefix} Spleeter: RAM Safety - Segment {idx + 1}/{len(chunks)}...")
-            
-            c_path = os.path.join(temp_dir, f"chunk_{idx}.wav")
-            chunk.export(c_path, format="wav")
-            
-            cmd = [sys.executable, '-m', 'spleeter', 'separate', '-p', self.model, '-o', temp_dir, input_path]
-            subprocess.run(cmd, capture_output=True, env=os.environ.copy(), creationflags=self.get_subprocess_flags())
-
-            v_chunk_p = os.path.join(temp_dir, f"chunk_{idx}", "vocals.wav")
-            i_chunk_p = os.path.join(temp_dir, f"chunk_{idx}", "accompaniment.wav")
-            
-            if os.path.exists(v_chunk_p):
-                cv = AudioSegment.from_file(v_chunk_p)
-                ci = AudioSegment.from_file(i_chunk_p)
-                if final_vocals is None or final_instr is None:
-                    final_vocals, final_instr = cv, ci
-                else:
-                    final_vocals = final_vocals.append(cv, crossfade=10)
-                    final_instr = final_instr.append(ci, crossfade=10)
-        
-        return final_vocals, final_instr
+        self.model_name = 'spleeter:2stems'
 
     def separate(self, input_path: str, song_name: str, vocals_folder: str, instr_folder: str, 
                   channels: str = "Stereo", fmt: str = "wav", sr: int = 44100, bitrate: str = "128k", 
-                  device_choice: str = "Auto", flac_compression: int = 5, progress_callback: Any = None):
+                  bit_depth: str = "16-bit", device_choice: str = "Auto", flac_compression: int = 5, 
+                  progress_callback: Any = None):
         
-        # 1. RESOLVE DEVICE FIRST
-        # We need this value to tell the Interceptor what to print in the UI
         resolved_device = resolve_tensorflow_device(device_choice)
-        prefix = f"[{str(resolved_device).upper()}]"
-
-        # 2. SETUP LOGGING (Now we have 'resolved_device')
-        spleeter_logger = logging.getLogger("spleeter")
-        if not spleeter_logger.handlers:
-            handler = ProgressInterceptor(progress_callback, device=resolved_device, tool_name="Spleeter")
-            spleeter_logger.addHandler(handler)
-
-        v_audio: Optional[AudioSegment] = None
-        i_audio: Optional[AudioSegment] = None
+        root_logger = logging.getLogger()
+        handler = ProgressInterceptor(progress_callback, device=resolved_device, tool_name="Spleeter")
+        root_logger.addHandler(handler)
 
         try:
             if not os.path.exists(input_path): return False, None, None
 
-            # 3. METADATA PREP
+            # 1. Metadata setup
             original_tags = get_audio_metadata(input_path)
-            v_tags = finalize_metadata(prepare_stem_metadata(original_tags, "Vocals"), "Vocals", "Spleeter")
-            i_tags = finalize_metadata(prepare_stem_metadata(original_tags, "Instrumental"), "Instrumental", "Spleeter")
-            
-            logging.info(f"[Spleeter] Separation starting on: {resolved_device}")
-            
-            if progress_callback: 
-                progress_callback(10, f"{prefix} Spleeter: Initializing...")
+            v_tags = prepare_stem_metadata(original_tags, "Vocals")
+            i_tags = prepare_stem_metadata(original_tags, "Instrumental")
+
+            # 2. Model Loading
+            separator = Separator(self.model_name)
+            adapter = AudioAdapter.default()
 
             with tempfile.TemporaryDirectory() as temp_dir:
-                orig_stderr = sys.stderr
-                sys.stderr = LogStreamer(spleeter_logger)
+                clean_input = str(pathlib.Path(input_path).resolve())
                 
+                # 3. Separation
                 try:
-                    # PHASE A: Primary API Attempt
-                    try:
-                        separator = Separator(self.model)
-                        separator.separate_to_file(input_path, temp_dir)
-                        
-                        s_dir = os.path.splitext(os.path.basename(input_path))[0]
-                        v_p, i_p = os.path.join(temp_dir, s_dir, "vocals.wav"), os.path.join(temp_dir, s_dir, "accompaniment.wav")
-                        if os.path.exists(v_p):
-                            v_audio, i_audio = AudioSegment.from_file(v_p), AudioSegment.from_file(i_p)
+                    separator.separate_to_file(clean_input, temp_dir, audio_adapter=adapter, synchronous=True)
+                except Exception:
+                    # Fallback to Subprocess if API fails
+                    subprocess.run([
+                        sys.executable, "-m", "spleeter", "separate",
+                        "-p", self.model_name, "-o", temp_dir, input_path
+                    ], capture_output=True, text=True, creationflags=0x08000000 if os.name == 'nt' else 0)
+
+                # 4. Path mapping
+                input_base = os.path.splitext(os.path.basename(input_path))[0]
+                output_folder = os.path.join(temp_dir, input_base)
+                v_src = os.path.join(output_folder, "vocals.wav")
+                i_src = os.path.join(output_folder, "accompaniment.wav")
+
+                if not os.path.exists(v_src): return False, None, None
+
+                # 5. Bit-Perfect Export Loop
+                stems = [
+                    (v_src, f"{song_name}_Spleeter_vocals.{fmt}", v_tags, vocals_folder),
+                    (i_src, f"{song_name}_Spleeter_instrumental.{fmt}", i_tags, instr_folder)
+                ]
+
+                final_paths = []
+                for idx, (src, out_name, tag_dict, folder) in enumerate(stems):
+                    save_path = get_unique_filename(os.path.join(folder, out_name))
                     
-                    except Exception as api_err:
-                        # PHASE B: CLI Fallback if API fails
-                        logging.warning(f"Spleeter API failed ({api_err}), trying CLI fallback...")
+                    # Use Soundfile for high-res formats
+                    if fmt.lower() in ['wav', 'flac']:
+                        data, native_sr = sf.read(src, dtype='float32')
+                        if native_sr != sr:
+                            data = librosa.resample(data.T, orig_sr=native_sr, target_sr=sr).T
+                        if channels == "Mono" and data.ndim > 1:
+                            data = data.mean(axis=1)
 
-                        cmd = [sys.executable, '-m', 'spleeter', 'separate', '-p', self.model, '-o', temp_dir, input_path]
-                        res = subprocess.run(cmd, capture_output=True, text=True, creationflags=self.get_subprocess_flags())
-                        
-                        if res.returncode != 0 and ("memory" in res.stderr.lower() or "oom" in res.stderr.lower()):
-                            # PHASE C: Manual Chunking
-                            # FIXED: Assigning to temp variables first to satisfy Pylance Type narrowing
-                            res_v, res_i = self._process_manual_chunks(input_path, temp_dir, prefix, progress_callback)
-                            v_audio, i_audio = res_v, res_i
-                        else:
-                            s_dir = os.path.splitext(os.path.basename(input_path))[0]
-                            v_p = os.path.join(temp_dir, s_dir, "vocals.wav")
-                            if os.path.exists(v_p):
-                                v_audio, i_audio = AudioSegment.from_file(v_p), AudioSegment.from_file(os.path.join(temp_dir, s_dir, "accompaniment.wav"))
-                finally:
-                    sys.stderr = orig_stderr
+                        st = {"32-bit": "FLOAT", "24-bit": "PCM_24", "16-bit": "PCM_16"}.get(bit_depth, "PCM_16")
+                        sf.write(save_path, data, sr, subtype=st)
+                    else:
+                        from pydub import AudioSegment
+                        audio = AudioSegment.from_file(src)
+                        if channels == "Mono": audio = audio.set_channels(1)
+                        if audio.frame_rate != sr: audio = audio.set_frame_rate(sr)
+                        audio.export(save_path, format=fmt, bitrate=bitrate)
 
-                # 2. TYPE GUARD & POST-PROCESSING
-                # This check ensures Pylance knows that from here on, audio is definitely NOT None
-                if v_audio is None or i_audio is None:
-                    return False, None, None
+                    # Apply tags
+                    self._apply_tags(save_path, tag_dict, "Spleeter")
+                    final_paths.append(os.path.basename(save_path))
 
-                # Re-assignment to localized names can help some Pylance versions clarify the type
-                final_v: AudioSegment = v_audio
-                final_i: AudioSegment = i_audio
-
-                if channels == "Mono": 
-                    final_v, final_i = final_v.set_channels(1), final_i.set_channels(1)
-                
-                if final_v.frame_rate != sr: 
-                    final_v, final_i = final_v.set_frame_rate(sr), final_i.set_frame_rate(sr)
-
-                # 3. EXPORT
-                v_dest = get_unique_filename(os.path.join(vocals_folder, f"{song_name}_Spleeter_vocals.{fmt}"))
-                i_dest = get_unique_filename(os.path.join(instr_folder, f"{song_name}_Spleeter_instrumental.{fmt}"))
-
-                def export_with_meta(audio_seg: AudioSegment, path: str, tags: Optional[Dict[str, Any]]):
-                    clean_tags: Dict[str, str] = {str(k): str(v[0]) if isinstance(v, list) else str(v) for k, v in (tags or {}).items()}
-                    params = {"out_f": path, "format": fmt, "tags": clean_tags}
-                    if fmt == "mp3": params["bitrate"] = bitrate
-                    elif fmt == "flac": params["parameters"] = ["-compression_level", str(flac_compression)]
-                    audio_seg.export(**params)
-
-                export_with_meta(final_v, v_dest, v_tags)
-                export_with_meta(final_i, i_dest, i_tags)
-
-                if progress_callback: progress_callback(100, f"{prefix} Spleeter: Complete")
-                return True, os.path.basename(v_dest), os.path.basename(i_dest)
+                return True, final_paths[0], final_paths[1]
 
         except Exception as e:
-            logging.error(f"Spleeter error: {e}", exc_info=True)
+            logging.error(f"Spleeter Error: {e}")
             return False, None, None
-        
+        finally:
+            root_logger.removeHandler(handler)
+            clear_memory_cache()
+
+    def _apply_tags(self, file_path: str, tags: dict, tool: str):
+        try:
+            f = music_tag.load_file(file_path)
+            if f:
+                f['title'], f['artist'] = tags.get('title', 'Unknown'), tags.get('artist', 'Unknown')
+                f['comment'] = f"Separated by {tool}"
+                f.save()
+        except Exception as e: logging.warning(f"Tagging failed: {e}")

@@ -1,8 +1,9 @@
 import os
+import torch
+import torchaudio
 import gc
 import sys
 import logging
-import torch
 import time
 import re
 import urllib.request
@@ -11,18 +12,13 @@ import music_tag
 from pydub import AudioSegment
 import tensorflow as tf
 import numpy as np
+from silero_vad import load_silero_vad, get_speech_timestamps, collect_chunks
 
-# Set up global logging format once
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s [%(levelname)s] %(message)s"
-)
-
-# Mute chatty background libraries
+# Mute chatty background libraries - DO NOT call basicConfig here
 logging.getLogger('numba').setLevel(logging.WARNING)
 logging.getLogger('tensorflow').setLevel(logging.ERROR)
 logging.getLogger('h5py').setLevel(logging.ERROR)
-logging.getLogger('spleeter').setLevel(logging.WARNING) 
+#logging.getLogger('spleeter').setLevel(logging.WARNING) 
 logging.getLogger('torio').setLevel(logging.ERROR)
 
 ################################
@@ -208,6 +204,48 @@ def save_transcription_to_file(output_path, model_name, text_blocks, segments):
             else:
                 f.write(f"{start:.2f}s - {end:.2f}s: {text}\n")
 
+def apply_vad(input_path: str, output_path: str) -> str:
+    """
+    Applies Silero VAD to an audio file, removing pure silence and instrumentals.
+    Returns the path to the VAD-cleaned audio. If VAD fails or finds no speech, 
+    it safely returns the original input path.
+    """
+    try:
+        # 1. Load the Silero VAD model using the modern API
+        model = load_silero_vad()
+
+        # 2. Read audio. Silero requires exactly 16000 Hz
+        wav, sample_rate = torchaudio.load(input_path)
+        
+        # Convert to mono if it's stereo
+        if wav.shape[0] > 1:
+            wav = torch.mean(wav, dim=0, keepdim=True)
+            
+        # Resample to 16kHz if necessary
+        if sample_rate != 16000:
+            resampler = torchaudio.transforms.Resample(orig_freq=sample_rate, new_freq=16000)
+            wav = resampler(wav)
+            
+        # Squeeze to 1D array for Silero
+        wav = wav.squeeze(0)
+
+        # 3. Get timestamps of actual speech
+        speech_timestamps = get_speech_timestamps(wav, model, sampling_rate=16000)
+
+        # 4. If speech is found, stitch the active chunks together and save
+        if len(speech_timestamps) > 0:
+            cleaned_wav = collect_chunks(speech_timestamps, wav)
+            # Add unsqueeze to make it 2D (1, samples) for saving
+            torchaudio.save(output_path, cleaned_wav.unsqueeze(0), 16000)
+            return output_path
+        else:
+            logging.warning(f"VAD detected no speech in {input_path}. Falling back to original audio.")
+            return input_path
+
+    except Exception as e:
+        logging.error(f"VAD Processing failed for {input_path}: {e}")
+        return input_path # Safe fallback
+     
 ######################
 # Both tools functions
 ######################
@@ -351,67 +389,63 @@ def download_required_models(models_dir, tool_filter=None, demucs_models=None,
     return status_report
 
 class ProgressInterceptor(logging.Handler):
-    def __init__(self, callback, device="CPU", tool_name="Process"):
+    def __init__(self, callback, device="CPU", tool_name="Process", total_duration=0):
         super().__init__()
         self.callback = callback
         self.device = str(device).upper()
         self.tool_name = tool_name
-        self.current_action = "Processing"
-        self.model_count = 1
-        self.current_model_idx = 1
+        self.total_duration = total_duration  # Received from librosa in the main script
+        self.current_action = "Initializing"
+        logging.info(f"Duration passed: {self.total_duration}")
 
     def emit(self, record):
         log_entry = record.getMessage()
-        
-        # 1. Action Detection Logic
         lower_entry = log_entry.lower()
-        if "download" in lower_entry:
-            self.current_action = "Downloading"
-        elif "separating" in lower_entry or "model" in lower_entry:
-            self.current_action = "Separating"
-        elif "transcrib" in lower_entry:
-            self.current_action = "Transcribing"
+        
+        # --- 1. CLEANUP: Suppress Whisper/Library "False Errors" ---
+        # These are strings that libraries log as ERROR but are actually INFO
+        suppress_keywords = [
+            "-->", "config.json", "weights of Wav2Vec2", 
+            "decoding params", "voskapi", "detected language"
+        ]
+        
+        if any(k in lower_entry for k in suppress_keywords):
+            record.levelno = logging.INFO
+            record.levelname = "INFO"
 
-        # 2. Demucs "Bag of Models" Tracking
-        # Detects: "Selected model is a bag of 4 models"
-        bag_match = re.search(r'bag of (\d+) models', lower_entry)
-        if bag_match:
-            self.model_count = int(bag_match.group(1))
-            self.current_model_idx = 1
+        if not self.callback:
+            return
 
-        # 3. Percentage Extraction
+        # --- 2. WHISPER PROGRESS (Timestamp Based) ---
+        # Matches: [01:22.000 --> 01:25.000]
+        timestamp_match = re.search(r'\[(\d{2}):(\d{2})\.\d{3}\s+-->', log_entry)
+        
+        if timestamp_match and self.total_duration > 0:
+            mins, secs = int(timestamp_match.group(1)), int(timestamp_match.group(2))
+            current_seconds = (mins * 60) + secs
+            
+            # Map progress to 10% - 90% range to leave room for loading/saving
+            raw_pct = (current_seconds / self.total_duration) * 80
+            progress_val = int(raw_pct + 10)
+            
+            # Ensure we don't exceed 95% purely from timestamps
+            progress_val = min(95, progress_val)
+            
+            display_text = f"[{self.device}] {self.tool_name}: {progress_val}% ({mins:02d}:{secs:02d})"
+            self.callback(progress_val, display_text)
+            return # Exit early if we handled a timestamp
+
+        # --- 3. GENERAL PROGRESS (Percentage Based) ---
+        # Matches standard "55%" logs from Demucs or other tools
         pct_match = re.search(r'(\d{1,3})%', log_entry)
-        if pct_match and self.callback:
-            raw_percent = int(pct_match.group(1))
-            
-            # Contextual formatting
-            action_str = f"{self.current_action}"
-            if self.model_count > 1 and self.current_action == "Separating":
-                action_str += f" (Model {self.current_model_idx}/{self.model_count})"
-            
-            # The final string you requested
-            # Example: [CUDA] Demucs Separating (Model 1/4): 84%
-            display_text = f"[{self.device}] {self.tool_name} {action_str}: {raw_percent}%"
-            
-            self.callback(raw_percent, display_text)
-            
-            # If a model hits 100%, increment the sub-model counter for Demucs
-            if raw_percent == 100 and self.current_model_idx < self.model_count:
-                self.current_model_idx += 1
+        if pct_match:
+            val = int(pct_match.group(1))
+            self.callback(val, f"[{self.device}] {self.tool_name} Processing: {val}%")
+            return
 
-class LogStreamer:
-    """Redirects sys.stderr/stdout writes to a logger, handling progress bars."""
-    def __init__(self, logger, level=logging.INFO):
-        self.logger = logger
-        self.level = level
-
-    def write(self, buf):
-        # Progress bars (tqdm) use \r to overwrite the same line.
-        # We replace \r with \n to ensure the logger treats each update as a record.
-        for line in buf.replace('\r', '\n').splitlines():
-            clean_line = line.strip()
-            if clean_line:
-                self.logger.log(self.level, clean_line)
-
-    def flush(self):
-        pass
+        # --- 4. ACTION DETECTION (Spleeter/General) ---
+        if "loading" in lower_entry or "weights" in lower_entry:
+            self.callback(15, f"[{self.device}] {self.tool_name}: Loading Models...")
+        
+        elif "writing" in lower_entry or "written" in lower_entry:
+            self.callback(90, f"[{self.device}] {self.tool_name}: Saving Output...")

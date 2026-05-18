@@ -1,12 +1,9 @@
-\begin{tabular}{lllrrrrrrrrrrrrr}
- &  &  & duration & download_time_sec & model_load_time_sec & pure_separation_time_sec & rtf & SDR_vocals & SDR_instr & ISR_vocals & ISR_instr & SIR_vocals & SIR_instr & SAR_vocals & SAR_instr \\
-tool & model & device_type &  &  &  &  &  &  &  &  &  &  &  &  &  \\
-\multirow[c]{2}{*}{Demucs} & \multirow[c]{2}{*}{htdemucs} & CPU & 205.316270 & 10.237213 & 0.000502 & 107.562976 & 0.523137 & 9.685328 & 14.071745 & 16.116077 & 21.738681 & 17.895853 & 20.626319 & 9.947273 & 14.790853 \\
- &  & CUDA & 205.316270 & 10.237213 & 0.000501 & 22.992290 & 0.112062 & 9.659790 & 13.974743 & 16.112615 & 21.626066 & 17.768876 & 20.633650 & 9.906034 & 14.784241 \\
-\multirow[c]{2}{*}{OpenUnmix} & \multirow[c]{2}{*}{umx} & CPU & 205.316270 & 32.010927 & 0.000500 & 28.913414 & 0.141225 & 7.014369 & 11.602719 & 12.875675 & 20.092678 & 14.934355 & 17.150310 & 7.482892 & 12.547914 \\
- &  & CUDA & 205.316270 & 32.010927 & 0.000000 & 8.755470 & 0.042398 & 7.014367 & 11.602720 & 12.875669 & 20.092671 & 14.934355 & 17.150306 & 7.482892 & 12.547912 \\
-Spleeter & 2stems & CPU & 205.316270 & 0.052789 & 0.000000 & 39.489293 & 0.191295 & 7.796216 & 10.854026 & 13.210141 & 17.073206 & 17.314335 & 17.999756 & 8.102895 & 12.527888 \\
+\begin{tabular}{lllrrrrrrr}
+ &  &  & duration & init_overhead_sec & waking_time_sec & pure_sep_time_sec & rtf & SDR_vocals & SDR_instr \\
+tool & model & device_type &  &  &  &  &  &  &  \\
+\multirow[c]{2}{*}{Demucs} & \multirow[c]{2}{*}{htdemucs} & CPU & 205.316270 & 0.000000 & 0.240742 & 218.820789 & 1.065115 & 9.690862 & 14.106618 \\
+ &  & CUDA & 205.316270 & 0.000000 & 0.196345 & 20.806662 & 0.101222 & 9.730197 & 14.129979 \\
+\multirow[c]{2}{*}{OpenUnmix} & \multirow[c]{2}{*}{umxhq} & CPU & 205.316270 & 0.000000 & 0.000000 & 25.657646 & 0.124944 & 6.639502 & 11.272806 \\
+ &  & CUDA & 205.316270 & 0.000000 & 0.000000 & 7.147722 & 0.034789 & 6.639503 & 11.272810 \\
+Spleeter & 2stems & CPU & 205.316270 & 0.000000 & 0.000000 & 28.914365 & 0.140836 & 7.796216 & 10.854026 \\
 \end{tabular}
-
-\vspace{0.2cm}
-\noindent \small \textit{*Note: Evaluations were performed using an Intel(R) Core(TM) i5-7400 CPU @ 3.00GHz (CPU) and NVIDIA GeForce GTX 1050 Ti (CUDA).}

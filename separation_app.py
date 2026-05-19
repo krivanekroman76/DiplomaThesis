@@ -2330,25 +2330,37 @@ class SeparationApp(ctk.CTk):
             self.progress_bar.start()
 
         def update_ui(tool_name, status):
-            # Update the UI text safely from the background thread
             if hasattr(self, 'progress_text'):
                 self.after(0, lambda: self.progress_text.configure(text=f"{tool_name}: {status}"))
 
-        def download_thread():
+        # ---------------------------------------------------------
+        # 1. READ UI VARIABLES IN THE MAIN THREAD
+        # ---------------------------------------------------------
+        def get_models_from_ui(tool_key, fallback):
+            if hasattr(self, 'model_vars') and tool_key in self.model_vars:
+                # Split by comma, strip whitespace, ignore empty strings
+                return [m.strip() for m in self.model_vars[tool_key].get().split(',') if m.strip()]
+            return fallback
+
+        current_demucs = get_models_from_ui("demucs", ["htdemucs"])
+        current_whisper = get_models_from_ui("whisper", ["base"])
+        current_wav2vec2 = get_models_from_ui("wav2vec2", ["facebook/wav2vec2-base-960h"])
+
+        # ---------------------------------------------------------
+        # 2. PASS THE LISTS INTO THE BACKGROUND THREAD
+        # ---------------------------------------------------------
+        def download_thread(d_list, w_list, w2v_list):
             from separators.utils import download_required_models
             
-            # Fetch your model lists from settings or state (Examples below)
-            # You should adapt these lists based on how you load them in your app
-            demucs_list = ["htdemucs"] 
-            whisper_list = ["base"]
-            wav2vec2_list = ["facebook/wav2vec2-base-960h"]
+            # FORCE HuggingFace to download Wav2Vec2 into Models/huggingface/hub
+            os.environ["HF_HOME"] = os.path.join(self.models_dir, "huggingface")
             
-            # Call the utils function
+            # Call the utils function using the variables passed into the thread
             final_status = download_required_models(
                 models_dir=self.models_dir, 
-                demucs_models=demucs_list,
-                whisper_models=whisper_list,
-                wav2vec2_models=wav2vec2_list,
+                demucs_models=d_list,
+                whisper_models=w_list,
+                wav2vec2_models=w2v_list,
                 status_callback=update_ui
             )
             
@@ -2363,7 +2375,12 @@ class SeparationApp(ctk.CTk):
             self.after(0, self.scan_models_directory)
             self.after(500, lambda: self.show_model_summary(final_status))
 
-        threading.Thread(target=download_thread, daemon=True).start()
+        # Start the thread, passing our extracted UI lists as arguments (args=...)
+        threading.Thread(
+            target=download_thread, 
+            args=(current_demucs, current_whisper, current_wav2vec2), 
+            daemon=True
+        ).start()
 
     def show_model_summary(self, status_report):
         """
@@ -2445,36 +2462,29 @@ class SeparationApp(ctk.CTk):
         if os.path.exists(umx_path):
             found_models["openunmix"] = [os.path.join(umx_path, d).replace("\\", "/") for d in os.listdir(umx_path) if os.path.isdir(os.path.join(umx_path, d))]
 
-        # 3. UPDATE UI VARIABLES (Smart Merge vs. Hard Sync)
+        # 3. UPDATE UI VARIABLES (Smart Merge for ALL tools)
         if hasattr(self, 'model_vars'):
-            
-            # Group definitions
-            sync_tools = ["vosk", "whisper", "wav2vec2"]
-            merge_tools = ["demucs", "openunmix"]
-
             for tool in found_models.keys():
                 if tool in self.model_vars:
-                    # Logic for Vosk/Whisper/Wav2vec2: Wipe and match disk
-                    if tool in sync_tools:
-                        combined = sorted(list(set(found_models[tool])))
+                    # 1. Grab what the user manually typed in the text box
+                    current_text = self.model_vars[tool].get()
+                    existing_list = [x.strip() for x in current_text.split(",") if x.strip()]
                     
-                    # Logic for Demucs/OpenUnmix: Merge with existing UI text
-                    else:
-                        # Grab what's currently in the text box and split by comma
-                        current_text = self.model_vars[tool].get()
-                        existing_list = [x.strip() for x in current_text.split(",") if x.strip()]
-                        
-                        # Add the "Official" safety net just in case they cleared the box
-                        officials = ["htdemucs", "mdx", "mdx_extra"] if tool == "demucs" else ["umx", "umxl", "umxhq"]
-                        
-                        # Merge: Existing + Officials + Newly Scanned Folders
-                        combined = sorted(list(set(existing_list + officials + found_models[tool])))
+                    # 2. Add "Official" safety nets for specific tools
+                    officials = []
+                    if tool == "demucs":
+                        officials = ["htdemucs", "mdx", "mdx_extra"]
+                    elif tool == "openunmix":
+                        officials = ["umx", "umxl", "umxhq"]
                     
-                    # Update the UI text box
+                    # 3. MERGE: User Entries + Officials + Newly Scanned Folders
+                    combined = sorted(list(set(existing_list + officials + found_models[tool])))
+                    
+                    # 4. Update the UI text box
                     self.model_vars[tool].set(", ".join(combined))
                     
-                    # Update internal tracking for dropdowns
-                    if hasattr(self, 'transcription_models') and tool in sync_tools:
+                    # 5. Update internal tracking for dropdown menus
+                    if hasattr(self, 'transcription_models') and tool in ["vosk", "whisper", "wav2vec2"]:
                         self.transcription_models[tool] = combined
                     if hasattr(self, 'separator_models'):
                         if tool == "demucs": self.separator_models["Demucs"] = combined
@@ -2698,7 +2708,7 @@ class SeparationApp(ctk.CTk):
         close_btn.pack(pady=(0, 20))
 
     def setup_progress_bar(self, parent):
-        progress_frame = ctk.CTkFrame(parent, height=40, corner_radius=0)
+        progress_frame = ctk.CTkFrame(parent, height=60, corner_radius=0)
         # Keep the frame itself on the grid of the main window
         progress_frame.grid(row=1, column=1, sticky="ew", padx=(10, 0), pady=(0, 10))
         # Important: prevents the frame from shrinking vertically when empty

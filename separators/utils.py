@@ -262,7 +262,7 @@ def resolve_torch_device(device_choice: str, return_string=False):
     return target if return_string else torch.device(target)
 
 def download_required_models(models_dir, tool_filter=None, demucs_models=None, 
-            whisper_models=None, wav2vec2_models=None, status_callback=None):
+                             whisper_models=None, wav2vec2_models=None, status_callback=None):
     """
     Downloads models into the specified models_dir.
     
@@ -322,25 +322,30 @@ def download_required_models(models_dir, tool_filter=None, demucs_models=None,
         except Exception as e:
             report("OpenUnmix", f"Error ❌ ({e})")
 
-    # 4. WHISPER
+    # 4. WHISPER (Fixed: Routed to /whisper subfolder, avoids RAM load)
     if tool_filter is None or tool_filter == "Whisper":
         if whisper_models:
             try:
                 import whisper
+                whisper_dir = os.path.join(models_dir, "whisper")
+                os.makedirs(whisper_dir, exist_ok=True)
+                
                 for m in whisper_models:
-                    # device="cpu" prevents VRAM spikes just for downloading
-                    whisper.load_model(m, device="cpu", download_root=models_dir)
+                    # Using _download directly prevents the model from loading into RAM/VRAM during the fetch
+                    whisper._download(whisper._MODELS[m], whisper_dir, False)
                 report("Whisper", "Downloaded/Found ✅")
             except Exception as e:
                 report("Whisper", f"Error ❌ ({e})")
 
-    # 5. WAV2VEC2
+    # 5. WAV2VEC2 (Fixed: Routed HuggingFace cache to /huggingface subfolder)
     if tool_filter is None or tool_filter == "Wav2Vec2":
         if wav2vec2_models:
             try:
-                # Redirect HuggingFace cache to our models_dir
-                os.environ["HF_HOME"] = models_dir
-                os.environ["TRANSFORMERS_CACHE"] = models_dir
+                # Redirect HuggingFace cache strictly to our huggingface subfolder
+                hf_dir = os.path.join(models_dir, "huggingface")
+                os.environ["HF_HOME"] = hf_dir
+                os.environ["TRANSFORMERS_CACHE"] = hf_dir
+                
                 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
                 
                 for m in wav2vec2_models:

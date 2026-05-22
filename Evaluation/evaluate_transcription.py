@@ -1,6 +1,6 @@
 """
 ================================================================================
-TRANSCRIPTION EVALUATION Pipeline
+TRANSCRIPTION EVALUATION Pipeline (5-Tier, Alignment & Visual Summaries)
 ================================================================================
 AUTHOR: Bc. Roman Křivánek
 REQUIRED: A dataset folder containing audio files and optionally .txt lyrics.
@@ -9,35 +9,30 @@ USAGE GUIDE:
 
 1. FETCH LYRICS (Genius.com API):
     python Evaluation/evaluate_transcription.py --fetch_lyrics --genius_token YOUR_TOKEN
-    NOTE: Lyrics are saved as .txt files. You can manually verify or edit these 
-          files before running the evaluation to ensure "Ground Truth" accuracy.
 
 2. SEPARATE & EVALUATE (Full Pipeline):
     python Evaluation/evaluate_transcription.py --run_separation
-        (Uses default htdemucs)
-    python Evaluation/evaluate_transcription.py --run_separation spleeter-2stems --num_tracks 5
-        (Runs separation using Spleeter on only the first 5 tracks)
 
-3. TARGETED EVALUATION (Specific Tools/Models with Debugging):
-    python Evaluation/evaluate_transcription.py --tools Whisper --models medium --debug
-
-FLAGS SUMMARY:
---device [Auto|cuda|cpu] : Hardware acceleration (Default: Auto)
---model_path [Path]      : Local directory for model weights (Default: ./Models)
---clean_run              : Overwrites cached text files and forces fresh runs.
---skip_transcription     : Runs only separation/lyrics fetching phases.
---debug                  : Enters verbose mode displaying track processing times, 
-                           RTF, and fine-grained error metrics (Ins, Del, Sub).
+3. TARGETED EVALUATION WITH VISUAL ALIGNMENT (Specific Tools/Models):
+    python Evaluation/evaluate_transcription.py --tools Whisper --models small --align_track_idx 0
 ================================================================================
 """
 DEFAULT_GENIUS_TOKEN = "q5ySfDNJOqsEoKB6H7ZE7iBxTXmT_JD7kKfJCwLJFE0FzOT6pIx-HNVaPnrgVL2a"
 
 # --- 1. USER CONFIGURATION (DEFAULT MODELS) ---
+# (Assumes your backend uses Hugging Face transformers)
 DEFAULT_CONFIG = {
-    "Whisper": ["small"],
-    "Vosk": ["vosk-model-small-fr-0.22", "vosk-model-fr-0.22"],
-    "Wav2Vec2": ["facebook/wav2vec2-base-960h"],
-    "Separation": "htdemucs"
+    "Vosk": ["vosk-model-fr-0.22", "vosk-model-fr-0.6-linto-2.2.0"],
+    "Wav2Vec2": [
+        "jonatasgrosman/wav2vec2-large-xlsr-53-french", # The Competition Winner (Hugging Face speech recognition competition)
+        "facebook/wav2vec2-large-xlsr-53-french"        # Official model from facebook
+    ],
+    "Whisper": [
+        "openai/whisper-large-v3",                  # Official OpenAI benchmark
+        "bofenghuang/whisper-large-v2-french",      # Massive 2,200h French fine-tune
+        "bofenghuang/whisper-medium-french"         # Lighter, faster French fine-tune
+    ],
+    "Separation": ["htdemucs"] # demucs V4 model (Hybrid Transformer Demucs)
 }
 
 import os
@@ -51,6 +46,7 @@ import shutil
 import logging
 import gc
 import unicodedata
+import difflib
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
@@ -64,6 +60,17 @@ import lyricsgenius
 import cpuinfo
 from tinytag import TinyTag
 
+# --- CONDITIONAL IMPORTS FOR PLOTTING (Pylance safe) ---
+try:
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    PLOTTING_AVAILABLE = True
+except ImportError:
+    plt = None  # type: ignore
+    sns = None  # type: ignore
+    PLOTTING_AVAILABLE = False
+    print("[!] 'matplotlib' or 'seaborn' not found. Graph generation will be skipped.")
+
 # --- LOGGING SETUP ---
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -75,7 +82,6 @@ project_root = script_dir.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-# CRITICAL: This line must be exactly here (global scope, before the try block)
 STRATEGY_REGISTRY: Dict[str, Any] = {"separators": {}, "transcribers": {}}
 
 try:
@@ -103,7 +109,6 @@ class TranscriptionEvaluator:
         self.separated_dir = Path(args.separated_path)
         self.results_dir = Path("Evaluation/transcription_results")
         
-        # --- NEW DIRECTORY CLEANUP LOGIC ---
         if args.clean_run and self.results_dir.exists():
             logger.info("🧹 [--clean_run] Wiping transcription results directory...")
             shutil.rmtree(self.results_dir, ignore_errors=True)
@@ -111,18 +116,117 @@ class TranscriptionEvaluator:
         if args.force_reseparate and self.separated_dir.exists():
             logger.info("🧹 [--force_reseparate] Wiping separated audio directory...")
             shutil.rmtree(self.separated_dir, ignore_errors=True)
-        # -----------------------------------
 
         self.txt_outputs_dir = self.results_dir / "txt_outputs"
+        self.plots_dir = self.results_dir / "plots"
         
-        for p in [self.separated_dir, self.results_dir, self.txt_outputs_dir]:
+        for p in [self.separated_dir, self.results_dir, self.txt_outputs_dir, self.plots_dir]:
             p.mkdir(parents=True, exist_ok=True)
         
         self.csv_path = self.results_dir / "raw_transcription_metrics.csv"
         self.json_path = self.results_dir / "summary_transcription.json"
+        self.latex_path = self.results_dir / "latex_table.tex"
         self.devices_to_test = self._resolve_devices(args.device)
         self.hardware_name = self._get_cuda_name() if "cuda" in self.devices_to_test else self._get_cpu_name()
 
+    # --- 5 CLEANING TIERS ---
+    def tier_1_minimalist(self, text: str) -> str:
+        text = text.lower()
+        return re.sub(r'\s+', ' ', text).strip()
+
+    def tier_2_punctuation_strip(self, text: str) -> str:
+        text = text.lower()
+        text = re.sub(r'[^\w\s\'-]', '', text)
+        return re.sub(r'\s+', ' ', text).strip()
+
+    def tier_3_boundary_split(self, text: str) -> str:
+        text = text.lower().replace("'", " ").replace("-", " ")
+        text = re.sub(r'[^\w\s]', '', text)
+        return re.sub(r'\s+', ' ', text).strip()
+
+    def tier_4_acoustic_robust(self, text: str) -> str:
+        text = "".join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
+        text = text.lower().replace("'", " ").replace("-", " ")
+        text = re.sub(r'[^\w\s]', '', text)
+        return re.sub(r'\s+', ' ', text).strip()
+
+    def tier_5_aggressive_squash(self, text: str) -> str:
+        text = "".join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
+        text = text.lower().replace("'", "").replace("-", "")
+        text = re.sub(r'[^\w\s]', '', text)
+        return re.sub(r'\s+', ' ', text).strip()
+
+    # --- EXTRACTION METHODS ---
+    def extract_continuous_text(self, raw_text: str) -> str:
+        if "Transcription (Model:" in raw_text and "Timestamps:" in raw_text:
+            parts = raw_text.split("\n\nTimestamps:")[0]
+            content = parts.split("):\n", 1)[-1]
+            return content.strip()
+        return raw_text.strip()
+
+    def extract_timestamped_text(self, raw_text: str) -> str:
+        if "Timestamps:" in raw_text:
+            timestamp_section = raw_text.split("Timestamps:")[1].strip()
+            lines = timestamp_section.split('\n')
+            extracted_lines = []
+            for line in lines:
+                cleaned_line = re.sub(r'^\d+\.\d+s\s*-\s*\d+\.\d+s:\s*', '', line.strip())
+                if cleaned_line:
+                    extracted_lines.append(cleaned_line)
+            return " ".join(extracted_lines)
+        return raw_text.strip()
+
+    # --- ALIGNMENT VISUALIZATION ---
+    def generate_alignment_visualization(self, ref_text: str, hyp_text: str, tool_info: str, chunk_size: int = 6):
+        ref_words = ref_text.split()
+        hyp_words = hyp_text.split()
+        
+        matcher = difflib.SequenceMatcher(None, ref_words, hyp_words)
+        aligned_ref, aligned_hyp, aligned_ops = [], [], []
+        
+        for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+            if tag == 'equal':
+                for r, h in zip(ref_words[i1:i2], hyp_words[j1:j2]):
+                    aligned_ref.append(r); aligned_hyp.append(h); aligned_ops.append(" ")
+            elif tag == 'replace':
+                r_chunk, h_chunk = ref_words[i1:i2], hyp_words[j1:j2]
+                for r, h in zip(r_chunk, h_chunk):
+                    aligned_ref.append(r); aligned_hyp.append(h); aligned_ops.append("SUB")
+                if len(r_chunk) > len(h_chunk):
+                    for r in r_chunk[len(h_chunk):]:
+                        aligned_ref.append(r); aligned_hyp.append("*" * len(r)); aligned_ops.append("DEL")
+                elif len(h_chunk) > len(r_chunk):
+                    for h in h_chunk[len(r_chunk):]:
+                        aligned_ref.append("*" * len(h)); aligned_hyp.append(h); aligned_ops.append("INS")
+            elif tag == 'delete':
+                for r in ref_words[i1:i2]:
+                    aligned_ref.append(r); aligned_hyp.append("*" * len(r)); aligned_ops.append("DEL")
+            elif tag == 'insert':
+                for h in hyp_words[j1:j2]:
+                    aligned_ref.append("*" * len(h)); aligned_hyp.append(h); aligned_ops.append("INS")
+
+        print("\n" + "="*80)
+        print(f" VISUAL ALIGNMENT: {tool_info}")
+        print(" REF = Ground Truth Lyrics | HYP = Model Output (Tier 2 Applied)")
+        print("="*80)
+
+        for i in range(0, len(aligned_ops), chunk_size):
+            r_chunk = aligned_ref[i:i+chunk_size]
+            h_chunk = aligned_hyp[i:i+chunk_size]
+            o_chunk = aligned_ops[i:i+chunk_size]
+            
+            widths = [max(len(r), len(h), len(o)) for r, h, o in zip(r_chunk, h_chunk, o_chunk)]
+            
+            ref_row = "REF: " + "  ".join(f"{word:<{widths[idx]}}" for idx, word in enumerate(r_chunk))
+            hyp_row = "HYP: " + "  ".join(f"{word:<{widths[idx]}}" for idx, word in enumerate(h_chunk))
+            op_row  = "OP:  " + "  ".join(f"{word:<{widths[idx]}}" for idx, word in enumerate(o_chunk))
+            
+            print(ref_row)
+            print(hyp_row)
+            print(op_row)
+            print("-" * 80)
+
+    # --- DEVICE & GENERAL UTILS ---
     def _resolve_devices(self, device_arg: str) -> List[str]:
         device_arg = device_arg.lower()
         if device_arg == "auto":
@@ -139,19 +243,6 @@ class TranscriptionEvaluator:
         if torch.cuda.is_available():
             return torch.cuda.get_device_name(0)
         return "N/A"
-
-    def _parse_transcription_text(self, raw_output: str) -> str:
-        if "Transcription (Model:" in raw_output and "Timestamps:" in raw_output:
-            parts = raw_output.split("\n\nTimestamps:")[0]
-            content = parts.split("):\n", 1)[-1]
-            return content.strip()
-        return raw_output.strip()
-
-    def _get_ground_truth_lyrics(self, track_name: str) -> str:
-        lyrics_path = self.lyrics_dir / f"{track_name}.txt"
-        if lyrics_path.exists():
-            return lyrics_path.read_text(encoding="utf-8").strip()
-        return ""
 
     def _clean_genius_lyrics(self, raw_lyrics: str) -> str:
         lines = raw_lyrics.split('\n')
@@ -172,11 +263,6 @@ class TranscriptionEvaluator:
             cleaned_lines.append(line_s)
             
         return re.sub(r'\n{3,}', '\n\n', "\n".join(cleaned_lines)).strip()
-
-    def robust_clean(self, text: str) -> str:
-        text = "".join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
-        text = text.lower().replace("'", " ").replace("-", " ")
-        return re.sub(r'[^\w\s]', '', text).strip()
 
     def fetch_and_save_lyrics(self):
         token = self.args.genius_token if self.args.genius_token else DEFAULT_GENIUS_TOKEN
@@ -209,9 +295,14 @@ class TranscriptionEvaluator:
 
     def separate_vocals(self):
         if not self.args.run_separation: return
-
         sep_input = self.args.run_separation.lower()
-        tool_key, model_name = sep_input.split("-", 1) if "-" in sep_input else (sep_input, DEFAULT_CONFIG["Separation"])
+        
+        # FIX: Safely extract the first model string if "Separation" is configured as a list
+        default_sep = DEFAULT_CONFIG["Separation"]
+        default_model = default_sep[0] if isinstance(default_sep, list) else default_sep
+
+        # Now model_name is guaranteed to be a string type
+        tool_key, model_name = sep_input.split("-", 1) if "-" in sep_input else (sep_input, default_model)
         sep_class = STRATEGY_REGISTRY["separators"].get(tool_key)
         
         if not sep_class: return
@@ -227,9 +318,6 @@ class TranscriptionEvaluator:
 
         for track_path in audio_files:
             final_vocal_path = self.separated_dir / f"{track_path.stem}.wav"
-            
-            # (Removed the old clean_run file unlinking here)
-            
             if final_vocal_path.exists(): continue
 
             temp_out_dir = self.separated_dir / f"temp_{track_path.stem}"
@@ -259,16 +347,13 @@ class TranscriptionEvaluator:
                 print(f" [!] Error: {e}")
 
     def get_detailed_metrics(self, ref: str, est: str) -> Dict[str, Any]:
-        """Compatible with JiWER 2.5.1 / 3.x"""
+        if not ref or not est:
+            return {"wer": 1.0, "cer": 1.0, "w_sub": 0, "w_del": 0, "w_ins": 0}
         measures = jiwer.compute_measures(ref, est)
         cer = jiwer.cer(ref, est)
-        
         return {
-            "wer": measures["wer"],
-            "cer": cer,
-            "w_sub": measures["substitutions"],
-            "w_del": measures["deletions"],
-            "w_ins": measures["insertions"]
+            "wer": measures["wer"], "cer": cer,
+            "w_sub": measures["substitutions"], "w_del": measures["deletions"], "w_ins": measures["insertions"]
         }
 
     def run_evaluation_pipeline(self):
@@ -287,6 +372,14 @@ class TranscriptionEvaluator:
         if self.args.num_tracks: test_samples = test_samples[:self.args.num_tracks]
 
         tools_to_run = self.args.tools or [k for k in DEFAULT_CONFIG.keys() if k != "Separation"]
+        
+        tiers = [
+            self.tier_1_minimalist,
+            self.tier_2_punctuation_strip,
+            self.tier_3_boundary_split,
+            self.tier_4_acoustic_robust,
+            self.tier_5_aggressive_squash
+        ]
 
         for tool_name in tools_to_run:
             transcriber_class = STRATEGY_REGISTRY["transcribers"].get(tool_name)
@@ -305,19 +398,16 @@ class TranscriptionEvaluator:
                     elif "model_path" in sig.parameters:
                         transcriber = transcriber_class(model_path=self.args.model_path)
                     else:
-                        # Fallback if the class takes no path arguments in __init__
                         transcriber = transcriber_class()
 
                     for lang in langs:
                         print(f"\n--- {tool_name} ({model_name}) | {device} | Lang: {lang} ---")
-                        for track_path in test_samples:
-                            wer, cer, rtf = 1.0, 1.0, 0.0
-                            w_sub, w_del, w_ins = 0, 0, 0
+                        for track_idx, track_path in enumerate(test_samples):
+                            rtf = 0.0
                             lang_tag = f"_{lang}" if lang else ""
                             cache_file = self.txt_outputs_dir / f"{tool_name}_{str(model_name).replace('/','_')}_{device}{lang_tag}_{track_path.stem}.txt"
 
                             try:
-                                # Use soundfile instead of librosa for native WAV duration
                                 duration = sf.info(str(track_path)).duration
                             except Exception as e:
                                 logger.error(f"  [!] Failed to get duration for {track_path.stem}: {e}")
@@ -325,67 +415,191 @@ class TranscriptionEvaluator:
 
                             if cache_file.exists() and not self.args.clean_run:
                                 raw_out = cache_file.read_text(encoding="utf-8")
-                                if self.args.debug:
-                                    logger.debug(f"  [Cache Hit] Using execution file for track: {track_path.stem}")
+                                if self.args.debug: logger.debug(f"  [Cache Hit] Track: {track_path.stem}")
                             else:
                                 start_t = time.time()
                                 success, _ = transcriber.transcribe(
-                                    audio_path=str(track_path), 
-                                    output_path=str(cache_file), 
-                                    model_name=model_name, 
-                                    device_choice=device, 
+                                    audio_path=str(track_path), output_path=str(cache_file), 
+                                    model_name=model_name, device_choice=device, 
                                     **({"language": lang} if lang else {})
                                 )
                                 elapsed_transcription = time.time() - start_t
                                 rtf = elapsed_transcription / duration if duration > 0 else 0
                                 raw_out = cache_file.read_text(encoding="utf-8") if success else ""
 
-                                if self.args.debug:
-                                    logger.debug(f"  [Timing] Track: {track_path.stem} | Duration: {duration:.2f}s | Transcription: {elapsed_transcription:.2f}s | RTF: {rtf:.4f}")
+                            if not raw_out.strip(): continue
 
-                            if raw_out.strip():
-                                ref_p = self.lyrics_dir / f"{track_path.stem}.txt"
-                                ref_raw = ref_p.read_text(encoding="utf-8") if ref_p.exists() else ""
-                                ref, est = self.robust_clean(ref_raw), self.robust_clean(raw_out)
-                                
-                                if ref and est:
-                                    m = self.get_detailed_metrics(ref, est)
-                                    wer, cer = m["wer"], m["cer"]
-                                    w_sub, w_del, w_ins = m["w_sub"], m["w_del"], m["w_ins"]
-
-                                    if self.args.debug:
-                                        logger.debug(f"  [Metrics Summary] Substitutions: {w_sub} | Deletions: {w_del} | Insertions: {w_ins}")
-
-                            row = {
-                                "tool": tool_name, 
-                                "model": model_name, 
-                                "lang": lang or "N/A", 
-                                "device": device, 
-                                "song": track_path.stem, 
-                                "WER": wer, 
-                                "CER": cer, 
-                                "rtf": rtf,
-                                "substitutions": w_sub,
-                                "deletions": w_del,
-                                "insertions": w_ins
-                            }
+                            ref_p = self.lyrics_dir / f"{track_path.stem}.txt"
+                            ref_raw = ref_p.read_text(encoding="utf-8") if ref_p.exists() else ""
                             
-                            all_metrics = [m for m in all_metrics if not (m.get('tool')==tool_name and m.get('model')==model_name and m.get('song')==track_path.stem and m.get('lang')==(lang or "N/A"))]
-                            all_metrics.append(row)
-                            pd.DataFrame(all_metrics).to_csv(self.csv_path, index=False)
-                            print(f" -> {track_path.stem}: WER {wer*100:.1f}%")
+                            hyp_cont = self.extract_continuous_text(raw_out)
+                            hyp_time = self.extract_timestamped_text(raw_out)
+                            
+                            is_unified = (hyp_cont == hyp_time)
+                            text_variants = [("unified", hyp_cont)] if is_unified else [("continuous", hyp_cont), ("timestamped", hyp_time)]
+                            
+                            # Pre-initialize row to prevent "possibly unbound" Pylance warning
+                            row: Dict[str, Any] = {}
+                            
+                            for txt_type, hyp_text in text_variants:
+                                row = {
+                                    "tool": tool_name, "model": model_name, "lang": lang or "N/A", 
+                                    "device": device, "song": track_path.stem, "text_type": txt_type, "rtf": rtf
+                                }
+                                
+                                for tier_num, clean_func in enumerate(tiers, 1):
+                                    r_clean = clean_func(ref_raw)
+                                    h_clean = clean_func(hyp_text)
+                                    metrics = self.get_detailed_metrics(r_clean, h_clean)
+                                    
+                                    row[f"Tier{tier_num}_WER"] = metrics["wer"]
+                                    row[f"Tier{tier_num}_CER"] = metrics["cer"]
+                                    
+                                    if tier_num == 4: # Store acoustic baseline errors
+                                        row["substitutions"] = metrics["w_sub"]
+                                        row["deletions"] = metrics["w_del"]
+                                        row["insertions"] = metrics["w_ins"]
+
+                                all_metrics = [m for m in all_metrics if not (m.get('tool')==tool_name and m.get('model')==model_name and m.get('song')==track_path.stem and m.get('lang')==(lang or "N/A") and m.get('text_type')==txt_type and m.get('device')==device)]
+                                all_metrics.append(row)
+                                pd.DataFrame(all_metrics).to_csv(self.csv_path, index=False)
+                            
+                            # Print summary and resolve "row" warning by ensuring row is not empty
+                            if row:
+                                print(f" -> {track_path.stem} processed. T4 Acoustic WER: {row.get('Tier4_WER', 1.0)*100:.1f}%")
+
+                            # --- VISUAL ALIGNMENT TRIGGER ---
+                            if self.args.align_track_idx is not None and track_idx == self.args.align_track_idx:
+                                # We use Tier 2 for visualization as requested in the previous spec
+                                vis_ref = self.tier_2_punctuation_strip(ref_raw)
+                                vis_hyp = self.tier_2_punctuation_strip(hyp_time)
+                                tool_info = f"{track_path.stem} | {tool_name} ({model_name}) | {device}"
+                                self.generate_alignment_visualization(vis_ref, vis_hyp, tool_info)
 
                     if transcriber: del transcriber
                     gc.collect()
                     if device == "cuda": torch.cuda.empty_cache()
-                    
+
     def generate_summaries(self):
-        if not self.csv_path.exists(): return
+        if not self.csv_path.exists(): 
+            print("[!] No CSV data found to summarize.")
+            return
+            
         df = pd.read_csv(self.csv_path)
-        summary = df.groupby(['tool', 'model']).agg({'WER': 'mean', 'CER': 'mean', 'rtf': 'mean'}).reset_index()
+        
+        agg_dict = {'rtf': 'mean'}
+        for i in range(1, 6):
+            agg_dict[f'Tier{i}_WER'] = 'mean'
+            agg_dict[f'Tier{i}_CER'] = 'mean'
+            
+        summary = df.groupby(['tool', 'model', 'text_type']).agg(agg_dict).reset_index()
         summary.to_json(self.json_path, orient='records', indent=4)
+        
+        # 3. Generate LaTeX Table
+        with open(self.latex_path, 'w', encoding='utf-8') as f:
+            f.write("\\begin{table}[hbt!]\n\\centering\n")
+            f.write("\\caption{Mean WER and CER Across 5 Normalization Tiers}\n")
+            f.write("\\resizebox{\\textwidth}{!}{\n")
+            f.write("\\begin{tabular}{ll|c|ccccc|ccccc}\n\\toprule\n")
+            f.write(" & & & \\multicolumn{5}{c|}{\\textbf{WER (\\%)}} & \\multicolumn{5}{c}{\\textbf{CER (\\%)}} \\\\\n")
+            f.write("\\textbf{Tool} & \\textbf{Model} & \\textbf{Type} & T1 & T2 & T3 & T4 & T5 & T1 & T2 & T3 & T4 & T5 \\\\\n\\midrule\n")
+            
+            for _, row_data in summary.iterrows():
+                wer_vals = [f"{row_data[f'Tier{i}_WER']*100:.2f}" for i in range(1, 6)]
+                cer_vals = [f"{row_data[f'Tier{i}_CER']*100:.2f}" for i in range(1, 6)]
+                type_short = "Uni" if row_data['text_type'] == "unified" else ("Cont" if row_data['text_type'] == "continuous" else "Time")
+                
+                f.write(f"{row_data['tool']} & {row_data['model']} & {type_short} & " + " & ".join(wer_vals) + " & " + " & ".join(cer_vals) + " \\\\\n")
+                
+            f.write("\\bottomrule\n\\end{tabular}\n}\n\\end{table}\n")
+            
+        print(f"\n[+] Saved LaTeX table to {self.latex_path}")
+
+        # 4. Generate Graphs
+        if PLOTTING_AVAILABLE and plt is not None and sns is not None:
+            sns.set_theme(style="whitegrid")
+            
+            summary['System'] = summary['tool'] + "\n(" + summary['model'] + ")\n" + summary['text_type']
+            
+            # --- RTF Plot ---
+            plt.figure(figsize=(10, 6))
+            ax = sns.barplot(data=summary, x='System', y='rtf', palette="viridis")
+            
+            plt.title("Mean Real-Time Factor (RTF) per Model", fontsize=14, pad=15, weight='bold')
+            plt.ylabel("RTF (Lower is faster)", fontsize=12, labelpad=10)
+            plt.xlabel("Evaluated Models", fontsize=12, labelpad=10)
+            plt.xticks(rotation=45, ha="right")
+            
+            # Headroom and Labels
+            ax.set_ylim(0, summary['rtf'].max() * 1.15)
+            for container in getattr(ax, 'containers', []):
+                ax.bar_label(
+                    container, fmt='%.2f', padding=3, weight='bold', fontsize=11,
+                    bbox=dict(facecolor='white', edgecolor='none', pad=1.5, alpha=0.9)
+                )
+
+            plt.tight_layout()
+            plt.savefig(self.plots_dir / "RTF_Comparison.png", dpi=300)
+            plt.close()
+            
+            wer_cols = [f'Tier{i}_WER' for i in range(1, 6)]
+            cer_cols = [f'Tier{i}_CER' for i in range(1, 6)]
+            
+            df_wer_melt = pd.melt(summary, id_vars=['System'], value_vars=wer_cols, var_name='Tier', value_name='WER')
+            df_wer_melt['WER'] = df_wer_melt['WER'] * 100
+            df_wer_melt['Tier'] = df_wer_melt['Tier'].str.replace('_WER', '')
+            
+            df_cer_melt = pd.melt(summary, id_vars=['System'], value_vars=cer_cols, var_name='Tier', value_name='CER')
+            df_cer_melt['CER'] = df_cer_melt['CER'] * 100
+            df_cer_melt['Tier'] = df_cer_melt['Tier'].str.replace('_CER', '')
+
+            # --- WER Plot ---
+            plt.figure(figsize=(14, 7)) # Slightly wider to accommodate 5 tiers per model
+            ax_wer = sns.barplot(data=df_wer_melt, x='System', y='WER', hue='Tier', palette="rocket")
+            
+            plt.title("Mean Word Error Rate (WER) Across 5 Normalization Tiers", fontsize=14, pad=15, weight='bold')
+            plt.ylabel("WER (%)", fontsize=12, labelpad=10)
+            plt.xlabel("Evaluated Models", fontsize=12, labelpad=10)
+            plt.xticks(rotation=45, ha="right")
+            plt.legend(title="Cleaning Tier", frameon=True)
+            
+            # Headroom and Labels (Smaller font for grouped bars to prevent overlap)
+            ax_wer.set_ylim(0, df_wer_melt['WER'].max() * 1.15)
+            for container in getattr(ax_wer, 'containers', []):
+                ax_wer.bar_label(
+                    container, fmt='%.1f', padding=3, weight='bold', fontsize=8,
+                    bbox=dict(facecolor='white', edgecolor='none', pad=1.0, alpha=0.9)
+                )
+
+            plt.tight_layout()
+            plt.savefig(self.plots_dir / "WER_Tiers_Comparison.png", dpi=300)
+            plt.close()
+            
+            # --- CER Plot ---
+            plt.figure(figsize=(14, 7))
+            ax_cer = sns.barplot(data=df_cer_melt, x='System', y='CER', hue='Tier', palette="mako")
+            
+            plt.title("Mean Character Error Rate (CER) Across 5 Normalization Tiers", fontsize=14, pad=15, weight='bold')
+            plt.ylabel("CER (%)", fontsize=12, labelpad=10)
+            plt.xlabel("Evaluated Models", fontsize=12, labelpad=10)
+            plt.xticks(rotation=45, ha="right")
+            plt.legend(title="Cleaning Tier", frameon=True)
+            
+            # Headroom and Labels
+            ax_cer.set_ylim(0, df_cer_melt['CER'].max() * 1.15)
+            for container in getattr(ax_cer, 'containers', []):
+                ax_cer.bar_label(
+                    container, fmt='%.1f', padding=3, weight='bold', fontsize=8,
+                    bbox=dict(facecolor='white', edgecolor='none', pad=1.0, alpha=0.9)
+                )
+
+            plt.tight_layout()
+            plt.savefig(self.plots_dir / "CER_Tiers_Comparison.png", dpi=300)
+            plt.close()
+            
+            print(f"[+] Saved RTF, WER, and CER graphs to {self.plots_dir}/")
+            
         print("\n--- EVALUATION COMPLETE ---")
-        print(summary)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -393,6 +607,7 @@ if __name__ == "__main__":
     parser.add_argument("--separated_path", type=str, default="Evaluation/separated_muni")
     parser.add_argument("--device", type=str, default="Auto")
     parser.add_argument("--num_tracks", type=int, default=None)
+    parser.add_argument("--align_track_idx", type=int, default=None, help="Index of the track (0-based) to print visual alignment for.")
     parser.add_argument("--clean_run", action="store_true", help="Deletes transcription_results and runs a fresh evaluation.")
     parser.add_argument("--force_reseparate", action="store_true", help="Deletes the separated audio folder to force re-separation.")
     parser.add_argument("--model_path", type=str, default="./Models")

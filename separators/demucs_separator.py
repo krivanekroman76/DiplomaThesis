@@ -1,4 +1,6 @@
 import os
+import sys
+import re
 import logging
 import torch
 import tempfile
@@ -22,6 +24,44 @@ from .utils import (
     ProgressInterceptor
 )
 
+class TqdmInterceptor:
+    """
+    Hijacks the raw sys.stderr stream to snatch percentages from tqdm progress bars 
+    that bypass standard Python logging.
+    """
+    def __init__(self, callback, original_stream, device: str):
+        self.callback = callback
+        self.original_stream = original_stream
+        self.buffer = ""
+        # Regex to find numbers immediately followed by a % sign (e.g., " 45%|")
+        self.pct_regex = re.compile(r'(\d{1,3})%')
+        # Format device string nicely (e.g., cuda -> CUDA, cpu -> CPU)
+        self.hw_label = f"[{str(device).upper()}] "
+
+    def write(self, buf):
+        # 1. Still print to the actual console so your terminal looks normal
+        self.original_stream.write(buf) 
+        
+        # 2. Add text to our snatcher buffer
+        self.buffer += buf
+        
+        # 3. tqdm uses \r to refresh the line. When we see one, parse the buffer!
+        if '\r' in buf or '\n' in buf:
+            match = self.pct_regex.search(self.buffer)
+            if match and self.callback:
+                pct = int(match.group(1))
+                scaled_pct = 10 + int(pct * 0.8)
+                try:
+                    # Added hw_label here
+                    self.callback(scaled_pct, f"{self.hw_label}Demucs: Processing audio chunks... {pct}%")
+                except Exception:
+                    pass
+            self.buffer = ""
+
+    def flush(self):
+        self.original_stream.flush()
+
+
 class DemucsSeparator:
     def __init__(self):
         setup_ffmpeg_environment()
@@ -39,18 +79,14 @@ class DemucsSeparator:
 
         # --- FUTURE-PROOF METADATA QUERY ---
         try:
-            # We load the model metadata once to find the native segment limit
             model_obj = demucs.pretrained.get_model(model)
             native_segment = getattr(model_obj, 'segment', 7.8) 
             logging.info(f"[Demucs] Model native segment limit: {native_segment}")
         except Exception as e:
-            # Fallback if the API changes or model loading fails here
             native_segment = 7.8 if "htdemucs" in model.lower() else 44.0
             logging.warning(f"[Demucs] Could not query model metadata ({e}). Using fallback limit: {native_segment}")
 
         # --- ADAPTIVE SEGMENT LOGIC ---
-        # If user didn't provide one, or provided one too high for the architecture
-        # Ensure all segment values are integers
         if user_segment is None or user_segment > native_segment:
             current_segment = int(native_segment) 
         else:
@@ -82,10 +118,8 @@ class DemucsSeparator:
                 last_exception = e
                 err_msg = str(e).lower()
                 
-                # Fatal Transformer Limit Error (If our metadata query somehow missed it)
                 if "longer segment than it was trained for" in err_msg:
                     logging.error("Segment length mismatch detected. Retrying with architecture-safe segment.")
-                    # Force a very safe segment for the next attempt
                     for a in attempts: a["seg"] = 7.0 
                     continue
 
@@ -111,13 +145,10 @@ class DemucsSeparator:
         
         with tempfile.TemporaryDirectory(prefix="demucs_v4_") as temp_dir:
             try:
-                # Metadata extraction for tags
                 original_tags = get_audio_metadata(input_path)
                 v_tags = prepare_stem_metadata(original_tags, "Vocals")
                 i_tags = prepare_stem_metadata(original_tags, "Instrumental")
 
-                # CLI Arguments for the main Demucs process
-                # Using --float32 to maintain the quality you need for your thesis
                 demucs_args = [
                     "-n", model, 
                     "-o", temp_dir, 
@@ -130,9 +161,20 @@ class DemucsSeparator:
                     "--float32"
                 ]
 
-                demucs_main(demucs_args)
+                # --- NEW INTERCEPTION LOGIC ---
+                # Backup the real console stream
+                original_stderr = sys.stderr 
+                # Replace it with our snatcher class
+                sys.stderr = TqdmInterceptor(progress_callback, original_stderr, device) 
+                
+                try:
+                    # Run Demucs while our snatcher is active!
+                    demucs_main(demucs_args)
+                finally:
+                    # VERY IMPORTANT: Always give stderr back to the OS!
+                    sys.stderr = original_stderr
+                # ------------------------------
 
-                # Path resolution logic (Demucs appends the model name and file stem to output)
                 input_stem = pathlib.Path(input_path).stem
                 sep_folder = os.path.join(temp_dir, model, input_stem)
                 v_src = os.path.join(sep_folder, "vocals.wav")
@@ -144,7 +186,9 @@ class DemucsSeparator:
                 if not os.path.exists(v_src) or not os.path.exists(i_src):
                     raise RuntimeError("Demucs execution finished but files are missing.")
 
-                # Export Stems
+                if progress_callback:
+                    progress_callback(90, "Exporting and resampling audio stems...")
+
                 stems = [
                     (v_src, f"{song_name}_Demucs_{model}_vocals.{fmt}", v_tags, vocals_folder),
                     (i_src, f"{song_name}_Demucs_{model}_instrumental.{fmt}", i_tags, instr_folder)
@@ -156,7 +200,6 @@ class DemucsSeparator:
                     
                     if fmt.lower() in ['wav', 'flac']:
                         data, native_sr = sf.read(src, dtype='float32')
-                        # Quality checks: Resample if native AI output differs from user choice
                         if native_sr != sr:
                             data = librosa.resample(data.T, orig_sr=native_sr, target_sr=sr).T
                         if channels == "Mono" and data.ndim > 1:
@@ -172,6 +215,9 @@ class DemucsSeparator:
 
                     self._apply_tags(save_path, tag_dict, model)
                     final_filenames.append(os.path.basename(save_path))
+
+                if progress_callback:
+                    progress_callback(100, "Finalizing track validation!")
 
                 return True, final_filenames[0], final_filenames[1]
 

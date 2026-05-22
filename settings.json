@@ -1,12 +1,12 @@
 {
     "is_first_run": false,
     "models_dir": "d:\\DiplomaThesis\\Models",
-    "input_folder": "input\\FLAC",
+    "input_folder": "input",
     "vocals_folder": "output/vocals",
     "instrumentals_folder": "output/instrumentals",
     "transcriptions_folder": "output/text",
     "appearance_mode": "Dark",
-    "color_theme": "green",
+    "color_theme": "dark-blue",
     "scaling": "100%",
     "auto_flush_memory": true,
     "separator_models": {

@@ -253,18 +253,19 @@ class SeparationApp(ctk.CTk):
         # 3. BUILD UI (The Body)
         self._setup_main_containers()
 
-        # 4. Initial tab loading is deferred until the main window is fully rendered to avoid heavy processing during startup
-        self.after(200, self._initial_startup_sequence)
+        # Force Tkinter to fully calculate widget layouts and finish drawing the initial window geometry
+        self.update_idletasks() 
 
+        # Track dimensions AFTER the layout has fully settled so startup configure events are ignored
         self._last_width = self.winfo_width()
         self._last_height = self.winfo_height()
-        
-        # Bind the configure event
-        self.bind("<Configure>", self._handle_resize)
         self._resize_timer = None
 
-        # Force Tkinter to finish drawing the initial window geometry (e.g., 1200x700)
-        self.update_idletasks() 
+        # Bind the configure event safely now
+        self.bind("<Configure>", self._on_window_configure)
+
+        # 4. Defer initial tab loading safely
+        self.after(200, self._initial_startup_sequence)
 
         # Intercept the "X" close button
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
@@ -291,14 +292,6 @@ class SeparationApp(ctk.CTk):
 
         # 2. Now that the window is rendered, calculate the layout
         self._recalculate_pagination(is_initialization=True)
-
-    def _handle_resize(self, event):
-        # Only trigger if the main window was resized, not a sub-widget
-        if event.widget == self:
-            if self._resize_timer:
-                self.after_cancel(self._resize_timer)
-            # Wait 250ms after the last move before recalculating
-            self._resize_timer = self.after(250, self._recalculate_pagination)
 
     def show_welcome_tutorial(self):
         """Displays a paginated interactive tutorial for first-time users."""
@@ -402,6 +395,20 @@ class SeparationApp(ctk.CTk):
             
             BLINKS = 3 # Number of flashes for each widget
             self.duration = 350 # Duration of each flash toggle in milliseconds
+
+            # HELPER: Safely finds the first available action button inside a target list frame
+            def get_first_row_action_button(list_frame):
+                if not list_frame:
+                    return None
+                # Get all children inside the list frame container
+                children = list_frame.winfo_children()
+                if children:
+                    # Look at the first item (the first row frame)
+                    first_row = children[0]
+                    # Safely extract the action_btn we stored via setattr()
+                    return getattr(first_row, "action_btn", None)
+                return None
+
             try:    
                 if idx == 1: # SETTINGS
                     self._switch_tab(self.settings_frame, self.settings_button, "settings")
@@ -417,6 +424,10 @@ class SeparationApp(ctk.CTk):
 
                 elif idx == 2: # INPUT TAB
                     self._switch_tab(self.input_frame, self.input_button, "input")
+                    
+                    # Dynamically look up the play button of the first loaded song
+                    first_play_btn = get_first_row_action_button(self.songs_list_frame)
+                    
                     story = [
                         self.input_button,
                         self.path_entry,
@@ -424,12 +435,15 @@ class SeparationApp(ctk.CTk):
                         self.add_file_btn,
                         self.songs_list_frame
                     ]
+                    # Append the play button to flash sequence if a song is loaded
+                    if first_play_btn:
+                        story.append(first_play_btn)
+                        
                     self.choreograph_flash(story, BLINKS)
 
                 elif idx == 3: # SEPARATION TOOLS
                     self._switch_tab(self.input_frame, self.input_button, "input")
                     story = [
-                        #self.sep_scrollable,
                         self.tools_container,
                         self.model_menu,
                         self.separate_button
@@ -438,6 +452,11 @@ class SeparationApp(ctk.CTk):
 
                 elif idx == 4: # SEPARATED OUTPUT REVIEW
                     self._switch_tab(self.sep_out_frame, self.sep_out_button, "sep_out")
+                    
+                    # Grab the play buttons for vocals and instrumentals dynamically
+                    first_vocal_play = get_first_row_action_button(self.vocals_list_frame)
+                    first_instr_play = get_first_row_action_button(self.instr_list_frame)
+                    
                     story = [
                         self.sep_out_button,
                         getattr(self, 'header_frame2', None), 
@@ -445,6 +464,10 @@ class SeparationApp(ctk.CTk):
                         getattr(self, 'header_frame3', None), 
                         self.instr_list_frame
                     ]
+                    # Append dynamic list player items if they exist
+                    if first_vocal_play: story.append(first_vocal_play)
+                    if first_instr_play: story.append(first_instr_play)
+                        
                     self.choreograph_flash(story, BLINKS)
 
                 elif idx == 5: # TRANSCRIPTION MENU
@@ -458,14 +481,20 @@ class SeparationApp(ctk.CTk):
 
                 elif idx == 6: # TRANSCRIPTION OUTPUT
                     self._switch_tab(self.trans_out_frame, self.trans_out_button, "trans_out")
-                    # Make sure these names exactly match your transcription frame variables
+                    
+                    # FIX: Dynamically fetch the 📖 reader button from the first row entry!
+                    first_reader_btn = get_first_row_action_button(self.trans_list_frame)
+                    
                     story = [
                         self.trans_out_button,
                         getattr(self, 'header_frame1', None),
                         self.trans_list_frame,
-                        self.read_btn,
                         self.trans_page_frame
                     ]
+                    # If an item exists in the list, inject its specific 📖 button directly into the flash reel
+                    if first_reader_btn:
+                        story.insert(3, first_reader_btn)
+                        
                     self.choreograph_flash(story, BLINKS)
 
             except Exception as e:
@@ -1218,8 +1247,10 @@ class SeparationApp(ctk.CTk):
         # 1. Flat base
         row_frame = ctk.CTkFrame(parent_frame, corner_radius=0, fg_color=("gray85", "gray20"))
         row_frame.pack(fill="x", padx=2, pady=2)
-        self.checkbox_frame = ctk.CTkFrame(row_frame,fg_color=("gray85", "gray20"))
-        self.checkbox_frame.pack(side="left", padx=5, pady=5)
+        
+        # Turned into local variables to prevent multi-row overwriting
+        checkbox_frame = ctk.CTkFrame(row_frame, fg_color=("gray85", "gray20"))
+        checkbox_frame.pack(side="left", padx=5, pady=5)
         
         # 2. Selection checkbox
         if not is_txt:
@@ -1230,48 +1261,121 @@ class SeparationApp(ctk.CTk):
                     "type": 'folder' if is_folder else 'song',
                     "data": {'name': file_name, 'path': file_path}
                 }
-            self.chk = ctk.CTkCheckBox(self.checkbox_frame, text="", variable=selection_dict[item_idx]["var"], width=24, corner_radius=0)
-            self.chk.pack(side="left")
+            chk = ctk.CTkCheckBox(checkbox_frame, text="", variable=selection_dict[item_idx]["var"], width=24, corner_radius=0)
+            chk.pack(side="left")
 
-        # 3. Action Buttons
+        # 3. Action Buttons (Converted to local variables)
         if is_folder:
-            self.open_btn = ctk.CTkButton(self.checkbox_frame, text="Open", width=65, corner_radius=0,
+            open_btn = ctk.CTkButton(checkbox_frame, text="Open", width=65, corner_radius=0,
                                      command=lambda p=file_path: self.enter_folder(p))
-            self.open_btn.pack(side="left", padx=(0, 5))
+            open_btn.pack(side="left", padx=(0, 5))
+            setattr(row_frame, "action_btn", open_btn)
+            
         elif is_txt:
-            self.read_btn = ctk.CTkButton(self.checkbox_frame, text="📖", width=54, corner_radius=0,
+            read_btn = ctk.CTkButton(checkbox_frame, text="📖", width=54, corner_radius=0,
                                      command=lambda p=file_path: self.play_audio(p))
-            self.read_btn.pack(side="left", padx=(0, 5))
+            read_btn.pack(side="left", padx=(0, 5))
+            setattr(row_frame, "action_btn", read_btn)
+            
         else:
-            self.play_btn = ctk.CTkButton(self.checkbox_frame, text="▶", width=30, corner_radius=0,
+            play_btn = ctk.CTkButton(checkbox_frame, text="▶", width=30, corner_radius=0,
                                      command=lambda p=file_path: self.play_audio(p))
-            self.play_btn.pack(side="left", padx=(0, 5))
-            self.info_btn = ctk.CTkButton(self.checkbox_frame, text="\u2139", width=30, corner_radius=0,
+            play_btn.pack(side="left", padx=(0, 5))
+            setattr(row_frame, "action_btn", play_btn)
+            
+            info_btn = ctk.CTkButton(checkbox_frame, text="\u2139", width=30, corner_radius=0,
                                      command=lambda p=file_path, n=file_name: self.show_audio_info(p, n, show_sync_controls=is_input_tab))
-            self.info_btn.pack(side="left", padx=(0, 5))
+            info_btn.pack(side="left", padx=(0, 5))
 
-        # 4. File icon and name
-        if is_folder: display_text = f"📁 {file_name}"
-        elif is_txt: display_text = f"📝 {file_name}"
-        else: display_text = f"🎵 {file_name}"
-        lbl = ctk.CTkLabel(row_frame, text=display_text, anchor="w")
-        lbl.pack(side="left", fill="x", expand=True, padx=5)
+        # --- RIGHT SIDE COMPONENTS CONTAINER ---
+        right_container = ctk.CTkFrame(row_frame, fg_color="transparent")
+        right_container.pack(side="right", fill="y")
 
-        # 5. Delete button
+        # 5. Delete button 
+        del_btn = None
         if not is_folder:
-            del_btn = ctk.CTkButton(row_frame, text="🗑", width=30, corner_radius=0, fg_color="#a83232", hover_color="#8a2929",
+            del_btn = ctk.CTkButton(right_container, text="🗑", width=30, corner_radius=0, fg_color="#a83232", hover_color="#8a2929",
                                     command=lambda p=file_path: self.delete_file(p))
-            del_btn.pack(side="right", padx=5)
 
         # 6. Stats Label
         if is_folder:
-            stats_lbl = ctk.CTkLabel(row_frame, text="Calculating...", text_color="gray", font=ctk.CTkFont(size=12))
-            stats_lbl.pack(side="right", padx=(10, 15))
+            stats_lbl = ctk.CTkLabel(right_container, text="Calculating...", text_color="gray", font=ctk.CTkFont(size=12))
+            stats_lbl.pack(side="left", padx=(10, 15))
             self.calculate_folder_size_async(file_path, stats_lbl)
         else:
             stats_text = self.get_file_stats(file_path, is_folder, is_txt)
-            stats_lbl = ctk.CTkLabel(row_frame, text=stats_text, text_color="gray", font=ctk.CTkFont(size=12))
-            stats_lbl.pack(side="right", padx=(10, 15))
+            stats_lbl = ctk.CTkLabel(right_container, text=stats_text, text_color="gray", font=ctk.CTkFont(size=12))
+            stats_lbl.pack(side="left", padx=(10, 5))
+
+        # 4. Icon and Text Label Separation
+        if is_folder: icon_text = "📁"
+        elif is_txt: icon_text = "📝"
+        else: icon_text = "🎵"
+        
+        icon_lbl = ctk.CTkLabel(row_frame, text=icon_text)
+        icon_lbl.pack(side="left", padx=(5, 0))
+
+        lbl = ctk.CTkLabel(row_frame, text=file_name, anchor="w")
+        lbl.pack(side="left", fill="x", expand=True, padx=(5, 5))
+
+        # --- MARQUEE ENGINE STATE ---
+        marquee_timer = None
+        marquee_buffer = file_name + "         •         "  
+        shift_index = 0
+
+        def scroll_text_loop():
+            """Rotates characters to simulate a horizontal scroll."""
+            nonlocal marquee_timer, shift_index
+            shift_index = (shift_index + 1) % len(marquee_buffer)
+            
+            updated_string = marquee_buffer[shift_index:] + marquee_buffer[:shift_index]
+            lbl.configure(text=updated_string)
+            
+            marquee_timer = row_frame.after(180, scroll_text_loop)
+
+        # --- HOVER LOGIC COMBINED ---
+        def on_row_enter(event):
+            if del_btn and not del_btn.winfo_ismapped():
+                del_btn.pack(side="left", padx=(5, 15))
+            
+            nonlocal marquee_timer
+            lbl.update_idletasks() 
+            
+            if lbl.winfo_reqwidth() > lbl.winfo_width() and marquee_timer is None:
+                scroll_text_loop()
+
+        def on_row_leave(event):
+            x, y = row_frame.winfo_pointerxy()
+            widget_under_mouse = row_frame.winfo_containing(x, y)
+            if widget_under_mouse and str(widget_under_mouse).startswith(str(row_frame)):
+                return
+            
+            if del_btn:
+                del_btn.pack_forget()
+            
+            nonlocal marquee_timer, shift_index
+            if marquee_timer:
+                row_frame.after_cancel(marquee_timer)
+                marquee_timer = None
+            
+            shift_index = 0
+            lbl.configure(text=file_name)
+
+        # Destructor guard to prevent background timer memory leaks/crashes
+        def on_destroy(event):
+            nonlocal marquee_timer
+            if marquee_timer:
+                row_frame.after_cancel(marquee_timer)
+                marquee_timer = None
+
+        # Bind event tracking onto the parent base row frame
+        row_frame.bind("<Enter>", on_row_enter)
+        row_frame.bind("<Leave>", on_row_leave)
+        row_frame.bind("<Destroy>", on_destroy)
+
+        # Shared bindings on the label widget so tracking never slips
+        lbl.bind("<Enter>", on_row_enter)
+        lbl.bind("<Leave>", on_row_leave)
 
     def get_file_stats(self, file_path, is_folder, is_txt):
         """Returns a formatted string with duration (if audio) and file size."""
@@ -1475,11 +1579,24 @@ class SeparationApp(ctk.CTk):
             # Process everything currently in the queue
             while True:
                 label_widget, text = self.folder_size_queue.get_nowait()
-                label_widget.configure(text=text)
+                
+                # NESTED SAFETY CHECK: Prevent a dead widget from crashing the whole loop
+                try:
+                    # this updates the file or folder size labels
+                    if label_widget and label_widget.winfo_exists():
+                        label_widget.configure(text=text)
+                    else:
+                        # Just 'pass' here! We don't need to be warned about a successfully avoided crash.
+                        pass
+                except Exception as widget_err:
+                    print(f"DEBUG: Error updating individual widget: {widget_err}")
+                    
         except queue.Empty:
             pass
+        except Exception as global_err:
+            print(f"CRITICAL: Unexpected error in size queue manager: {global_err}")
         finally:
-            # Check the queue again in 100 milliseconds
+            # Check the queue again in 100 milliseconds, guaranteed to run
             self.after(100, self._check_size_queue)
 
     def enter_folder(self, folder_path):
@@ -2211,38 +2328,34 @@ class SeparationApp(ctk.CTk):
         window_height = self.winfo_height()
         
         # Fallback for startup
-        if window_height < 100: window_height = 800 
-        row_height = 35 
-
+        if window_height < 100: 
+            window_height = 700 
+            
         if is_fullscreen:
-            # Force reset to page 0 so items aren't hidden on a "ghost" page
             self.current_pages["input"] = 0
             self.current_pages["vocals"] = 0
             self.current_pages["instr"] = 0
             self.current_pages["trans"] = 0
-            # In fullscreen mode, we can show all items without pagination
+            
             self.ITEMS_PER_PAGE_SEP = 9999
             self.ITEMS_PER_PAGE_TRANS = 9999
             self.ITEMS_PER_PAGE_INPUT = 9999
         else:
-            # --- NORMAL WINDOW MATH ---
-            window_height = self.winfo_height()
-            if window_height < 100: window_height = 800 
+            # --- CALIBRATED NORMAL WINDOW MATH ---
             row_height = 38 
 
             # Separation Tab (Vocals/Instr stacked)
-            avail_sep = (window_height - 240) / 2 
+            # Subtracted 300px to give tabs, spacing, and buttons plenty of headroom
+            avail_sep = (window_height - 300) / 2 
             self.ITEMS_PER_PAGE_SEP = max(4, int(avail_sep / row_height))
 
             # Transcription/Input Tab (One tall list)
-            avail_input = window_height - 200
+            # Subtracted 320px -> 700 - 320 = 380px. 380 / 38 = exactly 10 items max per page!
+            avail_input = window_height - 320
             self.ITEMS_PER_PAGE_INPUT = max(6, int(avail_input / row_height))
             self.ITEMS_PER_PAGE_TRANS = self.ITEMS_PER_PAGE_INPUT
 
-        if is_initialization: return
-
         # --- APPLY CHANGES TO ACTIVE TAB ---
-        # Determine which tab is currently visible and update it
         if hasattr(self, 'input_frame') and self.input_frame.winfo_ismapped():
             self.ITEMS_PER_PAGE = self.ITEMS_PER_PAGE_INPUT
             self.render_page("input")
@@ -2708,26 +2821,26 @@ class SeparationApp(ctk.CTk):
         close_btn.pack(pady=(0, 20))
 
     def setup_progress_bar(self, parent):
-        progress_frame = ctk.CTkFrame(parent, height=60, corner_radius=0)
+        progress_frame = ctk.CTkFrame(parent, height=50, corner_radius=0)
         # Keep the frame itself on the grid of the main window
-        progress_frame.grid(row=1, column=1, sticky="ew", padx=(10, 0), pady=(0, 10))
+        progress_frame.grid(row=1, column=1, sticky="ew", padx=(10, 10), pady=(0, 10))
         # Important: prevents the frame from shrinking vertically when empty
         progress_frame.pack_propagate(False) 
 
         # 1. Pack the button to the far right
         self.abort_button = ctk.CTkButton(progress_frame, text="Abort", command=self.abort_separation_process, width=80, height=24, corner_radius=0)
-        self.abort_button.pack(side="right", padx=(0, 10))
+        self.abort_button.pack(side="right", padx=(10, 10))
         self.abort_button.pack_forget()
 
         # 2. Pack the progress bar to the left, and tell it to fill empty space
-        self.progress_bar = ctk.CTkProgressBar(progress_frame, mode="determinate", height=12)
+        self.progress_bar = ctk.CTkProgressBar(progress_frame, mode="determinate", height=20)
         self.progress_bar.pack(side="left", fill="x", expand=True, padx=(10, 10))
         self.progress_bar.set(0)
         self.progress_bar.pack_forget()
 
         # 3. Pack the text to the left. 
         # When the bar is hidden, this text will slide to the far left automatically!
-        self.progress_text = ctk.CTkLabel(progress_frame, text="Ready", font=ctk.CTkFont(size=12))
+        self.progress_text = ctk.CTkLabel(progress_frame, text="Ready", font=ctk.CTkFont(size=16))
         self.progress_text.pack(side="left", padx=(10, 10))
 
     def update_task_progress(self, percent, message, file_index, total_files, task_name="Task"):
@@ -2872,7 +2985,6 @@ class SeparationApp(ctk.CTk):
                 del os.environ["CUDA_VISIBLE_DEVICES"]
 
             # 3. LAZY LOADING & TYPE CASTING
-            # We use a local variable and type assertions to satisfy Pylance
             active_sep = None
 
             if config.ai_tool == "Spleeter":
@@ -2906,18 +3018,32 @@ class SeparationApp(ctk.CTk):
 
                 input_path = song['path']
                 song_name = os.path.splitext(song['name'])[0]
-                cb = lambda p, m: self.update_task_progress(p, m, i, total_files, task_name="Separation")
                 
+                # CLEAN AND INTERCEPTED PROGRESS ENGINE:
+                # One clean callback wrapper that filters out ABORT_REQUESTED crashes
+                def thread_safe_cb(p, m, idx=i):
+                    def safe_progress_update():
+                        try:
+                            # Quick safety pull: if loop aborted, do not push updates down to layout
+                            if getattr(self, 'abort_separation', False):
+                                return
+                            self.update_task_progress(p, m, idx, total_files, task_name="Separation")
+                        except RuntimeError as e:
+                            if "ABORT_REQUESTED" in str(e):
+                                logging.info("Progress engine cleanly absorbed abort signal.")
+                            else:
+                                raise e
+
+                    self.after(0, safe_progress_update)
+
                 result = (False, "", "") # Safe default
 
                 try:
                     # --- TOOL-SPECIFIC EXECUTION WITH TYPE GUARDS ---
-                    
                     if config.ai_tool == "Demucs":
                         from separators.demucs_separator import DemucsSeparator
                         assert isinstance(active_sep, DemucsSeparator)
                         
-                        # Use the 'or' operator to provide a default if config.bit_depth is None
                         safe_bit_depth = config.bit_depth or "16-bit"
 
                         result = active_sep.separate(
@@ -2933,9 +3059,9 @@ class SeparationApp(ctk.CTk):
                             bit_depth=safe_bit_depth,
                             shifts=config.shifts, 
                             overlap=config.overlap, 
-                            device_choice=actual_device, 
+                            device_choice=actual_device, # <-- Pass device profile
                             flac_compression=config.flac_compression, 
-                            progress_callback=cb
+                            progress_callback=thread_safe_cb
                         )
                         
                     elif config.ai_tool == "Spleeter":
@@ -2953,7 +3079,7 @@ class SeparationApp(ctk.CTk):
                             bitrate=config.bitrate, 
                             device_choice=actual_device, 
                             flac_compression=config.flac_compression, 
-                            progress_callback=cb
+                            progress_callback=thread_safe_cb
                         )
                     
                     elif config.ai_tool == "OpenUnmix":
@@ -2972,22 +3098,29 @@ class SeparationApp(ctk.CTk):
                             bitrate=config.bitrate, 
                             device_choice=actual_device, 
                             flac_compression=config.flac_compression, 
-                            progress_callback=cb
+                            progress_callback=thread_safe_cb
                         )
 
                     # Validate Result
                     if isinstance(result, tuple) and len(result) >= 3 and result[0]:
                         successful_files.extend([result[1], result[2]]) 
                     else:
-                        logging.error(f"Separation logic returned failure for: {song_name}")
-                        failed_files.append(song_name)
+                        # Only log errors if the user didn't intentionally stop the process
+                        if not self.abort_separation:
+                            logging.error(f"Separation logic returned failure for: {song_name}")
+                            failed_files.append(song_name)
                         
                 except Exception as e:
-                    logging.error(f"Error processing {song_name}: {e}", exc_info=True)
-                    failed_files.append(song_name)
+                    if not self.abort_separation:
+                        logging.error(f"Error processing {song_name}: {e}", exc_info=True)
+                        failed_files.append(song_name)
 
-            # --- COMPLETION LOGIC ---
-            if not self.abort_separation:
+            # --- COMPLETION/ABORT TERMINATION LOGIC ---
+            if self.abort_separation:
+                self.is_separating = False
+                self.after(0, lambda: self.progress_text.configure(text="Process Aborted Successfully. (Ready)"))
+                self.after(500, lambda: self.progress_bar.pack_forget())
+            else:
                 self.is_separating = False # UNLOCK BEFORE FINAL MESSAGE
                 success_count = len(successful_files) // 2 
                 completion_text = f"Batch complete! {success_count}/{total_files} processed. (Ready)"
@@ -3006,8 +3139,9 @@ class SeparationApp(ctk.CTk):
 
         except Exception as e:
             self.is_separating = False # UNLOCK ON ERROR
-            if str(e) == "ABORT_REQUESTED":
-                logging.info("Separation aborted by user.")
+            if "ABORT_REQUESTED" in str(e):
+                logging.info("Separation pipeline break recognized.")
+                self.after(0, lambda: self.progress_text.configure(text="Process Aborted. (Ready)"))
             else:
                 self.after(0, lambda: self.progress_text.configure(text=f"Error: {str(e)} (Ready)"))
                 logging.error(f"Thread error: {e}", exc_info=True)
@@ -3015,7 +3149,7 @@ class SeparationApp(ctk.CTk):
             self.is_separating = False # FINAL UNLOCK
             self.abort_separation = False
             self.after(0, lambda: self.abort_button.pack_forget())
-
+            
     def run_standalone_transcription(self):
         """
         @brief Prepares and initiates a batch transcription process.
@@ -3220,44 +3354,44 @@ class SeparationApp(ctk.CTk):
             self.after(0, lambda: self.abort_button.pack_forget())
 
 if __name__ == "__main__":
-    # 1. MANDATORY: Tells Windows how to handle the .exe / subprocesses
+    # 1. CATCH SUBPROCESS FALLBACKS (Prevents secondary GUI windows)
+    if len(sys.argv) > 1 and ("spleeter" in sys.argv or "separate" in sys.argv):
+        from spleeter.__main__ import entrypoint as spleeter_entrypoint
+        if "separate" in sys.argv:
+            sys.argv = [sys.argv[0]] + sys.argv[sys.argv.index("separate"):]
+        spleeter_entrypoint()
+        os._exit(0)
+
+    # 2. MANDATORY: Handle multiprocessing frameworks
     multiprocessing.freeze_support()
     
-    # 2. Setup Logging only once
+    # 3. Setup Logging once (Ensure no StreamHandler is writing to stdout here!)
     log_path = setup_logging()
     logger = logging.getLogger()
 
     try:
-        # 3. Redirect streams
+        # 4. Redirect streams safely
         sys.stdout = LogStreamer(logger, logging.INFO)
         sys.stderr = LogStreamer(logger, logging.ERROR)
         
         logging.info(f"App Started - Logging to {log_path}")
 
-        # 4. Launch the GUI
+        # 5. Launch the GUI
         app = SeparationApp()
         app.mainloop()
 
     except Exception as e:
-        # This captures crashes that happen during app.mainloop()
         logging.critical(f"Application crashed: {e}", exc_info=True)
     
     finally:
-        # 5. SAFE CLEANUP
-        # Only the main GUI process should try to kill children.
-        # This prevents the PermissionError / WinError 5.
+        # 6. SAFE CLEANUP
         logging.info("Shutting down. Cleaning up processes...")
-        
-        # Get the current process name or ID to be sure
         for child in multiprocessing.active_children():
             try:
                 logging.debug(f"Terminating child process: {child.name}")
                 child.terminate()
-                child.join(timeout=0.5) # Give it a moment to die
+                child.join(timeout=0.5)
             except (PermissionError, AttributeError):
-                # If we don't have permission to kill a specific child, 
-                # we just skip it rather than crashing the whole exit.
                 pass
         
-        # Use os._exit to release the console immediately
         os._exit(0)

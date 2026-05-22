@@ -1,0 +1,36 @@
+Transcription (Model: vosk-model-fr-0.22):
+les gens me regardaient bizarre les gens me regardaient bizarre les gens me regardaient bizarre si j'ai fait du mal dites moi les gens me regardaient bizarre et j'ai tellement peur au final les gens me regardent bizarre si je les découvre me regardent le paysage des montagnes ne m'écoute pas les gens regardent le paysage si j'ai demandé de moi les gens me regardent bizarre j'ai tellement peur ou pénale parce que je ne mange pas je roule pourtant que rampait je me sens marcher dessus comme si je rendais je suis des vôtres ce que je ne mangeais plus et tout je suis ce qu'on appelle un obèse en surpoids on se moque de moi et ma démarche une voiture trois h à côté de cela j'ai l'impression que le monde s'écroule les regards sont dus alors je pèse constamment le mien je vise les murs personne je m'envoie clément et je me dis je ne peux m'en prendre qu'à moi même si c'est ma faute que dieu veut partager c'est ma faute j'ai pas les bonnes paroles et je ne comprends toujours pas regardez le paysage j'ai été coupable les gens me regardent bizarre il m'entend mais ne m'écoute pas les paysages si j'ai malgré moi les gens me regardent paysage j'ai tellement peur au final j'ai la taille d'un enfant de sept ans étant plus jeune j'attendais que mon conseillé d'en consommer les cours je demande de l'aide au plus grand chose c'est trop haut et puis j'ai plus d'un j'ai pris de l'âge je m'assume totalement j'ai une forme en bon me du plus haut également les époux comment les gens nous boussole devenir ou jouer sur mes gardes calculer vos regards sont des coups de poignard je vais différent je vais assumer un peu comme si j'étais un bagne je me dis que ça fait mal quand tu vois que personne ne t'écoute oui ça fait mal le monde moderne mal de ne plus sentir les coups et je ne comprends toujours pas pourquoi gardez paysage j'ai été coupa les jambes regarder le paysage il m'entend mais n'écoute pas les gens me regardent un peu et ça se gère dites-moi les gens me regardent bizarre j'ai tellement peur au pénal c'est différent j'ai un cœur comme toi non tu ne peux pas me comprendre je suis dans un réel combat tu sais je suis assez différent pas si différent j'ai un cul comme toi j'ai un cœur comme tu ne veux pas me comprendre je suis dans un réel combat dans un réel pour vous parler regarde le paysage comme si j'étais coupable les gens me regardaient bizarre il m'entend mais ne m'écoute pas les gens en garde à vue et ça c'est gênant dites-moi les gens me regardent bizarre j'ai tellement peur au final
+
+Timestamps:
+0.00s - 1.65s: les gens me regardaient bizarre
+2.43s - 4.14s: les gens me regardaient bizarre
+5.01s - 6.78s: les gens me regardaient bizarre
+7.44s - 16.11s: si j'ai fait du mal dites moi les gens me regardaient bizarre et j'ai tellement peur au final les gens me regardent bizarre
+16.98s - 25.14s: si je les découvre me regardent le paysage des montagnes ne m'écoute pas les gens regardent le paysage
+25.71s - 29.79s: si j'ai demandé de moi les gens me regardent bizarre
+30.51s - 50.64s: j'ai tellement peur ou pénale parce que je ne mange pas je roule pourtant que rampait je me sens marcher dessus comme si je rendais je suis des vôtres ce que je ne mangeais plus et tout je suis ce qu'on appelle un obèse en surpoids on se moque de moi et ma démarche une voiture trois h à côté de cela j'ai l'impression que le monde s'écroule les regards sont dus
+50.94s - 54.78s: alors je pèse constamment le mien je vise les murs
+55.20s - 61.73s: personne je m'envoie clément et je me dis je ne peux m'en prendre qu'à moi même si c'est ma faute
+62.40s - 64.29s: que dieu veut partager c'est ma faute
+64.83s - 67.64s: j'ai pas les bonnes paroles et je ne comprends toujours pas
+68.55s - 69.69s: regardez le paysage
+70.53s - 73.62s: j'ai été coupable les gens me regardent bizarre
+74.37s - 82.71s: il m'entend mais ne m'écoute pas les paysages si j'ai malgré moi les gens me regardent paysage
+83.40s - 103.44s: j'ai tellement peur au final j'ai la taille d'un enfant de sept ans étant plus jeune j'attendais que mon conseillé d'en consommer les cours je demande de l'aide au plus grand chose c'est trop haut et puis j'ai plus d'un j'ai pris de l'âge je m'assume totalement j'ai une forme en bon me du plus haut également les époux comment les gens nous boussole
+103.47s - 105.66s: devenir ou jouer sur mes gardes
+106.42s - 114.33s: calculer vos regards sont des coups de poignard je vais différent je vais assumer un peu comme si j'étais un bagne
+115.02s - 119.28s: je me dis que ça fait mal quand tu vois que personne ne t'écoute oui ça fait mal
+120.00s - 120.75s: le monde moderne
+121.47s - 121.86s: mal
+122.43s - 125.70s: de ne plus sentir les coups et je ne comprends toujours pas pourquoi
+126.24s - 127.23s: gardez paysage
+128.04s - 131.13s: j'ai été coupa les jambes regarder le paysage
+131.88s - 136.62s: il m'entend mais n'écoute pas les gens me regardent un peu et ça se gère
+137.55s - 140.22s: dites-moi les gens me regardent bizarre
+140.91s - 142.89s: j'ai tellement peur au pénal
+143.58s - 156.39s: c'est différent j'ai un cœur comme toi non tu ne peux pas me comprendre je suis dans un réel combat tu sais je suis assez différent pas si différent j'ai un cul comme toi j'ai un cœur comme tu ne veux pas me comprendre
+157.41s - 160.14s: je suis dans un réel combat dans un réel pour vous parler
+160.51s - 165.66s: regarde le paysage comme si j'étais coupable les gens me regardaient bizarre
+166.41s - 171.78s: il m'entend mais ne m'écoute pas les gens en garde à vue et ça c'est gênant
+172.71s - 175.29s: dites-moi les gens me regardent bizarre
+175.98s - 177.99s: j'ai tellement peur au final

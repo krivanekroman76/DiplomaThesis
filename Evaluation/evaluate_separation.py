@@ -12,7 +12,7 @@ PREREQUISITES:
   the GUI or by manually editing the 'settings.json' file in your IDE.
 
 USAGE GUIDE (Commands can be chained together!):
-1.  STANDARD EVAL:  python Evaluation/evaluate_separation.py --musdb_path "path/to/musdb"
+1.  STANDARD EVAL:  python Evaluation/evaluate_separation.py 
 2.  CLEAN START:    python Evaluation/evaluate_separation.py --clean_run (Deletes previous results)
 3.  REGEN GRAPHS:   python Evaluation/evaluate_separation.py --only_reports (Uses existing CSV)
 4.  HW TARGETING:   python Evaluation/evaluate_separation.py --device cuda (Forces GPU only)
@@ -23,6 +23,14 @@ USAGE GUIDE (Commands can be chained together!):
 
 EXAMPLE OF CHAINED COMMAND:
 python Evaluation/evaluate_separation.py --clean_run --device cuda --num_tracks 5 --tool OpenUnmix --debug
+Arguments:
+--musdb_path "path/to/musdb"
+--clean_run
+--device cuda (cpu)
+--flag_download
+--num_tracks 2
+--tool Demucs
+--model_path
 
 LOGIC:
 - Measures 'Waking Time' (Cold Start) vs 'Pure Separation' (Warm RTF).
@@ -181,11 +189,43 @@ class SeparationEvaluator:
         logging.info(f"Loading MUSDB18 dataset from: {self.args.musdb_path}")
         mus = musdb.DB(root=self.args.musdb_path, subsets="test", is_wav=True)
         test_samples = mus.tracks[:self.args.num_tracks] if self.args.num_tracks else mus.tracks
-        tools = [self.args.tool] if self.args.tool else ["Demucs", "OpenUnmix", "Spleeter"]
-
-        for tool_name in tools:
-            models = self._get_models_for_tool(tool_name)
+        
+        # --- NEW CLI OVERRIDE LOGIC ---
+        if self.args.run_separation:
+            try:
+                # We split on the FIRST hyphen only, just in case a model name contains hyphens (e.g., 'my-custom-model')
+                target_tool, target_model = self.args.run_separation.split('-', 1)
+                
+                # Case-insensitive tool matching for better CLI UX
+                tool_map = {"demucs": "Demucs", "spleeter": "Spleeter", "openunmix": "OpenUnmix"}
+                target_tool = tool_map.get(target_tool.lower(), target_tool)
+                
+                tools_and_models = [(target_tool, [target_model])]
+                logging.info(f"CLI Override active: Forcing evaluation of {target_tool} -> {target_model}")
+            except ValueError:
+                logging.error("[!] Invalid format for --run_separation. Expected Tool-Model (e.g., Demucs-htdemucs_ft). Exiting.")
+                return
+        else:
+            # Standard settings.json / fallback behavior
+            tools_to_check = [self.args.tool] if self.args.tool else ["Demucs", "OpenUnmix", "Spleeter"]
+            
+            # Case-insensitive mapping to match the JSON keys and internal logic
+            tool_map = {"demucs": "Demucs", "spleeter": "Spleeter", "openunmix": "OpenUnmix"}
+            tools_to_check = [tool_map.get(t.lower(), t) for t in tools_to_check]
+            
+            tools_and_models = [(t, self._get_models_for_tool(t)) for t in tools_to_check]
+        
+        # Process the resolved targets
+        for tool_name, models in tools_and_models:
+            # Type guard: Ensure tool_name is a string for the type checker
+            if not isinstance(tool_name, str):
+                continue
+                
             for model_name in models:
+                # Type guard: Ensure model_name is a string for the type checker
+                if not isinstance(model_name, str):
+                    continue
+                    
                 with ExitStack() as stack:
                     active_model_dir = stack.enter_context(tempfile.TemporaryDirectory()) if self.args.flag_download else str(self.model_dir)
                     os.environ["TORCH_HOME"] = active_model_dir
@@ -199,9 +239,11 @@ class SeparationEvaluator:
                             logging.warning("[!] Skipping Spleeter-CUDA: TensorFlow GPU support not detected.")
                             continue
 
+                        # Determine display names for logging and CSV
+                        display_device = "GPU CUDA" if current_device == "cuda" else "CPU"
                         device_name = torch.cuda.get_device_name(0) if current_device == "cuda" else self._get_cpu_name()
                         
-                        logging.info(f"\n--- Benchmark: {tool_name} [{model_name}] on {current_device.upper()} ---")
+                        logging.info(f"\n--- Benchmark: {tool_name} [{model_name}] on {display_device} ---")
                         logging.debug(f"Hardware Name: {device_name}")
                         start_init = time.time()
                         
@@ -225,7 +267,7 @@ class SeparationEvaluator:
                         is_first_track = True
 
                         for track in test_samples:
-                            if self._is_already_evaluated(df_existing, tool_name, model_name, current_device, track.name):
+                            if self._is_already_evaluated(df_existing, tool_name, model_name, display_device, track.name):
                                 logging.debug(f"Skipping {track.name} (Already Evaluated)")
                                 continue
 
@@ -266,7 +308,7 @@ class SeparationEvaluator:
 
                                     metrics = self._calculate_museval(track, v_path, i_path)
                                     row = {
-                                        "tool": tool_name, "model": model_name, "device_type": current_device.upper(),
+                                        "tool": tool_name, "model": model_name, "device_type": display_device,
                                         "device_name": device_name, "song": track.name, "duration": track.duration,
                                         "init_overhead_sec": init_overhead, "waking_time_sec": waking_cost,
                                         "pure_sep_time_sec": timing["sep"], "rtf": rtf, **metrics
@@ -281,7 +323,7 @@ class SeparationEvaluator:
                             except Exception as e:
                                 logging.error(f"Error on {track.name}: {e}")
 
-                        self._append_to_json_summary(pd.DataFrame(all_metrics), tool_name, model_name, current_device.upper())
+                        self._append_to_json_summary(pd.DataFrame(all_metrics), tool_name, model_name, display_device)
                         self._clear_memory()
 
         self.generate_reports(all_metrics)
@@ -363,7 +405,7 @@ class SeparationEvaluator:
             df (pd.DataFrame): The dataframe containing past evaluations.
             tool (str): The separation tool.
             model (str): The model variant.
-            dev (str): Hardware device used.
+            dev (str): Hardware device used (e.g., 'GPU CUDA' or 'CPU').
             song (str): Name of the song.
             
         Returns:
@@ -371,19 +413,62 @@ class SeparationEvaluator:
         """
         if df.empty or 'tool' not in df.columns: 
             return False
-        return not df[(df['tool']==tool)&(df['model']==model)&(df['device_type']==dev.upper())&(df['song']==song)].empty
+        return not df[(df['tool']==tool)&(df['model']==model)&(df['device_type']==dev)&(df['song']==song)].empty
 
     def _get_models_for_tool(self, tool: str) -> List[str]:
         """
-        Retrieves the models associated with a tool. Acts as a fallback mechanism.
-        
-        Args:
-            tool (str): The separation tool.
-            
-        Returns:
-            List[str]: A list containing the default model to benchmark.
+        Retrieves the enabled models associated with a tool from settings.json.
+        Falls back to defaults if settings.json is missing or structurally invalid.
         """
-        return {"Demucs": ["htdemucs"], "OpenUnmix": ["umxhq"], "Spleeter": ["2stems"]}.get(tool, ["2stems"])
+        # Hardcoded fallbacks in case settings.json isn't available or keys are empty
+        fallback_defaults = {
+            "Demucs": ["htdemucs"], 
+            "OpenUnmix": ["umxhq"], 
+            "Spleeter": ["2stems"]
+        }
+        
+        settings_path = Path("settings.json")
+        
+        if settings_path.exists():
+            try:
+                with open(settings_path, 'r', encoding='utf-8') as f:
+                    settings = json.load(f)
+                
+                # 1. Extract the separator models
+                separator_models = settings.get("separator_models", {})
+
+                # 2. Check and default Spleeter
+                # If Spleeter is missing or the list is empty ([]), default it to ["2stems"]
+                if not separator_models.get("Spleeter"):
+                    logging.info("Models list for Spleeter is empty in settings.json. Defaulting to ['2stems'].")
+                    separator_models["Spleeter"] = ["2stems"]
+                
+                # 3. Check for the requested tool inside the updated dictionary
+                if tool in separator_models:
+                    models_list = separator_models[tool]
+                    
+                    # Handle Case A: Direct list -> {"separator_models": {"Demucs": [...]}}
+                    if isinstance(models_list, list):
+                        if models_list:  # Ensure the list isn't empty
+                            logging.debug(f"Loaded models for {tool} from settings.json: {models_list}")
+                            return models_list
+                        else:
+                            logging.info(f"Models list for {tool} is empty in settings.json. Using fallback default.")
+                    
+                    # Handle Case B: Nested dictionary structures
+                    elif isinstance(models_list, dict):
+                        for key in ['enabled_models', 'models', 'selected_models']:
+                            if key in models_list and isinstance(models_list[key], list) and models_list[key]:
+                                logging.debug(f"Loaded nested models for {tool} from settings.json: {models_list[key]}")
+                                return models_list[key]
+                                
+            except Exception as e:
+                logging.warning(f"Failed to parse settings.json ({e}). Falling back to default configuration.")
+        else:
+            logging.warning("settings.json not found! Using default evaluation models.")
+
+        # 4. Final Fallback if the tool wasn't found or was invalid
+        return fallback_defaults.get(tool, ["2stems"])
 
     def _append_to_json_summary(self, df: pd.DataFrame, tool: str, model: str, device: str):
         """
@@ -419,50 +504,111 @@ class SeparationEvaluator:
         data.setdefault(tool, {}).setdefault(model, {})[device] = means
         with open(self.json_path, 'w') as f: json.dump(data, f, indent=4)
 
-    def generate_reports(self, data: Any, from_csv: bool = False):
+    def generate_reports(self, data: Any, from_csv: bool = False, clean_run: bool = False):
         """
         Transforms raw evaluation metrics into visual graphs and academic tables.
         
         Args:
             data (Any): In-memory list of dictionaries/dataframe of the metrics.
             from_csv (bool): If true, bypasses the in-memory list and reads directly from the CSV.
-            
-        Internal Actions:
-            - Generates a compiled summary table and formats it to a LaTeX string.
-            - Calls internal plotting methods to create Seaborn bar charts.
+            clean_run (bool): If true, deletes old tables, JSONs, and graphs before regenerating.
         """
+        if clean_run:
+            logging.info("Clean run detected. Removing old report files...")
+            # Delete flat files
+            for filename in ["latex_table.txt", "summary_results.json"]:
+                file_path = self.results_dir / filename
+                if file_path.exists():
+                    file_path.unlink()
+            
+            # Delete entire graphs directory and its contents
+            graph_dir = self.results_dir / "graphs"
+            if graph_dir.exists():
+                shutil.rmtree(graph_dir)
+
         df = pd.read_csv(self.csv_path) if from_csv else pd.DataFrame(data)
         if df.empty or 'tool' not in df.columns: 
             logging.warning("No data available to generate reports.")
             return
+
+        if self.args.debug:   
+            logging.debug(f"\n🚨 EXACT COLUMNS AVAILABLE IN CSV: {df.columns.tolist()}\n")
             
         summary = df.groupby(['tool', 'model', 'device_type']).mean(numeric_only=True)
-        # Fixed the FutureWarning: Now uses style.to_latex()
-        with open(self.results_dir / "latex_table.txt", "w") as f: f.write(summary.style.to_latex())
         
-        graph_dir = self.results_dir / "graphs"; graph_dir.mkdir(exist_ok=True)
-        self._plot_metric(df, 'rtf', "RTF (Lower is Better)", graph_dir / "RTF_Comparison.png", True)
-        self._plot_metric(df, 'SDR_vocals', "SDR Vocals (Higher is Better)", graph_dir / "SDR_Comparison.png", False)
+        # Write new LaTeX table
+        with open(self.results_dir / "latex_table.txt", "w") as f: 
+            f.write(summary.style.to_latex())
+        
+        # Write new JSON summary (assuming you want the grouped mean summary saved to JSON)
+        summary.to_json(self.results_dir / "summary_results.json", orient="index")
+        
+        graph_dir = self.results_dir / "graphs"
+        graph_dir.mkdir(exist_ok=True)
+        
+        # RTF depends on hardware, so we keep the hue (include_hue=True)
+        self._plot_metric(df, 'rtf', "RTF (Lower is Better)", graph_dir / "RTF_Comparison.png", horizontal_line=True, include_hue=True)
+        
+        # SDR depends only on the model, so we drop the hardware grouping (include_hue=False)
+        self._plot_metric(df, 'SDR_vocals', "SDR Vocals (Higher is Better)", graph_dir / "SDR_Vocal_Comparison.png", horizontal_line=False, include_hue=False)
+        
+        # Exactly matching the CSV column 'SDR_instr'
+        self._plot_metric(df, 'SDR_instr', "SDR Instrumentals (Higher is Better)", graph_dir / "SDR_Instr_Comparison.png", horizontal_line=False, include_hue=False)
+        
         logging.info(f"Reports successfully generated in {self.results_dir}")
 
-    def _plot_metric(self, df: pd.DataFrame, col: str, title: str, path: Path, horizontal_line: bool):
+    def _plot_metric(self, df: pd.DataFrame, col: str, title: str, path: Path, horizontal_line: bool, include_hue: bool = True):
         """
-        Constructs and saves a bar chart comparing models by device.
-        
-        Args:
-            df (pd.DataFrame): Dataframe containing metrics.
-            col (str): The exact column name to plot on the Y-Axis (e.g., 'rtf').
-            title (str): Formatted string for the graph title.
-            path (Path): Where to save the resulting PNG file.
-            horizontal_line (bool): Whether to draw a red dashed line at Y=1.0 
-                                    (useful for visualising Real-Time boundary).
+        Constructs and saves an academically polished bar chart comparing models.
         """
         plt.figure(figsize=(10, 6))
         sns.set_theme(style="whitegrid")
         df['Label'] = df['tool'] + "\n(" + df['model'] + ")"
-        sns.barplot(data=df, x='Label', y=col, hue='device_type', palette="muted")
-        if horizontal_line: plt.axhline(1.0, color='red', linestyle='--')
-        plt.title(title); plt.tight_layout(); plt.savefig(path, dpi=300); plt.close()
+        
+        if include_hue:
+            ax = sns.barplot(data=df, x='Label', y=col, hue='device_type', palette="muted", ci=None)
+            ax.legend(title="Device Type", frameon=True, fontsize=10)
+        else:
+            ax = sns.barplot(data=df, x='Label', y=col, palette="muted", ci=None)
+            
+        if horizontal_line: 
+            plt.axhline(1.0, color='red', linestyle='--')
+            
+        # 1. Academic Headroom: Expand Y-axis by 15% so top labels always have breathing room
+        max_val = df[col].max()
+        ax.set_ylim(0, max_val * 1.15)
+            
+        # Bypass strict Pylance type stubs by accessing containers dynamically
+        ax_containers = getattr(ax, 'containers', [])
+        for container in ax_containers:
+            # 2. Placement: Let Matplotlib anchor it automatically to the top edge!
+            ax.bar_label(
+                container, 
+                fmt='%.2f', 
+                padding=3,       # Sits 3 points above the bar's top edge
+                weight='bold',   # Bold font
+                fontsize=11,
+                # White text mask to ensure gridlines or red dashed lines don't strike through the text
+                bbox=dict(facecolor='white', edgecolor='none', pad=1.5, alpha=0.9)
+            ) # type: ignore
+
+        # Academic Typography Polish
+        plt.title(title, fontsize=14, pad=15, weight='bold')
+        plt.xlabel('Evaluated Models', fontsize=12, labelpad=10)
+        
+        # 3. Dynamic Y-axis labeling (Works for 'rtf', 'SDR_vocals', 'SDR_instrumental', etc.)
+        if col == 'rtf':
+            y_label = "Real-Time Factor (RTF)"
+        else:
+            # Replaces underscores with spaces, capitalizes words, and ensures SDR is uppercase
+            clean_col = col.replace('_', ' ').title().replace('Sdr', 'SDR')
+            y_label = f"{clean_col} (dB)"
+            
+        plt.ylabel(y_label, fontsize=12, labelpad=10)
+
+        plt.tight_layout()
+        plt.savefig(path, dpi=300)
+        plt.close()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Audio Separation Evaluation Pipeline for Thesis Benchmarking")
@@ -471,6 +617,7 @@ if __name__ == "__main__":
     parser.add_argument("--device", type=str, default="AUTO", help="Hardware to evaluate on: 'cpu', 'cuda', or 'auto' (loops both).")
     parser.add_argument("--num_tracks", type=int, default=None, help="Limit evaluation to the first N tracks (useful for fast testing).")
     parser.add_argument("--tool", type=str, default=None, help="Specific tool to test (e.g., 'Demucs', 'Spleeter'). If omitted, runs all.")
+    parser.add_argument("--run_separation", type=str, default=None, help="Instantly evaluate a specific tool and model, bypassing settings.json. Format: Tool-Model (e.g., Demucs-htdemucs_ft)")
     parser.add_argument("--flag_download", action="store_true", help="Download models to a temp dir to measure download times.")
     parser.add_argument("--only_reports", action="store_true", help="Skip processing and only generate graphs/LaTeX from the existing CSV.")
     parser.add_argument("--clean_run", action="store_true", help="Delete previous results and output WAVs before starting.")
@@ -478,5 +625,7 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     evaluator = SeparationEvaluator(args)
-    if args.only_reports: evaluator.generate_reports(None, from_csv=True)
-    else: evaluator.run_evaluation_pipeline()
+    if args.only_reports: 
+        evaluator.generate_reports(None, from_csv=True, clean_run=args.clean_run)
+    else: 
+        evaluator.run_evaluation_pipeline()

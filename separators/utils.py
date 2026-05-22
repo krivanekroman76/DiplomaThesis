@@ -452,5 +452,12 @@ class ProgressInterceptor(logging.Handler):
         if "loading" in lower_entry or "weights" in lower_entry:
             self.callback(15, f"[{self.device}] {self.tool_name}: Loading Models...")
         
-        elif "writing" in lower_entry or "written" in lower_entry:
+        # Spleeter Native/Subprocess Core Phase Hooks
+        elif "spleeter processing" in lower_entry or "processing" in lower_entry:
+            self.callback(45, f"[{self.device}] {self.tool_name}: Analyzing & Separating Audio...")
+            
+        elif "vocals" in lower_entry or "accompaniment" in lower_entry:
+            self.callback(75, f"[{self.device}] {self.tool_name}: Extracting Audio Stems...")
+
+        elif "writing" in lower_entry or "written" in lower_entry or "saving" in lower_entry:
             self.callback(90, f"[{self.device}] {self.tool_name}: Saving Output...")

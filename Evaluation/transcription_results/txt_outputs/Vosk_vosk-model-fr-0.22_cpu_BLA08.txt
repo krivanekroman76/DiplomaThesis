@@ -1,0 +1,13 @@
+Transcription (Model: vosk-model-fr-0.22):
+j'ai l'impression d'avoir échoué ne venez pas me dire que j'ai doué j'ai l'impression d'avoir échoué ne venez pas me dire que je suis tout c'est comment explique moi qu'est-ce que j'ai raté ne me dis pas que la vie m'a appris qu'à inventer c'est comment explique-moi qu'est-ce que j'ai raté ne me dis pas que la vie m'a appris karaté j'écris des pages mais on a aucune de tourner persuadé que tout ça n'est pas vraiment fait pour moi je me laisse guider s'il est écrit que je dois prendre un mur je pourrais pas l'esquiver l'esc merci pour le soutien mais quand ça n'allait pas t'étais pas là ri je me souviens soupire je t'en veux même pas je m'en fous que tu m'aimes ou que tu m'aimes pas moi je me préférais avant quand moi et mon petit d'ego on veut voulez juste avancer à penser aujourd'hui on a grandi il m'arrive de me regarder et de me dire où tu prends pour qui penser penser j'ai l'impression d'avoir échoué ne venez pas me dire que je suis douée douée j'ai l'impression d'avoir échoué ne venez pas me dire que c'est doux d'où et comment explique moi qu'est-ce que j'ai raté ne me dis pas que la vie m'a a pris car peu c'est comment explique-moi qu'est-ce que j'ai raté ne me dis pas que la vie m'a appris karaté
+
+Timestamps:
+0.00s - 1.98s: j'ai l'impression d'avoir échoué
+2.94s - 4.92s: ne venez pas me dire que j'ai doué
+5.82s - 7.77s: j'ai l'impression d'avoir échoué
+8.67s - 28.38s: ne venez pas me dire que je suis tout c'est comment explique moi qu'est-ce que j'ai raté ne me dis pas que la vie m'a appris qu'à inventer c'est comment explique-moi qu'est-ce que j'ai raté ne me dis pas que la vie m'a appris karaté j'écris des pages mais on a aucune de tourner persuadé que tout ça n'est
+28.56s - 48.72s: pas vraiment fait pour moi je me laisse guider s'il est écrit que je dois prendre un mur je pourrais pas l'esquiver l'esc merci pour le soutien mais quand ça n'allait pas t'étais pas là ri je me souviens soupire je t'en veux même pas je m'en fous que tu m'aimes ou que tu m'aimes pas moi je me préférais avant quand moi et mon petit d'ego on veut
+48.72s - 50.79s: voulez juste avancer à penser
+51.51s - 59.52s: aujourd'hui on a grandi il m'arrive de me regarder et de me dire où tu prends pour qui penser penser j'ai l'impression d'avoir échoué
+60.45s - 65.28s: ne venez pas me dire que je suis douée douée j'ai l'impression d'avoir échoué
+66.00s - 81.03s: ne venez pas me dire que c'est doux d'où et comment explique moi qu'est-ce que j'ai raté ne me dis pas que la vie m'a a pris car peu c'est comment explique-moi qu'est-ce que j'ai raté ne me dis pas que la vie m'a appris karaté

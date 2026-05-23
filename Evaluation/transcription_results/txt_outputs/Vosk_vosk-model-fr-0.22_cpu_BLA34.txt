@@ -1,0 +1,62 @@
+Transcription (Model: vosk-model-fr-0.22):
+alors allons laissez blague recevez une estimation la planète terre en vue localisation paris a marseille recevez ma main la boîte est pleine la loi même nom d'ukraine non moi je n'ai pas d'autant que je suivrai je ne ferai pas semblant je me fous de mon temps mais vrai j'attends depuis longtemps toul allons ah table ta ta ta ta c'est ta ta ta table tatatatatata à qui vous allez bouder vous allez bouder il y a pas de l a il y a de l éduqué dans le carré bus dans le carré des photos tu n'auras que si j'étais un pays je t invite à lire au logement tu es venu en était devenu un as du matelas bientôt le directeur est apolitique on est en haïti regardez les hémérocalles ne vous en faites pas on va tous finir dans un monde où je n'ai pas d'autant que je suis brun je ne fais pas semblant je me fous de mon temps mais vraiment atomes depuis longtemps tout le monde allons ah peut-être ta ta ta ta ta ta ta ta cet adaptateur ta ta ta ta ta à seulement six dumas tu te lèves assise dumas dit-on au serveur qui remet des bouteilles au patron du club qu'on ferme la boîte venezuela tu es venu faire du statut qui est venu douce calme toi tu vas goûter le sang tu connais la dernière qu'on aurait tu connais la dernière qu'on veut enfin une roue dentée paramètres sur le thème pour décorer venu s'appelle rue j'ai relu ça paie de toute façon on n'oublie rien on a tous les dossiers on a douze mois mais je n'ai pas pour autant je suis brun je ne ferai pas semblant je me fous de monde dos mais vrais gens atomes depuis longtemps tout le monde allons ta ta ta ta table ta ta ta ta ta la trottinette à ta table ta ta ta ta ah mission accomplie mission accomplie ils sont vraiment prêts alger honte moi quoi non
+
+Timestamps:
+0.00s - 0.42s: alors
+1.71s - 2.07s: allons
+3.24s - 5.46s: laissez blague recevez
+6.69s - 8.52s: une estimation la planète terre en vue
+9.66s - 11.04s: localisation paris
+11.76s - 14.58s: a marseille
+17.10s - 19.59s: recevez ma main la boîte est pleine
+20.25s - 21.00s: la loi
+21.66s - 23.13s: même nom d'ukraine
+23.82s - 24.00s: non
+25.41s - 31.23s: moi je n'ai pas d'autant que je suivrai je ne ferai pas semblant
+31.98s - 38.67s: je me fous de mon temps mais vrai j'attends depuis longtemps
+40.17s - 40.53s: toul
+44.13s - 44.46s: allons
+53.43s - 54.21s: ah
+55.71s - 56.13s: table
+57.15s - 57.81s: ta ta ta ta
+58.80s - 59.85s: c'est ta ta ta table
+60.69s - 61.53s: tatatatatata
+67.83s - 70.50s: à qui vous allez bouder
+71.28s - 72.39s: vous allez bouder
+73.22s - 77.82s: il y a pas de l a il y a de l éduqué dans le carré bus
+78.69s - 82.98s: dans le carré des photos tu n'auras que si j'étais un pays je t invite à lire au logement
+83.76s - 90.54s: tu es venu en était devenu un as du matelas bientôt le directeur est apolitique on est en haïti
+91.65s - 92.40s: regardez
+93.15s - 103.44s: les hémérocalles ne vous en faites pas on va tous finir dans un monde où je n'ai pas d'autant que je suis brun je ne fais pas semblant
+104.19s - 110.82s: je me fous de mon temps mais vraiment atomes depuis longtemps
+112.56s - 113.13s: tout le monde
+117.42s - 117.72s: allons
+126.69s - 126.99s: ah
+128.27s - 129.24s: peut-être ta ta ta ta
+130.41s - 131.07s: ta ta ta ta
+132.09s - 132.93s: cet adaptateur
+133.95s - 134.76s: ta ta ta ta ta
+141.48s - 149.64s: à seulement six dumas tu te lèves assise dumas dit-on au serveur qui remet des bouteilles au patron du club qu'on ferme la boîte
+150.48s - 151.14s: venezuela
+152.01s - 160.65s: tu es venu faire du statut qui est venu douce calme toi tu vas goûter le sang tu connais la dernière qu'on aurait tu connais la dernière qu'on veut
+160.80s - 164.37s: enfin une roue dentée paramètres sur le thème pour décorer
+165.00s - 173.34s: venu s'appelle rue j'ai relu ça paie de toute façon on n'oublie rien on a tous les dossiers on a douze mois mais je n'ai pas pour autant
+174.06s - 176.94s: je suis brun je ne ferai pas semblant
+177.72s - 179.76s: je me fous de monde
+180.03s - 180.54s: dos
+181.50s - 184.35s: mais vrais gens atomes depuis longtemps
+186.09s - 186.66s: tout le monde
+190.92s - 191.22s: allons
+201.90s - 202.86s: ta ta ta ta table
+203.82s - 204.57s: ta ta ta ta ta
+205.35s - 206.46s: la trottinette à ta table
+207.48s - 208.29s: ta ta ta ta
+215.01s - 215.73s: ah
+218.04s - 219.06s: mission accomplie
+219.63s - 220.62s: mission accomplie
+221.34s - 222.33s: ils sont vraiment prêts
+223.59s - 224.01s: alger
+231.66s - 231.84s: honte
+237.54s - 237.81s: moi
+244.05s - 244.35s: quoi
+246.96s - 247.11s: non

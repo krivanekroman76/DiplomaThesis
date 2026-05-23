@@ -1,0 +1,44 @@
+Transcription (Model: vosk-model-fr-0.22):
+oh oh les yeux plus gros que le monde docteur berry big black design rétro où es-tu vendait du rêve pour le père ça ne se faisait pas besoin de cogiter d'interdire des impulsions posez l'un des mélodies et on oublie la crise l'interdisez un ciseau à terre besoin de cogiter d'agir c'est inutile l'un l'un globalise comment vas-tu début a-til comment leur dire que c'est moi le king c'est moi qui vous dit que j'habite crève maudit sujet big blanquer mais là c'est hyper et on dit que les éleveurs mais le débrouillard ici chez le gens ordinaires de la guinée tout comme j'ai besoin d'un rappeurs je me fous de vos idoles galerie ça n'est pas eux qui me donnent le maroc je suis pas dans les délires thomas d'ansembourg les roseraie il faut que tout le monde chante bon refrain on disait où es-tu pour le père faisait peur ou pas besoin de cogiter des impulsions il posé là des mélodies ont oublié la crise interdisez un réseau interne pas besoin de cogiter l'un je voulais juste vous rendre mes lovés sans pour autant vouloir être mauvais voulez pas d'avoir innové on me donne la nausée j'étais souvent posée je voulais que personne vienne me causer je voulais juste jouer même sauver fort que l'intérim fructueux et chômé vous convient je finirai paumé pour m'épauler j'étais souvent dur et en colère oui je n'aimais pas le système scolaire j'avais du mal avec les horaires et mes ennemis je disais je les l'ignorais je ne suis pas là pour décorer neuronaux faut pas dire qu'on les aime où es-tu pour le père faisait ou pas besoin d'interdire d'idées ils ont posé là des mélodies et ont oublié la crise l'interdisez un ciseau à terme pas besoin de cogiter d'un djihadiste l'ananas lundi les plus grands tout le monde sait que je vais voir ce qu'ont vu tout le monde sait que commode j'ai commencé pour m'en sortir j'ai dû transmettre ma peinture multi manga si je lève les yeux plus gros que mon sac j'ai dû voir ce buts nous les grands de ce monde n'est-ce pas google m'amuser commenter pour m'en sortir j'ai dû transmettre notre peine sur mes pieds regardez qui est la votre ou vos pour le père faisait peur pas besoin de cogiter a-t-il des impulsions t il posait là des mélodies ont oublié la crise l'interdisez un ciseau à terre pas besoin de loger des gens l'un des risques darla
+
+Timestamps:
+0.39s - 5.07s: oh oh les yeux plus gros que le monde docteur berry big black
+5.76s - 9.45s: design rétro où es-tu vendait du rêve
+11.04s - 17.19s: pour le père ça ne se faisait pas besoin de cogiter d'interdire des impulsions
+17.76s - 22.02s: posez l'un des mélodies et on oublie la crise
+22.89s - 24.96s: l'interdisez un ciseau à terre
+25.74s - 26.97s: besoin de cogiter d'agir
+27.12s - 27.57s: c'est inutile
+29.79s - 34.32s: l'un
+35.91s - 39.18s: l'un
+40.77s - 47.46s: globalise comment vas-tu début a-til comment leur dire que c'est moi le king c'est moi qui vous dit que j'habite crève maudit sujet
+48.00s - 54.54s: big blanquer mais là c'est hyper et on dit que les éleveurs mais le débrouillard ici chez le gens ordinaires de la guinée tout comme j'ai besoin d'un rappeurs
+55.20s - 59.16s: je me fous de vos idoles galerie ça n'est pas eux qui me donnent le maroc je suis pas dans les délires
+60.42s - 64.65s: thomas d'ansembourg les roseraie il faut que tout le monde chante bon refrain on disait
+66.18s - 66.89s: où es-tu
+69.51s - 71.70s: pour le père faisait peur
+72.00s - 73.41s: ou pas besoin de cogiter
+74.16s - 80.64s: des impulsions il posé là des mélodies ont oublié la crise
+81.60s - 83.61s: interdisez un réseau interne
+84.24s - 85.23s: pas besoin de cogiter
+88.41s - 92.94s: l'un
+99.48s - 103.89s: je voulais juste vous rendre mes lovés sans pour autant vouloir être mauvais voulez pas d'avoir innové
+104.40s - 112.80s: on me donne la nausée j'étais souvent posée je voulais que personne vienne me causer je voulais juste jouer même sauver fort que l'intérim fructueux et chômé vous convient je finirai paumé
+113.52s - 123.42s: pour m'épauler j'étais souvent dur et en colère oui je n'aimais pas le système scolaire j'avais du mal avec les horaires et mes ennemis je disais je les l'ignorais je ne suis pas là pour décorer neuronaux faut pas dire qu'on les aime
+124.98s - 125.70s: où es-tu
+128.34s - 133.11s: pour le père faisait ou pas besoin d'interdire d'idées
+134.31s - 139.32s: ils ont posé là des mélodies et ont oublié la crise
+140.22s - 142.29s: l'interdisez un ciseau à terme
+142.83s - 144.84s: pas besoin de cogiter d'un djihadiste
+147.09s - 147.96s: l'ananas
+148.56s - 150.69s: lundi
+158.82s - 175.86s: les plus grands tout le monde sait que je vais voir ce qu'ont vu tout le monde sait que commode j'ai commencé pour m'en sortir j'ai dû transmettre ma peinture multi manga si je lève les yeux plus gros que mon sac j'ai dû voir ce buts nous les grands de ce monde n'est-ce pas
+176.40s - 180.93s: google m'amuser commenter pour m'en sortir j'ai dû transmettre notre peine sur mes pieds
+181.44s - 184.44s: regardez qui est la votre ou vos
+186.87s - 189.03s: pour le père faisait peur
+189.54s - 190.56s: pas besoin de cogiter
+190.86s - 197.85s: a-t-il des impulsions t il posait là des mélodies ont oublié la crise
+198.75s - 200.82s: l'interdisez un ciseau à terre
+201.39s - 202.80s: pas besoin de loger des gens
+205.62s - 210.81s: l'un des risques
+212.49s - 213.18s: darla

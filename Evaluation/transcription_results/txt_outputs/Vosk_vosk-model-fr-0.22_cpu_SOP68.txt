@@ -1,0 +1,36 @@
+Transcription (Model: vosk-model-fr-0.22):
+mais les exemples ça va t'inquiète pas tout ce qu'il faut sur la table ça va bien gros regarde-moi virgil abloh fait la simple ça va bien ça fait depuis le bac à sable ça va bien c'est plus d'un passeport c'est google map onze mai ça partager l'hippodrome sous le capot alors bien tu sais ça c'est vrai mais nous des glaçons bon c'est vrai que dès la rentrée d'un quarante vingt good bye bye details for la simple gangsta l'aptitude à aider la femme la gagne la danse ça l'a dérangé moto ça va bien folle n'en fais pas tout un drame ça va bien t'inquiète pas on est dix mille comme mon crâne va regarde-moi saute partout comme jackie chan ça va bien inquiète quant aux boules dans une petite zone atom à est plein si tu veux pas qu'on la gargouille on est peur baisse la voix ou t'es plus dans ta chambre gangsta gangsta gangsta la conquête j'implore le sapin gangsta store tu dégages delta la gauche gagne la cause exacte débranchez bon tout c'est avant qu'on les rencontre mais la route est longue dakar comment valhalla et gaston c'est mon côté game store quelques instants ça va pas ça va bien pas avant ça va bien pas beaucoup
+
+Timestamps:
+0.00s - 1.41s: mais les exemples
+1.98s - 2.37s: ça va
+3.21s - 7.17s: t'inquiète pas tout ce qu'il faut sur la table ça va bien gros
+7.20s - 10.41s: regarde-moi virgil abloh fait la simple ça va bien
+11.16s - 17.40s: ça fait depuis le bac à sable ça va bien c'est plus d'un passeport c'est google map onze mai
+18.43s - 24.48s: ça partager l'hippodrome sous le capot alors bien tu sais ça c'est vrai mais nous des glaçons
+25.68s - 30.51s: bon c'est vrai que dès la rentrée
+33.18s - 34.35s: d'un quarante vingt
+35.04s - 36.35s: good bye bye
+39.18s - 42.90s: details for la simple gangsta l'aptitude à aider
+43.47s - 46.11s: la femme la gagne
+46.59s - 49.05s: la danse ça l'a dérangé
+51.30s - 53.64s: moto ça va bien folle
+54.15s - 59.85s: n'en fais pas tout un drame ça va bien t'inquiète pas on est dix mille comme mon crâne va
+60.72s - 64.11s: regarde-moi saute partout comme jackie chan ça va bien
+64.56s - 67.92s: inquiète quant aux boules dans une petite zone atom à est plein
+68.85s - 71.67s: si tu veux pas qu'on la gargouille on est peur
+71.94s - 74.55s: baisse la voix ou t'es plus dans ta chambre
+75.30s - 78.15s: gangsta gangsta gangsta
+80.58s - 83.49s: la conquête j'implore le sapin gangsta store
+84.00s - 84.81s: tu dégages
+86.28s - 89.73s: delta la gauche gagne la cause exacte
+90.30s - 90.87s: débranchez
+93.03s - 93.81s: bon tout
+93.84s - 98.10s: c'est avant qu'on les rencontre mais la route est longue
+99.99s - 100.68s: dakar
+102.81s - 103.37s: comment
+104.67s - 106.77s: valhalla et gaston
+107.52s - 114.06s: c'est mon côté game store quelques instants ça va pas ça va bien
+114.78s - 115.98s: pas avant
+118.02s - 118.98s: ça va bien
+119.67s - 120.75s: pas beaucoup

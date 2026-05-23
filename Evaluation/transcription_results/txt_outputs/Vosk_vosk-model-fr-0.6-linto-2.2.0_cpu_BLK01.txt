@@ -1,0 +1,38 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+et puis on avait eu rare gain pas eu vent tu sais je dirais prônée par le sang le dos de personnes moi personne ne connaissait faut me laisser vos données de l'essai mais sache que personne ne t'aime mon me laisser faut me laisser tu m'as délaisser mais sache que personne ne mourra comme moi tu iras guerre on y va tu sais j'avais des problèmes plus qu'en foutaient des problèmes d'audition map une roche est-elle le phuket pour toujours tout je me serais étouffée façon de parler mais tous les hommes sont pas pareils renvoie la pareille ou alors on arrête je mettais juré que tu serais là hum oui tu ressemble au maroc c'est pour ça je suis piqué et dis-moi de quoi tara on est juste en train de s'expliquer gain va tu sais fin oui c'est moi aînés les gais bon allez faut me laisser tu vas adorer ce truc mais puisque personne ne mourra pas moi ayé un tu es fin vous me laissez aller faut me laisser aller délaissé depuis quand d'honneur mais sache que personne ne l'aimera comme moi oui c'est oui c'est oui mais le week-end ou gays ils ont les gays mais sache que personne ne s'étonnera que moi
+
+Timestamps:
+0.00s - 0.46s: et puis
+1.83s - 3.93s: on avait eu rare
+6.72s - 7.26s: gain
+10.49s - 11.97s: pas eu vent
+13.47s - 18.06s: tu sais je dirais prônée par le sang
+19.01s - 21.57s: le dos de personnes
+22.74s - 26.49s: moi personne ne connaissait
+27.87s - 31.23s: faut me laisser vos données de l'essai
+32.94s - 36.30s: mais sache que personne ne t'aime mon me laisser
+37.89s - 38.73s: faut me laisser
+40.20s - 41.22s: tu m'as délaisser
+42.84s - 45.63s: mais sache que personne ne mourra comme moi
+49.71s - 50.49s: tu iras
+54.12s - 54.45s: guerre
+56.88s - 60.57s: on y va
+62.01s - 82.08s: tu sais j'avais des problèmes plus qu'en foutaient des problèmes d'audition map une roche est-elle le phuket pour toujours tout je me serais étouffée façon de parler mais tous les hommes sont pas pareils renvoie la pareille ou alors on arrête je mettais juré que tu serais là hum oui tu ressemble au maroc c'est pour ça je suis piqué et dis-moi de quoi
+82.11s - 83.82s: tara on est juste en train de s'expliquer
+92.43s - 92.79s: gain
+98.50s - 98.91s: va
+99.61s - 102.74s: tu sais
+106.92s - 107.43s: fin
+112.80s - 114.21s: oui c'est moi
+115.53s - 119.89s: aînés les gais
+123.86s - 125.88s: bon allez faut me laisser
+127.32s - 128.82s: tu vas adorer ce truc
+129.96s - 132.72s: mais puisque personne ne mourra pas moi
+135.72s - 136.62s: ayé
+138.63s - 139.38s: un
+141.42s - 145.02s: tu es fin
+153.51s - 155.52s: vous me laissez aller
+156.06s - 158.13s: faut me laisser aller
+158.70s - 164.40s: délaissé depuis quand d'honneur mais sache que personne ne l'aimera comme moi oui c'est
+165.11s - 167.70s: oui c'est oui mais le week-end
+168.57s - 173.76s: ou gays ils ont les gays mais sache que personne ne s'étonnera que moi

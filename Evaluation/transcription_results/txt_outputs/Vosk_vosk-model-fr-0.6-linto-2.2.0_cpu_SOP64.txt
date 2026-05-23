@@ -1,0 +1,31 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+maman m'a dit la vie n'est pas facile mais plus facile avec un grand sourire donc je souris quand je l'ai mal à la vie car ma maman dit qu'il y a toujours plus brodé allemagne dis donc ça attendra merci davis même est infini quand toujours la main aux plus démunis avant d'être importance on a énormément utile de maladies aussi ici fragile si vous savez comment tu lis comme ça elle a des douleurs indélébiles au paradis mais la lire mais bon ben moi du lait la la la la la la la la la la la la la la la la la la danse dans la vie la la la la la la la la la la la la la la la la la la danse danse la la la la la a la vue la maman m'a dit de ne jamais oublier d'où je venais mais surtout qui j'étais on avait peur mais on savait donner elle m'a toujours dit jeannot l'accueil a une chose que tu n'as pas et beaucoup sont morts pour la liberté nos alli pas tous on a su mais surtout ne te fais pas marcher sur les pieds il est en humanité c'est comme ça là des le mandat ta moitié e et les élites en chaleur les ennemis c'est comme ça elle a vraiment bon cœur al al al al al al al al al al al al al al al al al al al dente dans la vie la là là là la la la la la et là là la la la la la danse danse amoureux mon meilleur conseil que maman meilleur conseil que la nuit le meilleur conseil que nuit vraiment le meilleur vraiment donner un conseil je dis moment donné la vue
+
+Timestamps:
+0.36s - 8.16s: maman m'a dit la vie n'est pas facile mais plus facile avec un grand sourire donc je souris quand je l'ai mal à la vie car ma maman dit qu'il y a toujours plus brodé allemagne
+8.16s - 10.32s: dis donc ça attendra merci davis même
+10.61s - 16.53s: est infini quand toujours la main aux plus démunis avant d'être importance on a énormément utile de maladies aussi ici
+17.18s - 23.32s: fragile si vous savez comment tu lis comme ça elle a des douleurs indélébiles
+24.00s - 25.14s: au paradis
+26.49s - 27.36s: mais la lire
+28.62s - 31.26s: mais bon ben moi du lait
+31.65s - 37.59s: la la la la la la la la la la la la la la la la la la danse dans la vie
+38.44s - 41.59s: la la la la la la la la la la la la la
+42.42s - 43.52s: la la la la la
+43.69s - 44.31s: danse danse
+46.16s - 49.35s: la la la la la
+51.78s - 52.29s: a la vue
+55.65s - 72.00s: la maman m'a dit de ne jamais oublier d'où je venais mais surtout qui j'étais on avait peur mais on savait donner elle m'a toujours dit jeannot l'accueil a une chose que tu n'as pas et beaucoup sont morts pour la liberté nos alli pas tous on a su
+72.12s - 74.07s: mais surtout ne te fais pas marcher sur les pieds
+75.71s - 83.97s: il est en humanité c'est comme ça là des le mandat ta moitié e et les élites
+84.81s - 85.62s: en chaleur
+85.77s - 89.07s: les ennemis c'est comme ça elle a vraiment bon cœur
+89.76s - 96.51s: al al al al al al al al al al al al al al al al al al al dente dans la vie
+97.41s - 99.96s: la là là là la la la la la et là
+101.28s - 103.23s: là la la la la la danse danse
+111.39s - 111.84s: amoureux
+114.94s - 117.15s: mon meilleur conseil que maman
+117.38s - 120.27s: meilleur conseil que la nuit le meilleur conseil que nuit
+121.95s - 122.79s: vraiment le meilleur
+123.84s - 126.39s: vraiment donner un conseil je dis moment donné
+147.25s - 147.57s: la vue

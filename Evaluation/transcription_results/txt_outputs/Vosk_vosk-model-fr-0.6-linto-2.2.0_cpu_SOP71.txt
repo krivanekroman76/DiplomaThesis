@@ -1,0 +1,29 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+sans toi et moi c'est pas là mais la vie n'aurait aucune à bout ça les anges dorés aucune auraient eux et moi je ne saurais quel est mon nous est pas peur et non ils n'ont jamais quitté ça non ils ne connaissent pas laisse-moi poser ma tête sur ton les cloches de raconte l'histoire de nous ça ça jusqu'à ce que la vidange torcy prendre le même sens je te montre la puissance de nous monteur on a affolé les compteurs fais moi confiance mon vite mais surtout n'aie pas peur non monsieur chapuis qui ne parle que que téhéran plus grand roman que mon plus bon moment aucun doute sur nos plus grands les jeunes ben fait pas peur mes voeux sans toi et moi on pas mais ils peuvent cracher leur venin qui veulent un pour cent de scander tiens un pour cent de nos liens nous justifie pas la peine ils vite un truc hors du commun oublions qu'il existe une fin on décolle pour un que je te montre le trésor de notre fusion oui trésor que même les plus grands archéologues ne pourront jamais trouvé j'étais paumé et si on évitait va aller je t'emmène là où les astronautes n'ont jamais mis les pieds c'est qui ne parles que de toi clément plus roman que tellement plus plus grand est paralysé but les autres en haut faut vivant pour nous de nous de nous deux que nous deux deux si tu
+
+Timestamps:
+0.00s - 14.23s: sans toi et moi c'est pas là mais la vie n'aurait aucune à bout ça les anges dorés aucune auraient eux et moi je ne saurais quel est mon nous est pas peur et non ils n'ont jamais quitté ça non ils ne connaissent pas
+15.87s - 22.20s: laisse-moi poser ma tête sur ton les cloches de raconte l'histoire de nous ça ça
+23.51s - 26.19s: jusqu'à ce que la vidange torcy prendre le même sens
+26.88s - 29.19s: je te montre la puissance de nous
+29.76s - 30.57s: monteur
+31.41s - 34.98s: on a affolé les compteurs fais moi confiance mon vite mais surtout n'aie pas peur
+35.52s - 38.38s: non monsieur chapuis qui ne parle que
+39.96s - 44.28s: que téhéran plus grand roman que mon plus bon moment
+45.39s - 47.61s: aucun doute sur nos plus grands
+52.35s - 53.22s: les jeunes
+53.73s - 54.15s: ben
+60.99s - 62.73s: fait pas peur mes voeux
+63.12s - 69.33s: sans toi et moi on pas mais ils peuvent cracher leur venin qui veulent un pour cent de scander tiens
+69.99s - 73.77s: un pour cent de nos liens nous justifie pas la peine
+74.86s - 80.43s: ils vite un truc hors du commun oublions qu'il existe une fin on décolle pour un
+81.81s - 90.90s: que je te montre le trésor de notre fusion oui trésor que même les plus grands archéologues ne pourront jamais trouvé j'étais paumé
+91.86s - 98.31s: et si on évitait va aller je t'emmène là où les astronautes n'ont jamais mis les pieds
+100.96s - 103.56s: c'est qui ne parles que de toi
+105.03s - 108.05s: clément plus roman que tellement plus
+111.84s - 113.13s: plus grand est paralysé
+115.38s - 115.71s: but
+125.25s - 126.87s: les autres en haut
+127.50s - 132.51s: faut vivant pour nous de nous de nous deux que nous deux
+133.41s - 133.86s: deux
+138.48s - 139.14s: si tu

@@ -1,0 +1,33 @@
+Transcription (Model: vosk-model-fr-0.22):
+qu'ont fait les histoires d'amitié ça fait mal j'ai vu des frères y laisser leur vie au final où et quand le diable s'en mêle et rester le seul à pouvoir aller au sommet j'ai voulu soulager mon ego je me répète vous faire de mal à mon terreau où on avait les quatre cents go tout ce qui se passe autour de moi mais vrai à cent pour ensemble mon cœur se resserre à l'idée qu'on est devenu l'ami des hommes aujourd'hui j'ai bu la même mon ami je suis devenu un verre de vin mais go pas devant les fleurs ou jouets juste vrai faire du mal à mon frère commander le moi et j'en fais je veux pas dire on va faire du mal à montrer préau c'est fou comme les années sont passées qu'on me dit que ta fille va bientôt rentrer au lycée on doit être belle connaître notre histoire nos liens fraternels je sais que mes rêves m'ont témoigné mais pour toucher les étoiles concernant un bonnet ça me fait de la peine tu penses que j'ai changé pour de l'eau un vrai frère ne doute pas du cœur des frères surtout quand il se bat pour s'en sortir avec tout ce qu'on a traversé j'espère que la vie après la nouvelle monnaie go pas devant les fleurs ou je voulais juste un verre on va faire du mal à mon frère un monde où tout le mois et j'en suis heureuse dit raser va faire du mal à montrer c'est vrai on en fait où si je te parle moi si je te touche ce n'était pas mon intention mon frère pardonne-moi s'il te plaît j'ai même commandé j'aurais du mal à mon frère et moi et j'en fais trop je veux pas dire va faire du mal à montrer c'est un éternel insatisfait l'everest deux mille dix sept deux mille dix huit deux mille dix neuf juste à temps pour vous oh les couilles
+
+Timestamps:
+0.00s - 19.68s: qu'ont fait les histoires d'amitié ça fait mal j'ai vu des frères y laisser leur vie au final où et quand le diable s'en mêle et rester le seul à pouvoir aller au sommet j'ai voulu soulager mon ego je me répète vous faire de mal à mon terreau où on avait les quatre cents go tout ce qui se passe autour de moi mais vrai à cent pour ensemble
+20.43s - 27.99s: mon cœur se resserre à l'idée qu'on est devenu l'ami des hommes aujourd'hui j'ai bu la même mon ami je suis devenu un verre de vin mais go
+28.86s - 32.29s: pas devant les fleurs ou jouets juste vrai
+32.88s - 35.48s: faire du mal à mon frère commander
+36.63s - 37.94s: le moi et j'en fais
+39.12s - 39.79s: je veux pas dire
+41.16s - 42.69s: on va faire du mal à montrer
+43.32s - 44.10s: préau
+45.42s - 49.35s: c'est fou comme les années sont passées qu'on me dit que ta fille va bientôt rentrer au lycée
+50.37s - 58.59s: on doit être belle connaître notre histoire nos liens fraternels je sais que mes rêves m'ont témoigné mais pour toucher les étoiles concernant un bonnet
+59.49s - 62.76s: ça me fait de la peine tu penses que j'ai changé pour de l'eau
+64.35s - 73.65s: un vrai frère ne doute pas du cœur des frères surtout quand il se bat pour s'en sortir avec tout ce qu'on a traversé j'espère que la vie après la nouvelle monnaie go
+74.52s - 78.24s: pas devant les fleurs ou je voulais juste un verre
+79.08s - 80.82s: on va faire du mal à mon frère
+81.90s - 86.64s: un monde où tout le mois et j'en suis heureuse
+87.00s - 87.84s: dit raser
+88.73s - 90.18s: va faire du mal à montrer
+90.72s - 93.09s: c'est vrai on en fait
+93.36s - 93.60s: où
+96.81s - 99.75s: si je te parle moi si je te touche
+100.38s - 103.44s: ce n'était pas mon intention mon frère
+104.28s - 105.63s: pardonne-moi s'il te plaît
+107.73s - 109.26s: j'ai même commandé
+114.21s - 117.81s: j'aurais du mal à mon frère et moi et j'en fais trop
+118.65s - 119.45s: je veux pas dire
+120.75s - 122.25s: va faire du mal à montrer
+124.02s - 130.08s: c'est un éternel insatisfait l'everest
+131.19s - 134.97s: deux mille dix sept deux mille dix huit deux mille dix neuf juste à temps pour vous
+135.60s - 137.73s: oh les couilles

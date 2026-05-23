@@ -1,0 +1,34 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+je l'avais bon moi je la veux me marier je suis tombée le we je vais sauter les barrières il est comme ça ici on va y passer william et légumes ça peu importe la armani eux mais je ne le sommes pas y a trop de semblable et ça me rend parano faut que je fasse mon choix que je ne me trompe pas que je fasse les choses par amour pour changer ça mais bon lui je la vois elle me bon pas bon jusqu'à ma volonté une veillée lui est monté pascal je le sais point je ne suis pas son genre parce que je pas le physique et j'attends vraiment au jour mais pour l'instant je me daisy et essayer au secours j'arrive comme un missile oui quand on aime on en devient agressif je ne comprends pas la plupart des hommes veulent juste me passer une nuit je ne suis pas comme ça moi si elle me suit je lui promet le paradis pour changer ça mais comment lui je la vois elle me voit pas si bon jusqu a voté une ville monde et pascal toutefois je le suis toutefois beautiful je l'ai surnommé biotechnologies parce qu'elle est bio qu'il faut je les ai nommé biotope elle me fait tourner en rond abandonne abandonne pas elle le sait que pour elle je suis prêt tout donne à tout donne je je les ai vus
+
+Timestamps:
+0.00s - 6.12s: je l'avais bon moi je la veux me marier je suis tombée le we je vais sauter les barrières
+6.72s - 8.55s: il est comme ça ici on va y passer
+9.57s - 25.20s: william et légumes ça peu importe la armani eux mais je ne le sommes pas y a trop de semblable et ça me rend parano faut que je fasse mon choix que je ne me trompe pas que je fasse les choses par amour pour changer ça mais bon lui je la vois elle me
+25.35s - 26.35s: bon pas bon
+28.44s - 29.76s: jusqu'à ma volonté
+29.85s - 31.79s: une veillée lui est monté
+33.81s - 34.23s: pascal
+41.64s - 42.12s: je le sais
+42.84s - 43.11s: point
+50.67s - 58.11s: je ne suis pas son genre parce que je pas le physique et j'attends vraiment au jour mais pour l'instant je me daisy et essayer
+58.41s - 59.01s: au secours
+59.79s - 64.65s: j'arrive comme un missile oui quand on aime on en devient agressif
+65.28s - 72.63s: je ne comprends pas la plupart des hommes veulent juste me passer une nuit je ne suis pas comme ça moi si elle me suit je lui promet le paradis
+73.26s - 79.03s: pour changer ça mais comment lui je la vois elle me voit pas si bon
+81.15s - 83.55s: jusqu a voté une ville monde
+83.76s - 85.35s: et
+86.70s - 87.12s: pascal
+91.44s - 95.16s: toutefois je le suis
+95.76s - 96.15s: toutefois
+103.89s - 104.58s: beautiful
+107.25s - 108.72s: je l'ai surnommé biotechnologies
+111.54s - 112.74s: parce qu'elle est bio qu'il faut
+115.41s - 116.61s: je les ai nommé biotope
+120.39s - 122.61s: elle me fait tourner en rond
+123.53s - 124.08s: abandonne
+124.80s - 128.22s: abandonne pas elle le sait
+128.52s - 129.72s: que pour elle je suis prêt
+129.96s - 132.18s: tout donne à tout donne
+150.30s - 150.48s: je
+158.67s - 159.66s: je les ai vus

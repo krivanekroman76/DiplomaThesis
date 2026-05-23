@@ -1,0 +1,48 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+je suis sur la route des praz mais bon il y a rien de charmant la as me fait mal à la tête y a pas de médicaments je travaille pour manger tard le soir je fais mal mais également mon fils n'oublie jamais les bras maman on fait avec avec eux si tu savais tout ça bah ouais c'est la roue plus des sens plus rien j'ai tout donné pour que maman puisse manger un peu importe ce qu'il pense hier soir journée je voulais pas me rep j'aimerais rouler vite art où mais il y a des trous sur le goudron pas non plus même en dessous un retour de père et plus dix ans oui je veux toucher le chez et si tu vois que j'ai pris c'est juste que personne ne connait ma vie je suis sur la route des princes mais font rien rien de charmant fait mal à la tête médicaments tu travailles pour moi mais évidemment mon fils ne jamais les bras vas-y maman on fait je avec que si tu savais j'aimerais que tout ça les miens ont misé sur moi j'ai peur de nous noyer on m'a dit de partir loin les amis c'est loin et moi le nord nous a d ps et puis j'aurais aimé marcher sans doute j'ai trébuché sur mes illusions chaque jour claudio mo s ou un m autour de guerre est là mais oui je veux toucher nous sommes chez moi si tu vois que je brise est juste le seul personne ne connait ma vie je suis abonné mais bon y a rien de charbon la me fait mal à la tête de médicaments travaille pour manger tard le soir médicaments jamais il est vraiment bon je ça avec eux si tu savais tout ça on fait ah ben c'est dieu qui donne et celui qui repose ça ira mieux demain ça avec euh ben je me suis interdit d'abandonner donc que vais demain si tu ça c'est eux qui élu repose ça ira mieux demain avec tout ça et c'est pour ça que sur la roue dépasse engendre le même requin jésus mais bon y a rien de charbon y a pas de médicaments manger mais également mon fils benjamin jamais les bras vas-y maman ça avec eux sais-tu ça j'ai mis ça la route des princes conakry on a tous une route des princes un but à atteindre des rêves force à toute l'afrique force au monde hier éternellement insatisfait
+
+Timestamps:
+0.00s - 9.09s: je suis sur la route des praz mais bon il y a rien de charmant la as me fait mal à la tête y a pas de médicaments je travaille pour manger tard le soir je fais mal mais également mon fils n'oublie jamais les bras
+9.90s - 11.76s: maman on fait avec
+12.93s - 13.41s: avec eux
+15.51s - 16.89s: si tu savais
+18.36s - 19.20s: tout ça
+20.55s - 22.38s: bah ouais c'est la roue
+23.64s - 28.44s: plus des sens plus rien j'ai tout donné pour que maman puisse manger
+29.28s - 29.46s: un
+30.48s - 33.99s: peu importe ce qu'il pense hier soir journée
+34.89s - 36.27s: je voulais pas me rep
+37.41s - 38.58s: j'aimerais rouler vite
+39.12s - 49.89s: art où mais il y a des trous sur le goudron pas non plus même en dessous un retour de père et plus dix ans oui je veux toucher le chez
+51.12s - 59.46s: et si tu vois que j'ai pris c'est juste que personne ne connait ma vie je suis sur la route des princes mais font rien rien de charmant
+60.03s - 60.87s: fait mal à la tête
+61.29s - 62.80s: médicaments tu travailles pour moi
+63.91s - 66.09s: mais évidemment mon fils ne jamais les bras
+66.63s - 67.77s: vas-y maman on fait
+69.21s - 73.83s: je avec que si tu savais
+74.40s - 76.20s: j'aimerais que tout ça
+77.94s - 84.60s: les miens ont misé sur moi j'ai peur de nous noyer on m'a dit de partir loin
+85.50s - 86.93s: les amis c'est loin
+87.93s - 90.84s: et moi le nord nous a d
+91.92s - 106.26s: ps et puis j'aurais aimé marcher sans doute j'ai trébuché sur mes illusions chaque jour claudio mo s ou un m autour de guerre est là mais oui je veux toucher nous sommes chez moi
+107.79s - 114.24s: si tu vois que je brise est juste le seul personne ne connait ma vie je suis abonné
+114.57s - 117.06s: mais bon y a rien de charbon la me fait mal à la tête
+117.39s - 119.64s: de médicaments travaille pour manger tard le soir
+120.14s - 120.87s: médicaments
+121.62s - 123.75s: jamais il est vraiment bon
+125.43s - 126.63s: je ça avec eux
+128.70s - 130.08s: si tu savais
+131.55s - 132.39s: tout ça
+134.04s - 143.97s: on fait ah ben c'est dieu qui donne et celui qui repose ça ira mieux demain ça avec euh ben je me suis interdit d'abandonner donc que vais demain
+144.48s - 146.85s: si tu ça c'est eux qui élu
+147.24s - 148.95s: repose ça ira mieux demain
+149.52s - 155.25s: avec tout ça et c'est pour ça que sur la roue dépasse engendre le même requin jésus
+156.02s - 157.14s: mais bon y a rien de charbon
+158.59s - 159.75s: y a pas de médicaments
+160.32s - 160.68s: manger
+161.61s - 163.74s: mais également mon fils benjamin jamais les bras
+164.34s - 165.00s: vas-y maman
+167.28s - 168.12s: ça avec eux
+170.19s - 171.06s: sais-tu ça
+172.11s - 173.85s: j'ai mis ça
+175.50s - 184.02s: la route des princes conakry on a tous une route des princes un but à atteindre des rêves force à toute l'afrique force au monde hier éternellement insatisfait

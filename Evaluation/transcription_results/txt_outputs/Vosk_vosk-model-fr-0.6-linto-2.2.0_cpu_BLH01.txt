@@ -1,0 +1,45 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+lego ninjago on en est revenu avec trois gammes de regarde ça demanda instant je viens d'un endroit où on ne connaît pas les dollars j ai vu qu ils ont peur de moi quand ebola je vais pas comme si la nuit ne m'en voulez pas parce que je suis je suis je suis constate comme prévu nous je dis plus mon blaze pas à toi de deviner février posons les herbes direction la guilde je crois que mon matrix et judo mon truc un peu trop par parrot ne me dites représenter mon bled apos je me suis toujours demandé pourquoi es-tu jaloux tu es toujours sur ma route comme yahia mon fidèle taksim sondage déchiré je me vois en train de chercher à tap la vie c'est bizarre on va te demander qu'est-ce que je gagne un endroit où on connais pas j'ai vu ils ont peur de moi quand voilà je voté pas comme si les nuits ne m'en voulez pas parce que je je suis pour mon peuple tricolore rosenberg voici tous ceux qui ont marqué l'époque comme une boule au ventre si bien ce qui était faux merci payez-vous perso pays que ça sent la petite zohra matin-là je guette un endroit où on ne connaît pas les je veux ils ont pardonnez-moi quand j'ai voté quoi si les nuits ne m'en pas parce que je suis je vendredi v m h nous contrôler comme barrage on va tout contrôler barrage diaby non contrôler j'avais du monde entier ok je suis je suis
+
+Timestamps:
+0.45s - 2.40s: lego ninjago on en est revenu
+3.12s - 3.91s: avec trois gammes de
+5.04s - 5.47s: regarde ça
+6.91s - 7.96s: demanda instant
+10.32s - 12.93s: je viens d'un endroit où on ne connaît pas les dollars
+14.10s - 16.65s: j ai vu qu ils ont peur de moi quand ebola
+17.79s - 19.27s: je vais pas comme si la nuit
+21.36s - 23.22s: ne m'en voulez pas parce que je suis
+29.82s - 30.48s: je suis
+39.12s - 42.27s: je suis constate comme prévu nous je dis plus mon blaze pas à toi de deviner
+43.10s - 48.63s: février posons les herbes direction la guilde je crois que mon matrix et judo mon truc un peu trop par parrot
+49.54s - 54.77s: ne me dites représenter mon bled apos je me suis toujours demandé pourquoi es-tu jaloux
+56.34s - 62.82s: tu es toujours sur ma route comme yahia mon fidèle taksim sondage déchiré je me vois en train de chercher à tap
+63.36s - 68.07s: la vie c'est bizarre on va te demander qu'est-ce que je gagne un endroit où on
+68.22s - 68.68s: connais pas
+70.59s - 72.96s: j'ai vu ils ont peur de moi quand voilà
+74.22s - 75.70s: je voté pas comme si les nuits
+77.70s - 79.06s: ne m'en voulez pas parce que je
+86.16s - 86.80s: je suis
+95.85s - 97.83s: pour mon peuple tricolore rosenberg
+99.72s - 101.97s: voici tous ceux qui ont marqué l'époque comme
+103.20s - 104.31s: une boule au ventre
+104.88s - 107.99s: si bien
+112.50s - 113.07s: ce qui était faux
+114.03s - 114.33s: merci
+116.46s - 117.00s: payez-vous
+118.41s - 119.25s: perso pays
+120.33s - 123.24s: que ça sent la petite zohra matin-là
+126.03s - 128.07s: je guette un endroit où on ne connaît pas les
+129.78s - 131.15s: je veux ils ont pardonnez-moi quand
+133.47s - 134.97s: j'ai voté quoi si les nuits
+136.95s - 138.76s: ne m'en pas parce que je suis
+145.47s - 145.80s: je
+156.06s - 156.51s: vendredi
+157.68s - 161.22s: v m h nous contrôler comme barrage
+163.32s - 165.06s: on va tout contrôler barrage
+166.23s - 168.15s: diaby non contrôler
+173.76s - 175.20s: j'avais du monde entier
+186.48s - 186.84s: ok
+190.80s - 191.43s: je suis
+198.27s - 200.68s: je suis

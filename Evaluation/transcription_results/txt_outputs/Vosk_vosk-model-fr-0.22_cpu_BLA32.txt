@@ -1,0 +1,31 @@
+Transcription (Model: vosk-model-fr-0.22):
+je suis sur la route des bases mais bon y a rien de charmant là me fait mal à la tête il y a pas de médicaments je travaille pour manger tard le soir je fais mal mais élégamment mon fils ne baisse jamais les bras c'est ce que me dit maman on fait avec joie ça avec d'après si tu savais j'aimerais que tout ça bah ouais sur la route j'ai calé le des sens plus rien j'ai tout donné pour que maman puisse manger je veux devenir un pas peur pense hier soir j'en ai rêvé je voulais pas me réveille j'aimerais rouler vite sur la route mais il y a des trous gaudreault rabat n'a plus vraiment de souffle à mon tour de peur les bleus disent oui je veux toucher les sommes vous et si je vois que j'ai brisé juteuse personne ne connaît ma vie je suis sur la route des princes mais bon y a rien de charmant fait mal à la tête de médicaments qui travaillent pour manger tard le soir je fais mal évidemment mon fils n'avait jamais les bras c'est ce que me dit maman ce qu'on fait avec je sœur avec le mauvais si tu savais j'aimerais que tout ça les miens ont misé sur moi mais j'ai peur de nous noyer on m'a dit de partir loin d'été mes amis c'est loin de moi le nord nous a fait des essais c'est peu et j'aurais aimé marcher sans doute j'ai trébuché sur mes illusions chaque jour que dieu m'a manceau à mon tour de gérer la maison oui je veux toucher les sommes chez moi d si je vois que j'ai brisé je le lis personne ne connaît ma vie je suis sur la voie du courage pour rien rien de charmant me fait mal à la tête deux médicaments tu travaillent pour manger légèrement mon fils ne m'a jamais les bras c'est ce que me dit maman amber avec je m'en sors avec eux si tu savais j'aimerais que tout ça on fait avec c'est dieu qui donne du repos ça ira mieux demain ça avec dave je me suis interdit d'abandonner que je l'aimais demain ça c'est dieu qui donne à celui qui repose ça ira mieux demain ça c'est pour ça que sur la route des princes engendre le même repas jésus il y a pas de médicaments manger des lamelles également maurice ne jamais les bras c'est ce que me dit maman on fait avec marsha avec moi si tu savais j'aimerais que tout ça la où des princes conakry on a tous une route des princes un but à atteindre des rêves force à toute l'afrique pense au monde éternellement insatisfait
+
+Timestamps:
+0.00s - 14.31s: je suis sur la route des bases mais bon y a rien de charmant là me fait mal à la tête il y a pas de médicaments je travaille pour manger tard le soir je fais mal mais élégamment mon fils ne baisse jamais les bras c'est ce que me dit maman on fait avec joie ça avec d'après
+15.51s - 19.26s: si tu savais j'aimerais que tout ça
+20.58s - 31.17s: bah ouais sur la route j'ai calé le des sens plus rien j'ai tout donné pour que maman puisse manger je veux devenir un pas peur
+31.68s - 32.34s: pense
+32.88s - 36.81s: hier soir j'en ai rêvé je voulais pas me réveille
+37.47s - 40.74s: j'aimerais rouler vite sur la route mais il y a des trous
+41.43s - 50.37s: gaudreault rabat n'a plus vraiment de souffle à mon tour de peur les bleus disent oui je veux toucher les sommes vous
+50.94s - 58.32s: et si je vois que j'ai brisé juteuse personne ne connaît ma vie je suis sur la route des princes
+58.35s - 59.49s: mais bon y a rien de charmant
+60.03s - 63.84s: fait mal à la tête de médicaments qui travaillent pour manger tard le soir je fais mal
+64.08s - 76.26s: évidemment mon fils n'avait jamais les bras c'est ce que me dit maman ce qu'on fait avec je sœur avec le mauvais si tu savais j'aimerais que tout ça
+77.88s - 91.59s: les miens ont misé sur moi mais j'ai peur de nous noyer on m'a dit de partir loin d'été mes amis c'est loin de moi le nord nous a fait des essais
+92.16s - 106.26s: c'est peu et j'aurais aimé marcher sans doute j'ai trébuché sur mes illusions chaque jour que dieu m'a manceau à mon tour de gérer la maison oui je veux toucher les sommes chez moi
+107.07s - 114.96s: d si je vois que j'ai brisé je le lis personne ne connaît ma vie je suis sur la voie du courage pour rien
+114.96s - 117.09s: rien de charmant me fait mal à la tête
+117.39s - 119.19s: deux médicaments tu travaillent pour manger
+120.33s - 126.63s: légèrement mon fils ne m'a jamais les bras c'est ce que me dit maman amber avec je m'en sors avec eux
+128.70s - 132.45s: si tu savais j'aimerais que tout ça
+134.04s - 143.97s: on fait avec c'est dieu qui donne du repos ça ira mieux demain ça avec dave je me suis interdit d'abandonner que je l'aimais demain
+144.81s - 148.98s: ça c'est dieu qui donne à celui qui repose ça ira mieux demain
+150.06s - 155.13s: ça c'est pour ça que sur la route des princes engendre le même repas jésus
+158.40s - 159.75s: il y a pas de médicaments
+160.35s - 166.47s: manger des lamelles également maurice ne jamais les bras c'est ce que me dit maman on fait avec
+167.04s - 171.57s: marsha avec moi si tu savais
+172.32s - 173.94s: j'aimerais que tout ça
+175.47s - 182.10s: la où des princes conakry on a tous une route des princes un but à atteindre des rêves force à toute l'afrique pense au monde
+182.64s - 184.02s: éternellement insatisfait

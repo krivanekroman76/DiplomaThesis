@@ -1,0 +1,37 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+plan naîtra planète rap sopra no smoking euh sortent du camp le monde est venu l'écran une anecdote est aujourd'hui regarde-moi tout le mal ce légendaire bad mais quoi si tu parleras au nom d'allah paix devient encore dans les quatre coins du monde et qui est en fait d'entrer sur des messages en europe re ça ça sent tellement bon quand t'as vu je t'aurais le ben écoute vas-tu pas là-dedans que je guérir je fais pas semblant je crois que je le sens papa papa papa le grand bazar bon bon bon endroit au bon moment les éléments quant à ça non la peine la voilà toutes ta ta ta ta ta ta ta ta ta ta ça antenne européenne et non voilà areva pardon oui de soprano dans les bacs mettre live exclusive de problème on un bonhomme
+
+Timestamps:
+0.69s - 3.21s: plan naîtra planète rap sopra no smoking
+4.63s - 7.38s: euh sortent du camp
+9.26s - 10.53s: le monde est venu l'écran
+11.49s - 14.08s: une anecdote est aujourd'hui regarde-moi
+15.54s - 16.28s: tout le mal
+17.70s - 19.20s: ce légendaire bad mais quoi
+20.88s - 23.20s: si tu parleras au nom d'allah paix devient
+25.50s - 27.21s: encore dans les quatre coins du monde
+30.30s - 32.10s: et qui est en fait d'entrer sur des messages
+36.30s - 36.84s: en europe
+39.52s - 42.00s: re ça
+43.26s - 45.35s: ça sent tellement bon
+46.17s - 49.86s: quand t'as vu je t'aurais le
+53.53s - 54.33s: ben écoute vas-tu
+54.96s - 58.11s: pas là-dedans que je guérir
+59.61s - 62.49s: je fais pas semblant je crois que je le sens
+63.08s - 65.09s: papa papa papa
+66.42s - 69.24s: le grand bazar
+72.36s - 74.25s: bon bon bon endroit au bon moment
+75.76s - 76.74s: les éléments
+77.28s - 78.76s: quant à ça
+82.25s - 82.46s: non
+86.01s - 86.85s: la peine
+88.23s - 91.29s: la voilà
+94.45s - 94.81s: toutes
+96.87s - 102.17s: ta ta ta ta ta ta ta ta ta
+105.38s - 105.63s: ta
+114.03s - 115.49s: ça antenne européenne et non
+118.73s - 119.06s: voilà
+123.18s - 123.93s: areva
+126.00s - 127.43s: pardon oui de soprano
+128.88s - 129.66s: dans les bacs
+131.22s - 133.83s: mettre live exclusive de problème on un bonhomme

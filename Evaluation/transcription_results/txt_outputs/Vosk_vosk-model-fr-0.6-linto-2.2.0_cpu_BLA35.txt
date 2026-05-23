@@ -1,0 +1,28 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+assez assez assez assez mon souvent menotté elle montante à portée des rêves à ma portée et je me sens libre comme jamais de douter mon ambition planter des fruits à récolter oui oui le monde est vaste mon ambition n'est pas néfaste tout paraît grand qu'en fait en bas seul mon coeur ne me mens pas non huit vies ne suffisent pas je immortel si j'avais le choix j'aime profité ne te trompes pas je ne suis qu'un homme je suis comme toi éternel insatisfait je vite qu on ne peut combler j ai jamais assez satisfait je suis avide c'est assez assez assez jamais assez c'est assez haut assez assez assez jamais assez c'est assez et je me sens dès que j'aurais atteint mon but mes désirs se disputent chez bien que le b tu est pour ma part mais je me battrai comme une brute sans eux je ne suis plus qu'un gosse qui se père du euh je viens de loin comprends pourquoi j ai essayé wolf qui ne parle pas jamais assez tout pour changer les choses avec ma voix et oui je donnerais tout pour ça mais quand on aime on ne compte pas on veut toujours ce qu on a pas pendant que le temps file entre nos doigts éternel insatisfait vite qu ne peut combler j ai jamais assez satisfait je suis avide a assez assez assez jamais assez assez assez haut assez assez assez jamais assez pas assez à ces éternels insatisfaits vite on ne peut combler mais assez éternel insatisfait je suis a b c'est assez assez jamais c'est c'est assez si on est jamais assez j'en ai jamais assez est assez j'en ai jamais assez je n ai jamais assez
+
+Timestamps:
+0.00s - 3.45s: assez assez assez assez
+5.28s - 18.36s: mon souvent menotté elle montante à portée des rêves à ma portée et je me sens libre comme jamais de douter mon ambition planter des fruits à récolter
+19.11s - 37.17s: oui oui le monde est vaste mon ambition n'est pas néfaste tout paraît grand qu'en fait en bas seul mon coeur ne me mens pas non huit vies ne suffisent pas je immortel si j'avais le choix j'aime profité ne te trompes pas je ne suis qu'un homme je suis comme toi éternel insatisfait je
+37.86s - 41.52s: vite qu on ne peut combler j ai jamais assez
+42.90s - 45.66s: satisfait je suis avide
+47.85s - 48.90s: c'est assez
+49.17s - 52.77s: assez assez jamais assez
+53.52s - 60.31s: c'est assez haut assez assez assez jamais assez
+60.99s - 81.03s: c'est assez et je me sens dès que j'aurais atteint mon but mes désirs se disputent chez bien que le b tu est pour ma part mais je me battrai comme une brute sans eux je ne suis plus qu'un gosse qui se père du euh je viens de loin comprends pourquoi j ai essayé
+81.15s - 94.20s: wolf qui ne parle pas jamais assez tout pour changer les choses avec ma voix et oui je donnerais tout pour ça mais quand on aime on ne compte pas on veut toujours ce qu on a pas pendant que le temps file entre nos doigts
+94.50s - 96.99s: éternel insatisfait
+97.98s - 101.61s: vite qu ne peut combler j ai jamais assez
+102.99s - 105.75s: satisfait je suis avide
+108.24s - 112.56s: a assez assez assez jamais assez
+113.26s - 125.10s: assez assez haut assez assez assez jamais assez pas assez à ces éternels insatisfaits
+126.12s - 128.34s: vite on ne peut combler
+128.97s - 133.83s: mais assez éternel insatisfait je suis a b
+136.21s - 137.40s: c'est assez
+137.52s - 138.36s: assez
+139.99s - 140.58s: jamais
+141.95s - 142.40s: c'est
+145.02s - 146.40s: c'est assez
+151.17s - 157.98s: si on est jamais assez j'en ai jamais assez est assez j'en ai jamais assez
+158.64s - 161.60s: je n ai jamais assez

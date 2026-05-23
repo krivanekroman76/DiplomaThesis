@@ -1,0 +1,18 @@
+Transcription (Model: vosk-model-fr-0.22):
+ah c'est c'est c'est c'est c'est mes envies mon souvent me noter un montant d'apporter des rêves à ma portée et je me sens libre quand j'arrête de douter mon ambition planter des fruits à récolter oui oui le monde est vaste mon ambition n'est pas tout paraît grand quand t'es en bas seul mon coeur ne me manque pas nos huit vies ne suffisent pas je immortel si j'avais le choix j'aime profiter ne te trompe pas je ne suis qu'un homme jésus comme d'un éternel insatisfait je sens vide qu'on ne peut comblée j'ai jamais assez éternel insatisfait je suis avide d'amour à donner et assez assez assez jamais assez assez assez assez assez assez jamais assez assez assez je me sens vide dès que j'atteins mon but mes désirs se disputent bien que le b tu es pour ma pas mais je me battrai comme une brute sans eux je ne suis plus qu'un gosse qui perd deux et je viens de loin comprends pourquoi j'ai essayé toi qui ne parle pas jamais assez tôt pour la changer les choses avec ma voix et oui je donnerai tout pour ça mais quand on aime on ne compte pas on veut toujours ce qu'on a pas pendant que le temps file entre nos doigts éternel insatisfait je le sens vide qu'on ne peut combler j'ai jamais assez éternel insatisfait je suis avide d'amour assez assez assez jamais assez assez assez assez assez assez jamais assez pas assez ces éternels insatisfaits je le sais vite qu'on ne peut combler mais ces éternels insatisfaits je suis avide d'amour à donner et assez assez je n'ai jamais jamais c'est assez c'est à ces gens et n'ai jamais séjourné j'en ai jamais assez j'en ai jamais assez à ces gens ai jamais assez j'en ai jamais assez
+
+Timestamps:
+0.00s - 18.33s: ah c'est c'est c'est c'est c'est mes envies mon souvent me noter un montant d'apporter des rêves à ma portée et je me sens libre quand j'arrête de douter mon ambition planter des fruits à récolter
+19.14s - 39.12s: oui oui le monde est vaste mon ambition n'est pas tout paraît grand quand t'es en bas seul mon coeur ne me manque pas nos huit vies ne suffisent pas je immortel si j'avais le choix j'aime profiter ne te trompe pas je ne suis qu'un homme jésus comme d'un éternel insatisfait je sens vide qu'on ne peut
+39.15s - 47.04s: comblée j'ai jamais assez éternel insatisfait je suis avide d'amour à donner
+47.76s - 67.92s: et assez assez assez jamais assez assez assez assez assez assez jamais assez assez assez je me sens vide dès que j'atteins mon but mes désirs se disputent
+68.13s - 87.96s: bien que le b tu es pour ma pas mais je me battrai comme une brute sans eux je ne suis plus qu'un gosse qui perd deux et je viens de loin comprends pourquoi j'ai essayé toi qui ne parle pas jamais assez tôt pour la changer les choses avec ma voix et oui je donnerai tout pour ça
+88.11s - 106.47s: mais quand on aime on ne compte pas on veut toujours ce qu'on a pas pendant que le temps file entre nos doigts éternel insatisfait je le sens vide qu'on ne peut combler j'ai jamais assez éternel insatisfait je suis avide d'amour
+108.21s - 121.47s: assez assez assez jamais assez assez assez assez assez assez jamais assez pas assez
+122.16s - 125.76s: ces éternels insatisfaits je le sais
+126.12s - 128.34s: vite qu'on ne peut combler
+128.97s - 135.39s: mais ces éternels insatisfaits je suis avide d'amour à donner
+136.08s - 140.58s: et assez assez je n'ai jamais jamais
+141.12s - 142.44s: c'est assez
+145.02s - 149.79s: c'est à ces gens et n'ai jamais séjourné
+151.21s - 160.44s: j'en ai jamais assez j'en ai jamais assez à ces gens ai jamais assez j'en ai jamais assez

@@ -1,0 +1,25 @@
+Transcription (Model: vosk-model-fr-0.22):
+elle raccroche ta carrière t'as plus d'unité la mienne a du réseau illimité déchire comme t'as pas idée comme la famille hallyday pas semblant j'entends et rappelle arya stark si tu me fais la guerre faire comme les tarderez chez toi et faire comme les grands la guerre vous rappeler le tien protéines des fleurs la technique vous doutez il ne veut pas de tes miettes pour aller dîner tu peux me faire carter en parler je ne peux pas le grand tas de l'art hanouna s'était bouché appelle-moi farina qui souhaite ne pas pousser la chansonnette merci à papa emma est bientôt vingt ans que je suis à la mode je les entends tous chanter sur les ondes merci qui merci papa hola hola hola hola hola hola hola hola là là le problème est ça me connait une classique à l'ecole de deux couplets ont coupé nos souvenirs de fête en tête à la toilette assaisonner comme les autres elle ne m'a pas vu arriver sois gentil à tout prix à tout le monde disait vous demande jamais jamais pleurer un pot de fleurs un arbre ou dans vos habits de moto ça ne me parle pas des promesses faites à moi j'ai décidé de tester mais peut-être que jacqueline enfant est là un ami plus personne ne me fait rêver pour les voyous alors qu'on la connaît donc remplir mettre à deux pas d'un engagement car tu n'auras jamais bientôt vingt ans que je suis à la mode je les entends chanter sur les hommes merci qui merci papa ola ola ola ola ola ola ola ola à mon papa appelle-moi papa appelle-moi papa appelle-moi papa petit petit petit petit et a la paix petit à petit holà holà là
+
+Timestamps:
+0.00s - 4.47s: elle raccroche ta carrière t'as plus d'unité la mienne a du réseau illimité
+5.13s - 6.30s: déchire comme t'as pas idée
+6.96s - 9.09s: comme la famille hallyday pas semblant
+9.12s - 11.79s: j'entends et rappelle arya stark si tu me fais la guerre
+12.51s - 29.49s: faire comme les tarderez chez toi et faire comme les grands la guerre vous rappeler le tien protéines des fleurs la technique vous doutez il ne veut pas de tes miettes pour aller dîner tu peux me faire carter en parler je ne peux pas le grand tas de l'art hanouna s'était bouché appelle-moi farina qui souhaite ne pas pousser la chansonnette merci à papa
+30.00s - 35.01s: emma est bientôt vingt ans que je suis à la mode
+35.52s - 41.19s: je les entends tous chanter sur les ondes merci qui merci papa
+42.15s - 61.92s: hola hola hola hola hola hola hola hola là là le problème est ça me connait une classique à l'ecole de deux couplets ont coupé nos souvenirs de fête en tête à la toilette assaisonner comme les autres elle ne m'a pas vu arriver
+63.18s - 65.58s: sois gentil à tout prix à tout le monde disait
+66.39s - 74.31s: vous demande jamais jamais pleurer un pot de fleurs un arbre ou dans vos habits de moto ça ne me parle pas des promesses faites à moi j'ai décidé de tester mais peut-être que jacqueline enfant est là
+74.88s - 81.54s: un ami plus personne ne me fait rêver pour les voyous alors qu'on la connaît donc remplir mettre à deux pas d'un engagement car tu n'auras jamais
+83.52s - 86.73s: bientôt vingt ans que je suis à la mode
+87.24s - 90.18s: je les entends chanter sur les hommes
+91.02s - 92.91s: merci qui merci papa
+93.87s - 97.68s: ola ola ola ola ola
+98.59s - 104.13s: ola ola ola à mon papa
+105.27s - 105.93s: appelle-moi papa
+107.04s - 107.70s: appelle-moi papa
+108.90s - 109.59s: appelle-moi papa
+110.82s - 115.11s: petit petit petit petit et a la paix
+115.83s - 118.14s: petit à petit holà holà là

@@ -1,0 +1,32 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+parle-moi parle-moi j'ai tant de choses à te dire aide moi aide moi à ne pas ouvrir la première fois que je l ai vu j'avoue que je suis restée bête j'ai ma propre version de l histoire de la belle et la bête je sais je pourrais passer pour un négro fragile je lui ai fait croire que c'est moi j ai rendu paris j'avais pas un centime mais beaucoup de sentiments des problèmes qui sont un parcours qui en dit long je voyais en est celle qui allait faire de moi un homme un short casanova du ghetto qui fait le lobe parfois j'ai dû mentir faire le dur à cuire et chaque fois j'y étais en tort je crois qu'elle endure choix je m'énerve pas ce que je suis réservé je vois pas ce qu'elle veut dire et je vois encore moi aide-moi à ne pas souffrir moi étais moi on va s'en sortir le service vêtements je suis peut-être habiter ou peut-être habitué il faut que je change elle va me buter elle va me quitter on a du mal à communiquer suis complètement niqué elle ne sait pas encore piqué je pourrais pas l'expliquer la vérité un goût amer le rêve n'est pas bleu je dessine l'avenir en couleur sur un petit tableau j'aimerais tellement lui dire des choses mais l'orgueil veux pas bien sûr l'amour ça rend aveugle il y a des choses que je vois pas on a passé le stade des dix tiède je peux plus faire ça parce que mon fils j'ai on résout pas tout sur un week-end mais si tu veux tout savoir oui ah non moi moins mois free au moment de toi et moi sortie c'est évident parallèlement le bon temps même si je décolle n'est plus en toi je sais pas mais je ne trouve pas le sommeil je parle en langage codé je ne suis plus moi-même moi et même si je déconne je sais pas mais je trouvais le sommeil langage codé je ne suis plus moi-même de dit-on parallèlement parallèlement j'ai tant de choses
+
+Timestamps:
+0.00s - 19.59s: parle-moi parle-moi j'ai tant de choses à te dire aide moi aide moi à ne pas ouvrir la première fois que je l ai vu j'avoue que je suis restée bête j'ai ma propre version de l histoire de la belle et la bête je sais je pourrais passer pour un négro fragile je lui ai fait croire que c'est moi j ai rendu paris
+20.31s - 35.49s: j'avais pas un centime mais beaucoup de sentiments des problèmes qui sont un parcours qui en dit long je voyais en est celle qui allait faire de moi un homme un short casanova du ghetto qui fait le lobe parfois j'ai dû mentir faire le dur à cuire et chaque fois j'y étais en tort je crois qu'elle endure choix
+36.00s - 39.81s: je m'énerve pas ce que je suis réservé je vois pas ce qu'elle veut dire et je vois encore
+41.73s - 42.21s: moi
+46.47s - 49.29s: aide-moi à ne pas souffrir
+50.70s - 52.80s: moi étais
+56.75s - 59.25s: moi on va s'en sortir
+65.91s - 67.92s: le service
+77.64s - 78.06s: vêtements
+80.16s - 100.08s: je suis peut-être habiter ou peut-être habitué il faut que je change elle va me buter elle va me quitter on a du mal à communiquer suis complètement niqué elle ne sait pas encore piqué je pourrais pas l'expliquer la vérité un goût amer le rêve n'est pas bleu je dessine l'avenir en couleur sur un petit tableau j'aimerais tellement lui dire des choses mais l'orgueil veux pas bien sûr l'amour ça rend aveugle il y a des choses que je vois pas
+100.32s - 102.06s: on a passé le stade des dix tiède
+102.72s - 107.25s: je peux plus faire ça parce que mon fils j'ai on résout pas tout sur un week-end
+108.00s - 109.37s: mais si tu veux tout savoir oui
+111.90s - 112.80s: ah non moi
+116.16s - 117.99s: moins mois
+119.37s - 120.06s: free
+121.80s - 123.79s: au moment de
+126.90s - 127.83s: toi et moi
+128.97s - 129.81s: sortie
+138.06s - 138.78s: c'est évident
+152.55s - 154.32s: parallèlement le bon temps
+155.04s - 161.07s: même si je décolle n'est plus en toi je sais pas mais je ne trouve pas le sommeil je parle en langage codé je ne suis plus moi-même
+163.35s - 166.43s: moi et même si je déconne
+167.07s - 169.08s: je sais pas mais je trouvais le sommeil
+169.68s - 171.39s: langage codé je ne suis plus moi-même
+176.84s - 176.96s: de
+178.01s - 178.47s: dit-on
+198.24s - 202.02s: parallèlement parallèlement j'ai tant de choses

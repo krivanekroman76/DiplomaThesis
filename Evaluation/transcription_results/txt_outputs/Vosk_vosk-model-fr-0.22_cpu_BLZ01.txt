@@ -1,0 +1,42 @@
+Transcription (Model: vosk-model-fr-0.22):
+parle-moi parle-moi j'ai tant de choses à te dire aidez-moi aidez-moi pas ouvrez la première fois que je l'ai vu j'avoue que je suis resté j'ai ma propre version de l'histoire de la belle et la bête je sais je pourrais passer pour un négro fragile je lui ai fait croire que c'est moi j'ai rendu paris magique j'avais pas un sentiment mais beaucoup de sentiments des problèmes qui s'empilent un parcours qui en dit long je voyais en elle celle qui allait faire de moi un homme un joueur de casanova du ghetto qui fait le lobe parfois j'ai dû mentir faire le dur à cuire et chaque fois j'étais en tort je crois qu'elle endure je parle mal et je m'énerve parce que je suis réservé je vois pas ce qu'elle veut dire et je vois encore moi qui ai tant de choses à te dire aidez-moi à ne pas souffrir loin de moi j'ai tant de choses à offrir hum hum en race en sortie nous pouvons nous détendre répondez au syndicat non ne l'est pas pour comprendre ces décors je suis peut-être habité ou peut-être habitué il faut que je change elle va me buter elle va me quitter on a du mal à communiquer suis complètement niquée elle ne sait pas que je suis encore piqué je pourrais pas l'expliquer la vérité un goût amer le rêve n'est pas bleu je dessine l'avenir en couleurs sur un petit tableau j'aimerais tellement lui dire des choses mais l'orgueil veut pas bien sûr l'amour ça rend aveux il y a des choses que je ne vois pas on a passé le stade des disquettes tu peux plus faire ça parce que mon fils gay on résout pas tout sur un week-end mais si tu veux tout savoir oui je t'aime palma à moi j'ai tant de choses à te dire de moi moi à ne pas souffrir moi on m'a juste en deux d'offrir toi et moi et moi on va s'en sortir des c'est rigolo elle ne pas les destin par là moi parlement mais j'ai entendu même si je déconne je sais pas mais j'ai trouvé le sommeil je parle en langage codé je ne suis plus moi-même ma parle-moi le gévaudan doudoune même si je déconne je sais pas mais j'ai retrouvé le sommeil langage codé je ne suis plus moi-même on tourne autour du temps dis donc non le vietnam c'est d'y croire moi je ne ai pas maintenant nous pouvons parle-moi parle-moi j'ai des choses à te dire
+
+Timestamps:
+0.00s - 7.05s: parle-moi parle-moi j'ai tant de choses à te dire aidez-moi aidez-moi
+7.80s - 27.84s: pas ouvrez la première fois que je l'ai vu j'avoue que je suis resté j'ai ma propre version de l'histoire de la belle et la bête je sais je pourrais passer pour un négro fragile je lui ai fait croire que c'est moi j'ai rendu paris magique j'avais pas un sentiment mais beaucoup de sentiments des problèmes qui s'empilent un parcours qui en dit long je voyais en elle celle qui allait faire de moi un homme
+28.14s - 39.84s: un joueur de casanova du ghetto qui fait le lobe parfois j'ai dû mentir faire le dur à cuire et chaque fois j'étais en tort je crois qu'elle endure je parle mal et je m'énerve parce que je suis réservé je vois pas ce qu'elle veut dire et je vois encore
+41.70s - 44.91s: moi qui ai tant de choses à te dire
+46.44s - 49.56s: aidez-moi à ne pas souffrir
+50.28s - 54.48s: loin de moi j'ai tant de choses à offrir
+55.32s - 59.22s: hum hum en race en sortie
+62.52s - 63.72s: nous pouvons nous détendre
+65.22s - 68.22s: répondez au syndicat
+72.66s - 73.77s: non ne l'est pas
+74.76s - 78.12s: pour comprendre ces décors
+80.13s - 98.88s: je suis peut-être habité ou peut-être habitué il faut que je change elle va me buter elle va me quitter on a du mal à communiquer suis complètement niquée elle ne sait pas que je suis encore piqué je pourrais pas l'expliquer la vérité un goût amer le rêve n'est pas bleu je dessine l'avenir en couleurs sur un petit tableau j'aimerais tellement lui dire des choses mais l'orgueil veut pas bien sûr l'amour ça rend aveux
+98.97s - 102.06s: il y a des choses que je ne vois pas on a passé le stade des disquettes
+102.78s - 104.61s: tu peux plus faire ça parce que mon fils gay
+105.45s - 107.28s: on résout pas tout sur un week-end
+108.00s - 109.80s: mais si tu veux tout savoir oui je t'aime
+110.52s - 116.73s: palma à moi j'ai tant de choses à te dire de moi
+117.45s - 120.18s: moi à ne pas souffrir
+120.87s - 123.93s: moi on m'a juste en deux
+124.50s - 126.63s: d'offrir toi et moi
+127.20s - 129.84s: et moi on va s'en sortir
+131.28s - 131.43s: des
+138.06s - 138.81s: c'est rigolo
+141.42s - 144.33s: elle ne pas
+146.50s - 149.01s: les destin
+151.29s - 151.68s: par là
+151.71s - 154.53s: moi parlement mais j'ai entendu
+155.04s - 161.13s: même si je déconne je sais pas mais j'ai trouvé le sommeil je parle en langage codé je ne suis plus moi-même
+162.03s - 166.44s: ma parle-moi le gévaudan doudoune même si je déconne
+167.07s - 169.08s: je sais pas mais j'ai retrouvé le sommeil
+169.68s - 171.42s: langage codé je ne suis plus moi-même
+174.27s - 176.64s: on tourne autour du temps
+177.99s - 178.62s: dis donc
+181.73s - 181.88s: non
+183.87s - 186.99s: le vietnam c'est d'y croire
+191.64s - 192.69s: moi je ne ai pas
+193.98s - 197.73s: maintenant nous pouvons
+198.24s - 203.13s: parle-moi parle-moi j'ai des choses à te dire

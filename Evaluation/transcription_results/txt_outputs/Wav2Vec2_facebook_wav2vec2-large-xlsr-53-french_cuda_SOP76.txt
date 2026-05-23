@@ -1,0 +1,10 @@
+Transcription (Model: facebook/wav2vec2-large-xlsr-53-french):
+tu sers unomam u nomm ptite fac en  notite face oublie quun jour onceur se l  a ta tou sacrif s'il mais son cera te p si tu traites comm une interprèt al courone tu cherches un bome tucherss un bon ome un vrai quep prare tout assumé te rondar essot u meurtira vous tb   u nai palapousue tu cers e nomm a ame a tu vois de pilettecopina lamari dans tes bras le bouquet ne veu pas tari toi  si tu veux le bon et pouvoir le dire oui ah oi alaes ont ta mer fet de file les maris tu lui di mama méacalpri tu ceses nommanor et pas quune paque qibri m prtà tout satifie s'il met on qeroteple si que trai communu ren te real couronne e tu cherce bonomme n vrai quepre toutasine qe rondaesoil meur i n'e pas lapousoue ti ser ce noba ebe adu adu ne doute pas de toi ua il viendra vers toi dura on da pomme te bel ne doute pas de toi dura il viendra vers toi doura it commera comme té ersdantv atua tuupu i seeb
+
+Timestamps:
+0.00s - 20.00s: tu sers unomam u nomm ptite fac en  notite face oublie quun jour onceur se l  a ta tou sacrif s'il mais son cera te p si tu traites comm une interprèt al courone tu cherches un bome
+20.00s - 40.00s: tucherss un bon ome un vrai quep prare tout assumé te rondar essot u meurtira vous tb   u nai palapousue tu cers e nomm a ame a
+40.00s - 60.00s: tu vois de pilettecopina lamari dans tes bras le bouquet ne veu pas tari toi  si tu veux le bon et pouvoir le dire oui ah oi alaes ont ta mer fet de file les maris tu lui di mama méacalpri tu ceses nommanor et pas quune paque qibri m
+60.00s - 80.00s: prtà tout satifie s'il met on qeroteple si que trai communu ren te real couronne e tu cherce bonomme n vrai quepre toutasine qe rondaesoil meur
+80.00s - 100.00s: i n'e pas lapousoue ti ser ce noba ebe adu adu ne doute pas de toi ua il viendra vers toi dura on da pomme te bel
+100.00s - 120.00s: ne doute pas de toi dura il viendra vers toi doura it commera comme té ersdantv atua tuupu i seeb

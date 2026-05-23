@@ -1,0 +1,10 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+ceci dit pour les gens qui me dévisage comme si j'étais un que j'avais des nibards leur donne un bon coup pour le militaire avec un peu austère aux murs de maryland je voulais aider les gens me regardent bizarre désolé mais je n ai pas l'amour de big et monsieur jack me dit que chemin que pour moi en sorte il faudrait un miracle qu'on apprenne la vie krav l'un de nos pays là où amis où est donc or ni car je veux juste savoir où est leur dieu alors la famille dis-moi on dit quoi on a rien fait juste on y croit on y croit tout le monde dit blague tout le monde il blague tout le monde dit black hein j'ai dit tout le monde dit blague tout le monde voit blague tout le monde voit black black tout le monde voir black hein j'ai dit tout le monde voir blague
+
+Timestamps:
+0.39s - 6.03s: ceci dit pour les gens qui me dévisage comme si j'étais un que j'avais des nibards leur donne un bon coup pour le militaire avec un peu austère aux murs de maryland
+6.72s - 12.87s: je voulais aider les gens me regardent bizarre désolé mais je n ai pas l'amour de big et monsieur jack me dit que chemin que pour moi en sorte il faudrait un miracle
+13.53s - 15.78s: qu'on apprenne la vie krav l'un de nos pays là où amis
+16.35s - 23.40s: où est donc or ni car je veux juste savoir où est leur dieu alors la famille dis-moi on dit quoi on a rien fait juste on y croit on y croit
+25.80s - 33.51s: tout le monde dit blague tout le monde il blague tout le monde dit black hein j'ai dit tout le monde dit blague tout le monde voit blague
+34.08s - 38.49s: tout le monde voit black black tout le monde voir black hein j'ai dit tout le monde voir blague

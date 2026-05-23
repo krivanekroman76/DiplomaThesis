@@ -1,0 +1,26 @@
+Transcription (Model: vosk-model-fr-0.22):
+on ne se connaît pas mais je voulais vous dire merci si vous saviez combien vous avez changé ma vie sans vraiment le savoir vous avez fait de la magie moi qui ne croyais plus en moi ni en l'avenir combien de fois j'ai le ventre en l'air je n'avais plus la force et l'envie d'aller faire ma guerre c'est plus pour faire tourner la roue jusqu'au jour où le destin vos hum hum hum hum hum hum hum hum grâce à vous c'est lunaire on a tous un jour eu ce moment j'ai croisé ce héros j'ai adoré l'histoire un bureau de plus on ne se connaît pas mais vous m'avez tellement appris vos mots vos sourires et vos larmes ont sauvé la vie vos combats m'ont appris à encaisser les cours et votre persévérance à me remettre debout vos médailles ont redonné vie à mes rêves le gamin va alors mon entreprise équilibrée être un humain vous second ce qui m'a fait tourner la roue le destin de vous avoir mis sur ma route où vous verrez un email grâce à vous qui à on a tous un jour j'ai croisé ce héros quel est le sens de l'histoire la la la la la la la ah là là là je ne veux pas vous déranger ni vous embarrasser j'avais tellement besoin de mon héros et de lui dire merci ces mots vous sont adressés peut-être qu'ils feront l'effet que vous avez sur ma vie on a tous un jour eu ce moment dommage j'ai croisé ce héros malgré de sauver une vie adoré l'histoire et l'histoire des deux héros je voulais la démonter là là
+
+Timestamps:
+0.09s - 19.65s: on ne se connaît pas mais je voulais vous dire merci si vous saviez combien vous avez changé ma vie sans vraiment le savoir vous avez fait de la magie moi qui ne croyais plus en moi ni en l'avenir combien de fois j'ai le ventre en l'air je n'avais plus la force et l'envie d'aller faire ma guerre
+20.16s - 30.36s: c'est plus pour faire tourner la roue jusqu'au jour où le destin vos hum hum hum hum hum hum hum hum
+31.59s - 32.85s: grâce à vous
+33.39s - 34.47s: c'est lunaire
+35.64s - 40.08s: on a tous un jour eu ce moment j'ai croisé ce héros
+40.80s - 45.15s: j'ai adoré l'histoire
+45.90s - 47.28s: un bureau
+47.58s - 67.20s: de plus on ne se connaît pas mais vous m'avez tellement appris vos mots vos sourires et vos larmes ont sauvé la vie vos combats m'ont appris à encaisser les cours et votre persévérance à me remettre debout vos médailles ont redonné vie à mes rêves le gamin va alors mon entreprise équilibrée
+67.51s - 69.60s: être un humain vous
+69.99s - 72.45s: second ce qui m'a fait tourner la roue
+73.23s - 78.78s: le destin de vous avoir mis sur ma route où vous verrez un email
+80.04s - 82.68s: grâce à vous qui à
+84.57s - 85.89s: on a tous un jour
+87.03s - 88.98s: j'ai croisé ce héros
+90.03s - 93.00s: quel est le sens de l'histoire
+96.09s - 100.32s: la la la la la la la
+100.32s - 104.82s: ah là là là
+107.64s - 116.82s: je ne veux pas vous déranger ni vous embarrasser j'avais tellement besoin de mon héros et de lui dire merci ces mots vous sont adressés
+117.36s - 128.04s: peut-être qu'ils feront l'effet que vous avez sur ma vie on a tous un jour eu ce moment dommage j'ai croisé ce héros malgré de sauver une vie
+128.64s - 133.62s: adoré l'histoire et l'histoire des deux héros
+134.58s - 136.20s: je voulais la démonter
+138.75s - 139.93s: là là

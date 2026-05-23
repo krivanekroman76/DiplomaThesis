@@ -1,0 +1,38 @@
+Transcription (Model: vosk-model-fr-0.22):
+les années passent et les bleus sont toujours aussi salaires qui nous manque donc la nuit je continue de rouler on m'a demandé d'en boire un meneur embrasse-moi oblige je rejoins ton ciel étoilé les mentalités n'ont pas évolué françois gardons les mêmes raisons qu'en dernière dernièrement les tombolas du nord et mon cœur je regrette la soirée aux mamans dans l'europe encore une soirée son fameux parler ensemble sol au sol encore une soirée le soir le soir contact sous l'eau sous selon l'avis je partage un café avec tous mes fantômes bien-aimés on parle de tout de rien comme on le faisait dans le passé et le jour de prendre soin de tout qu'ils ont toujours aimé mais mais oui le jour je pense de nous le cœur que j'ai sur ma main j'ai peur de le faire tomber j'ai peur pour les petits quand je vois le monde évoluer l'argent le supplément appris à paranoïa en parlant des petits et grands des les voyez plus tu grandis plus la vie devient plus compliquée les relations des sentiments je sais plus quoi en penser plus déçu de moi que des autres en réalité c'est pour quand tes conseils me manquent quand je me sens blessée encore une soirée réseau reparler ensemble au sol au sol encore une soirée soirée le soir le soir avec la tête sous l'eau sous l'eau selon lundi je partage un café avec tous mes fantômes bien-aimés un peu de tout de rien comme on le faisait dans le passé que le jeu prend soin de tous ils ont toujours aimé mais mais mais oui le jour où je prends soin de nous mais a chacun sa manière de trop bu non c'est plus sympa de trouver
+
+Timestamps:
+0.00s - 2.46s: les années passent et les bleus sont toujours aussi salaires
+3.45s - 5.79s: qui nous manque donc la nuit je continue de rouler
+6.69s - 8.97s: on m'a demandé d'en boire un meneur
+9.87s - 12.09s: embrasse-moi oblige je rejoins ton ciel étoilé
+13.02s - 15.39s: les mentalités n'ont pas évolué
+16.08s - 18.78s: françois gardons les mêmes raisons qu'en dernière
+19.71s - 21.99s: dernièrement les tombolas du nord et mon cœur
+22.92s - 24.69s: je regrette la soirée aux mamans dans l'europe
+27.69s - 28.65s: encore une soirée
+29.52s - 32.45s: son fameux parler ensemble sol au sol
+34.06s - 35.19s: encore une soirée
+35.97s - 37.02s: le soir le soir
+37.68s - 39.00s: contact sous l'eau sous
+40.02s - 44.97s: selon l'avis je partage un café avec tous mes fantômes bien-aimés
+46.11s - 53.01s: on parle de tout de rien comme on le faisait dans le passé et le jour de prendre soin de tout
+53.52s - 58.14s: qu'ils ont toujours aimé mais mais oui le jour je pense
+58.81s - 60.12s: de nous
+61.53s - 63.90s: le cœur que j'ai sur ma main j'ai peur de le faire tomber
+64.83s - 67.32s: j'ai peur pour les petits quand je vois le monde évoluer
+68.04s - 70.32s: l'argent le supplément appris à paranoïa
+71.25s - 73.59s: en parlant des petits et grands des les voyez
+74.61s - 77.04s: plus tu grandis plus la vie devient plus compliquée
+77.94s - 80.43s: les relations des sentiments je sais plus quoi en penser
+81.39s - 83.70s: plus déçu de moi que des autres en réalité
+84.51s - 87.12s: c'est pour quand tes conseils me manquent quand je me sens blessée
+89.34s - 90.30s: encore une soirée
+91.05s - 94.18s: réseau reparler ensemble au sol au sol
+95.70s - 97.29s: encore une soirée soirée
+97.65s - 100.97s: le soir le soir avec la tête sous l'eau sous l'eau
+101.67s - 108.09s: selon lundi je partage un café avec tous mes fantômes bien-aimés
+109.20s - 115.83s: un peu de tout de rien comme on le faisait dans le passé que le jeu prend soin de tous
+116.40s - 123.63s: ils ont toujours aimé mais mais mais oui le jour où je prends soin de nous mais
+125.28s - 129.21s: a chacun sa manière de trop bu
+129.84s - 134.94s: non c'est plus sympa de trouver

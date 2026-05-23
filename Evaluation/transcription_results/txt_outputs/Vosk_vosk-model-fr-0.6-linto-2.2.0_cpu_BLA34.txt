@@ -1,0 +1,53 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+allons allons les six blague bon recevez une estimation la planète terre en vue où localisation paris ben non ma main hum la nba savez la marque la boîte est pleine la loi du même nom d'agenda d'arrêt moi je n'ai pas tout autant je suivrai je ne ferai pas semblant je me fous de mon temps mais attendent depuis longtemps pas attends attends attends attends ta table attends à qui vous allez voter vous allez goûter y a pas d'oseille a pas d'oseille critiqué dans le carré vip dans le carré vip pour toi tu n'auras que c'est un bide vite roule au joint venu en est qui qui est venu en équipe t'as bien tout le tuer carrière politique on est en est-il tu se fait recaler ne vous en faites pas on va tous finir dans un putain d'acteur je n'ai pas toujours autant je suivrai je ne ferai pas semblant je me fous de mon temps mais attendent depuis le haut dans tout ta ta ta ta ta ta ta ta ta ta ta ta ta ta ta ta ta tu s'élève à six du mat tu te lèves assise humains dites au serveur qui remet des bouteilles et au patron du club confirme la voix tu es venu si vous voulez qui est venu faire du qui est venu tout seul larry calme-toi tu vas goûter le sol tu connais la dernière tu t'y connais la dernière fait une ronde si tu peux pas mettre sur le tai cons tu es venu ça paie qui est venu ça paie de toute façon nous on oublie rien on a coulé dossier on a tous je n'ai pas pour autant je suivrai je ne ferai pas semblant je me fous de mon temps mais attendent depuis longtemps tout a ta ta ta ta ta ta ta ta ta ta ta ta mission rien laquelle
+
+Timestamps:
+0.00s - 0.45s: allons
+1.44s - 3.93s: allons les six blague
+4.74s - 5.46s: bon recevez
+6.66s - 8.52s: une estimation la planète terre en vue
+9.21s - 11.04s: où localisation paris
+12.42s - 14.01s: ben non ma main
+15.41s - 17.54s: hum la nba savez
+18.00s - 19.56s: la marque la boîte est pleine
+20.13s - 24.36s: la loi du même nom d'agenda d'arrêt
+25.41s - 27.63s: moi je n'ai pas tout autant
+28.35s - 31.20s: je suivrai je ne ferai pas semblant
+32.04s - 34.80s: je me fous de mon temps
+35.79s - 39.36s: mais attendent depuis longtemps pas
+55.68s - 57.79s: attends attends attends attends
+59.13s - 59.82s: ta table
+60.95s - 61.20s: attends
+67.68s - 70.44s: à qui vous allez voter
+71.28s - 72.33s: vous allez goûter
+73.25s - 77.91s: y a pas d'oseille a pas d'oseille critiqué dans le carré vip
+78.69s - 81.51s: dans le carré vip pour toi tu n'auras que c'est un bide
+82.11s - 83.04s: vite roule au joint
+84.03s - 86.79s: venu en est qui qui est venu en équipe
+87.45s - 90.54s: t'as bien tout le tuer carrière politique on est en est-il
+91.79s - 96.99s: tu se fait recaler ne vous en faites pas on va tous finir dans un putain d'acteur
+97.98s - 99.84s: je n'ai pas toujours autant
+100.59s - 103.44s: je suivrai je ne ferai pas semblant
+104.25s - 107.01s: je me fous de mon temps
+107.97s - 110.85s: mais attendent depuis le haut dans
+112.56s - 112.78s: tout
+128.55s - 131.10s: ta ta ta ta ta ta ta ta
+132.24s - 134.79s: ta ta ta ta ta ta ta ta ta
+142.83s - 149.58s: tu s'élève à six du mat tu te lèves assise humains dites au serveur qui remet des bouteilles et au patron du club confirme la voix
+150.22s - 151.14s: tu es venu si vous voulez
+152.04s - 156.90s: qui est venu faire du qui est venu tout seul larry calme-toi tu vas goûter le sol
+157.50s - 158.28s: tu connais la dernière
+158.99s - 160.14s: tu t'y connais la dernière
+160.84s - 164.04s: fait une ronde si tu peux pas mettre sur le tai cons
+164.64s - 165.87s: tu es venu ça paie
+166.56s - 170.91s: qui est venu ça paie de toute façon nous on oublie rien on a coulé dossier on a tous
+171.60s - 173.34s: je n'ai pas pour autant
+174.06s - 176.91s: je suivrai je ne ferai pas semblant
+177.72s - 180.51s: je me fous de mon temps
+181.50s - 184.35s: mais attendent depuis longtemps
+186.09s - 186.30s: tout
+200.16s - 204.60s: a ta ta ta ta ta ta ta ta ta ta
+207.60s - 208.04s: ta ta
+218.07s - 218.49s: mission
+221.25s - 221.46s: rien
+225.39s - 225.78s: laquelle

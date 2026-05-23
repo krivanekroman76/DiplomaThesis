@@ -52,7 +52,7 @@ from contextlib import ExitStack
 import shutil
 import logging
 import gc
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Optional
 import torch
 import tensorflow as tf
 import numpy as np
@@ -540,29 +540,44 @@ class SeparationEvaluator:
         with open(self.results_dir / "latex_table.txt", "w") as f: 
             f.write(summary.style.to_latex())
         
-        # Write new JSON summary (assuming you want the grouped mean summary saved to JSON)
-        summary.to_json(self.results_dir / "summary_results.json", orient="index")
+        # Write new JSON summary (indent=4 formats it nicely instead of a single line)
+        summary.to_json(self.results_dir / "summary_results.json", orient="index", indent=4)
         
         graph_dir = self.results_dir / "graphs"
         graph_dir.mkdir(exist_ok=True)
         
-        # RTF depends on hardware, so we keep the hue (include_hue=True)
+        # Determine global maximum for SDR using the AVERAGED data ('summary'), not raw data
+        sdr_cols = ['SDR_vocals', 'SDR_instr']
+        global_sdr_max: Optional[float] = None
+        
+        if set(sdr_cols).issubset(summary.columns):
+            # Casting to float ensures pandas/numpy types don't confuse the linter
+            global_sdr_max = float(summary[sdr_cols].max().max())
+
+        # RTF depends on hardware, so we keep the hue (include_hue=True). Scale is isolated.
         self._plot_metric(df, 'rtf', "RTF (Lower is Better)", graph_dir / "RTF_Comparison.png", horizontal_line=True, include_hue=True)
         
         # SDR depends only on the model, so we drop the hardware grouping (include_hue=False)
-        self._plot_metric(df, 'SDR_vocals', "SDR Vocals (Higher is Better)", graph_dir / "SDR_Vocal_Comparison.png", horizontal_line=False, include_hue=False)
+        self._plot_metric(df, 'SDR_vocals', "SDR Vocals (Higher is Better)", graph_dir / "SDR_Vocal_Comparison.png", horizontal_line=False, include_hue=False, y_max_override=global_sdr_max)
         
         # Exactly matching the CSV column 'SDR_instr'
-        self._plot_metric(df, 'SDR_instr', "SDR Instrumentals (Higher is Better)", graph_dir / "SDR_Instr_Comparison.png", horizontal_line=False, include_hue=False)
-        
+        self._plot_metric(df, 'SDR_instr', "SDR Instrumentals (Higher is Better)", graph_dir / "SDR_Instr_Comparison.png", horizontal_line=False, include_hue=False, y_max_override=global_sdr_max)
+
+        # Write strictly formatted, academic LaTeX table
+        latex_str = self._generate_academic_latex_table(df)
+        with open(self.results_dir / "latex_table.txt", "w") as f: 
+            f.write(latex_str)
+
         logging.info(f"Reports successfully generated in {self.results_dir}")
 
-    def _plot_metric(self, df: pd.DataFrame, col: str, title: str, path: Path, horizontal_line: bool, include_hue: bool = True):
+    def _plot_metric(self, df: pd.DataFrame, col: str, title: str, path: Path, horizontal_line: bool, include_hue: bool = True, y_max_override: Optional[float] = None):        
         """
         Constructs and saves an academically polished bar chart comparing models.
         """
         plt.figure(figsize=(10, 6))
-        sns.set_theme(style="whitegrid")
+        
+        # Start with a clean white background, we will customize the grid manually
+        sns.set_theme(style="white") 
         df['Label'] = df['tool'] + "\n(" + df['model'] + ")"
         
         if include_hue:
@@ -571,12 +586,20 @@ class SeparationEvaluator:
         else:
             ax = sns.barplot(data=df, x='Label', y=col, palette="muted", ci=None)
             
-        if horizontal_line: 
-            plt.axhline(1.0, color='red', linestyle='--')
+        # Refine the Grid: Place lines behind bars, only on the Y-axis
+        ax.set_axisbelow(True)
+        ax.yaxis.grid(True, color='gray', linestyle='--', alpha=0.3)
+        ax.xaxis.grid(False)
             
-        # 1. Academic Headroom: Expand Y-axis by 15% so top labels always have breathing room
-        max_val = df[col].max()
-        ax.set_ylim(0, max_val * 1.15)
+        if horizontal_line: 
+            plt.axhline(1.0, color='red', linestyle='--', alpha=0.7)
+            
+        # 1. Academic Headroom: Apply the override if provided, otherwise use local max
+        if y_max_override is not None:
+            ax.set_ylim(0, y_max_override * 1.15)
+        else:
+            max_val = df[col].max()
+            ax.set_ylim(0, max_val * 1.15)
             
         # Bypass strict Pylance type stubs by accessing containers dynamically
         ax_containers = getattr(ax, 'containers', [])
@@ -596,7 +619,7 @@ class SeparationEvaluator:
         plt.title(title, fontsize=14, pad=15, weight='bold')
         plt.xlabel('Evaluated Models', fontsize=12, labelpad=10)
         
-        # 3. Dynamic Y-axis labeling (Works for 'rtf', 'SDR_vocals', 'SDR_instrumental', etc.)
+        # 3. Dynamic Y-axis labeling
         if col == 'rtf':
             y_label = "Real-Time Factor (RTF)"
         else:
@@ -609,6 +632,110 @@ class SeparationEvaluator:
         plt.tight_layout()
         plt.savefig(path, dpi=300)
         plt.close()
+
+    def _generate_academic_latex_table(self, df: pd.DataFrame) -> str:
+        """
+        Pivots the raw data and generates a highly structured LaTeX table 
+        with bolded best values and specific anti-clipping dimensions.
+        """
+        # 1. Pivot the data: 1 row per Model, split RTF by CPU/GPU
+        records = []
+        for (tool, model), group in df.groupby(['tool', 'model']):
+            cpu_mask = group['device_type'] == 'CPU'
+            gpu_mask = group['device_type'] == 'GPU CUDA'
+            
+            records.append({
+                'Tool': tool,
+                'Model': model,
+                'RTF_CPU': group[cpu_mask]['rtf'].mean() if any(cpu_mask) else np.nan,
+                'RTF_GPU': group[gpu_mask]['rtf'].mean() if any(gpu_mask) else np.nan,
+                'SDR_Voc': group['SDR_vocals'].mean(),
+                'SDR_Ins': group['SDR_instr'].mean(),
+                'SIR_Voc': group['SIR_vocals'].mean(),
+                'SIR_Ins': group['SIR_instr'].mean(),
+                'SAR_Voc': group['SAR_vocals'].mean(),
+                'SAR_Ins': group['SAR_instr'].mean(),
+                'ISR_Voc': group['ISR_vocals'].mean(),
+                'ISR_Ins': group['ISR_instr'].mean()
+            })
+        
+        tdf = pd.DataFrame(records)
+        
+        # 2. Find the "Best" values for bolding (Min for RTF, Max for Audio Metrics)
+        best = {
+            'RTF_CPU': tdf['RTF_CPU'].min(),
+            'RTF_GPU': tdf['RTF_GPU'].min(),
+            'SDR_Voc': tdf['SDR_Voc'].max(),
+            'SDR_Ins': tdf['SDR_Ins'].max(),
+            'SIR_Voc': tdf['SIR_Voc'].max(),
+            'SIR_Ins': tdf['SIR_Ins'].max(),
+            'SAR_Voc': tdf['SAR_Voc'].max(),
+            'SAR_Ins': tdf['SAR_Ins'].max(),
+            'ISR_Voc': tdf['ISR_Voc'].max(),
+            'ISR_Ins': tdf['ISR_Ins'].max()
+        }
+        
+        # 3. Formatting Helper
+        def fmt(val, col_name):
+            if pd.isna(val):
+                return "-"
+            # Check if this value is the best (account for float imprecision)
+            is_best = abs(val - best[col_name]) < 1e-5
+            s = f"{val:.2f}"
+            return f"\\textbf{{{s}}}" if is_best else s
+
+        # 4. Build the LaTeX String
+        lines = [
+            "\\begin{table}[htbp]",
+            "\\centering",
+            "\\caption{Comprehensive separation benchmark. Quality metrics remain consistent across hardware architectures, while Real-Time Factor (RTF) highlights computational efficiency.}",
+            "\\label{tab:separation_results}",
+            "% --- THESE TWO LINES PREVENT THE TABLE FROM CLIPPING ---",
+            "\\setlength{\\tabcolsep}{3.5pt}",
+            "\\footnotesize",
+            "% -------------------------------------------------------",
+            "\\begin{tabular}{llrrrrrrrrrr}",
+            "\\hline",
+            "\\textbf{Tool} & \\textbf{Model} & \\multicolumn{2}{c}{\\textbf{RTF}} & \\multicolumn{2}{c}{\\textbf{SDR}} & \\multicolumn{2}{c}{\\textbf{SIR}} & \\multicolumn{2}{c}{\\textbf{SAR}} & \\multicolumn{2}{c}{\\textbf{ISR}} \\\\ ",
+            "\\hline",
+            " & & \\textbf{CPU} & \\textbf{GPU} & \\textbf{Voc.} & \\textbf{Ins.} & \\textbf{Voc.} & \\textbf{Ins.} & \\textbf{Voc.} & \\textbf{Ins.} & \\textbf{Voc.} & \\textbf{Ins.} \\\\ ",
+            "\\hline"
+        ]
+        
+        # Sort to ensure Demucs -> OpenUnmix -> Spleeter
+        tdf['Tool_Cat'] = pd.Categorical(tdf['Tool'], categories=['Demucs', 'OpenUnmix', 'Spleeter'], ordered=True)
+        tdf = tdf.sort_values(['Tool_Cat', 'Model'])
+        
+        current_tool = ""
+        for _, row in tdf.iterrows():
+            # Add a horizontal line between different tools
+            if row['Tool'] != current_tool and current_tool != "":
+                lines.append("\\hline")
+                
+            tool_str = row['Tool'] if row['Tool'] != current_tool else ""
+            current_tool = row['Tool']
+            
+            # Format row
+            r_tool = tool_str
+            r_model = row['Model'].replace('_', '\\_') # Escape underscores for LaTeX
+            
+            row_vals = [
+                r_tool, r_model,
+                fmt(row['RTF_CPU'], 'RTF_CPU'), fmt(row['RTF_GPU'], 'RTF_GPU'),
+                fmt(row['SDR_Voc'], 'SDR_Voc'), fmt(row['SDR_Ins'], 'SDR_Ins'),
+                fmt(row['SIR_Voc'], 'SIR_Voc'), fmt(row['SIR_Ins'], 'SIR_Ins'),
+                fmt(row['SAR_Voc'], 'SAR_Voc'), fmt(row['SAR_Ins'], 'SAR_Ins'),
+                fmt(row['ISR_Voc'], 'ISR_Voc'), fmt(row['ISR_Ins'], 'ISR_Ins')
+            ]
+            lines.append(" & ".join(row_vals) + " \\\\")
+            
+        lines.extend([
+            "\\hline",
+            "\\end{tabular}",
+            "\\end{table}"
+        ])
+        
+        return "\n".join(lines)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Audio Separation Evaluation Pipeline for Thesis Benchmarking")

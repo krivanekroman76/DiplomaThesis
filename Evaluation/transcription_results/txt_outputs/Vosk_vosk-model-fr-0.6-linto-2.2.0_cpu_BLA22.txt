@@ -1,0 +1,29 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+problème calmez-vous tais-toi tais-toi yvette chauffe devons jamais pensé taisez-vous voulez partir en vacances ou pas voilà voilà policier il ne laisse pas facile parce que on était beau mais non t'inquiète t'inquiète on est on est beau on estimait on est tous ensemble ça va aller ça va le faire ok tout le monde se calme ça va le faire je fais identité rapidement s'il vous plaît alpha diallo alpha diallo alpha omega isis neuf deux loulou incertain alpha diallo alpha diallo netteté cela la plastique n'aime pas cela qui face à sa fin je suis moniteur de colonie je ne veux pas savoir à partir du charbon matinée appelez-moi quelques uns à ce que oui ou monsieur vous m'écoutez messieurs messieurs hi hi s'assoie mon pokémon ou quoi tout le monde me regarde a travers mon innocence je pense qu'ils me charment ma maîtresse d'école ma dit que j ai été chez moi mais mon papa lui pourtant se méfie des est-elle fidèle la france est belle belle même regarde de haut comme la tour eiffel mes parents m'ont pas mis au monde pour toucher les aides ai vu que marion m'a souhaité quoi se mais je sais qu'elle je suis français peut-être parce qu'il me trouvait trop laisse-moi juste l'inviter je suis français pharmacie pas si elle me trouve trop laisse-moi juste gymnastique pour mon pays n'ont pas un coup non mais je paie mes impôts moi je pensais pas que l'amour pouvait être un combat à la base je voulais juste lui rendre un hommage je suis tiraillée comme mon grand-père il le sas c'est dommage jolie marianne marianne je préfère ne rien voir quand même doué je t'invite à manger un bonbon menthe tard je savais qu'un jour tu me déclarera daf la haye je suis français peut-être parce qu'il me trouve laide moi je suis vidé je suis
+
+Timestamps:
+0.00s - 1.26s: problème calmez-vous
+1.92s - 5.88s: tais-toi tais-toi yvette chauffe devons jamais pensé taisez-vous voulez partir en vacances ou pas
+6.93s - 9.78s: voilà voilà policier il ne laisse pas facile parce que on était beau
+10.71s - 16.59s: mais non t'inquiète t'inquiète on est on est beau on estimait on est tous ensemble ça va aller ça va le faire ok tout le monde se calme ça va le faire
+17.52s - 21.96s: je fais identité rapidement s'il vous plaît alpha diallo alpha diallo
+22.95s - 31.41s: alpha omega isis neuf deux loulou incertain alpha diallo alpha diallo netteté cela la plastique n'aime pas cela qui face à sa fin
+31.98s - 34.09s: je suis moniteur de colonie je ne veux pas savoir
+34.97s - 37.20s: à partir du charbon matinée
+38.04s - 40.47s: appelez-moi quelques uns à ce que oui ou
+42.18s - 61.65s: monsieur vous m'écoutez messieurs messieurs hi hi s'assoie mon pokémon ou quoi tout le monde me regarde a travers mon innocence je pense qu'ils me charment ma maîtresse d'école ma dit que j ai été chez moi mais mon papa lui pourtant se méfie des est-elle fidèle la france est belle belle même
+61.68s - 63.93s: regarde de haut comme la tour eiffel
+65.01s - 67.71s: mes parents m'ont pas mis au monde pour toucher les aides
+68.91s - 72.83s: ai vu que marion m'a souhaité quoi se mais je sais qu'elle
+73.95s - 75.18s: je suis français
+77.97s - 79.59s: peut-être parce qu'il me trouvait trop
+80.40s - 81.93s: laisse-moi juste l'inviter
+85.16s - 86.34s: je suis français
+88.26s - 92.48s: pharmacie pas si elle me trouve trop
+93.90s - 94.62s: laisse-moi juste
+99.78s - 102.39s: gymnastique pour mon pays n'ont pas un coup
+103.35s - 122.94s: non mais je paie mes impôts moi je pensais pas que l'amour pouvait être un combat à la base je voulais juste lui rendre un hommage je suis tiraillée comme mon grand-père il le sas c'est dommage jolie marianne marianne je préfère ne rien voir quand même doué
+124.80s - 132.05s: je t'invite à manger un bonbon menthe tard je savais qu'un jour tu me déclarera daf la haye
+133.14s - 134.37s: je suis français
+137.01s - 139.68s: peut-être parce qu'il me trouve laide
+139.71s - 145.02s: moi je suis vidé je suis

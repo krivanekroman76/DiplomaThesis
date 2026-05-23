@@ -1,0 +1,42 @@
+Transcription (Model: vosk-model-fr-0.22):
+mademoiselle dites-moi vraiment ce qui s'est passé c'était un voisin si charmant si gentil il avait l'assurance d'un homme incomplet il avait les mots pour nous faire sourire quand on lui confie nos coeurs en débris il me disait souvent qu'avec ça va vivre l'enfer et que tout le mal qu'il avait prévu de bientôt la quitter mais ce soir j'ai compris que nos mains de savoir rentré plus tôt du boulot en ouvrant la porte sa vie a basculé les larmes aux yeux elle se met à crier que fait-on quand on lit des avis cela du lit pour aller à golbey qu'elle se met à le frapper au sol et se met à hurler je te souhaite tout le malheur du pauvre toi mes douleurs de suite jusqu'à l'attend or pour vous le mal que tu m'as fait tu m'auras plus avec vos distances les gens rendez-vous ensuite tu savais combien je t'ai répondu tu ça pourtant si tu savais oui pour danser si tu savais combien je te baise tu savais lui proposer tout ça tu savais que dumas souhaitait une voisine si charmante si gentil avec une femme épanouie les mots pour nous réconforter quand on lui confie nos coeurs brisés elle me disait souvent qu'avec son arme vivez le bonheur chaque seconde qu'elle avait prévu de bientôt se marier j'ai compris que les deux allaient rentrer un peu plus tôt du boulot à nos relations sa vie a basculé les larmes aux yeux à jamais hanté l'idée que cela durait pour aller à l'école pensez à consommer le fera pas tout le temps hurle je te souhaite tout le bonheur du monde des douleurs que c'est juste la peau vous voulez mal que tu m'as fait tu mourras modesto se sont inquiétés de gérer les cours si tu savais combien j'ai répondu tu ça pourtant si tu savais pourtant si tu savais combien je t'aimais si tu savais pourtant utile tu savais marie-claude hum moi j'étais la voisine c'est gentil j'avais tout d'une femme un peu fragile sur le palier j'aimais lui partager les débris de mon petit coeur brisé il m'avait toujours les mots pour me soigner et me disait aussi que je le soigner finit par me dire qu'il m'aimait ce soir j'ai compris que je me mentais quand on est rentré plus tôt du boulot en ouvrant la chambre sa vie a basculé à jamais un inclus dans mon lit déshabillé cela a duré pour aller à golbey elle prend son sac et se met à le frapper autant la l'url je t'envoie tout le malheur du monde que mes douleurs topiques juste à temps pour payer tout le mal que tu mentais tu ne m'auras plus avec de beaux discours sans en question majeure en écho pourtant si tu savais combien moi je j'étais t'aider oui que tu sois content que tu sors oui pour danser si tu savais combien je t'aimais tu savais tu savais danser tu vous tout le mal que tu m'as
+
+Timestamps:
+0.00s - 19.89s: mademoiselle dites-moi vraiment ce qui s'est passé c'était un voisin si charmant si gentil il avait l'assurance d'un homme incomplet il avait les mots pour nous faire sourire quand on lui confie nos coeurs en débris il me disait souvent qu'avec ça va vivre l'enfer et que tout le mal qu'il avait prévu de bientôt la quitter mais ce soir j'ai compris que nos mains de savoir
+20.16s - 25.44s: rentré plus tôt du boulot en ouvrant la porte sa vie a basculé les larmes aux yeux elle se met à crier
+25.74s - 29.70s: que fait-on quand on lit des avis cela du lit pour aller à golbey
+30.43s - 31.83s: qu'elle se met à le frapper
+32.40s - 34.02s: au sol et se met à hurler
+34.89s - 39.21s: je te souhaite tout le malheur du pauvre toi mes douleurs de suite jusqu'à l'attend
+40.02s - 45.18s: or pour vous le mal que tu m'as fait tu m'auras plus avec vos distances
+46.20s - 47.31s: les gens rendez-vous
+49.35s - 52.56s: ensuite tu savais combien je t'ai répondu tu ça
+53.79s - 56.33s: pourtant si tu savais oui pour danser
+57.75s - 59.61s: si tu savais combien je te baise
+60.48s - 62.91s: tu savais lui proposer tout ça
+64.59s - 71.97s: tu savais que dumas souhaitait une voisine si charmante si gentil avec une femme épanouie
+72.57s - 82.32s: les mots pour nous réconforter quand on lui confie nos coeurs brisés elle me disait souvent qu'avec son arme vivez le bonheur chaque seconde qu'elle avait prévu de bientôt se marier
+83.10s - 90.57s: j'ai compris que les deux allaient rentrer un peu plus tôt du boulot à nos relations sa vie a basculé les larmes aux yeux à jamais hanté
+91.71s - 94.74s: l'idée que cela durait pour aller à l'école
+95.01s - 97.39s: pensez à consommer le fera pas tout le temps
+98.70s - 99.27s: hurle
+100.83s - 105.18s: je te souhaite tout le bonheur du monde des douleurs que c'est juste la peau
+107.17s - 109.71s: vous voulez mal que tu m'as fait tu mourras
+110.43s - 113.43s: modesto se sont inquiétés de gérer les cours
+115.41s - 118.50s: si tu savais combien j'ai répondu tu ça
+119.73s - 120.72s: pourtant si tu savais
+121.80s - 125.55s: pourtant si tu savais combien je t'aimais
+126.27s - 128.61s: si tu savais pourtant utile
+130.55s - 131.52s: tu savais
+132.78s - 146.28s: marie-claude hum moi j'étais la voisine c'est gentil j'avais tout d'une femme un peu fragile sur le palier j'aimais lui partager les débris de mon petit coeur brisé il m'avait toujours les mots pour me soigner et me disait aussi que je le soigner
+146.88s - 149.04s: finit par me dire qu'il m'aimait ce soir
+149.07s - 156.51s: j'ai compris que je me mentais quand on est rentré plus tôt du boulot en ouvrant la chambre sa vie a basculé à jamais un inclus
+157.29s - 162.81s: dans mon lit déshabillé cela a duré pour aller à golbey elle prend son sac et se met à le frapper
+163.44s - 165.21s: autant la l'url
+166.89s - 178.41s: je t'envoie tout le malheur du monde que mes douleurs topiques juste à temps pour payer tout le mal que tu mentais tu ne m'auras plus avec de beaux discours sans en question majeure en écho
+179.97s - 182.16s: pourtant si tu savais combien moi je j'étais t'aider
+182.40s - 185.46s: oui que tu sois content que tu sors
+186.51s - 187.17s: oui pour danser
+188.58s - 190.32s: si tu savais combien je t'aimais
+191.31s - 195.36s: tu savais tu savais danser
+195.44s - 198.42s: tu vous tout le mal que tu m'as

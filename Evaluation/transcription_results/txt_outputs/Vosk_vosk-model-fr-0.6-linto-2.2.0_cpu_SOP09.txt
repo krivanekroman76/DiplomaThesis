@@ -1,0 +1,40 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+passe-moi le moment et que je représente tous ces quartiers de france toute cette sentence ce qui supprime la tolérance inégalité des chances toute cette misère que les médias maquis délinquance passe-moi le magret je représente ces femmes de ménage se fait ressentir se fils dans l'usinage c'est bien rigolé frère alcoolisées foyer détruit par le manque de monnaie passe-moi le mal que représente les sans-papiers les exilés les expulser toutes ces familles qui vivent dans l'insalubrité stéphanie colonisé qui voyaient la france comme une terre de liberté passe-moi le maillot je oppressant cet islam de paix cette mixité entre communautés siège du métissage arc-en-ciel tu fais la france a aujourd'hui le plus beau paysage croisements de mailles que je représente sept ce rapport quatre se permettre à la fin ce qui est faux plat c'est pas trop tôt accepter cosmic sais pas plus assedic le mal que je représente cette jeunesse qui empêche de rêver n'est-ce pas besoin d'exprimer sa liberté besoin de s'évader on prend le mic pour se comprendre la parole à la vie à la mort quelle est notre homme représente les quatre couleurs on représente le point levé mais jamais chez nous vu que personne ne paie pour nous représente pas ce que je marrakech je représente chose mike jour mike je représente passeport allemand moins que je représente cette afrique entêté ces français pas encore intégré cette solidarité entre peuples affamés tirailleurs attend encore être indemnisé passe-moi le moment est toujours présent ces coussins tu plais qui font la plonge pour employer tous ceux qui viennent pour faire des études pour l'école alors que pour nous ça reste une enclume que je représente cette file d'attente devant la poste tous les cinq tu vois écoute tout ce qui fait que mes frères dans l'alcool se doit ce type de pouvoir dire policière pour crier parce que moi toujours présent pour ce qu'on ne peut pas entendre ce que où puis-je te faire mon taf quand la télé n'est pas ce télescope pour me voir les stats le mike pour se prend la parole à la vie à la mort quelle est notre présent les douleurs dans les quatre couleurs oppressante le poing levé mais jamais chez nous vu que personne ne paie pour nous représente montez comme sa mère mardi pas la force comment tu représentes sa place mohamed mike je représente pour moi je crois que vous avez euh beaucoup avancé par tout ça vous a fait du bien j'espère j'espère c'est sûr maintenant je vois un peu plus clair je pris conscience de certaines choses ça me fait plaisir et maintenant comment vous voyez l'avenir
+
+Timestamps:
+3.60s - 20.04s: passe-moi le moment et que je représente tous ces quartiers de france toute cette sentence ce qui supprime la tolérance inégalité des chances toute cette misère que les médias maquis délinquance passe-moi le magret je représente ces femmes de ménage se fait ressentir se fils dans l'usinage
+20.22s - 21.09s: c'est bien rigolé
+21.68s - 22.80s: frère alcoolisées
+23.55s - 42.12s: foyer détruit par le manque de monnaie passe-moi le mal que représente les sans-papiers les exilés les expulser toutes ces familles qui vivent dans l'insalubrité stéphanie colonisé qui voyaient la france comme une terre de liberté passe-moi le maillot je oppressant cet islam de paix cette mixité entre communautés
+42.72s - 44.88s: siège du métissage arc-en-ciel tu fais
+45.09s - 51.48s: la france a aujourd'hui le plus beau paysage croisements de mailles que je représente sept ce rapport quatre se permettre
+52.26s - 55.20s: à la fin ce qui est faux plat c'est pas trop tôt accepter
+55.44s - 56.99s: cosmic sais pas plus
+57.75s - 58.47s: assedic
+59.07s - 62.67s: le mal que je représente cette jeunesse qui empêche de rêver
+63.36s - 65.61s: n'est-ce pas besoin d'exprimer sa liberté
+66.57s - 67.56s: besoin de s'évader
+69.72s - 75.21s: on prend le mic pour se comprendre la parole à la vie à la mort quelle est notre homme représente
+76.58s - 78.81s: les quatre couleurs
+79.68s - 84.87s: on représente le point levé mais jamais chez nous vu que personne ne paie pour nous
+85.44s - 88.80s: représente pas ce que je marrakech
+90.06s - 91.62s: je représente chose
+93.75s - 94.41s: mike jour
+95.19s - 104.85s: mike je représente passeport allemand moins que je représente cette afrique entêté ces français pas encore intégré cette solidarité entre peuples affamés
+105.39s - 115.86s: tirailleurs attend encore être indemnisé passe-moi le moment est toujours présent ces coussins tu plais qui font la plonge pour employer tous ceux qui viennent pour faire des études pour l'école
+116.61s - 118.47s: alors que pour nous ça reste une enclume
+119.34s - 128.70s: que je représente cette file d'attente devant la poste tous les cinq tu vois écoute tout ce qui fait que mes frères dans l'alcool se doit ce type de pouvoir dire policière pour crier
+129.63s - 133.82s: parce que moi toujours présent pour ce qu'on ne peut pas entendre ce que
+135.03s - 140.79s: où puis-je te faire mon taf quand la télé n'est pas ce télescope pour me voir les stats le
+140.88s - 145.68s: mike pour se prend la parole à la vie à la mort quelle est notre présent
+146.91s - 149.40s: les douleurs dans les quatre couleurs
+150.48s - 155.46s: oppressante le poing levé mais jamais chez nous vu que personne ne paie pour nous
+156.00s - 156.78s: représente
+160.86s - 161.28s: montez
+164.97s - 165.18s: comme
+167.61s - 171.21s: sa mère mardi
+171.64s - 172.03s: pas
+178.26s - 178.80s: la force
+185.07s - 185.40s: comment
+187.38s - 190.77s: tu représentes
+191.52s - 206.22s: sa place mohamed mike je représente pour moi je crois que vous avez euh beaucoup avancé par tout ça vous a fait du bien j'espère j'espère c'est sûr maintenant je vois un peu plus clair je pris conscience de certaines choses ça me fait plaisir et maintenant comment vous voyez l'avenir

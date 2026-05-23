@@ -1,0 +1,32 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+ça va avoir ma cousine casse-toi non mais vas-y doucement poutine quatre pattes on peut en savoir plus mon coussin quatre bâtons pour vas-y doucement cousine ça va justement poutine le ton non mais vas-y doucement cousine castera tantôt savoir doucement posé il ne casse pas tout non mais vas-y doucement cousine j'imagine que le bloc mais comme je suis thierry on va devoir smith est dans notre famille c'est pas jean-claude justice dise tu vas te casser les zoos et ce n est pas le chien qui parle a demain pour chacune que je te prouvera que fait-on pour elle en fait autant face à lui venait grosse transforme en aura renvoyé la vingt-sept hum juste pour voir si tu te la pète autant on verra si vous avez le même pas dans son réseau attend au modèle actuel laisse le temps toucher la tournée ex même levé repas excuses on exclut peut penser le plus que toute honnêteté la rescousse l'équipe marwan cause applicable mais j'y vais tout doucement posée ne cache pas ton plan mais voici doucement cousine quatre pattes on peut enfin voir ma cousine quatre poissons non mais vas-y doucement cousine savoir justement poutine quatre fois ton non mais vas-y doucement cousine casse pas de complot savoir doucement posé il ne casse pas tout non mais vas-y doucement cousine vous avez des ombres et moi-même j'en perds mes mots oui elles veulent toutes oui elles veulent toutes et justement cousine castera complot et toi doucement position ne casse pas ton coup la dot a rendu fou résultat tu crois que t'as des super-pouvoirs comme mon garçon goku beaucoup beaucoup trop tout ça pour son groupe harry pour rester pro oui même si t'as les crocs fait doucement en plus de cette est venu accompagné ne me dis pas avec elle juste pour les pas allumettes brûlées jusqu'à t'es-tu et je pense que tu vas perdre des plumes dans le cul elle écoutait gars sûr si tu ne veux pas donner garde à vue lors de la remise au bout de deux secondes car il est inchangé le mais va peut-être te donner le cousin tu ne pas nous tient à cœur on peut juste les courts-circuits plus mon cousin ne cache pas ton coup mais voici mon cousin de pas ton coup ça va doucement casse-toi ton mais vas-y doucement ça va plus mon cousin mais voici que mon cousin ne cache pas ton coup ça va plus mon cousin ne casse pas ton coup facile nous souvent cousin vous avez des om et moi-même faisons permet aux vues de londres euh oui elles veulent qu'on les vole les antidouleurs les mains en l'air sur la piste la mode volontaire anti-douleur blaguer sur la piste la mode je l'enterre ouais les mains en l'air sur la piste la volonté a-t-il plaquée sur la piste doucement poser une carte patente non mais vas-y doucement claudine casse-toi on peut savoir gloussements claudine casse-toi complot mais vas-y doucement coutil ça va poutine le temps non mais vas-y doucement posé il ne casse pas ton plan ça va doucement posé il ne casse pas tout non mais vas-y doucement cousine ça va
+
+Timestamps:
+0.00s - 2.03s: ça va avoir ma cousine casse-toi
+2.31s - 7.94s: non mais vas-y doucement poutine quatre pattes on peut en savoir plus mon coussin quatre bâtons pour vas-y doucement cousine
+8.84s - 16.35s: ça va justement poutine le ton non mais vas-y doucement cousine castera tantôt savoir doucement posé il ne casse pas tout non mais vas-y doucement cousine
+19.59s - 27.49s: j'imagine que le bloc mais comme je suis thierry on va devoir smith est dans notre famille c'est pas jean-claude justice dise tu vas te casser les zoos et ce n est pas le chien qui parle
+28.41s - 29.37s: a demain pour chacune
+30.04s - 35.25s: que je te prouvera que fait-on pour elle en fait autant face à lui venait grosse transforme en aura renvoyé la vingt-sept
+35.55s - 46.38s: hum juste pour voir si tu te la pète autant on verra si vous avez le même pas dans son réseau attend au modèle actuel laisse le temps toucher la tournée ex même levé repas excuses on exclut peut penser le plus que toute honnêteté
+47.16s - 49.35s: la rescousse l'équipe marwan cause applicable
+49.71s - 58.92s: mais j'y vais tout doucement posée ne cache pas ton plan mais voici doucement cousine quatre pattes on peut enfin voir ma cousine quatre poissons non mais vas-y doucement cousine
+59.82s - 67.32s: savoir justement poutine quatre fois ton non mais vas-y doucement cousine casse pas de complot savoir doucement posé il ne casse pas tout non mais vas-y doucement cousine
+69.87s - 75.80s: vous avez des ombres et moi-même j'en perds mes mots
+77.94s - 78.78s: oui elles veulent toutes
+80.07s - 80.87s: oui elles veulent toutes
+81.78s - 101.58s: et justement cousine castera complot et toi doucement position ne casse pas ton coup la dot a rendu fou résultat tu crois que t'as des super-pouvoirs comme mon garçon goku beaucoup beaucoup trop tout ça pour son groupe harry pour rester pro oui même si t'as les crocs fait doucement en plus de cette est venu accompagné ne me dis pas avec elle juste pour les pas
+102.40s - 111.00s: allumettes brûlées jusqu'à t'es-tu et je pense que tu vas perdre des plumes dans le cul elle écoutait gars sûr si tu ne veux pas donner garde à vue lors de la remise au bout de deux secondes car il est inchangé
+112.97s - 114.15s: le mais va peut-être te donner
+115.56s - 121.97s: le cousin tu ne pas nous tient à cœur on peut juste les courts-circuits plus mon cousin ne cache pas ton coup mais voici mon cousin de
+122.22s - 123.57s: pas ton coup ça va doucement
+124.11s - 125.70s: casse-toi ton mais vas-y doucement
+127.09s - 128.20s: ça va plus mon cousin
+129.18s - 134.61s: mais voici que mon cousin ne cache pas ton coup ça va plus mon cousin ne casse pas ton coup facile nous souvent cousin
+137.19s - 147.93s: vous avez des om et moi-même faisons permet aux vues de londres euh oui elles veulent qu'on les vole
+148.81s - 162.60s: les antidouleurs les mains en l'air sur la piste la mode volontaire anti-douleur blaguer sur la piste la mode je l'enterre ouais les mains en l'air sur la piste la volonté
+163.29s - 164.91s: a-t-il plaquée sur la piste
+166.14s - 171.72s: doucement poser une carte patente non mais vas-y doucement claudine casse-toi on peut savoir gloussements claudine casse-toi
+171.84s - 173.31s: complot mais vas-y doucement coutil
+174.30s - 181.89s: ça va poutine le temps non mais vas-y doucement posé il ne casse pas ton plan ça va doucement posé il ne casse pas tout non mais vas-y doucement cousine
+182.82s - 183.18s: ça va

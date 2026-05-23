@@ -1,5 +1,8 @@
-python Evaluation/evaluate_transcription.py --clean_run --run_separation --device cuda --tools Whisper --models openai/whisper-large-v3 --whisper_langs auto fr
-python Evaluation/evaluate_transcription.py --device cuda --tools Whisper --models bofenghuang/whisper-large-v2-french --whisper_langs fr
-python Evaluation/evaluate_transcription.py --tools Wav2Vec2 --device cuda
-python Evaluation/evaluate_transcription.py --device cpu --tools Vosk
-python Evaluation/evaluate_transcription.py --device cpu --num_tracks 5 --tools Whisper Wav2Vec2 --models openai/whisper-large-v3 bofenghuang/whisper-large-v2-french jonatasgrosman/wav2vec2-large-xlsr-53-french facebook/wav2vec2-large-xlsr-53-french --whisper_langs fr
+python Evaluation/evaluate_transcription.py --clean_run --run_separation --tools Vosk
+python Evaluation/evaluate_transcription.py --device cuda --tools Wav2Vec2
+python Evaluation/evaluate_transcription.py --device cuda --tools Whisper --models medium large-v3 --whisper_langs fr
+python Evaluation/evaluate_transcription.py --device cuda --tools Whisper --models medium --whisper_langs fr
+python Evaluation/evaluate_transcription.py --device cuda --tools Whisper --models openai/whisper-large-v3
+
+python Evaluation/evaluate_transcription.py --device cpu --num_tracks 5 --tools Wav2Vec2
+python Evaluation/evaluate_transcription.py --device cpu --num_tracks 5 --tools Whisper --models openai/whisper-large-v3 medium --whisper_langs fr

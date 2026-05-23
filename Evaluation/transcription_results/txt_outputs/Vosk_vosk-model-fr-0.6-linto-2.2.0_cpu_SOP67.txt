@@ -1,0 +1,40 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+mademoiselle dites-moi vraiment ce qui s'est passé c'était un voisin si charmant si gentil il avait l'assurance d'un homme incomplet il avait les mots pour nous faire sourire quand on lui confie un coeurs en débris il disait souvent qu'avec ça va vivait l'enfer et que tout allait mal qu'il avait prévu de bientôt la quitter mais ce soir j'ai compris que nous mentait ça va rentré plus tôt du boulot en ouvrant la porte sa vie a basculé les larmes aux yeux elle se met à crier que fait-elle mon lit des habits il se lève du lit pour aller la calmer elle prend son sac et se met à le frapper il tombe au sol et se met à hurler je te souhaite tout le malheur du pôle outre-mer jusqu'à elle pour vous le mal que tu fais tu n'en auras plus beau discours les coups pourtant si tu savais combien moi je te réponds si tu savais pourtant si tu savais pourtant tu savais si tu savais combien je tenais mais pourtant si tu savais si tu savais tu savais claude dumas c'était une voisine si charmante si gentil laver une femme épanouie elle avait les mots pour nous réconforter quand on lui confie nos coeurs brisés elle me disait souvent qu'avec son nom le bonheur à chaque seconde elle avait prévu de bientôt se marier ce soir compris qu élément de rentrer un peu plus tôt du boulot en ouvrant sa vie a basculé les larmes aux yeux les déshabiller pour après son sacre elle se met à le frapper il tombe je te souhaite tout le malheur du monde outre-mer douleur de suite juste à temps pour payer ou le mal que tu mens tu mourras disent tout ce que tu les auras recours si tu savais combien moi je te répondrai si tu savais mais pourtant si tu savais si tu savais si tu savais combien moi je t'ai aimé oui pourtant si tu savais pourtant si tu savais tu savais max claude dumas et moi j'étais la voisine aussi gentil j'avais tout une femme un peu fragile sur le poignet j'aimais lui partager les débris de mon petit coeur brisé il avait toujours les mots pour me soigner et me disais aussi que je l'ai soigné il a fini par me dire qu'il m'aimait mais ne se sent incompris que je me que quand on est rentré plus tôt du boulot hum hum sa vie a basculé mais que fais-tu dans mon lit déshabillé la durée pour aller la calmer elle prend son sac et se met à le frapper il tombe au sol je te souhaite tout le malheur du monde jusqu à va-t'en vous payer tout le mal que tu m'as fait tout le monde aura plu avec tes beaux discours se orchestre pourtant si tu savais combien je t'aimais oui pourtant si tu savais si tu savais si tu savais combien je t'aimais mais pourtant si tu savais pourtant si tu savais pourtant euh vous croyez tu mens
+
+Timestamps:
+0.00s - 19.92s: mademoiselle dites-moi vraiment ce qui s'est passé c'était un voisin si charmant si gentil il avait l'assurance d'un homme incomplet il avait les mots pour nous faire sourire quand on lui confie un coeurs en débris il disait souvent qu'avec ça va vivait l'enfer et que tout allait mal qu'il avait prévu de bientôt la quitter mais ce soir j'ai compris que nous mentait ça va
+20.16s - 26.25s: rentré plus tôt du boulot en ouvrant la porte sa vie a basculé les larmes aux yeux elle se met à crier que fait-elle
+26.43s - 34.02s: mon lit des habits il se lève du lit pour aller la calmer elle prend son sac et se met à le frapper il tombe au sol et se met à hurler
+34.92s - 37.36s: je te souhaite tout le malheur du pôle outre-mer
+38.04s - 38.46s: jusqu'à elle
+41.16s - 43.95s: pour vous le mal que tu fais tu n'en auras plus
+44.46s - 45.21s: beau discours
+46.63s - 51.84s: les coups pourtant si tu savais combien moi je te réponds
+52.08s - 56.16s: si tu savais pourtant si tu savais pourtant
+56.34s - 60.99s: tu savais si tu savais combien je tenais mais pourtant si tu savais
+62.37s - 65.82s: si tu savais tu savais
+67.02s - 70.50s: claude dumas c'était une voisine si charmante si gentil laver
+70.74s - 78.21s: une femme épanouie elle avait les mots pour nous réconforter quand on lui confie nos coeurs brisés elle me disait souvent qu'avec son nom
+78.75s - 83.07s: le bonheur à chaque seconde elle avait prévu de bientôt se marier ce soir
+83.28s - 89.46s: compris qu élément de rentrer un peu plus tôt du boulot en ouvrant sa vie a basculé les larmes aux yeux
+91.70s - 92.64s: les déshabiller
+93.66s - 97.44s: pour après son sacre elle se met à le frapper il tombe
+100.86s - 105.09s: je te souhaite tout le malheur du monde outre-mer douleur de suite juste à temps
+107.10s - 109.69s: pour payer ou le mal que tu mens tu mourras
+110.58s - 113.25s: disent tout ce que tu les auras recours
+115.44s - 117.96s: si tu savais combien moi je te répondrai
+118.08s - 126.90s: si tu savais mais pourtant si tu savais si tu savais si tu savais combien moi je t'ai aimé oui pourtant si tu savais
+128.01s - 129.42s: pourtant si tu savais
+130.56s - 131.43s: tu savais
+132.78s - 152.43s: max claude dumas et moi j'étais la voisine aussi gentil j'avais tout une femme un peu fragile sur le poignet j'aimais lui partager les débris de mon petit coeur brisé il avait toujours les mots pour me soigner et me disais aussi que je l'ai soigné il a fini par me dire qu'il m'aimait mais ne se sent incompris que je me que quand on est rentré plus tôt du boulot
+152.94s - 154.50s: hum hum sa vie a basculé
+155.61s - 158.58s: mais que fais-tu dans mon lit déshabillé
+159.12s - 163.68s: la durée pour aller la calmer elle prend son sac et se met à le frapper il tombe au sol
+166.92s - 168.99s: je te souhaite tout le malheur du monde
+170.09s - 171.57s: jusqu à va-t'en
+172.08s - 176.97s: vous payer tout le mal que tu m'as fait tout le monde aura plu avec tes beaux discours se orchestre
+179.94s - 182.55s: pourtant si tu savais combien je t'aimais oui
+184.61s - 187.86s: pourtant si tu savais si tu savais
+188.58s - 195.27s: si tu savais combien je t'aimais mais pourtant si tu savais pourtant si tu savais pourtant
+195.84s - 197.34s: euh vous croyez
+198.03s - 198.39s: tu mens

@@ -1,0 +1,19 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+j'ai toujours aimé les femmes les blancs d'œuf les bonnement charme les ensorcelés toutes sans exception je savais réveiller leur flamme oui j'aimais jouer aux dames je les utiliser comme des pions je leur promettais des ailes à leur offrait le site j ciel alzheimer mon côté mauvais garçon je jongle avec chacune d'elles passé dont elle a un hôtel sans me rappeler de leur prêt mais un jour la roue a tourné ouais mais on est lui est sorti le grand jeu une garde-robe a dit emil e des roses un état des bijoux fabuleux je voulais finir ma dans et je lui faire des enfants ensemble tu euh oui monsieur pour eux tout ça les mécanos luxe elle possède un talent hôtel de mais quand même de bouteille en bouteille demoiselle n'était fidèle qu'à portefeuille génère pour eux et eux un jour la roue tourne et oui pour date on est pas la la la la la la la la la la fallait bien que ça sujets comme lus toujours pas brûlé aujourd'hui
+
+Timestamps:
+0.54s - 20.16s: j'ai toujours aimé les femmes les blancs d'œuf les bonnement charme les ensorcelés toutes sans exception je savais réveiller leur flamme oui j'aimais jouer aux dames je les utiliser comme des pions je leur promettais des ailes à leur offrait le site j ciel alzheimer mon côté mauvais garçon
+20.34s - 30.48s: je jongle avec chacune d'elles passé dont elle a un hôtel sans me rappeler de leur prêt mais un jour la roue a tourné
+33.33s - 35.91s: ouais mais on est
+41.49s - 52.37s: lui est sorti le grand jeu une garde-robe a dit emil e des roses un état des bijoux fabuleux je voulais finir ma dans et je lui faire des enfants ensemble tu euh oui monsieur
+53.31s - 54.57s: pour eux
+55.67s - 55.96s: tout ça
+57.66s - 58.89s: les mécanos luxe
+62.16s - 70.71s: elle possède un talent hôtel de mais quand même de bouteille en bouteille demoiselle n'était fidèle qu'à portefeuille génère pour eux et eux
+71.55s - 73.50s: un jour la roue tourne et
+76.71s - 78.13s: oui
+79.53s - 80.88s: pour date
+81.16s - 85.83s: on est pas
+87.48s - 91.14s: la la la la la la la la la la
+91.89s - 96.15s: fallait bien que ça sujets comme lus
+100.32s - 102.46s: toujours pas brûlé aujourd'hui

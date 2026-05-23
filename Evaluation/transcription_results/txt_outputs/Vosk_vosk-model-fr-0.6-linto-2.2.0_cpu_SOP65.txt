@@ -1,0 +1,37 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+tout va bien ma vue comme quoi je mens mais tout va bien où dormir cette nuit quand tout va bien ma vie c'est vrai que je ne cours plus sur des nourries avec si tu mets ailleurs d'autres ne connaissent que l infamie que tu voudrais faire plus c'est d'autant plus vrai qu'on fait des allers retours d'autres n'ont pas les moyens de se soigner dans maman ne pleure pas plutôt ou pas même si pas forcément tout va bien pas c'est dedans cette nuit tu vas bien ma vie est hein vrai que je vois moins mes potes mais la solitude c'est vrai etc que court mais contraire de faire des est tu la notre pas mon cas d'autres n'ont pas la force que tu as lu dans ma main ne pleure pas pas un même si pas mais tout va bien je ne serait pas ma vie dedans cette nuit va ma vie amir j'ai adressé quelques mots comme un pansement une pomme pour te remercier de cet amour dont je puisse tout mon courage tu es mon intraveineuse avec toi la vie est un miracle mais te voir c'est malheureux mal vraiment mal au moment mon non non
+
+Timestamps:
+0.05s - 1.62s: tout va bien ma vue
+3.54s - 5.91s: comme quoi je mens
+6.09s - 7.08s: mais tout va bien
+9.90s - 14.19s: où dormir cette nuit quand tout va bien ma vie
+15.90s - 18.30s: c'est vrai que je ne cours plus
+21.04s - 21.79s: sur des
+22.83s - 29.80s: nourries avec si tu mets ailleurs d'autres ne connaissent que l infamie
+30.66s - 32.67s: que tu voudrais faire plus
+32.88s - 38.13s: c'est d'autant plus vrai qu'on fait des allers retours
+39.12s - 47.87s: d'autres n'ont pas les moyens de se soigner dans maman ne pleure pas plutôt ou pas
+51.24s - 54.90s: même si pas forcément tout va bien
+59.36s - 59.72s: pas
+64.41s - 65.34s: c'est dedans
+65.70s - 66.81s: cette nuit
+67.44s - 70.74s: tu vas bien ma vie est hein
+71.28s - 74.43s: vrai que je vois moins mes potes mais
+75.90s - 77.25s: la solitude
+77.79s - 78.78s: c'est vrai etc
+79.53s - 85.14s: que court mais contraire de faire des est tu
+86.61s - 89.67s: la notre
+91.93s - 93.54s: pas mon cas
+94.53s - 102.24s: d'autres n'ont pas la force que tu as lu dans ma main ne pleure pas
+102.99s - 107.73s: pas un même si pas
+109.62s - 110.58s: mais tout va bien
+114.06s - 115.28s: je ne serait pas
+117.60s - 121.02s: ma vie dedans
+121.38s - 122.46s: cette nuit
+123.17s - 124.56s: va ma vie
+124.98s - 143.31s: amir j'ai adressé quelques mots comme un pansement une pomme pour te remercier de cet amour dont je puisse tout mon courage tu es mon intraveineuse avec toi la vie est un miracle mais te voir c'est malheureux
+145.78s - 148.08s: mal vraiment mal
+149.01s - 150.23s: au moment
+153.30s - 155.14s: mon
+156.64s - 157.23s: non non

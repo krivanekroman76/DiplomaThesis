@@ -1,0 +1,16 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+papa je ne trouve pas le sommeil je me suis couchée après le soleil j'aimerais que tu me racontes une histoire quand tu n'es pas là je me sens bizarre dehors j'y ai vu un monsieur par terre comme si il n'avait pas de maison je croyais que le monde il était parfait rassure-moi dis-moi que j'ai raison j'aime pas la télé que tu regardes la dame qui parle elle ne rigole pas allons parler pendant mon repas mais moi je veux rêver je veux être quoi je ferme les yeux les merveilles de ce monde mon fils demain y a école il faut que tu sois en forme le matin quand le réveil sonne papa n'est jamais très loin je serai toujours là pour toi maman en été et moi oui y a des gens qui n'ont pas de maison la chance faut qu'il sache d'ailleurs non le monde n'est pas parfait mais on compte sur vous demain faudra le monde meilleur tu peux tu beaucoup ri ouais tu sais tout peut changer la donne si vous voulez découvrir les merveilles de ce monde j espère mon fils sur quoi tu le sais tu montes pour dumont
+
+Timestamps:
+0.00s - 19.80s: papa je ne trouve pas le sommeil je me suis couchée après le soleil j'aimerais que tu me racontes une histoire quand tu n'es pas là je me sens bizarre dehors j'y ai vu un monsieur par terre comme si il n'avait pas de maison je croyais que le monde il était parfait rassure-moi dis-moi que j'ai raison j'aime pas la télé que tu regardes la dame qui parle elle ne rigole pas
+20.16s - 23.74s: allons parler pendant mon repas mais moi je veux rêver je veux être quoi
+26.18s - 27.15s: je ferme les yeux
+29.04s - 30.69s: les merveilles de ce monde
+37.20s - 46.92s: mon fils demain y a école il faut que tu sois en forme le matin quand le réveil sonne papa n'est jamais très loin je serai toujours là pour toi maman en été et moi oui y a des gens qui n'ont pas de maison
+47.58s - 54.90s: la chance faut qu'il sache d'ailleurs non le monde n'est pas parfait mais on compte sur vous demain faudra le monde meilleur tu peux tu
+56.67s - 60.54s: beaucoup ri ouais tu sais tout peut changer la donne
+61.47s - 66.75s: si vous voulez découvrir les merveilles de ce monde j espère mon fils
+67.41s - 69.12s: sur quoi tu le sais
+76.46s - 76.83s: tu montes
+79.92s - 80.13s: pour
+87.84s - 88.20s: dumont

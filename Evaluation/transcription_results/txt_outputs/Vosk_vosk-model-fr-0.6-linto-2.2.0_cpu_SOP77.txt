@@ -1,0 +1,33 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+a raccroche korian a plus d'unité la mienne a du réseau illimité ça déchire comme t'as pas idée comme la famille hallyday sur blanc en europe et qui arya stark si tu me fais la guerre chez moi ils sont frères comme les porterai chez toi ils sont frères comme les camps la guerre vous rappeler le protéiné la technique où tout et il ne faut pas de thème pour aller tu peux me flirter enfarinée par le grand talent de l'agenda était bouché appelle-moi ferdinand pousser la chansonnette fois on y était merci à papa ma égard bientôt vingt ans que je suis à la mode je les entends chanter sur les ondes merci qui merci papa oh la la oh la oh la la oh la la oh la oh la la oh la la la le mélo ça me connaît ça me connait des couplets à couper le souffle les tests assaisonner comme ca légumes ne m'a pas vu arriver sopra le gentil à tout prix à tout le monde levez-vous de mon chemin je n ai plus rien à prouver plus rien à foutre de vos habits de moto ça ne me parle pas des premiers chiffres de mode de ne de cessez-le-feu plus danser jacqueline enfants on a mis plus personne me fait rêver pour les voyous alors qu'on la connaît parfaitement remplir maintenant pas vraiment car tu n auras jamais bientôt vingt ans que je suis à la je les entends chanter sur les ondes merci qui merci papa sont là oh la la oh la oh la la la la la oh la oh la la oh la la la appelle-moi papa mon papa mon papa soit appelle-moi papa petit petit e petit e oh la la petit à petit la la
+
+Timestamps:
+0.00s - 1.35s: a raccroche
+1.47s - 4.47s: korian a plus d'unité la mienne a du réseau illimité
+5.04s - 6.30s: ça déchire comme t'as pas idée
+6.96s - 8.10s: comme la famille hallyday
+8.76s - 17.13s: sur blanc en europe et qui arya stark si tu me fais la guerre chez moi ils sont frères comme les porterai chez toi ils sont frères comme les camps la guerre vous rappeler le protéiné
+17.70s - 26.34s: la technique où tout et il ne faut pas de thème pour aller tu peux me flirter enfarinée par le grand talent de l'agenda était bouché appelle-moi ferdinand
+27.06s - 29.49s: pousser la chansonnette fois on y était merci à papa
+30.18s - 31.26s: ma égard
+31.83s - 34.95s: bientôt vingt ans que je suis à la mode
+35.52s - 38.70s: je les entends chanter sur les ondes
+39.39s - 41.16s: merci qui merci papa
+42.15s - 44.86s: oh la la oh la oh la la
+45.54s - 49.95s: oh la la oh la oh la la oh la la la
+52.32s - 53.76s: le mélo ça me connaît
+54.90s - 57.99s: ça me connait des couplets à couper le souffle les tests
+58.56s - 59.88s: assaisonner comme ca
+60.36s - 61.95s: légumes ne m'a pas vu arriver
+63.18s - 64.98s: sopra le gentil à tout prix à tout le monde
+66.06s - 74.02s: levez-vous de mon chemin je n ai plus rien à prouver plus rien à foutre de vos habits de moto ça ne me parle pas des premiers chiffres de mode de ne de cessez-le-feu plus danser jacqueline enfants
+74.82s - 79.41s: on a mis plus personne me fait rêver pour les voyous alors qu'on la connaît parfaitement remplir maintenant
+79.92s - 81.54s: pas vraiment car tu n auras jamais
+83.61s - 86.04s: bientôt vingt ans que je suis à la
+87.24s - 90.39s: je les entends chanter sur les ondes
+91.03s - 102.89s: merci qui merci papa sont là oh la la oh la oh la la la la la oh la oh la la oh la la la
+103.44s - 104.14s: appelle-moi papa
+105.57s - 109.59s: mon papa mon papa soit appelle-moi papa
+110.82s - 114.39s: petit petit e petit e oh la la
+115.83s - 116.57s: petit à petit
+117.36s - 118.11s: la la

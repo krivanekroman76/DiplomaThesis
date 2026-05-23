@@ -1,0 +1,56 @@
+Transcription (Model: vosk-model-fr-0.22):
+alléluia alléluia nos empreintes baba nos sommes ben j'ai toujours été le même si toujours est-elle la même j'étais toujours resté pour un week end ma première sacem va-t'en au dessus de la mêlée je ne vais pas m'arrêter je sais que je devrais l'essayer mais je n'ai fait que l'adresser car j'ai ça dans la haie je ne peux pas faire autrement je ne sais pas faire d'une seule main je les entends me taillait normal notre collègue jean-marc j'ai dû hériter de la baraka de mon voisin nadine dans la baraque à une décennie de troisième et coderre tourné à la gareth bale les célèbres afin de leur donner la tournée quand en balade au dernier chez leur carrière je n'ai pas tourné la page jamais j'ai plutôt permet d'aller mélanger les genres depuis tellement d'années qu'il n'arrive plus ensuite donc obligé ce soir de leur expliquer ce qui leur arrive bien aux autres ou comme diego dans l'abandonner comme ça avance pas anodin lorsqu'un bien change chance on bien rentrer dans l'alena à terre comme dans l'abandon pas anodin la tempête dans l'allée je joue plus je crois deux ans d'anthologie plus ensemble tu peux vos émotions me semblent commencer peloton plombe tous les jours j'ai toujours voulu qu'on en parle selon son propos tout dans le bon sens qu'on porte en a qui ont mon collègue tout ce que tu nous embraser food stoll montagne a jamais à la main deux nanas à jamais alors ma nous aurons comme diego la bombe en erreur comme ça avance pas anodin lorsqu'un bien change champs sont bien rentrés dans l'alena à terre comme dans l'abandon n'est pas anodin pays on va rentrer dans l'allée donc j'en sors ou pas c'est le son qui en plus ça roule bobo la philosophie de leur innocence veux ça ou pas pêcheurs au bord de mer lors de la zone jamais entendu à la main jamais alors ma nous aurons comme diego dans l'abandon et comme ça avance pas anodin lorsqu'un bien on vient rentrer dans l'alena un thèse comme dit dans la rafael nadal a grimpé dans l'alena maya
+
+Timestamps:
+0.84s - 2.82s: alléluia alléluia
+4.74s - 6.42s: nos empreintes baba
+8.22s - 8.76s: nos sommes
+10.80s - 11.67s: ben
+12.75s - 15.48s: j'ai toujours été le même si toujours est-elle la même
+16.29s - 26.19s: j'étais toujours resté pour un week end ma première sacem va-t'en au dessus de la mêlée je ne vais pas m'arrêter je sais que je devrais l'essayer mais je n'ai fait que l'adresser car j'ai ça dans la haie
+27.03s - 29.79s: je ne peux pas faire autrement je ne sais pas faire d'une seule main
+30.57s - 36.00s: je les entends me taillait normal notre collègue jean-marc j'ai dû hériter de la baraka de mon voisin
+36.24s - 55.86s: nadine dans la baraque à une décennie de troisième et coderre tourné à la gareth bale les célèbres afin de leur donner la tournée quand en balade au dernier chez leur carrière je n'ai pas tourné la page jamais j'ai plutôt permet d'aller mélanger les genres depuis tellement d'années qu'il n'arrive plus ensuite donc obligé ce soir de leur expliquer ce qui leur arrive bien aux autres
+56.40s - 58.65s: ou comme diego dans l'abandonner
+60.39s - 66.15s: comme ça avance pas anodin lorsqu'un bien change chance on bien rentrer dans l'alena
+67.11s - 69.21s: à terre
+71.10s - 72.69s: comme dans l'abandon
+74.22s - 75.57s: pas anodin la tempête
+76.83s - 77.55s: dans l'allée
+80.91s - 82.59s: je joue plus je crois
+83.07s - 85.23s: deux ans d'anthologie
+85.50s - 86.64s: plus ensemble
+86.64s - 87.12s: tu peux
+88.35s - 90.12s: vos émotions me semblent commencer
+90.90s - 92.19s: peloton plombe tous les jours
+92.94s - 94.14s: j'ai toujours voulu qu'on en parle
+95.22s - 99.15s: selon son propos tout dans le bon sens
+99.93s - 102.03s: qu'on porte en a qui ont mon collègue
+102.39s - 105.18s: tout ce que tu nous embraser
+105.84s - 106.74s: food stoll
+107.76s - 108.42s: montagne
+109.50s - 111.39s: a jamais
+112.08s - 113.00s: à la main
+115.74s - 118.08s: deux nanas à jamais
+118.83s - 120.60s: alors ma
+122.79s - 125.43s: nous aurons comme diego
+125.67s - 126.87s: la bombe en erreur
+127.74s - 133.32s: comme ça avance pas anodin lorsqu'un bien change champs sont bien rentrés dans l'alena
+134.40s - 136.32s: à terre
+138.27s - 142.47s: comme dans l'abandon n'est pas anodin pays
+142.89s - 144.49s: on va rentrer dans l'allée
+147.69s - 154.02s: donc j'en sors ou pas c'est le son qui en plus ça roule bobo
+156.03s - 157.02s: la philosophie
+157.65s - 158.79s: de leur innocence
+162.81s - 164.70s: veux ça ou pas
+166.41s - 168.78s: pêcheurs au bord de mer
+172.20s - 172.95s: lors de la zone
+177.78s - 179.94s: jamais entendu à la main
+184.92s - 185.46s: jamais
+186.18s - 187.35s: alors ma
+189.96s - 199.02s: nous aurons comme diego dans l'abandon et comme ça avance pas anodin lorsqu'un bien on vient rentrer dans l'alena
+200.16s - 201.93s: un thèse
+203.79s - 204.90s: comme dit dans la
+206.07s - 207.72s: rafael nadal a grimpé
+209.01s - 210.15s: dans l'alena
+212.34s - 212.76s: maya

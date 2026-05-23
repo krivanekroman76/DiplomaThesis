@@ -1,0 +1,33 @@
+Transcription (Model: vosk-model-fr-0.22):
+l'argot de cierges elle veut te faire tomber dans un piège c'est quoi le del même les uns vis à vis d'elle ou qui est toujours sûr de toi me guide et tu crois que c'est sa première fois qu'est-ce que la vie est belle de chez morel a besoin d'aide dans un débat comme ça tu vas te faire mal au dos et tu l'as eu dans la danse on fait les ninjas elle est connue dans le game on a laissé le maître un élève de tels engagements des risques elle va te rendre seul la paix est le dernier de la liste la ville de rennes mel d en énergie elle peut engager des risques elle va te rendit seul sur la piste le dernier d'aller l'argot de siège elle veut te faire tomber dans un piège c'est quoi le del même les uns vis à vis d'elle où donc il est toujours sûr de toi et tu refaisais sa première fois que devient-il style de cv moderne a besoin d'aide elle vient du bandeau elle est belle mais elle est dingue elle est effrayée par les blindés devoir passer des flingues c'est la base de sa bande soglo te fait bander son tanga ou blesser un enfant de mangue parce que mon garçon n'est pas la seule bombe laisse-la dans un monde d'aller voir mes grands-parents il est toujours sûr de toi et je crois que c'est sa première fois qu'est-ce que des listes de tuer les mauvaises raid c'est quoi le dell c'est quoi le del c'est c'est quoi le que veulent
+
+Timestamps:
+0.00s - 1.38s: l'argot de cierges
+2.37s - 4.68s: elle veut te faire tomber dans un piège
+5.73s - 7.17s: c'est quoi le del
+7.74s - 10.23s: même les uns vis à vis d'elle
+11.19s - 14.88s: ou qui est toujours sûr de toi me guide
+15.12s - 25.20s: et tu crois que c'est sa première fois qu'est-ce que la vie est belle de chez morel a besoin d'aide dans un débat comme ça
+26.49s - 28.92s: tu vas te faire mal au dos et tu l'as eu dans la danse
+30.03s - 31.83s: on fait les ninjas
+32.79s - 33.87s: elle est connue dans le game
+36.09s - 39.30s: on a laissé le maître
+39.84s - 44.04s: un élève de tels engagements des risques elle va te rendre seul
+44.22s - 46.83s: la paix est le dernier de la liste la ville de rennes
+47.55s - 55.53s: mel d en énergie elle peut engager des risques elle va te rendit seul sur la piste le dernier d'aller l'argot de siège
+56.43s - 58.86s: elle veut te faire tomber dans un piège
+59.73s - 61.23s: c'est quoi le del
+63.03s - 65.52s: même les uns vis à vis d'elle
+67.14s - 69.75s: où donc il est toujours sûr de toi
+71.04s - 73.65s: et tu refaisais sa première fois
+74.47s - 79.83s: que devient-il style de cv moderne a besoin d'aide
+85.44s - 93.36s: elle vient du bandeau elle est belle mais elle est dingue elle est effrayée par les blindés devoir passer des flingues c'est la base de sa bande soglo te fait bander
+93.87s - 96.12s: son tanga ou blesser un enfant de mangue
+96.84s - 101.73s: parce que mon garçon n'est pas la seule bombe laisse-la dans un monde d'aller voir mes grands-parents
+102.24s - 103.92s: il est toujours sûr de toi
+105.36s - 112.53s: et je crois que c'est sa première fois qu'est-ce que des listes de tuer les mauvaises
+113.40s - 115.65s: raid c'est quoi le dell
+118.44s - 119.91s: c'est quoi le del
+122.73s - 123.17s: c'est
+127.02s - 127.95s: c'est quoi le
+129.33s - 130.98s: que veulent

@@ -1,0 +1,28 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+les années panser les plaies sont toujours aussi sont eux qui nous manque donc la nuit je continue de rouler eux tous mes profs indian mountain notons pas ramené euh embrassent non plus je rejoins ton ciel étoilé eux et si les mentalités n'ont pas euh la guerre pour les mêmes raisons qu'au siècle dernier euh victor newman mais il manque euh euh regretter son rayonnement dans l'eau euh soir soir soir soir soir oui encore une fois a la tête sous l'eau sous l'eau la partager avec tous mes fantômes tomber on parle de tout de rien comme on le faisait dans le passé le jour je prends soin tout ce qu'ils ont toujours aimé mais mais mais oui le jour je prends soin le coeur sur la main j'ai peur de le faire tomber euh peur pour les petits quand je vois le monde évoluer eux l'argent le succès appelée paranoïa euh en parlant des petits grandissent si tu les voyais plus tu grandis plus la vie devient plus compliqué les relations des sentiments sais plus quoi penser plus déçu de moi que les autres en réalité euh c'est fou comme tes conseils me manquent quand je me sens blessée et euh encore une fois parler fort au sol au sport au sol oui encore une fois soir soir avec la tête sous l'eau sous l'eau partager quoi faire avec tous mes fonds comme dns on parle de tout de rien comme on le faisait dans le passé le jour je prends soin ils ont toujours aimé mais mais mais oui jour je prends soin a chacun sa main nous de trop oui on sait que la main de trop oui
+
+Timestamps:
+0.00s - 14.40s: les années panser les plaies sont toujours aussi sont eux qui nous manque donc la nuit je continue de rouler eux tous mes profs indian mountain notons pas ramené euh embrassent non plus je rejoins ton ciel étoilé eux et si les mentalités n'ont pas
+15.60s - 20.31s: euh la guerre pour les mêmes raisons qu'au siècle dernier euh victor newman
+21.21s - 24.57s: mais il manque euh euh regretter son rayonnement dans l'eau
+26.22s - 26.73s: euh
+28.28s - 32.04s: soir soir soir soir soir
+33.81s - 35.07s: oui encore une fois
+37.21s - 39.24s: a la tête sous l'eau sous l'eau
+40.92s - 44.40s: la partager avec tous mes fantômes tomber
+46.05s - 49.17s: on parle de tout de rien comme on le faisait dans le passé
+50.01s - 58.89s: le jour je prends soin tout ce qu'ils ont toujours aimé mais mais mais oui le jour je prends soin
+61.53s - 80.40s: le coeur sur la main j'ai peur de le faire tomber euh peur pour les petits quand je vois le monde évoluer eux l'argent le succès appelée paranoïa euh en parlant des petits grandissent si tu les voyais plus tu grandis plus la vie devient plus compliqué les relations des sentiments sais plus quoi penser
+81.39s - 87.09s: plus déçu de moi que les autres en réalité euh c'est fou comme tes conseils me manquent quand je me sens blessée
+87.60s - 88.53s: et euh
+89.52s - 90.21s: encore une fois
+92.31s - 94.59s: parler fort au sol au sport au sol
+95.46s - 96.75s: oui encore une fois
+97.76s - 101.16s: soir soir avec la tête sous l'eau sous l'eau
+104.70s - 108.06s: partager quoi faire avec tous mes fonds comme dns
+109.14s - 112.29s: on parle de tout de rien comme on le faisait dans le passé
+112.86s - 114.72s: le jour je prends soin
+116.43s - 121.74s: ils ont toujours aimé mais mais mais oui jour je prends soin
+125.49s - 127.08s: a chacun sa main nous
+127.20s - 128.55s: de trop oui
+129.84s - 134.73s: on sait que la main de trop oui

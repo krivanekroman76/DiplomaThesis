@@ -1,0 +1,20 @@
+Transcription (Model: vosk-model-fr-0.22):
+je suis l'équilibriste sur un fil chaque jour que dieu fait je dois gérer mon vertige j'apprends la brise des tempêtes et les crises comme secours notre histoire m'a manqué un sourire contre vents et marées je cherche la stabilité sur ce grand balancier qu'on appelle la l'a vue dans ce magnifique désir que je joue le trapéziste je joue avec le risque de tomber dans l'oubli j'ai peur du vide sur des fédéraux j'ai pas la horde au quotidien la stabilité de leurs désirs et leurs besoins leur bonheur leur chagrin deux ans d'abattre mes rêves dans mes déceptions et mes peines avec la peur d'être découvert avec l'envie de tout comprendre ce sont mes choix l'amour et ses émois battent toutes ces relations humaines aux de corps on doit battre le temps mais toutes mes sentiments mes fantômes du passé mes besoins les épreuves de la vie budgétaire ne pas d'autant plus rattrape nos moyens comment veux-tu que je n'avais pas osé tu n'es pas là j'ai peur du vide sur un cv je ne résiste pas à la pesanteur de la vie oui je suis la télé durant les congés job comment es-tu arrivé à canton où va-t-on en fermant les yeux sur la cruauté des radios me j'y arriverai en temps voulu dans les deux ans suivant la ça vous dit
+
+Timestamps:
+0.00s - 20.16s: je suis l'équilibriste sur un fil chaque jour que dieu fait je dois gérer mon vertige j'apprends la brise des tempêtes et les crises comme secours notre histoire m'a manqué un sourire contre vents et marées je cherche la stabilité sur ce grand balancier qu'on appelle
+20.28s - 28.59s: la l'a vue dans ce magnifique désir que je joue le trapéziste je joue avec le risque de tomber dans l'oubli
+29.28s - 33.78s: j'ai peur du vide sur des fédéraux
+34.59s - 37.89s: j'ai pas la horde
+40.83s - 53.88s: au quotidien la stabilité de leurs désirs et leurs besoins leur bonheur leur chagrin deux ans d'abattre mes rêves dans mes déceptions et mes peines avec la peur d'être découvert avec l'envie de tout comprendre
+54.48s - 67.41s: ce sont mes choix l'amour et ses émois battent toutes ces relations humaines aux de corps on doit battre le temps mais toutes mes sentiments mes fantômes du passé mes besoins
+69.69s - 75.33s: les épreuves de la vie budgétaire ne pas d'autant plus rattrape nos moyens
+76.62s - 82.29s: comment veux-tu que je n'avais pas osé tu n'es pas là
+83.52s - 87.39s: j'ai peur du vide sur un cv
+88.29s - 95.97s: je ne résiste pas à la pesanteur de la vie oui je suis la télé
+99.21s - 101.28s: durant les congés job
+101.49s - 103.62s: comment es-tu arrivé à canton
+104.61s - 106.44s: où va-t-on
+106.98s - 114.12s: en fermant les yeux sur la cruauté des radios me j'y arriverai en temps voulu
+116.34s - 117.84s: dans les deux ans suivant la
+118.56s - 119.82s: ça vous dit

@@ -1,0 +1,36 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+euh douceur ce nom mais un homme d'état enfants ben euh hum hum tu face aux qu'un jour quant au sfr le tatou sacrifier s'il te plaît s'il comme pas dans le coup on ne cherche pas un homme prêt à tout assumer tes rondeurs humeur terre ben la pas là tu sais asos tu vois depuis l'hôtel mahomet dans tes bras le bouquet ne veux pas toi si tu veux le bon et pouvoir lui dire oui oh oui alain mais on a fait des les morts non non tout ça non maman mais pas que pas que qui y t prête à tout sacrifier dans le commune couronne euh tu sais un vrai tout par terre goûtez aux ah n'es pas là tu cherches un homme la le départ de paul gora quoi on doit compter bella je ne doute pas de toi gora vers toi dora j'aimerais raconter cherche la
+
+Timestamps:
+0.09s - 1.68s: euh douceur ce nom
+2.27s - 4.56s: mais un homme d'état enfants
+4.89s - 10.66s: ben euh hum hum tu face aux qu'un jour quant au sfr
+11.07s - 13.53s: le tatou sacrifier
+14.13s - 17.40s: s'il te plaît s'il comme
+18.45s - 25.32s: pas dans le coup on ne cherche pas un homme prêt à tout assumer tes rondeurs
+26.01s - 27.45s: humeur terre
+27.99s - 28.47s: ben
+30.60s - 32.61s: la
+35.97s - 38.16s: pas là tu sais
+40.74s - 44.61s: asos tu vois depuis l'hôtel
+45.06s - 48.72s: mahomet dans tes bras le bouquet ne veux pas toi
+48.81s - 54.96s: si tu veux le bon et pouvoir lui dire oui oh oui alain mais on a fait des les morts
+56.28s - 61.38s: non non tout ça non maman mais pas que pas que qui y t
+61.47s - 62.88s: prête à tout sacrifier
+64.44s - 67.08s: dans le commune
+68.42s - 69.15s: couronne
+69.90s - 70.95s: euh tu sais
+71.70s - 72.48s: un vrai
+73.45s - 77.13s: tout par terre
+77.37s - 80.22s: goûtez aux
+81.56s - 83.07s: ah
+85.83s - 86.77s: n'es pas là
+87.84s - 89.19s: tu cherches un homme
+92.88s - 96.75s: la le départ de paul gora
+97.92s - 98.34s: quoi
+99.33s - 100.71s: on doit compter bella
+101.28s - 104.31s: je ne doute pas de toi gora
+105.09s - 106.62s: vers toi dora
+107.04s - 108.00s: j'aimerais raconter
+113.43s - 113.91s: cherche
+122.61s - 125.04s: la

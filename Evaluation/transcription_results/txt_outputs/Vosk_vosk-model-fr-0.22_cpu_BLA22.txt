@@ -1,0 +1,29 @@
+Transcription (Model: vosk-model-fr-0.22):
+problème calmez-vous pour toi et lecture de vos voisins pensez taisez-vous voulez partir en vacances ou quoi voilà voilà un policier ne laisse pas passer parce qu'on est pas beau notre équipe qui est tournée on est beau et stylé on est tous ensemble ça va aller ça va le faire ok tout le monde se calme ça va je vais identité rapidement s'il vous plaît alpha diallo alpha diallo alpha omega easy neuf deux aux loulous incertaine alpha diallo alpha diallo neuf cela semble si simple papa papa monsieur je suis moniteur de colonie je ne veux pas savoir je vous dis que vous avez un coin du jardin mathilde charon appelez-moi quelqu'un là que oui ou loulou mais si vous m'écoutez monsieur messieurs transformant pokémon où tout le monde me regarde à travers mon innocent je pense qu'il me charme ma maîtresse d'école m'a dit que j'étais chez moi mais mon papa lui pourtant se méfie d'elle est infidèle la france est belle elle me regarde de haut comme la tour eiffel mes parents m'ont pas mis au monde pour toucher les aides les aides j'ai vu que marion ma dignité mais je sais qu'elle m'aime je suis français moyen c'est peut-être parce qu'il me trouve trop et juste l'envie de danser je veux l'ambiance je suis français voyager en asie parce qu'il me trouve transat ou laisse-moi juste de l'inviter à danser je vais bien stéphanie j'ai une astuce pour mon pays un coup bim mais je peux pas t'en parler là mais je paye mes impôts moi je pensais pas que l'amour pouvait être un combat à la base je voulais juste lui rendre un hommage je suis tiraillé comme mon grand-père ils le savent dommage joli marianne marianne je préfère ne rien voir comme amadou et mariam rien je t'ai invite à manger un bonbon ou un petit matin tard je sais qu'un jour dieu me déclarera dave la haie je suis français et marielle macé c'est peut-être parce qu'il me trouve trop bon et laisse moi juste l'envie de danser je vais l'ambiance je suis français nous sommes assez en vedette
+
+Timestamps:
+0.00s - 1.23s: problème calmez-vous
+2.07s - 5.88s: pour toi et lecture de vos voisins pensez taisez-vous voulez partir en vacances ou quoi
+6.96s - 9.78s: voilà voilà un policier ne laisse pas passer parce qu'on est pas beau
+10.83s - 16.31s: notre équipe qui est tournée on est beau et stylé on est tous ensemble ça va aller ça va le faire ok tout le monde se calme ça va
+17.52s - 21.96s: je vais identité rapidement s'il vous plaît alpha diallo alpha diallo
+22.92s - 41.31s: alpha omega easy neuf deux aux loulous incertaine alpha diallo alpha diallo neuf cela semble si simple papa papa monsieur je suis moniteur de colonie je ne veux pas savoir je vous dis que vous avez un coin du jardin mathilde charon appelez-moi quelqu'un là que oui ou loulou
+42.18s - 44.16s: mais si vous m'écoutez monsieur messieurs
+44.88s - 60.27s: transformant pokémon où tout le monde me regarde à travers mon innocent je pense qu'il me charme ma maîtresse d'école m'a dit que j'étais chez moi mais mon papa lui pourtant se méfie d'elle est infidèle la france est belle
+60.96s - 63.93s: elle me regarde de haut comme la tour eiffel
+65.01s - 70.08s: mes parents m'ont pas mis au monde pour toucher les aides les aides j'ai vu que marion ma dignité
+70.83s - 76.35s: mais je sais qu'elle m'aime je suis français moyen
+77.28s - 80.28s: c'est peut-être parce qu'il me trouve trop et
+80.88s - 82.95s: juste l'envie de danser
+83.52s - 84.45s: je veux l'ambiance
+85.32s - 86.61s: je suis français
+87.87s - 89.04s: voyager en asie
+91.16s - 97.77s: parce qu'il me trouve transat ou laisse-moi juste de l'inviter à danser je vais bien
+99.15s - 100.95s: stéphanie j'ai une astuce pour mon pays
+101.85s - 102.84s: un coup bim
+103.56s - 116.10s: mais je peux pas t'en parler là mais je paye mes impôts moi je pensais pas que l'amour pouvait être un combat à la base je voulais juste lui rendre un hommage je suis tiraillé comme mon grand-père ils le savent
+117.18s - 124.65s: dommage joli marianne marianne je préfère ne rien voir comme amadou et mariam rien
+124.80s - 141.99s: je t'ai invite à manger un bonbon ou un petit matin tard je sais qu'un jour dieu me déclarera dave la haie je suis français et marielle macé c'est peut-être parce qu'il me trouve trop bon et laisse moi juste l'envie de danser
+142.56s - 143.46s: je vais l'ambiance
+144.42s - 145.74s: je suis français
+146.40s - 150.09s: nous sommes assez en vedette

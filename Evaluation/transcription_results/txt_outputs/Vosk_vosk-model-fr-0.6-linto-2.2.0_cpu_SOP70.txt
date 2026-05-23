@@ -1,0 +1,23 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+je suis le ténébreux est jeune chat sur un fil chaque jour que dieu fait je crois je raymond robert t s affrontent la brise les tempêtes et les crises comme ce clown triste hein mama qui a essorer contre vents et marées la stabilité sur ce grand balancier qu on appelle la vie dans ce magnifique cirque se joue le trapèze existe se joue avec le risque de tomber dans l'oubli peur sur pas ça là la jungle quotidien avec la stabilité demi-heure avec leurs désirs et leurs besoins avec leur bonheur leur chagrin je sens mais avec mes déceptions et mes peines la peur d'être découvert avec l'envie de tout foutre ce sont mes choix et moi tout à zéro quand je jongle avec le temps avec toutes mes sentiments mes enfants comme adultes passé avec mes joueurs tu veux pas je t'en prie comment veux-tu que je n ecoute sais pas surtout si tu n'es pas là c'est sur pas ça là oui je suis je suis fil ben oui je fais mes actes sur un fil accroché oui je suivant la courbe
+
+Timestamps:
+0.00s - 15.87s: je suis le ténébreux est jeune chat sur un fil chaque jour que dieu fait je crois je raymond robert t s affrontent la brise les tempêtes et les crises comme ce clown triste hein mama qui a essorer contre vents et marées
+16.59s - 28.56s: la stabilité sur ce grand balancier qu on appelle la vie dans ce magnifique cirque se joue le trapèze existe se joue avec le risque de tomber dans l'oubli
+29.88s - 32.30s: peur sur
+35.28s - 36.69s: pas ça là
+38.25s - 50.56s: la jungle quotidien avec la stabilité demi-heure avec leurs désirs et leurs besoins avec leur bonheur leur chagrin je sens mais avec mes déceptions et mes peines
+50.94s - 55.89s: la peur d'être découvert avec l'envie de tout foutre ce sont mes choix
+57.12s - 58.77s: et moi tout à zéro
+60.34s - 67.29s: quand je jongle avec le temps avec toutes mes sentiments mes enfants comme adultes passé avec mes joueurs
+71.73s - 73.71s: tu veux pas je t'en prie
+76.62s - 77.82s: comment veux-tu que je n
+78.96s - 82.26s: ecoute sais pas surtout si tu n'es pas là
+83.31s - 86.61s: c'est sur
+89.67s - 91.23s: pas ça là
+94.44s - 95.10s: oui je suis
+98.76s - 99.96s: je suis fil
+103.68s - 106.32s: ben oui je fais mes actes
+107.91s - 109.26s: sur un fil accroché
+113.66s - 114.51s: oui je
+117.18s - 119.31s: suivant la courbe

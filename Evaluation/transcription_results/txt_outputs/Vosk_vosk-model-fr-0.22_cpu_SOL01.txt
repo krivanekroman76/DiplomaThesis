@@ -1,0 +1,38 @@
+Transcription (Model: vosk-model-fr-0.22):
+gémeaux alors quoi de plus important que la famille c'est l'oxygène d'un être humain pourquoi ne pas l'inviter mes cheveux respirez à la fin mai pas à pas mais aujourd'hui c'est devenu banal d'être un enfant de parents divorcés dans les foyers d'emplois il y a des excès de lits superposés le mariage n'est plus le trente des sentiments car on ne fait plus des familles mais des enfants par accident un avortement ne fait plus culpabiliser combien de filles de dix sept ans sont déjà des femmes isolées ici on apprend à vivre singulier donc pour une futilité on se dispute l'immobilier sais pas si t'as idée de ce qu'est aujourd'hui la vie de couple c'était lutter debout t'aider où tu étais tu me dégoûte encore derrière les promesses des premiers rendez-vous car la vie de couple ne se résume pas qu'il view tu sais dis toi que j'ai rien contre ce mec tant qu'il te respecte et qui te dirige vers la mer kite-surf qu'importe ton choix je serai toujours avec toi je sais que ce mec est honnête dis-toi que j'ai confiance en toi tu seras pas là mais je veux respirer barre mais les avatars mais en faire ce que j'étais j'ai toujours suivi tes conseils demain tu as toujours été mon exemple mais aujourd'hui je suis une femme faites confiance à mes soins un frein vraiment mon week end en famille dans ses bras quel serait mon soutien tu sais enfin ce que ça donne des coups de main tu sais je sais t'as deux aurait été là quand j'avais besoin de toi dis toi tout ce que tu me d'un dieu te le rendra dans une famille il faut se serrer les coudes pour ça mais il faut savoir recevoir les coups n'ai aucun doute je n'ai jamais douté que vous étiez là pour moi la famille c'est ça pas des tiens respect je me barre ma femme les enfants et m'ont informé de mes droits pour me dire que dans mon cœur et pour ma famille de ma famille je crois pas que dans mon cœur et ma famille de ma famille joie pour mes potes kayak dans mon cœur pour ma famille maintenant mais pour mémoire kayak dans mon cœur c'est là qu'on est au plus bas quand tu passes le bon ou le mauvais choix que places de bus au mauvais endroit elle est la même quand tu la déçois quand ton soi-disant amour se barre avec un potentat c'est ce père qui suit la santé pour que la tienne soit bonne cette mère à qui tu as strasbourg qui sans cesse te pardonne j'espère qui pourrait prendre des coups pourquoi un vrai pote qui pourrait mourir pour toi c'est un pas et là respirer je me barre haut ma femme et c'est un pas à pas
+
+Timestamps:
+0.00s - 4.08s: gémeaux alors quoi de plus important que la famille c'est l'oxygène d'un être humain
+5.40s - 8.88s: pourquoi ne pas l'inviter
+9.93s - 12.24s: mes cheveux
+12.27s - 13.20s: respirez
+14.16s - 16.95s: à la fin mai
+18.61s - 21.78s: pas à pas mais
+23.01s - 42.90s: aujourd'hui c'est devenu banal d'être un enfant de parents divorcés dans les foyers d'emplois il y a des excès de lits superposés le mariage n'est plus le trente des sentiments car on ne fait plus des familles mais des enfants par accident un avortement ne fait plus culpabiliser combien de filles de dix sept ans sont déjà des femmes isolées ici on apprend à
+42.96s - 63.03s: vivre singulier donc pour une futilité on se dispute l'immobilier sais pas si t'as idée de ce qu'est aujourd'hui la vie de couple c'était lutter debout t'aider où tu étais tu me dégoûte encore derrière les promesses des premiers rendez-vous car la vie de couple ne se résume pas qu'il view tu sais dis toi que j'ai rien contre ce mec tant qu'il te respecte
+63.15s - 74.04s: et qui te dirige vers la mer kite-surf qu'importe ton choix je serai toujours avec toi je sais que ce mec est honnête dis-toi que j'ai confiance en toi tu seras pas là
+75.42s - 78.69s: mais je veux respirer
+79.47s - 80.10s: barre
+81.33s - 82.39s: mais
+83.52s - 85.62s: les avatars
+86.79s - 93.96s: mais en faire ce que j'étais j'ai toujours suivi tes conseils
+94.56s - 102.93s: demain tu as toujours été mon exemple mais aujourd'hui je suis une femme
+103.56s - 105.51s: faites confiance à mes soins
+106.08s - 121.85s: un frein vraiment mon week end en famille dans ses bras quel serait mon soutien tu sais enfin ce que ça donne des coups de main tu sais je sais t'as deux aurait été là quand j'avais besoin de toi dis toi
+122.10s - 127.11s: tout ce que tu me d'un dieu te le rendra dans une famille il faut se serrer les coudes pour ça
+127.32s - 136.02s: mais il faut savoir recevoir les coups n'ai aucun doute je n'ai jamais douté que vous étiez là pour moi la famille c'est ça
+137.81s - 138.48s: pas
+140.38s - 142.80s: des tiens
+142.80s - 143.19s: respect
+143.94s - 145.12s: je me barre
+145.74s - 146.43s: ma femme
+149.40s - 150.36s: les enfants
+152.43s - 171.03s: et m'ont informé de mes droits pour me dire que dans mon cœur et pour ma famille de ma famille je crois pas que dans mon cœur et ma famille de ma famille joie pour mes potes kayak dans mon cœur
+171.78s - 172.74s: pour ma famille
+173.43s - 177.00s: maintenant mais pour mémoire kayak dans mon cœur
+177.60s - 194.82s: c'est là qu'on est au plus bas quand tu passes le bon ou le mauvais choix que places de bus au mauvais endroit elle est la même quand tu la déçois quand ton soi-disant amour se barre avec un potentat c'est ce père qui suit la santé pour que la tienne soit bonne cette mère à qui tu as strasbourg qui sans cesse te pardonne
+195.54s - 200.68s: j'espère qui pourrait prendre des coups pourquoi un vrai pote qui pourrait mourir pour toi
+202.08s - 203.04s: c'est un pas
+205.20s - 207.00s: et là
+207.54s - 212.25s: respirer je me barre haut ma femme et
+214.05s - 217.01s: c'est un pas à pas

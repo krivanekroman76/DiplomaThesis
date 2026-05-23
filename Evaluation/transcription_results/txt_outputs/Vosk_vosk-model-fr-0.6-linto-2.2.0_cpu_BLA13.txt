@@ -1,0 +1,47 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+les gens me regardent le paysage les gens me regardent un paysage les gens me regardaient paysage tu m'as dites moi les gens me regardaient paysans et j ai tellement peur au final les gens me regardaient paysage si je découvre pas les gens nous regardent paysans une montagne ecoute pas les gens regardent le paysage si dites-moi les gens nous regardent paysage j'ai tellement peur ou féminin moi ce que je mange quand je roule pourtant le coeur en paix je me sens marcher dessus même si je paie je suis des vôtres sauf que je ne marche plus et tout juste on appelle un obèse ou en surpoids on se moque de moi et ma démarche une fois sur trois à choucroute de l'impression que le monde s'écroule les regards sont durs alors je peux constamment le je vis personne je me frotte les mains et je me dis que je ne peux m'en prendre qu'à moi-même si c'est ma faute bon dieu je sais ma faute pas les bonnes paroles je ne comprends toujours pas pourquoi depuis si court pas les gens me regardent paysage il quand m'écoutes pas les gens dites-moi les gens nous regardent paysage j'ai tellement peur j'ai la taille d'un enfant de sept ans étant plus jeune j'attendais que mon corps c'est en quand je fais les couches demande de l'aide aux plus grands sauts c'est trop haut et puis j'y ai plus en plus de la je m assume totalement chez une femme ont lancé nous tue plus haut également quand les gens nous poussent à devenir rouge sur mes gardes calcul vos regards sont des coups de poignard différence mais assumez un peu comme si j'étais un bagne je me dis que ça fait mal bon dieu que personne écoute oui ça fait mal le monde moderne j'ai tellement mal au point de ne plus sentir les coups les jeunes ne comprends toujours pas pourquoi à annecy pas les gens nous regardaient écoute pas les gens depuis six mois les gens nous regardent paysage tellement peur on pays-bas j ai un coeur comme toi non tu ne peux pas me comprendre je suis dans un réel combat tu sais je suis pas si différent c'est différent j'ai un coeur comme toi un coeur comme tout non tu ne veux pas me comprendre je ne peux pas me quand je suis dans un réel combat dans un réel coup les regarde paysage je couvre pas les gens nous regardent le paysage montre m'écoute pas les gens perdent depuis si dites-moi les gens nous regardent paysage j'ai tellement peur
+
+Timestamps:
+0.00s - 1.68s: les gens me regardent le paysage
+2.43s - 4.08s: les gens me regardent un paysage
+4.98s - 6.72s: les gens me regardaient paysage
+8.25s - 16.11s: tu m'as dites moi les gens me regardaient paysans et j ai tellement peur au final les gens me regardaient paysage
+16.98s - 20.49s: si je découvre pas les gens nous regardent paysans
+21.27s - 21.96s: une montagne
+22.56s - 25.17s: ecoute pas les gens regardent le paysage
+25.71s - 25.95s: si
+27.36s - 29.79s: dites-moi les gens nous regardent paysage
+30.48s - 32.37s: j'ai tellement peur ou féminin
+32.58s - 52.56s: moi ce que je mange quand je roule pourtant le coeur en paix je me sens marcher dessus même si je paie je suis des vôtres sauf que je ne marche plus et tout juste on appelle un obèse ou en surpoids on se moque de moi et ma démarche une fois sur trois à choucroute de l'impression que le monde s'écroule les regards sont durs alors je peux constamment le
+53.13s - 54.00s: je vis
+55.22s - 61.59s: personne je me frotte les mains et je me dis que je ne peux m'en prendre qu'à moi-même si c'est ma faute
+62.01s - 62.85s: bon dieu
+63.36s - 64.29s: je sais ma faute
+65.04s - 68.10s: pas les bonnes paroles je ne comprends toujours pas pourquoi
+68.88s - 73.62s: depuis si court pas les gens me regardent paysage
+74.37s - 76.83s: il quand m'écoutes pas les gens
+80.01s - 82.74s: dites-moi les gens nous regardent paysage
+83.40s - 84.63s: j'ai tellement peur
+85.68s - 100.98s: j'ai la taille d'un enfant de sept ans étant plus jeune j'attendais que mon corps c'est en quand je fais les couches demande de l'aide aux plus grands sauts c'est trop haut et puis j'y ai plus en plus de la je m assume totalement chez une femme ont lancé nous tue plus haut également
+101.82s - 105.63s: quand les gens nous poussent à devenir rouge sur mes gardes
+106.44s - 107.04s: calcul
+108.27s - 110.07s: vos regards sont des coups de poignard
+110.79s - 114.27s: différence mais assumez un peu comme si j'étais un bagne
+115.02s - 117.06s: je me dis que ça fait mal bon dieu
+117.24s - 119.21s: que personne écoute oui ça fait mal
+119.86s - 120.78s: le monde moderne
+120.96s - 125.67s: j'ai tellement mal au point de ne plus sentir les coups les jeunes ne comprends toujours pas pourquoi
+126.96s - 128.04s: à annecy
+128.93s - 130.47s: pas les gens nous regardaient
+133.05s - 134.34s: écoute pas les gens
+134.88s - 140.22s: depuis six mois les gens nous regardent paysage
+141.12s - 142.65s: tellement peur on pays-bas
+144.51s - 154.77s: j ai un coeur comme toi non tu ne peux pas me comprendre je suis dans un réel combat tu sais je suis pas si différent c'est différent j'ai un coeur comme toi un coeur comme tout
+154.80s - 160.17s: non tu ne veux pas me comprendre je ne peux pas me quand je suis dans un réel combat dans un réel coup les
+160.57s - 161.64s: regarde paysage
+162.51s - 165.66s: je couvre pas les gens nous regardent le paysage
+166.47s - 168.36s: montre m'écoute pas
+168.96s - 169.92s: les gens perdent
+169.92s - 171.45s: depuis si
+172.74s - 175.32s: dites-moi les gens nous regardent paysage
+176.01s - 177.24s: j'ai tellement peur

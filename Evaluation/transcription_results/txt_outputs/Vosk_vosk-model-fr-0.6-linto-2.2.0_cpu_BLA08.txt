@@ -1,0 +1,16 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+j'ai l'impression d'avoir échoué ne venez pas me dire que je suis douée j'ai l'impression d'avoir échoué ne venez pas me dire que chez tout et sait comment explique moi qu est ce que j ai raté ne me dis pas que la m'a a pris car harper sait comment explique moi qu'est-ce que j'ai raté ne me dis pas que la vie m'en a pris car ap jc écrit des pages mais on a aucune de tourner persuadé que tout ça n'est pas vraiment fait pour moi je me laisse guider si est écrit que je dois prendre un mur je pourrais pas les esquiver merci pour le soutien mais quand ça n'allait pas été pas la fiche me souviens je t'en veux même pas je m'en fous que tu m'aimes ou tu m'aimes pas moi je me préférais avant quand moi et mon petit égo on voulait juste avancer aujourd'hui on agrandit il m'arrive de me regarder et me dire où est-ce tu prends pour qui penser j'ai l'impression d'avoir échoué ne venez pas me dire que chez doué j'ai l'impression d'avoir échoué ne venez pas me dire que chez doux et c'est comment explique moi qu est ce que j ai raté ne me dis pas clavier m'en a pris car et sait comment explique moi qu qu'est-ce que j'ai raté ne me dis pas clavier m'en a pris car râpé
+
+Timestamps:
+0.00s - 1.98s: j'ai l'impression d'avoir échoué
+2.94s - 4.89s: ne venez pas me dire que je suis douée
+5.82s - 7.80s: j'ai l'impression d'avoir échoué
+8.70s - 28.38s: ne venez pas me dire que chez tout et sait comment explique moi qu est ce que j ai raté ne me dis pas que la m'a a pris car harper sait comment explique moi qu'est-ce que j'ai raté ne me dis pas que la vie m'en a pris car ap jc écrit des pages mais on a aucune de tourner persuadé que tout ça n'est
+28.56s - 29.82s: pas vraiment fait pour moi
+30.51s - 34.65s: je me laisse guider si est écrit que je dois prendre un mur je pourrais pas les esquiver
+35.52s - 40.26s: merci pour le soutien mais quand ça n'allait pas été pas la fiche me souviens
+40.95s - 50.04s: je t'en veux même pas je m'en fous que tu m'aimes ou tu m'aimes pas moi je me préférais avant quand moi et mon petit égo on voulait juste avancer
+51.54s - 59.49s: aujourd'hui on agrandit il m'arrive de me regarder et me dire où est-ce tu prends pour qui penser j'ai l'impression d'avoir échoué
+60.45s - 62.40s: ne venez pas me dire que chez doué
+63.30s - 65.25s: j'ai l'impression d'avoir échoué
+66.00s - 81.00s: ne venez pas me dire que chez doux et c'est comment explique moi qu est ce que j ai raté ne me dis pas clavier m'en a pris car et sait comment explique moi qu qu'est-ce que j'ai raté ne me dis pas clavier m'en a pris car râpé

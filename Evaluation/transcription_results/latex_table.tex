@@ -1,0 +1,17 @@
+\begin{table}[hbt!]
+\centering
+\caption{Mean WER and CER Across 5 Normalization Tiers}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{ll|c|ccccc|ccccc}
+\toprule
+ & & & \multicolumn{5}{c|}{\textbf{WER (\%)}} & \multicolumn{5}{c}{\textbf{CER (\%)}} \\
+\textbf{Tool} & \textbf{Model} & \textbf{Type} & T1 & T2 & T3 & T4 & T5 & T1 & T2 & T3 & T4 & T5 \\
+\midrule
+Vosk & vosk-model-fr-0.22 & Uni & 62.70 & 59.20 & 57.18 & 56.85 & 58.52 & 41.93 & 40.71 & 40.04 & 39.47 & 39.66 \\
+Vosk & vosk-model-fr-0.6-linto-2.2.0 & Uni & 64.48 & 61.21 & 58.98 & 58.71 & 60.68 & 45.29 & 44.09 & 43.48 & 43.04 & 43.14 \\
+Wav2Vec2 & facebook/wav2vec2-large-xlsr-53-french & Uni & 75.09 & 73.03 & 70.74 & 70.23 & 71.99 & 43.15 & 42.05 & 41.54 & 40.82 & 40.78 \\
+Wav2Vec2 & jonatasgrosman/wav2vec2-large-xlsr-53-french & Uni & 77.17 & 75.30 & 74.58 & 74.20 & 73.72 & 45.82 & 44.77 & 44.24 & 43.37 & 43.11 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

@@ -1,0 +1,40 @@
+Transcription (Model: vosk-model-fr-0.22):
+et si l'on pouvait se dire bon oui juste le temps de le repeindre en rose voici le monde pouvait se mettre sur pause j'aurais aimé revivre ses intentions je pense au bon vieux temps j'ai trop désolé le temps c'est pas l'argent dedans me donner vos rêves je me rappelle qu'on était tous ensemble vers souviens-toi de ce qu'on s'était dit à l'époque où c'était nous les petits et trop d'images en tête suite aux nostalgie opère une pause il y a aura vous aurez des heureux son souvenir raisonner pour nos euros oh ce soir ou demain oui mais ça ce soir ou demain oui mais ça ce soir ou demain oui mais ça ce soir ou demain les fêtes de quartier des bars d'été là-bas qui nous guettaient maman qui s'inquiétait pas toi qui était pété le lendemain regretté de me céder pas ça j'avoue j'étais pas stable quand toi tu connais pas ça laisse-moi te raconter il y avait zéro calcul ça ça n'avait pas compté mes a-t-elle raconté restant et on avait induit un peu comme peggy tu ne nous voyez pas nous dans l'après midi ambiance nocturne l'époque section on attend que la roue tourne on se pose des questions quatre vingt dix huit coupe du monde je voulais déjà prendre mes gains pour qu'on se coupe du monde le temps est passé ça fait plus de dix ans les visages sont marqués mais j'ai la même vision c'est souviens-toi de ce qu'on s'était dit à l'époque où c'était nous les petits trop d'images en tête suite aux nostalgies ok une pause raisonnée bon ok son souvenir raisonner les héros ce soir ou demain mais ça ce soir ou demain oui mais ça ce soir ou demain oui mais ça ce soir ou demain ça ce soir ou demain à ce soir ou deux ce soir ou demain quand oui mais ça redevenir on vous aurait dit un mot ils ont du souvenir mon raisonner ce soir ou demain oui mais ça ce soir ou demain mais ça ce soir ou demain oui mais ça le soir ou demain les armes
+
+Timestamps:
+0.00s - 8.94s: et si l'on pouvait se dire bon oui juste le temps de le repeindre en rose voici le monde pouvait se mettre sur pause j'aurais aimé revivre ses intentions
+9.63s - 16.05s: je pense au bon vieux temps j'ai trop désolé le temps c'est pas l'argent dedans me donner vos rêves
+16.56s - 28.65s: je me rappelle qu'on était tous ensemble vers souviens-toi de ce qu'on s'était dit à l'époque où c'était nous les petits et trop d'images en tête suite aux nostalgie
+29.52s - 30.72s: opère une pause
+31.44s - 32.34s: il y a aura
+33.81s - 35.37s: vous aurez des heureux
+36.45s - 37.59s: son souvenir
+39.60s - 41.10s: raisonner pour nos euros
+42.15s - 44.40s: oh ce soir ou demain
+45.18s - 48.72s: oui mais ça ce soir ou demain
+49.53s - 52.98s: oui mais ça ce soir ou demain
+53.76s - 57.27s: oui mais ça ce soir ou demain
+59.46s - 68.07s: les fêtes de quartier des bars d'été là-bas qui nous guettaient maman qui s'inquiétait pas toi qui était pété le lendemain regretté de me céder pas ça j'avoue j'étais pas stable
+68.87s - 88.80s: quand toi tu connais pas ça laisse-moi te raconter il y avait zéro calcul ça ça n'avait pas compté mes a-t-elle raconté restant et on avait induit un peu comme peggy tu ne nous voyez pas nous dans l'après midi ambiance nocturne l'époque section on attend que la roue tourne on se pose des questions quatre vingt dix huit coupe du monde je voulais déjà prendre mes gains pour qu'on se coupe du monde
+88.95s - 99.69s: le temps est passé ça fait plus de dix ans les visages sont marqués mais j'ai la même vision c'est souviens-toi de ce qu'on s'était dit à l'époque où c'était nous les petits
+100.32s - 103.35s: trop d'images en tête suite aux nostalgies
+104.64s - 106.65s: ok une pause raisonnée
+108.24s - 109.41s: bon ok
+111.48s - 112.59s: son souvenir
+114.63s - 116.16s: raisonner les héros
+118.11s - 119.49s: ce soir ou demain
+121.02s - 123.78s: mais ça ce soir ou demain
+124.59s - 128.07s: oui mais ça ce soir ou demain
+128.82s - 132.36s: oui mais ça ce soir ou demain
+134.16s - 137.76s: ça ce soir ou demain
+138.48s - 140.88s: à ce soir ou deux
+142.41s - 144.09s: ce soir ou demain
+145.44s - 148.62s: quand oui mais ça redevenir
+150.18s - 153.03s: on vous aurait dit un mot
+153.12s - 154.23s: ils ont du souvenir
+155.73s - 156.93s: mon raisonner
+159.57s - 161.01s: ce soir ou demain
+161.79s - 165.33s: oui mais ça ce soir ou demain
+166.86s - 169.59s: mais ça ce soir ou demain
+170.37s - 173.88s: oui mais ça le soir ou demain
+175.38s - 176.10s: les armes

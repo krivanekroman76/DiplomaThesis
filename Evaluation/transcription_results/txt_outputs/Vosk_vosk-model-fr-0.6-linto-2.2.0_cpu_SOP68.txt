@@ -1,0 +1,28 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+crainte ça va euh inquiète pas tout ce qu'il faut sur la table ça va bien moi virgile enclos là ça passe ça va bien ça fait depuis le bac à sable ça va bien je suis plus dans mon passeport c'est google maps tiens ça l'hippodrome sous le capot bien tu sais ça jeffrey on est nous des glaçons merci d'accord quoi gangsta la ça va bien ta folle pas n'en fais pas tout un drame ça va bien t'inquiète pas on est dix mille dans mon crâne ça va bien hum partout comme ça shane ça va bien t'inquiète pas chut tyson plein si tu veux pas qu'on la charme oui on est l'avoir ou est puni dans ta chambre bianca la latitude la delta là la c'est bon quoi ca va bien ça va bien pas bien pas bien
+
+Timestamps:
+0.90s - 1.29s: crainte
+1.98s - 6.72s: ça va euh inquiète pas tout ce qu'il faut sur la table ça va bien
+7.47s - 8.52s: moi virgile enclos
+8.85s - 10.44s: là ça passe ça va bien
+11.16s - 16.92s: ça fait depuis le bac à sable ça va bien je suis plus dans mon passeport c'est google maps
+18.20s - 24.51s: tiens ça l'hippodrome sous le capot bien tu sais ça jeffrey on est nous des glaçons
+25.68s - 26.13s: merci
+33.21s - 33.66s: d'accord
+36.93s - 37.14s: quoi
+40.92s - 41.49s: gangsta
+45.30s - 45.52s: la
+51.90s - 60.42s: ça va bien ta folle pas n'en fais pas tout un drame ça va bien t'inquiète pas on est dix mille dans mon crâne ça va bien
+61.32s - 62.49s: hum partout comme ça
+62.73s - 65.16s: shane ça va bien t'inquiète pas
+65.85s - 67.95s: chut tyson plein
+68.88s - 71.13s: si tu veux pas qu'on la charme oui on est
+72.21s - 74.52s: l'avoir ou est puni dans ta chambre
+75.45s - 75.98s: bianca
+80.63s - 84.30s: la latitude
+85.38s - 87.36s: la delta là
+88.74s - 93.30s: la c'est bon
+102.81s - 103.05s: quoi
+110.88s - 114.06s: ca va bien ça va bien
+114.75s - 118.42s: pas bien pas bien

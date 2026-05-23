@@ -1,0 +1,32 @@
+Transcription (Model: vosk-model-fr-0.22):
+ok vous êtes prêts moi je suivrai de près pareil j'ai énuméré plus belle sabre tout ce qu'il faut dans le sac avec boîte nommée gare pour moi ça va ça va ok j'arrive dans le truc et tout le monde me guéthary arrêta plus car l'ambiance m'inquiète et vite moins vite les flics veulent ma tête j'ai fait du deux ans sur le périple tout le monde m'appelle pas hum hum une petite fille pastèque narguilé fort pépère juste histoire de dans le caca taper les cartes cadeaux j'ai attendu ça toute la semaine mes louboutin ma semaine je parle avec moi-même ma copine femelle francais tranquille ce n'est que le début ça peut finir en projet il j'ai des potes bébé alors la invasion j'ai mes plus belles tables dans le sac avec moi avec nous mais gare pour moi ça va pas ça va a vous vous je suis le roi de la capitale mandat dis on ne joue pas de match amical sur le terrain j'ai des putains de vision comme zidane qu'on ne va pas trop parler ça risque d'être interminable et on passe ils sont minables ouais pourquoi tout d'abord parce que mon gars atwater mlle c moi il me faut par rapport à ça il ne faut pas faire ça je vais finir par prendre mon verre et de le renverser excuse-moi what's your name on m'appelle le black panther ne crois pas que je te drague je suis mal articulé la bague au doigt je ne veux rien faire de mal t'as pas compris maintenant je vais tenter ma chance à toi j'ai aimé mes plus belles savent ce qu'il faut dans le zinc avec moi à m'égare pour moi ça va ça va bar à tabac ou je brille un peu trop ou il n'aime pas ça ou ils n'aiment pas ça ouais un peu trop il n'aime pas ça ou il n'aime pas ça tout va bien tout va bien on est sauvés sapé comme jamais demande à mon équipe sexion d'assaut c'est vrai qu'il est toujours aussi bien et j'ai aimé plus savent ce qu'il faut dans le sac avec moi je m'égare pour moi ça va ça vous va bar à vin black m oublie pas ah
+
+Timestamps:
+0.03s - 9.06s: ok vous êtes prêts moi je suivrai de près pareil j'ai énuméré plus belle sabre tout ce qu'il faut dans le sac avec boîte nommée gare
+9.84s - 11.00s: pour moi ça va
+12.00s - 12.60s: ça va
+16.17s - 35.76s: ok j'arrive dans le truc et tout le monde me guéthary arrêta plus car l'ambiance m'inquiète et vite moins vite les flics veulent ma tête j'ai fait du deux ans sur le périple tout le monde m'appelle pas hum hum une petite fille pastèque narguilé fort pépère juste histoire de dans le caca taper les cartes cadeaux j'ai attendu ça toute la semaine mes louboutin ma semaine je parle avec moi-même
+35.79s - 41.73s: ma copine femelle francais tranquille ce n'est que le début ça peut finir en projet il j'ai des potes bébé alors
+43.08s - 43.65s: la invasion
+46.23s - 48.15s: j'ai mes plus belles tables
+48.99s - 52.20s: dans le sac avec moi avec nous mais gare
+52.98s - 54.60s: pour moi ça va pas
+55.50s - 56.25s: ça va
+58.44s - 59.73s: a vous
+60.83s - 79.17s: vous je suis le roi de la capitale mandat dis on ne joue pas de match amical sur le terrain j'ai des putains de vision comme zidane qu'on ne va pas trop parler ça risque d'être interminable et on passe ils sont minables ouais pourquoi tout d'abord parce que mon gars atwater mlle c moi il me faut par rapport à ça il ne faut pas faire ça je vais finir par prendre mon verre et de le renverser
+79.98s - 87.84s: excuse-moi what's your name on m'appelle le black panther ne crois pas que je te drague je suis mal articulé la bague au doigt je ne veux rien faire de mal
+88.89s - 99.96s: t'as pas compris maintenant je vais tenter ma chance à toi j'ai aimé mes plus belles savent ce qu'il faut dans le zinc avec moi à m'égare
+100.71s - 103.98s: pour moi ça va ça va
+105.42s - 110.13s: bar à tabac ou je
+110.16s - 112.23s: brille un peu trop ou
+113.31s - 116.58s: il n'aime pas ça ou ils n'aiment pas ça
+117.60s - 118.89s: ouais un peu trop
+121.41s - 126.45s: il n'aime pas ça ou il n'aime pas ça tout va bien tout va bien
+127.29s - 128.10s: on est sauvés
+128.79s - 130.02s: sapé comme jamais
+130.65s - 133.08s: demande à mon équipe sexion d'assaut
+136.02s - 145.89s: c'est vrai qu'il est toujours aussi bien et j'ai aimé plus savent ce qu'il faut dans le sac avec moi je m'égare
+146.61s - 147.81s: pour moi ça va
+149.28s - 153.46s: ça vous va
+154.83s - 157.56s: bar à vin black m oublie pas
+158.16s - 158.52s: ah

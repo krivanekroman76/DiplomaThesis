@@ -1,0 +1,15 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+et les vois plus dans tes yeux je les vois plus dans les cieux trop de nuages gris le monde a perdu de son bleu les chemins vers les rêves ne sont plus éclairées les chemin vers la paix sont dans l'obscurité ne les voit plus filez donc je n'en attends plus de souhaits et c'est là nul autre ne voit plus son berger ici elles sont factices ou on leur marche dessus un boulevard besoin de les revoir donc je pars je mets les voiles je pars à la chasse aux étoiles je pars à la chasse aux étoiles oui je pars je mets les voiles je pars à la chasse aux étoiles je sais pas ce qui est maintenant n'est-ce-pas c'est tellement vaste mais je prendrai le temps temps pour visiter les autres m'inspirer des planètes qui ne connaissent que la paix fermée plan sur une comète j'aurais enfin attrapé un selfie avec marseille les deux pieds sur la lune je te ferai des roues arrières sur les anneaux de saturne des pluies de météores me blesse auront peut-être mais ça n a pas pris de ramener les étoiles sur terre donc je sais pas mais les voix pars à la chasse aux étoiles la chasse aux étoiles oui je pas je mets les voiles je pars à la chasse tu sais ça toi le phénix part ça c'est plus loin ces étoiles ont disparu oui je sais plus loin toi mois plus tais-toi
+
+Timestamps:
+0.00s - 20.01s: et les vois plus dans tes yeux je les vois plus dans les cieux trop de nuages gris le monde a perdu de son bleu les chemins vers les rêves ne sont plus éclairées les chemin vers la paix sont dans l'obscurité ne les voit plus filez donc je n'en attends plus de souhaits et c'est là nul autre ne voit plus son berger ici elles sont factices ou on leur marche dessus
+20.25s - 21.03s: un boulevard
+21.63s - 41.76s: besoin de les revoir donc je pars je mets les voiles je pars à la chasse aux étoiles je pars à la chasse aux étoiles oui je pars je mets les voiles je pars à la chasse aux étoiles je sais pas ce qui est maintenant n'est-ce-pas c'est tellement vaste mais je prendrai le temps
+41.76s - 61.92s: temps pour visiter les autres m'inspirer des planètes qui ne connaissent que la paix fermée plan sur une comète j'aurais enfin attrapé un selfie avec marseille les deux pieds sur la lune je te ferai des roues arrières sur les anneaux de saturne des pluies de météores me blesse auront peut-être mais ça n a pas pris de ramener les étoiles sur terre donc je sais pas
+62.58s - 63.90s: mais les voix
+64.23s - 66.60s: pars à la chasse aux étoiles
+67.80s - 75.24s: la chasse aux étoiles oui je pas je mets les voiles je pars à la chasse
+76.41s - 79.05s: tu sais ça toi
+81.03s - 89.37s: le phénix part ça c'est plus loin ces étoiles ont disparu oui je sais plus loin
+90.45s - 92.07s: toi mois plus
+97.20s - 97.59s: tais-toi

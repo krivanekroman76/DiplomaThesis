@@ -1,0 +1,26 @@
+Transcription (Model: vosk-model-fr-0.22):
+ma maman dit la vie n'est pas facile mais plus facile avec un grand sourire donc je souris quand j'ai mal à la vie quand maman m'a dit qu'il y a des jours plus maudits elle m'a dit de ne pas attendre leur vie commune ça finit toujours la mer aux plus démunis avant d'être important un homme érudit de ma vie j'ai utilisé le terrain pour agir c'est tout ce qu'on veut reconstruire c'est comme ça la des oui combien de douleur indélébile renverrait auparavant des objets avec cette mélancolie comme salaire des membres du sli l'hallali la la la la la la la la la la danse dans la vie lily l'hallali là et là et là et là la danse dans la rue la darija est là elle est là a la vie à l'amour la la la la la la la la maman m'a dit de ne jamais oublier d'où je venais mais surtout qui j'étais en avait peu mais ça va donner et elle m'a toujours dit chez nous l'accueil des choses que tu n'as pas colorier beaucoup sont morts pour notre liberté nos alliés tout ce qu'on a mais surtout ne te fais pas manger de normandie vingt deux avatars en humanité c'est comme ça l'un des mandats comme on dit des âneries qui ta vie entière les amis c'est comme ça à la rue maman du lit le lit là là là et là et là et là et là et là la danse dans la vie morelli là et là et là et là et là là est la tendance à la violence reel mon frère maman donne le meilleur conseil que l'on lui donne d'ailleurs qu'on sait que l'industrie du moment le meilleur conseil que d'induire la vie à la mort dans le meilleur des cas l'un d'eux m'a donné un conseil que lundi j'étais malade le meilleur conseil que la nuit quentin danse danse danse danse danse danse danse danse danse danse danse danse danse danse a la vie à l'amour
+
+Timestamps:
+0.39s - 15.51s: ma maman dit la vie n'est pas facile mais plus facile avec un grand sourire donc je souris quand j'ai mal à la vie quand maman m'a dit qu'il y a des jours plus maudits elle m'a dit de ne pas attendre leur vie commune ça finit toujours la mer aux plus démunis avant d'être important un homme érudit de ma vie
+15.69s - 19.02s: j'ai utilisé le terrain pour agir c'est tout ce qu'on veut
+19.35s - 37.62s: reconstruire c'est comme ça la des oui combien de douleur indélébile renverrait auparavant des objets avec cette mélancolie comme salaire des membres du sli l'hallali la la la la la la la la la la danse dans la vie
+38.67s - 41.13s: lily l'hallali
+42.12s - 44.92s: là et là et là et là la danse dans la rue
+47.34s - 50.09s: la darija est là elle est là
+51.81s - 52.89s: a la vie à l'amour
+53.90s - 58.04s: la la la la la la la la
+59.40s - 75.06s: maman m'a dit de ne jamais oublier d'où je venais mais surtout qui j'étais en avait peu mais ça va donner et elle m'a toujours dit chez nous l'accueil des choses que tu n'as pas colorier beaucoup sont morts pour notre liberté nos alliés tout ce qu'on a mais surtout ne te fais pas manger de normandie
+76.23s - 85.68s: vingt deux avatars en humanité c'est comme ça l'un des mandats comme on dit des âneries qui ta vie entière
+85.77s - 88.56s: les amis c'est comme ça à la rue maman
+88.77s - 98.22s: du lit le lit là là là et là et là et là et là et là la danse dans la vie morelli
+99.06s - 101.52s: là et là et là et là et là
+101.61s - 104.37s: là est la tendance à la violence
+107.16s - 107.70s: reel
+111.48s - 113.70s: mon frère
+114.93s - 121.50s: maman donne le meilleur conseil que l'on lui donne d'ailleurs qu'on sait que l'industrie du moment le meilleur conseil que d'induire la vie à la mort
+122.33s - 127.29s: dans le meilleur des cas l'un d'eux m'a donné un conseil que lundi j'étais malade le meilleur conseil que la nuit
+128.58s - 133.41s: quentin danse danse danse danse danse danse danse
+135.12s - 136.61s: danse danse danse
+137.40s - 139.39s: danse danse danse danse
+147.09s - 148.17s: a la vie à l'amour

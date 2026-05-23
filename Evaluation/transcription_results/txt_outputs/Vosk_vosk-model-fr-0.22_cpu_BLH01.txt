@@ -1,0 +1,54 @@
+Transcription (Model: vosk-model-fr-0.22):
+bonne année bonne année l'idée de me jolie regarde ça demanda d'un instant oh je viens d'un endroit où on ne connaît pas les dollars j'ai vu qu'ils ont peur de moi comme si j'étais hezbollah je me débats comme si la nuit malgré vous-même ne m'en voulez pas parce que je suis de l'eau je suis là ah bon ce soir je suis bizarre je suis constant comme prévu je n'ai plus mon blaze à toi de deviner peut briller posant les herbes direction lagune je crois que mon matrice et je suis dans mon truc un peu trop parrot on me dit de représenter mon bled à l'impôt des barreaux je me suis toujours demandé pourquoi les jaloux ils estiment tu es toujours sur ma route comme être vidé taksim sandales déchirées je me vois en train de chercher un cap la vie c'est bizarre à l'avoir on va te demander quelque temps je viens d'un endroit où on ne connaît pas les œnologues j'ai vu qu'ils ont peur de moi comme si j'étais hezbollah je me débats comme si l'ennemi manque d'engouement ne m'en voulez pas parce que je sais c'est ce qu'elle a fait de la loi je suis lisa a vous ce soir je suis gâtée pour mon peuple tricolore rosenberg c'est on m'a dit voici tu sais je veux marquer l'époque comme city hugo le ventre en as aussi mon plaid à l'ebola je me sens bien ce soir je reçoive en dehors de ça ce qui était arrivé au bord de la mer dites-lui que je me serve pour y accéder vous en semaine c'est mon pays ok ça sent pas la petite zohra madina contrapost la jeunesse je viens d'un endroit où on ne connaît pas les honneurs j'ai vu qu'ils ont peur de moi comme si j'étais hezbollah je veux dire pas comme si les immeubles les boomers ne m'en voulez pas parce que je suis les caisses sont attaquées à tes idoles je suis clé a conduire je suis fille de rendre les blancs nos barrages vont vite je dis nous gondoler comme au bon vieux temps dialogue en vue de contrôler dans nos bagages diaby nous contrôler un peu de sang leader du monde entier les quand tu as cancers je suis souterrain a tes côtés je suis à vous je suis bizarre suceuse avaleuse
+
+Timestamps:
+0.60s - 4.02s: bonne année bonne année l'idée de me jolie
+4.82s - 5.46s: regarde ça
+6.90s - 7.95s: demanda d'un instant
+9.45s - 12.93s: oh je viens d'un endroit où on ne connaît pas les dollars
+14.07s - 16.62s: j'ai vu qu'ils ont peur de moi comme si j'étais hezbollah
+17.79s - 20.01s: je me débats comme si la nuit malgré vous-même
+21.36s - 23.14s: ne m'en voulez pas parce que je suis
+27.09s - 27.57s: de l'eau
+29.82s - 31.56s: je suis là
+33.54s - 36.18s: ah bon
+36.84s - 38.31s: ce soir je suis bizarre
+39.12s - 42.30s: je suis constant comme prévu je n'ai plus mon blaze à toi de deviner
+43.11s - 48.66s: peut briller posant les herbes direction lagune je crois que mon matrice et je suis dans mon truc un peu trop parrot
+49.80s - 62.85s: on me dit de représenter mon bled à l'impôt des barreaux je me suis toujours demandé pourquoi les jaloux ils estiment tu es toujours sur ma route comme être vidé taksim sandales déchirées je me vois en train de chercher un cap
+63.36s - 66.18s: la vie c'est bizarre à l'avoir on va te demander quelque temps
+66.84s - 69.48s: je viens d'un endroit où on ne connaît pas les œnologues
+70.59s - 73.11s: j'ai vu qu'ils ont peur de moi comme si j'étais hezbollah
+74.22s - 79.44s: je me débats comme si l'ennemi manque d'engouement ne m'en voulez pas parce que je sais
+81.24s - 83.97s: c'est ce qu'elle a fait de la loi
+86.16s - 87.18s: je suis lisa
+89.85s - 92.52s: a vous
+93.15s - 95.07s: ce soir je suis gâtée
+95.85s - 98.25s: pour mon peuple tricolore rosenberg c'est
+99.30s - 102.27s: on m'a dit voici tu sais je veux marquer l'époque comme city
+103.20s - 106.53s: hugo le ventre en as aussi mon plaid à l'ebola
+107.04s - 111.15s: je me sens bien ce soir je reçoive en dehors de ça
+112.50s - 114.21s: ce qui était arrivé au bord de la mer
+114.90s - 119.22s: dites-lui que je me serve pour y accéder vous en semaine c'est mon pays
+120.24s - 120.96s: ok ça sent pas
+122.16s - 124.08s: la petite zohra madina contrapost
+124.38s - 124.88s: la jeunesse
+126.03s - 128.67s: je viens d'un endroit où on ne connaît pas les honneurs
+129.78s - 132.33s: j'ai vu qu'ils ont peur de moi comme si j'étais hezbollah
+133.47s - 138.78s: je veux dire pas comme si les immeubles les boomers ne m'en voulez pas parce que je suis
+140.04s - 143.04s: les caisses sont attaquées à tes idoles
+145.44s - 147.36s: je suis clé
+149.16s - 151.02s: a conduire
+152.96s - 154.89s: je suis fille
+155.91s - 157.95s: de rendre les blancs nos barrages vont vite
+158.76s - 161.55s: je dis nous gondoler comme au bon vieux temps
+162.36s - 165.06s: dialogue en vue de contrôler dans nos bagages
+166.20s - 168.15s: diaby nous contrôler
+169.23s - 171.84s: un peu de sang
+174.39s - 175.20s: leader du monde entier
+175.95s - 178.80s: les quand tu as cancers
+183.45s - 186.51s: je suis souterrain
+187.38s - 191.46s: a tes côtés je suis
+194.46s - 197.13s: à vous
+198.27s - 199.23s: je suis bizarre
+200.31s - 201.69s: suceuse avaleuse

@@ -1,0 +1,35 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+mon fait les histoires d'un métier ça fait mal j'y ai vu des frères y laisser leur vie au final ou oui quand le diable s'en mêle et dire à tes le seul à pouvoir aller au sommet j ai voulu soulager mon ego je me répète voulez pas faire de mal mon père où on en a fait les quatre cents go tout ce qui se passe autour de moi mais vrai grâce à enfants au centre vidéo gautier mon coeur se resserre hallyday on est devenus ennemis aujourd'hui c'est la même mon ami je suis devenu un père de famille pas de hurler au juste faire du mal à montrer au monde est égaux moi je dis rasée faire du mal un monstre préau c'est fou comme les années sont passées on dit que t'as il va bientôt entrer au lycée t'es trop belle on étale nos christian noyer fraternelle je sais que mes rêves m'ont éloignés mais pour toucher les étoiles faut savoir s'envolait ça me fait de la peine quand tu penses que je vais changer pour nous un vrai frère ne doute pas du coeur de faire surtout quand il se bat pour sortir ben tout ce qu on a traversé et j'espère que la vie après des lego et pas de dehors je voulais juste faire du mal à montrer au monde je veux pas faire du mal à bon frérot système pardon si je te touche mais ce n était pas mon intention mon frère pardonne-moi bon j'ai du mal à montrer moi si j'en fais trop mais je veux pas faire du mal à montrer oh big black éternel insatisfait l'everest deux mille dix-sept mai dix-huit deux mille dix-neuf juste à temps quoi
+
+Timestamps:
+0.00s - 0.78s: mon fait
+1.26s - 19.68s: les histoires d'un métier ça fait mal j'y ai vu des frères y laisser leur vie au final ou oui quand le diable s'en mêle et dire à tes le seul à pouvoir aller au sommet j ai voulu soulager mon ego je me répète voulez pas faire de mal mon père où on en a fait les quatre cents go tout ce qui se passe autour de moi mais vrai grâce à enfants au centre
+19.83s - 23.04s: vidéo gautier mon coeur se resserre hallyday on est devenus ennemis
+24.00s - 27.27s: aujourd'hui c'est la même mon ami je suis devenu un père de famille
+28.86s - 31.59s: pas de hurler au juste
+32.88s - 35.79s: faire du mal à montrer au monde est égaux
+38.77s - 40.32s: moi je dis rasée
+41.31s - 42.24s: faire du mal un monstre
+43.32s - 44.13s: préau
+45.36s - 49.32s: c'est fou comme les années sont passées on dit que t'as il va bientôt entrer au lycée
+50.64s - 51.66s: t'es trop belle
+51.93s - 54.12s: on étale nos christian noyer fraternelle
+54.72s - 58.56s: je sais que mes rêves m'ont éloignés mais pour toucher les étoiles faut savoir s'envolait
+59.49s - 62.40s: ça me fait de la peine quand tu penses que je vais changer pour nous
+64.38s - 68.55s: un vrai frère ne doute pas du coeur de faire surtout quand il se bat pour sortir
+69.15s - 72.00s: ben tout ce qu on a traversé et j'espère que la vie après des
+73.20s - 75.00s: lego et pas de dehors
+76.59s - 80.52s: je voulais juste faire du mal à montrer
+81.94s - 82.59s: au monde
+86.56s - 89.58s: je veux pas faire du mal à bon
+91.47s - 92.25s: frérot
+96.84s - 97.32s: système
+97.92s - 103.11s: pardon si je te touche mais ce n était pas mon intention mon frère
+104.28s - 104.88s: pardonne-moi
+112.35s - 112.62s: bon
+114.24s - 115.80s: j'ai du mal à montrer
+116.40s - 122.22s: moi si j'en fais trop mais je veux pas faire du mal à montrer
+123.06s - 123.42s: oh
+125.02s - 130.08s: big black éternel insatisfait l'everest
+131.22s - 134.40s: deux mille dix-sept mai dix-huit deux mille dix-neuf juste à temps
+137.16s - 137.49s: quoi

@@ -1,0 +1,47 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+je suis en retard je veux juste m'évader pour un petit temps tout est effacé oublié je jardin euh moi je veux oublier mais m'évader je me doutais pas c'est témoigner le mien est mort posons nous parlons de nos vies ce qui nous a causé du tort l'impression d'aimer sortir je crois qu'on on m'a jeté un sort comme une envie de fuir mais j ai plus de pa s pour oublier je suis obligée de me forcer à faire la fête ou alors je trouve ça la pointe du moins la date de ce foutu chien pour oublier je fume de l'herbe strap congénères perdu dans mes rêves devenus graff téméraire je regarde ma mère sourire aux lèvres cette femme me fait oublier que sur terre c'est la mère comment oublier hier si aujourd'hui j'ai mal en plus de ça demain c'est loin c'est quoi le moi je veux juste m'évader pour un petit temps tout est effacé oublié moi je veux oublier mais je veux tout pas bon ça ceux qui sont partis que le temps encore ainsi quatre muller martyrs du vice de notre époque et à ceux dont la fatigue a usé le corps et en voyant leurs souvenirs tu sens qu ils sont plus forts pour oublier il chante mais je les ai vus dès six ans avec des problèmes de santé suffit de gros décision lui aussi chanté dans centimètre carré alors plaidé non coupable comme nous le disait ca arrive championne sur un schéma ou le dire petite kidnappée tu le vis mal surpris de la folie on oublie les stigmates l'écrit pour oubli je chante quoi nous bien sûr moi je veux juste m'évader pour un petit tout est effacé oublié moi je veux oublier m'évader je veux tout débat pas les problèmes je ne veux plus de problèmes parce que je peux les problème je ne veux plus de problème elle est instable comme l'état du dugong ça me fait du bien king kong lemay moi je veux juste m'évader pour un petit temps tout est effacé oublié moi je veux oublier mais je veux tout débat pour tous les proches que j ai perdu en cours de route les durs moments oslo j ai failli devenir fou moi je veux juste me balader un petit tour c'est la fois où mon pays d'origine a connu un coup d'etat mais vous avez pas dormi il s était prêt à street peu m'évader je me doutais pas la guerre la crise j'ai peur subsiste l'argent y'a pas normalise utopie je pleure je pris mon dieu je me doute j'ai mal physiquement on tue les miens la lèpre nous rouge plus maintenant nous pouvons nous fier et moi je veux doutais pas enfin soldats peu importe le pouvoir l'homme est outil et dieu est grand pour oublier conçu pour le pleurer on chante big black
+
+Timestamps:
+0.00s - 0.63s: je suis en retard
+1.59s - 3.36s: je veux juste m'évader
+3.54s - 6.72s: pour un petit temps tout est effacé oublié je jardin
+7.58s - 13.77s: euh moi je veux oublier mais m'évader je me doutais pas c'est témoigner
+14.82s - 16.02s: le mien est mort
+16.92s - 18.36s: posons nous parlons de nos vies
+19.20s - 20.73s: ce qui nous a causé du tort
+21.51s - 23.07s: l'impression d'aimer sortir
+23.88s - 25.47s: je crois qu'on on m'a jeté un sort
+26.22s - 27.60s: comme une envie de fuir
+28.65s - 48.48s: mais j ai plus de pa s pour oublier je suis obligée de me forcer à faire la fête ou alors je trouve ça la pointe du moins la date de ce foutu chien pour oublier je fume de l'herbe strap congénères perdu dans mes rêves devenus graff téméraire je regarde ma mère sourire aux lèvres cette femme me fait oublier que sur terre c'est la mère comment oublier hier si aujourd'hui j'ai mal en plus de ça demain c'est loin c'est quoi le
+50.79s - 55.29s: moi je veux juste m'évader pour un petit temps tout est effacé oublié
+58.56s - 61.89s: moi je veux oublier mais je veux tout pas
+62.55s - 63.96s: bon ça ceux qui sont partis
+64.59s - 65.88s: que le temps encore
+66.51s - 69.66s: ainsi quatre muller martyrs du vice de notre époque
+70.50s - 72.00s: et à ceux dont la fatigue
+72.84s - 74.10s: a usé le corps
+74.70s - 77.67s: et en voyant leurs souvenirs tu sens qu ils sont plus forts
+78.96s - 97.11s: pour oublier il chante mais je les ai vus dès six ans avec des problèmes de santé suffit de gros décision lui aussi chanté dans centimètre carré alors plaidé non coupable comme nous le disait ca arrive championne sur un schéma ou le dire petite kidnappée tu le vis mal surpris de la folie on oublie les stigmates l'écrit pour oubli je chante quoi nous bien sûr
+98.91s - 100.86s: moi je veux juste m'évader
+101.04s - 103.45s: pour un petit tout est effacé oublié
+106.17s - 109.82s: moi je veux oublier m'évader je veux tout débat pas
+111.00s - 111.78s: les problèmes
+112.77s - 114.00s: je ne veux plus de problèmes
+114.75s - 116.37s: parce que je peux les problème
+117.45s - 118.77s: je ne veux plus de problème
+119.87s - 122.43s: elle est instable comme l'état du dugong ça me fait du bien
+123.71s - 126.48s: king kong
+127.83s - 128.22s: lemay
+132.27s - 134.16s: moi je veux juste m'évader
+134.34s - 136.80s: pour un petit temps tout est effacé oublié
+140.04s - 143.28s: moi je veux oublier mais je veux tout débat
+144.48s - 151.08s: pour tous les proches que j ai perdu en cours de route les durs moments oslo j ai failli devenir fou moi je veux juste me balader
+151.47s - 152.28s: un petit tour
+152.88s - 158.04s: c'est la fois où mon pays d'origine a connu un coup d'etat mais vous avez pas dormi il s était prêt à street
+158.43s - 161.37s: peu m'évader je me doutais pas
+162.81s - 170.43s: la guerre la crise j'ai peur subsiste l'argent y'a pas normalise utopie je pleure je pris mon dieu je me doute
+172.17s - 173.28s: j'ai mal physiquement
+173.58s - 175.62s: on tue les miens la lèpre nous rouge
+176.16s - 176.61s: plus maintenant
+177.42s - 180.03s: nous pouvons nous fier et moi je veux doutais pas
+181.35s - 188.97s: enfin soldats peu importe le pouvoir l'homme est outil et dieu est grand pour oublier conçu pour le pleurer on chante big black

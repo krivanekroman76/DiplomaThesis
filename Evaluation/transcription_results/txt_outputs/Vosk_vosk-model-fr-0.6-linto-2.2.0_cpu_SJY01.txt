@@ -1,0 +1,36 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+la politique c'est un sommet maman elle peut aussi se finit euh hum bon bah demain pour la fin dans un monde aura la guerre aura la guerre un débat l'a complètement brouillée ils peuvent prendre un avis avant d'en être aux usa les hommes sont coréens jouer là-bas le père noël s'appelle le prendre au moyen-orient mais elle a pas bouger davantage en libye aujourd'hui pour couleur tu peux souvent un humaniste se répète indices pétrole en europe prendre et toujours les mêmes innocence dans nos quartiers pour la drogue à s'appellera pas et toujours la langue addendum en afrique pour coupe ressentir et toujours les mêmes innocence dans mes quand il s'agit d'éducation de malnutrition ou de famille l'hiver sous les ponts d'or en battant humanitaire on se répète comme un disque vraiment quand on rarement il longtemps dans ma poche pas d'accord maintenant on parle aujourd'hui en donnera pas dans ma poche n'approche pas le garder dans mon cas humanité on se répète comme un disque vraiment e e e e e oh oh oh au rapport
+
+Timestamps:
+0.00s - 2.32s: la politique c'est un sommet
+3.00s - 9.27s: maman elle peut aussi se finit euh hum bon bah demain pour la fin
+9.60s - 13.02s: dans un monde aura la guerre aura la guerre
+14.07s - 18.06s: un débat l'a complètement brouillée ils peuvent prendre un avis avant d'en être
+19.23s - 23.97s: aux usa les hommes sont coréens jouer là-bas le père noël s'appelle le prendre
+25.08s - 25.95s: au moyen-orient
+27.87s - 29.82s: mais elle a pas bouger davantage
+30.63s - 34.32s: en libye aujourd'hui pour couleur tu peux souvent
+35.28s - 38.28s: un humaniste se répète
+38.40s - 44.31s: indices pétrole en europe
+45.54s - 47.63s: prendre et toujours les mêmes innocence
+48.92s - 51.64s: dans nos quartiers pour la drogue à s'appellera pas
+52.08s - 53.13s: et toujours la langue
+54.00s - 56.79s: addendum en afrique pour coupe ressentir
+58.17s - 59.64s: et toujours les mêmes innocence
+60.24s - 66.54s: dans mes quand il s'agit d'éducation de malnutrition ou de famille l'hiver sous les ponts d'or en battant
+70.35s - 71.31s: humanitaire
+72.36s - 73.89s: on se répète comme un disque
+75.90s - 76.26s: vraiment
+78.92s - 83.01s: quand on rarement il longtemps
+83.61s - 84.69s: dans ma poche
+87.00s - 89.85s: pas d'accord maintenant
+92.82s - 94.23s: on parle aujourd'hui
+94.89s - 96.72s: en donnera pas dans ma poche
+96.96s - 100.23s: n'approche pas le garder
+101.61s - 102.24s: dans mon cas
+105.72s - 106.35s: humanité
+108.15s - 109.69s: on se répète comme un disque
+111.45s - 111.81s: vraiment
+117.89s - 120.84s: e e e e e
+122.97s - 126.42s: oh oh oh
+128.97s - 130.14s: au rapport

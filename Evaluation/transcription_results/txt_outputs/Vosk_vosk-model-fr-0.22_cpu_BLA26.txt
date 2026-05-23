@@ -1,0 +1,18 @@
+Transcription (Model: vosk-model-fr-0.22):
+papa je ne trouve pas le sommeil je me suis couchée après le soleil j'aimerais que tu me racontes une histoire quand tu n'es pas là je me sens bizarre dehors j'ai vu un monsieur par terre comme s'il n'avait pas de maison je croyais que le monde il était parfait rassure moi dis-moi que j'ai raison j'aime pas la télé que du regard la dame qui parle elle ne rigole pas je dis en parler pendant mon repas mais moi je veux rêver je veux être pogba parle-moi des merveilles de ce monde avant je ferme les yeux parle-moi des merveilles de ce monde ferme vraiment mon fils de moyen ecole faut que tu sois en forme le matin quand le réveil sonne papa n'est jamais très loin je serai toujours là pour toi maman en été moi où il y a des gens qui n'ont pas de maison la chance veut qu'il sache d'ailleurs non le monde n'est pas parfait mais on va dire vous demain faudra le rendre meilleur tu peux être fier du concours et tu sais tout peut changer et même la dame de la télé sourire tu nous feras découvrir les merveilles de ce monde j'espère mon fils je compte sur toi demain tu le sais c'est vert du monde j'avais rêvé oubliez les fausses notes d'humour défavorisés les cosmos du monde oubliez les cosmos du monde du monde avait oublié il est déjà arrivé d'oublier les facettes
+
+Timestamps:
+0.00s - 20.16s: papa je ne trouve pas le sommeil je me suis couchée après le soleil j'aimerais que tu me racontes une histoire quand tu n'es pas là je me sens bizarre dehors j'ai vu un monsieur par terre comme s'il n'avait pas de maison je croyais que le monde il était parfait rassure moi dis-moi que j'ai raison j'aime pas la télé que du regard la dame qui parle elle ne rigole pas je dis
+20.19s - 27.21s: en parler pendant mon repas mais moi je veux rêver je veux être pogba parle-moi des merveilles de ce monde avant je ferme les yeux
+28.35s - 31.41s: parle-moi des merveilles de ce monde ferme
+33.69s - 34.32s: vraiment
+37.20s - 46.92s: mon fils de moyen ecole faut que tu sois en forme le matin quand le réveil sonne papa n'est jamais très loin je serai toujours là pour toi maman en été moi où il y a des gens qui n'ont pas de maison
+47.55s - 62.31s: la chance veut qu'il sache d'ailleurs non le monde n'est pas parfait mais on va dire vous demain faudra le rendre meilleur tu peux être fier du concours et tu sais tout peut changer et même la dame de la télé sourire
+62.58s - 68.88s: tu nous feras découvrir les merveilles de ce monde j'espère mon fils je compte sur toi demain tu le sais
+68.88s - 70.20s: c'est vert
+76.47s - 77.49s: du monde j'avais rêvé
+79.98s - 82.11s: oubliez les fausses notes d'humour défavorisés
+82.80s - 83.73s: les cosmos du monde
+84.48s - 85.98s: oubliez les cosmos du monde
+87.84s - 89.52s: du monde avait oublié
+89.52s - 92.58s: il est déjà arrivé d'oublier les facettes

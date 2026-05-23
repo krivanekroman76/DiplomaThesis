@@ -45,20 +45,27 @@ class SpleeterSeparator:
             root_logger = logging.getLogger()
             handler = ProgressInterceptor(progress_callback, device=resolved_device, tool_name="Spleeter")
             root_logger.addHandler(handler)
+            
+            process = None  # Reference for the fallback subprocess so we can kill it safely
 
             try:
                 if not os.path.exists(input_path):
+                    logging.error(f"Spleeter error: Input file not found at {input_path}")
                     return
 
+                logging.debug(f"Starting Spleeter separation for: '{song_name}'")
+
                 # 1. Metadata setup
+                logging.debug("Extracting and preparing audio metadata...")
                 original_tags = get_audio_metadata(input_path)
                 v_tags = prepare_stem_metadata(original_tags, "Vocals")
                 i_tags = prepare_stem_metadata(original_tags, "Instrumental")
 
                 # 2. Heavy Model Loading Moved Completely Inside the Thread Wrapper
-                logging.info("Spleeter: Initializing AI engine model weights...")
+                logging.info(f"Spleeter: Initializing AI engine model weights for {song_name}...")
                 separator = Separator(self.model_name)
                 adapter = AudioAdapter.default()
+                logging.debug("Spleeter models loaded into memory successfully.")
 
                 with tempfile.TemporaryDirectory() as temp_dir:
                     clean_input = str(pathlib.Path(input_path).resolve())
@@ -67,37 +74,41 @@ class SpleeterSeparator:
                     try:
                         # Try native execution
                         logging.info("spleeter processing: API active")
+                        logging.debug(f"Executing API 'separate_to_file' on: {clean_input}")
                         separator.separate_to_file(clean_input, temp_dir, audio_adapter=adapter, synchronous=True)
+                        logging.debug("API separation completed successfully.")
+                        
                     except Exception as api_err:
                         # Fallback to Subprocess if API fails
-                        logging.warning(f"Spleeter API fallback triggered: {api_err}")
+                        logging.warning(f"Spleeter API fallback triggered due to error: {api_err}")
                         logging.info("spleeter processing: fallback active")
                         
                         cmd = [
                             sys.executable, "-m", "spleeter", "separate",
                             "-p", self.model_name, "-o", temp_dir, input_path
                         ]
+                        logging.debug(f"Launching subprocess: {' '.join(cmd)}")
                         
                         # Windows specific flag to completely suppress background console windows in compiled EXEs
-                        # 0x08000000 = CREATE_NO_WINDOW
                         creation_flags = 0x08000000 if os.name == 'nt' else 0
                         
-                        # Open the subprocess with piped standard error (Spleeter logs to stderr)
+                        # FIX: Merge stderr into stdout so we only read one pipe. 
+                        # This prevents the child process from hanging due to a full stdout buffer!
                         process = subprocess.Popen(
                             cmd, 
                             stdout=subprocess.PIPE, 
-                            stderr=subprocess.PIPE, 
+                            stderr=subprocess.STDOUT, 
                             text=True,
                             creationflags=creation_flags
                         )
                         
-                        # Read lines dynamically as they are written by the background process
-                        if process.stderr:
-                            for line in process.stderr:
-                                # Forward the child log line straight into our root logger
-                                logging.info(line.strip())
+                        # Read lines dynamically to keep the OS pipe buffer empty
+                        if process.stdout:
+                            for line in process.stdout:
+                                logging.debug(f"SPLEETER-SUB: {line.strip()}")
                                 
                         process.wait()
+                        logging.debug(f"Subprocess exited with return code: {process.returncode}")
 
                     # 4. Path mapping
                     input_base = os.path.splitext(os.path.basename(input_path))[0]
@@ -106,7 +117,10 @@ class SpleeterSeparator:
                     i_src = os.path.join(output_folder, "accompaniment.wav")
 
                     if not os.path.exists(v_src):
+                        logging.error(f"Separation failed: Output stems not found in {output_folder}")
                         return
+                    
+                    logging.debug("Separation successful. Beginning bit-perfect export...")
 
                     # 5. Bit-Perfect Export Loop
                     stems = [
@@ -143,12 +157,24 @@ class SpleeterSeparator:
                     thread_result["success"] = True
                     thread_result["vocals"] = final_paths[0]
                     thread_result["instrumental"] = final_paths[1]
+                    logging.debug(f"Export finished successfully for {song_name}.")
 
             except Exception as e:
-                logging.error(f"Spleeter Worker Thread Error: {e}")
+                logging.error(f"Spleeter Worker Thread Error on {song_name}: {e}", exc_info=True)
             finally:
+                # GUARANTEED CLEANUP: Kill the subprocess if it's still somehow alive
+                if process is not None and process.poll() is None:
+                    logging.warning("Killing lingering Spleeter fallback subprocess...")
+                    process.terminate()
+                    try:
+                        process.wait(timeout=3)
+                    except subprocess.TimeoutExpired:
+                        process.kill()
+                        
                 root_logger.removeHandler(handler)
+                logging.debug("Flushing memory and unlinking TensorFlow variables...")
                 clear_memory_cache()
+                logging.debug(f"Background thread for '{song_name}' closed and destroyed.")
 
         # Create and initialize the worker thread
         worker_thread = threading.Thread(target=background_worker, daemon=True)
@@ -171,4 +197,4 @@ class SpleeterSeparator:
                 f['comment'] = f"Separated by {tool}"
                 f.save()
         except Exception as e: 
-            logging.warning(f"Tagging failed: {e}")
+            logging.warning(f"Tagging failed on {file_path}: {e}")

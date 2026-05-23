@@ -1,0 +1,12 @@
+Transcription (Model: facebook/wav2vec2-large-xlsr-53-french):
+avie est amira ame si parfoi jai mal mais tout vas bien ma vie est amira dormir cette nuit car tou va bien ma vie est mirac'est vrai que je ne cours plus mais aillers qatu avec stuve mais ailleus dot ne connaisse que la famine tu sait que tu voudrais faire plus ailleurs dot non plus e vrai qu'on fait des ale rautour ailleurs do non pas les moyens de e dee soiner donc mama nel pleurpa u touva bien ma vi est a ir mmsipfma e touva bien ma vie est uir jensri pp ben maviletaira  cest de dormir cette nuit cartouva bien maviestamir c'est vrai qeusepo moins mes portes mais aeur donc la solitu vriqira te quelque cours m dotre ve de frdtu vrmi la maison e notre vivesotapmn  dot non pas la force que tu me lives dt mama ituvabien ma vie est u  même si pafoi gama mai tou va bien ma vie est u mi je neslepapa bpi touvari ma vie est un mira  st de dormir dr cettnuit atb ma vie est  je tagrassé quelques mots comme un pensement in u pommade pourt remercier de cet amour dont je plise tout mon courage tu es mon intraveneus avec toi la vie etun miracle mais tei mais te voir si malheureuse c'est ce quimqee mal em maa
+
+Timestamps:
+0.00s - 20.00s: avie est amira ame si parfoi jai mal mais tout vas bien ma vie est amira dormir cette nuit car tou va bien ma vie est mirac'est vrai que je ne cours plus mais aillers qatu
+20.00s - 40.00s: avec stuve mais ailleus dot ne connaisse que la famine tu sait que tu voudrais faire plus ailleurs dot non plus e vrai qu'on fait des ale rautour ailleurs do non pas les moyens de e
+40.00s - 60.00s: dee soiner donc mama nel pleurpa u touva bien ma vi est a ir mmsipfma e touva bien ma vie est uir jensri pp
+60.00s - 80.00s: ben maviletaira  cest de dormir cette nuit cartouva bien maviestamir c'est vrai qeusepo moins mes portes mais aeur donc la solitu vriqira te quelque cours m
+80.00s - 100.00s: dotre ve de frdtu vrmi la maison e notre vivesotapmn  dot non pas la force que tu me lives dt mama
+100.00s - 120.00s: ituvabien ma vie est u  même si pafoi gama mai tou va bien ma vie est u mi je neslepapa bpi touvari ma vie est un mira  st de dormir
+120.00s - 140.00s: dr cettnuit atb ma vie est  je tagrassé quelques mots comme un pensement in u pommade pourt remercier de cet amour dont je plise tout mon courage tu es mon intraveneus avec toi la vie etun miracle mais tei
+140.00s - 160.00s: mais te voir si malheureuse c'est ce quimqee mal em maa

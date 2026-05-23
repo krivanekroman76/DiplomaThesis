@@ -1,0 +1,24 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+j'ai rien vu pourtant je ne dis rien deux peut-être que je m'en souviens plus bien que là je perds perde roberge je n ai pas connu mon grand-père dans notre anus je suis le grand frère et elle contient au moins un euro vierre sujet exemplaire si je ne le suis pas veuillez m'excuser mon exemple mon père mais le temps est contre nous abuser j'ai plus en plus je vieillis plus je réfléchis je veux pas qu'on la vie est ainsi je vois beaucoup de signes j'ai rien vu passer dans bas c'est ça pas le temps cheveux blanc j'ai rien vu passer j'ai rien vu ben c et j ai rien vu à peine cligner des yeux euh déjà un nîmois les jours passent des heures et les années quand moi je vois maman mais le bas les dents et mange des sujets si je ne le suis pas veuillez m'excuser mon exemple mon père mais le temps est contre nous abuser chez plus grand non plus je vieillis plus je réfléchis je veux pas qu on montait la vie est ainsi je vois beaucoup de signes j'ai rien vu passer tu es dans ce ça laisse pas le temps chenin blanc j ai rien vu ben c'est c'est dans passé je bats cheveux blancs j'ai rien vu j'ai rien vu bah c'est le temps est précieux mon petit ne sommes pas pressés prends le temps d'apprécier parce qu'on finira tous aux cieux tu verras le temps est précieux mon petit sommes après ces prend le temps d'apprécier parce qu'on on finira tous aux yeux tu verras tu verras ces pédales base ça cheveux blancs j'ai rien vu je sais n'as pas je gérais hum hum ce j'ai rien vu
+
+Timestamps:
+0.00s - 6.60s: j'ai rien vu pourtant je ne dis rien deux peut-être que je m'en souviens plus bien que là je perds perde
+8.28s - 27.09s: roberge je n ai pas connu mon grand-père dans notre anus je suis le grand frère et elle contient au moins un euro vierre sujet exemplaire si je ne le suis pas veuillez m'excuser mon exemple mon père mais le temps est contre nous abuser j'ai plus en plus je vieillis plus je réfléchis je veux pas qu'on
+27.81s - 31.55s: la vie est ainsi je vois beaucoup de signes j'ai rien vu passer
+33.51s - 35.67s: dans bas c'est ça
+36.96s - 40.77s: pas le temps cheveux blanc j'ai rien vu passer
+42.03s - 53.46s: j'ai rien vu ben c et j ai rien vu à peine cligner des yeux euh déjà un nîmois les jours passent des heures et les années quand moi je vois maman
+54.45s - 58.86s: mais le bas les dents et mange des sujets
+59.88s - 75.12s: si je ne le suis pas veuillez m'excuser mon exemple mon père mais le temps est contre nous abuser chez plus grand non plus je vieillis plus je réfléchis je veux pas qu on montait la vie est ainsi je vois beaucoup de signes j'ai rien vu passer
+76.94s - 78.39s: tu es dans ce
+80.13s - 85.61s: ça laisse pas le temps chenin blanc j ai rien vu ben c'est
+87.73s - 91.27s: c'est dans passé
+92.79s - 97.74s: je bats cheveux blancs j'ai rien vu
+99.69s - 118.29s: j'ai rien vu bah c'est le temps est précieux mon petit ne sommes pas pressés prends le temps d'apprécier parce qu'on finira tous aux cieux tu verras le temps est précieux mon petit sommes après ces prend le temps d'apprécier parce qu'on on finira tous aux yeux tu verras tu verras
+119.16s - 121.71s: ces pédales base ça
+123.75s - 125.76s: cheveux blancs j'ai rien vu
+127.89s - 129.63s: je sais
+133.92s - 135.04s: n'as pas
+135.78s - 137.28s: je gérais
+137.28s - 138.66s: hum hum ce
+140.10s - 141.09s: j'ai rien vu

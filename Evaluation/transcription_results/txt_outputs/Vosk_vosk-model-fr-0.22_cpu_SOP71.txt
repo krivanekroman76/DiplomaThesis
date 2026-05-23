@@ -1,0 +1,35 @@
+Transcription (Model: vosk-model-fr-0.22):
+sans toi et moi c'est pas la même la vie n'aurait aucune goût ça les anges n'auraient aucune oreille moi je ne saurais qu'elle est membre ne pas boire non dangereux sol dont ils ne connaissent pas d'ennuis pas laisse-moi poser ma tête sur ton nez raconte l'histoire de nos annonceurs et vivez dos à dos jusqu'à ce que l'évidence leur vie prendre le même ascenseur que je te montre la puissance de nos moteurs ensemble aura pour les compteurs fais moi confiance m'ont dit des mesures que vous n'ayez pas peur d'embêter vous échapper d'une banque tu verras que téhéran que des manquements aucun doute sur nous mon père m'avait parlé de moi où je n'ai pas peur de ça toi et moi c'est mais ils peuvent cracher leur venin l'imposant d'aston détient un bon sens de ce qu'il fait dans nos eaux usées via ses poils a peine les invités un truc hors du commun oubliant qu'il existe une fin on décolle pour un bola je te montre le trésor de notre fusion oui un trésor que même les plus grands archéologues ne pourront jamais trouver je te promets en effet ça va aller je t'emmène là où les astronautes ont jamais mis les pieds mais vous chopper qui ne parle que de toi tu mon plus grand roman que téhéran non aucun de nos plus grands est pas arrivé je me permets de parler de pleurer moi les autres enfant vivant bon nous deux nous deux nous deux que nous deux deux éléments deux études
+
+Timestamps:
+0.00s - 6.00s: sans toi et moi c'est pas la même la vie n'aurait aucune goût ça les anges n'auraient aucune oreille
+6.81s - 8.55s: moi je ne saurais qu'elle est membre
+9.42s - 11.49s: ne pas boire non dangereux
+12.15s - 17.70s: sol dont ils ne connaissent pas d'ennuis pas laisse-moi poser ma tête sur ton nez
+19.05s - 36.24s: raconte l'histoire de nos annonceurs et vivez dos à dos jusqu'à ce que l'évidence leur vie prendre le même ascenseur que je te montre la puissance de nos moteurs ensemble aura pour les compteurs fais moi confiance m'ont dit des mesures que vous n'ayez pas peur d'embêter
+36.51s - 38.31s: vous échapper d'une banque
+39.18s - 41.13s: tu verras que téhéran
+42.12s - 44.23s: que des manquements
+45.42s - 47.07s: aucun doute sur nous
+49.20s - 54.90s: mon père m'avait parlé de moi
+56.76s - 56.97s: où
+60.87s - 63.27s: je n'ai pas peur de ça
+63.36s - 67.08s: toi et moi c'est mais ils peuvent cracher leur venin
+67.77s - 73.20s: l'imposant d'aston détient un bon sens de ce qu'il fait dans nos eaux usées via ses poils
+73.26s - 73.80s: a peine
+74.76s - 78.84s: les invités un truc hors du commun oubliant qu'il existe une fin
+79.56s - 80.94s: on décolle pour un bola
+82.08s - 90.90s: je te montre le trésor de notre fusion oui un trésor que même les plus grands archéologues ne pourront jamais trouver je te promets
+91.44s - 92.28s: en effet
+93.09s - 98.34s: ça va aller je t'emmène là où les astronautes ont jamais mis les pieds
+99.69s - 101.28s: mais vous
+101.49s - 103.44s: chopper qui ne parle que de toi
+103.74s - 104.05s: tu
+105.23s - 107.85s: mon plus grand roman que téhéran
+109.68s - 113.13s: non aucun de nos plus grands est pas arrivé
+114.75s - 118.20s: je me permets de parler de pleurer
+119.11s - 119.64s: moi
+125.22s - 126.69s: les autres
+127.21s - 132.45s: enfant vivant bon nous deux nous deux nous deux que nous deux
+133.41s - 135.21s: deux éléments
+137.31s - 139.14s: deux études

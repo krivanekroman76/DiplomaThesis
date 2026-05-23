@@ -1,0 +1,37 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+merci laurent bouvet se mettent sur pause juste le temps de le repeindre en rose voici le monde pouvait se mettre sur j aimé revivre certaines choses je pense au temps danger trop désolé le temps c'est pas l'argent dedans me progrès je me rappelle qu on était tous ensemble clair souviens-toi de ce qu'on s'est dit à l époque où c'était nous les petits ni trop d'images en tête je suis trop nostalgique on paie une pause souvenirs on vous souvenez re bon souvenir bon ce soir ou demain oui mais ça ce soir ou demain oui mais ça ce soir ou demain oui ça le quartier des bars boites là-bas qui nous guettait maman qui s'inquiétait pas quoi qui était fêtée le lendemain regretter mais c'était pas ça j'avoue j'y c'est pas stable toi tu connais pas ça laisse-moi te raconter y avait zéro calcul ça ça avait pas compté mais ça se la raconter on avait tué un peu comme peggy tu ne nous voyez pas nous donne après midi ambiance nocturne les sections on attend que la roue tourne on se pose des questions quatre-vingt-dix-huit coupe du monde je voulais déjà prendre méga pour qu'on se coupe du monde le temps est passé et ça fait plus de dix ans les visages sont marqués mais j'ai la même vision souviens-toi de ce conseil été dit à l'époque où c'était nous les petits trop d'images en tête je suis trop nostalgique on paie une pause vous vous souvenez vous vous souvenez trop bon ce soir ou demain médecin ce soir ou demain oui mais ça ce soir ou demain oui mais ça ce soir ça ce soir ou demain ce soir ou demain ce soir ou demain quand euh oui mais ça vous vous souvenez bon son souverain vous vous souvenez bon ce soir ou demain médecin oui mais ça ce soir ou demain oublie ça ça euh
+
+Timestamps:
+0.00s - 15.84s: merci laurent bouvet se mettent sur pause juste le temps de le repeindre en rose voici le monde pouvait se mettre sur j aimé revivre certaines choses je pense au temps danger trop désolé le temps c'est pas l'argent dedans me progrès
+16.50s - 28.65s: je me rappelle qu on était tous ensemble clair souviens-toi de ce qu'on s'est dit à l époque où c'était nous les petits ni trop d'images en tête je suis trop nostalgique
+29.52s - 30.63s: on paie une pause
+31.20s - 31.65s: souvenirs
+33.75s - 34.32s: on vous souvenez
+35.04s - 37.59s: re bon souvenir
+42.12s - 44.43s: bon ce soir ou demain
+45.18s - 48.69s: oui mais ça ce soir ou demain
+49.50s - 53.01s: oui mais ça ce soir ou demain
+53.73s - 55.20s: oui ça
+59.88s - 68.07s: le quartier des bars boites là-bas qui nous guettait maman qui s'inquiétait pas quoi qui était fêtée le lendemain regretter mais c'était pas ça j'avoue j'y c'est pas stable
+69.21s - 74.52s: toi tu connais pas ça laisse-moi te raconter y avait zéro calcul ça ça avait pas compté mais ça se la raconter
+76.35s - 95.17s: on avait tué un peu comme peggy tu ne nous voyez pas nous donne après midi ambiance nocturne les sections on attend que la roue tourne on se pose des questions quatre-vingt-dix-huit coupe du monde je voulais déjà prendre méga pour qu'on se coupe du monde le temps est passé et ça fait plus de dix ans les visages sont marqués mais j'ai la même vision souviens-toi de ce
+95.28s - 103.36s: conseil été dit à l'époque où c'était nous les petits trop d'images en tête je suis trop nostalgique
+104.58s - 105.75s: on paie une pause
+108.84s - 109.38s: vous vous souvenez
+111.60s - 112.50s: vous vous souvenez
+115.44s - 119.49s: trop bon ce soir ou demain
+121.05s - 123.78s: médecin ce soir ou demain
+124.62s - 128.07s: oui mais ça ce soir ou demain
+128.82s - 131.52s: oui mais ça ce soir
+134.16s - 134.58s: ça
+136.08s - 137.73s: ce soir ou demain
+139.41s - 141.06s: ce soir ou demain
+142.44s - 144.06s: ce soir ou demain
+145.44s - 147.75s: quand euh oui mais ça
+150.57s - 153.69s: vous vous souvenez bon son souverain
+156.33s - 156.93s: vous vous souvenez
+158.73s - 161.04s: bon ce soir ou demain
+162.57s - 163.23s: médecin
+166.17s - 169.59s: oui mais ça ce soir ou demain
+170.28s - 171.81s: oublie ça
+175.71s - 176.61s: ça euh

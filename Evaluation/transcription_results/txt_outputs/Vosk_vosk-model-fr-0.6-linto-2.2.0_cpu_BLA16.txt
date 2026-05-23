@@ -1,0 +1,29 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+sur ma route oui il y a eu du mot voué de la bordure dans le moût vie est une vie de route sur ma route oui je ne compte plus les soucis de quoi devenir fou oui une vie de route sur ma route oui il y a eu des mots oui de l'aventure dans le monde vue de rose durement jean grande bulle aussi de quoi devenir fou oui une vie de rose sur ma télé tu en as tes mains sur ma route j ai eu des moments de doute je marchais sans avoir vers où j'ai été tué rien à foutre sur ma route j'avais pas de bagages aux autres est dans ma poche pas un sou juste la famille entre nous sur ma route il y a eu un tas de bouchons la vérité j'y ai souvent trébuché est-ce que tu sais que quand tu touches le fond il y a des gens chez qui tu peux te réfugier tu peux compter que sur tes pas parce que les amis pas d'histoire et un par un oui il m'arrive d'avoir le front au sol parce que dieu est grand et on est seul on meurt seul oui il y a eu des oui de l'aventure dans le monde une visite de ross sur ma route oui je ne compte plus les sous aussi de quoi devenir fou oui une vie de rose sur ma si on a sûrement sur ma route on m'a fait des coups en douce l'impression que mon coeur on souffre mais je suis sous anesthésie sur mon chemin j'ai croisé pas mal d'anciens ils me parlaient du lendemain et que tout est allé si vite ne me parle pas de nos j parce que je t'avoue que mon cœur est trop fragile je suis comme un pirate naufragé oui mon équipage suis plus trop tôt magie et je sèche mes larmes je baisse les armes je peux même plus savoir pourquoi une teste les autres si il y a plus rien à prendre je sais qui me reste une chose et ma route elle est trop long pour le temps de faire une séance oui il y a eu des oui de la non une de rose sur ma route oui je ne compte plus les sous soucis de quoi devenir fou oui une vie rose sur ma tu es sûr sur tu en as tué dans le monde une route sur ma route je ne compte plus les sous aussi de quoi devenir fou oui sur ma route oui il y a eu des mots oui de l'aventure dans le monde b le rose sûrement doué je ne compte plus les sous où c'est à devenir fou oui une vie de rose suivant c'est tu lendemain oui sûrement
+
+Timestamps:
+0.00s - 18.57s: sur ma route oui il y a eu du mot voué de la bordure dans le moût vie est une vie de route sur ma route oui je ne compte plus les soucis de quoi devenir fou oui une vie de route sur ma route oui il y a eu des mots oui de l'aventure dans le monde
+19.77s - 21.21s: vue de rose durement
+22.17s - 23.01s: jean grande bulle
+23.55s - 29.79s: aussi de quoi devenir fou oui une vie de rose sur ma télé
+31.05s - 32.03s: tu en as
+32.48s - 52.26s: tes mains sur ma route j ai eu des moments de doute je marchais sans avoir vers où j'ai été tué rien à foutre sur ma route j'avais pas de bagages aux autres est dans ma poche pas un sou juste la famille entre nous sur ma route il y a eu un tas de bouchons la vérité j'y ai souvent trébuché est-ce que tu sais que
+52.32s - 62.88s: quand tu touches le fond il y a des gens chez qui tu peux te réfugier tu peux compter que sur tes pas parce que les amis pas d'histoire et un par un oui il m'arrive d'avoir le front au sol parce que dieu est grand et on est seul on meurt seul
+63.60s - 67.14s: oui il y a eu des oui de l'aventure dans le monde
+68.01s - 70.56s: une visite de ross sur ma route oui
+70.80s - 77.49s: je ne compte plus les sous aussi de quoi devenir fou oui une vie de rose sur ma
+80.45s - 98.88s: si on a sûrement sur ma route on m'a fait des coups en douce l'impression que mon coeur on souffre mais je suis sous anesthésie sur mon chemin j'ai croisé pas mal d'anciens ils me parlaient du lendemain et que tout est allé si vite ne me parle pas de nos
+99.15s - 112.83s: j parce que je t'avoue que mon cœur est trop fragile je suis comme un pirate naufragé oui mon équipage suis plus trop tôt magie et je sèche mes larmes je baisse les armes je peux même plus savoir pourquoi une teste les autres si il y a plus rien à prendre je sais qui me reste une chose et ma route elle est trop long pour le temps de faire une séance
+113.52s - 116.67s: oui il y a eu des oui de la non
+117.96s - 125.31s: une de rose sur ma route oui je ne compte plus les sous soucis de quoi devenir fou oui une vie
+125.76s - 127.47s: rose sur ma
+130.44s - 132.69s: tu es sûr
+133.74s - 134.37s: sur
+135.69s - 138.09s: tu en as tué dans le monde
+138.93s - 141.27s: une route sur ma route
+141.72s - 143.52s: je ne compte plus les sous aussi
+143.61s - 145.66s: de quoi devenir fou oui
+147.21s - 151.95s: sur ma route oui il y a eu des mots oui de l'aventure dans le monde
+152.21s - 161.43s: b le rose sûrement doué je ne compte plus les sous où c'est à devenir fou oui une vie de rose suivant
+163.29s - 166.08s: c'est tu lendemain
+166.16s - 168.15s: oui sûrement

@@ -1,0 +1,44 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+mon coeur tu sais je réfléchissais et je me disais imagines un jour on est plus ensemble à te remettre en couple libre parce que c'est dur tu passes après le sosie d'eva longoria ça doit être compliqué de l'eau non non compliquée quand tu chaud et notre soif je pense qu'il va dans zumba ou le mois d'octobre qui bat tous les cas ah oui bah oui ça reste quand même nous toutes les meufs en fait dès qu on a en couple il y a tout le temps genre des gens qui attendent sommes pas tous d'autres mecs ouais et moi ça allons bon choix de touche ouais bon séjour voilà une chose que je trouve que ça quoi mais en fait pas arrivé pour véhicules ne pas là-dessus dans huit états pas si facile ah la la la la place que pour un prince charmant grand muscle doit pas lire l'allemand que divers je et les blancs il avait le pedigree de super non pas ben écoute pas plus tout fait pour cage dorée quoi quoi quoi mais dès qu'il a eu son premier soir soir soir il est parti quand même tiens ça il est parti ça car il est pas comme un usage il est pas comme linda car tu l'as larguée pour une latina comme la commune rue mon prof de zumba fais voir que t'avais vingt ans pas tout cela ne pas tout faire pour qu'un jour tu vas ben quoi quoi l'abbaye des tables ça elle est partie ça ça elle est partie quand même ça ça elle est partie comme un insee elle est partie melinda dans la vie rien n'est parfait en amour rien n'est parfait tu envoies tes regrets attendre on à avoir ton message est resté un soir bonsoir du soir car il est parti quand melinda il est parti quand même il est parti quand même il est parti comme même
+
+Timestamps:
+0.00s - 9.48s: mon coeur tu sais je réfléchissais et je me disais imagines un jour on est plus ensemble à te remettre en couple libre parce que c'est dur tu passes après le sosie d'eva longoria
+10.08s - 11.64s: ça doit être compliqué de l'eau
+12.60s - 14.67s: non non compliquée quand tu chaud et notre soif
+15.27s - 26.22s: je pense qu'il va dans zumba ou le mois d'octobre qui bat tous les cas ah oui bah oui ça reste quand même nous toutes les meufs en fait dès qu on a en couple il y a tout le temps genre des gens qui attendent sommes pas tous d'autres mecs ouais et moi ça allons bon choix
+27.62s - 27.93s: de touche
+28.89s - 30.33s: ouais bon séjour
+30.48s - 35.62s: voilà une chose que je trouve que ça quoi mais en fait pas arrivé pour véhicules
+36.71s - 37.23s: ne pas là-dessus
+38.28s - 39.18s: dans huit états
+40.23s - 41.16s: pas si facile
+43.11s - 46.41s: ah la la la
+47.13s - 55.89s: la place que pour un prince charmant grand muscle doit pas lire l'allemand que divers je et les blancs il avait le pedigree de super
+56.51s - 56.93s: non pas
+59.39s - 59.94s: ben écoute
+60.93s - 61.56s: pas plus
+63.99s - 65.55s: tout fait pour cage dorée
+66.97s - 75.42s: quoi quoi quoi mais dès qu'il a eu son premier soir soir soir il est parti quand même
+76.71s - 79.41s: tiens ça il est parti
+81.12s - 85.29s: ça car il est pas comme un usage
+87.48s - 89.43s: il est pas comme linda
+91.17s - 96.45s: car tu l'as larguée pour une latina comme la commune rue
+97.59s - 99.48s: mon prof de zumba
+100.20s - 102.39s: fais voir que t'avais vingt ans pas
+105.21s - 106.83s: tout cela ne pas
+109.47s - 111.81s: tout faire pour qu'un jour tu vas
+112.50s - 113.49s: ben quoi
+114.24s - 114.69s: quoi
+115.29s - 116.44s: l'abbaye des tables
+117.55s - 120.30s: ça elle est partie
+121.93s - 125.25s: ça ça elle est partie quand même
+125.87s - 130.05s: ça ça elle est partie comme un insee
+132.87s - 134.79s: elle est partie melinda
+137.49s - 141.45s: dans la vie rien n'est parfait en amour rien n'est parfait
+142.41s - 144.66s: tu envoies tes regrets attendre
+145.85s - 147.33s: on à avoir
+149.01s - 151.32s: ton message est resté un soir
+151.92s - 155.94s: bonsoir du soir car il est parti quand melinda
+158.97s - 160.20s: il est parti quand même
+163.77s - 165.03s: il est parti quand même
+168.66s - 169.89s: il est parti comme même

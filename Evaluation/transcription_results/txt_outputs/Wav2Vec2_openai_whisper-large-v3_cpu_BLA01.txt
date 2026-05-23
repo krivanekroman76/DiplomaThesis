@@ -1,0 +1,6 @@
+Transcription (Model: openai/whisper-large-v3):
+! !
+
+Timestamps:
+0.00s - 20.00s: !
+20.00s - 40.00s: !

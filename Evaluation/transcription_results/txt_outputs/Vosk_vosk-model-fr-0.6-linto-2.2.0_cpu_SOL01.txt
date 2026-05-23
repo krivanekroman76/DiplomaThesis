@@ -1,0 +1,39 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+dis-moi alors quoi de plus important que la famille c'est l'oxygène de naître main franges pourquoi pas mais là je veux respirer ben pour ma fin mai pas tant que lapin mais aujourd'hui c'est devenu banal comme enfants de parents divorcés dans les foyers donc il y a des excès de lits superposés mariage mais pour le trente-deux sentiment quand on ne fait plus des familles des enfants par accident un avortement ne fait plus culpabiliser combien de filles dix-sept ans sont des jardins familiaux lait ici on apprend à vivre singulier donc pour une futilité on se dispute l'immobilier si t'as idée de ce qui est aujourd'hui la vie de couple c'était lutter dégoûte des outils tu me dégoûte on court derrière les promesses des premiers rendez-vous car la vie de couple ne se résume pas qu'à i love you tu sais que j'ai rien contre ce mec tant qu'ils te respectent et qui te dirige vers la mecque petite soeur que pour ton choix je serai toujours avec moi je sais que ce mec est honnête tais-toi je confirme son poids etc pas que et là je veux respirer m ben mais pas pas à pas i a ce que étais j'ai toujours suivi tes conseils tu as toujours été mon mais aujourd'hui alors faites confiance frère m'a dit oui que je en famille dans ses bras t'as mon soutien tu sais ce que ça donne coups mais tu sais oui je sais t'as toujours été là quand j'avais besoin de toi hein dis toi que tout ce que tu me donnes dieu te rendra dans une famille il faut se serrer les coudes pour sa famille il faut savoir recevant l'écho n'ai aucun doute jamais douté que vous étiez là pour moi t'inquiète la femme c'est pas pas je ne me bats pas que i mis deux pour former trois pour mes curieux que dans monde curieux pour moi de bons mouvements mais je crois que dans mon coeur et un pour ma famille de ma famille je crois pour ma carrière que dans mon cas pour ma famille mais trois crois y a que dans mon coeur celle-là quand on est au plus bas que tu passes le bon le mauvais choix que tu places tes mauvais endroit elle est là même quand tu la déçois quand on soi-disant amour se bar avec un potentat ce père qui christine la santé pour que ce ne soit pas cette mer culture qui sans cesse te pardonne ses frères et soeurs qui pourrait prendre des coups pour toi c'est vrai pote tu pourrais mourir pour toi peut pas dit que et là c'est risqué je me bats ma affamés street c'est un pas que lapin mais
+
+Timestamps:
+0.00s - 4.53s: dis-moi alors quoi de plus important que la famille c'est l'oxygène de naître main franges
+5.43s - 7.95s: pourquoi pas
+9.93s - 13.20s: mais là je veux respirer
+14.01s - 16.90s: ben pour ma fin mai
+18.72s - 38.88s: pas tant que lapin mais aujourd'hui c'est devenu banal comme enfants de parents divorcés dans les foyers donc il y a des excès de lits superposés mariage mais pour le trente-deux sentiment quand on ne fait plus des familles des enfants par accident un avortement ne fait plus culpabiliser combien de filles
+39.00s - 46.95s: dix-sept ans sont des jardins familiaux lait ici on apprend à vivre singulier donc pour une futilité on se dispute l'immobilier
+47.52s - 67.68s: si t'as idée de ce qui est aujourd'hui la vie de couple c'était lutter dégoûte des outils tu me dégoûte on court derrière les promesses des premiers rendez-vous car la vie de couple ne se résume pas qu'à i love you tu sais que j'ai rien contre ce mec tant qu'ils te respectent et qui te dirige vers la mecque petite soeur que pour ton choix je serai toujours avec moi
+67.71s - 69.60s: je sais que ce mec est honnête tais-toi
+69.75s - 71.82s: je confirme son poids etc
+72.80s - 74.82s: pas que
+75.84s - 78.69s: et là je veux respirer
+79.20s - 79.95s: m ben
+81.33s - 83.19s: mais pas
+84.24s - 86.59s: pas à pas
+86.85s - 87.90s: i
+89.55s - 90.96s: a ce que étais
+91.23s - 93.96s: j'ai toujours suivi tes conseils
+96.38s - 98.13s: tu as toujours été mon
+100.08s - 100.83s: mais aujourd'hui
+103.23s - 104.61s: alors faites confiance
+107.22s - 111.93s: frère m'a dit oui que je en famille dans ses bras
+113.49s - 132.72s: t'as mon soutien tu sais ce que ça donne coups mais tu sais oui je sais t'as toujours été là quand j'avais besoin de toi hein dis toi que tout ce que tu me donnes dieu te rendra dans une famille il faut se serrer les coudes pour sa famille il faut savoir recevant l'écho n'ai aucun doute jamais douté que vous étiez
+132.83s - 135.99s: là pour moi t'inquiète la femme c'est pas
+137.82s - 138.48s: pas
+143.94s - 144.96s: je ne me bats
+149.76s - 150.39s: pas
+151.20s - 170.87s: que i mis deux pour former trois pour mes curieux que dans monde curieux pour moi de bons mouvements mais je crois que dans mon coeur et un pour ma famille de ma famille je crois pour ma carrière que dans mon cas
+171.78s - 172.74s: pour ma famille
+173.91s - 176.97s: mais trois crois y a que dans mon coeur
+177.60s - 197.76s: celle-là quand on est au plus bas que tu passes le bon le mauvais choix que tu places tes mauvais endroit elle est là même quand tu la déçois quand on soi-disant amour se bar avec un potentat ce père qui christine la santé pour que ce ne soit pas cette mer culture qui sans cesse te pardonne ses frères et soeurs qui pourrait prendre des coups pour toi
+197.94s - 200.64s: c'est vrai pote tu pourrais mourir pour toi
+201.81s - 204.48s: peut pas dit que
+205.68s - 207.96s: et là c'est risqué
+208.71s - 212.88s: je me bats ma affamés street
+214.05s - 217.71s: c'est un pas que lapin mais

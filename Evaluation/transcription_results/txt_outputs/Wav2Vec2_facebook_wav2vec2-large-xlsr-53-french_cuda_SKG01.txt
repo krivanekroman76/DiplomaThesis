@@ -1,0 +1,11 @@
+Transcription (Model: facebook/wav2vec2-large-xlsr-53-french):
+qen etra plein etrappe sous présent soulqing ae   sans tu cate o es afmee de lemonde ces veni le coquet ouma destiné rien exarté er du regarde moi du fa de mese tout le malettre qe masodese ce le chanperqe mes complèses iimigre etu arl estu faa guerre poure laou de la pai deviennet mon atles je san pé ma mé ancoli  dans des uatre qoins du mondes fa amel ser te mélodi qui pensait danses sur des mescages  te pe e jevides e dt enn merofa sans e de b de eureux qe çacaenp  qu'il me arrive je t'aurais donner le sousie je s'étais pas sa ab vola tu mes cou de matun et il ira laqe donne paa maba que je guerie resan i se ma oce tre pas senblant je pracuserais mes je bracuesrai mesph le flass san go  p pap i fo petit soldat e be nilan je qique qui que pos sable e emai e qe e mis  e se lemoi mons sonr ebonr de voi pi enmn binon e ou  smiim psnn no de noe p     de e    reina onp aa  le popoe po sannanpin et nousas qae fpl ou pour pour p p ariva çavec a angrui de ces autres alau esugi segi dans les baques va lo matele laife exclusif de poetrope n
+
+Timestamps:
+0.00s - 20.00s: qen etra plein etrappe sous présent soulqing ae   sans tu cate o es afmee de lemonde ces veni le coquet ouma destiné rien exarté er du regarde moi du fa de mese tout le malettre qe masodese ce le chanperqe mes complèses iimigre etu arl
+20.00s - 40.00s: estu faa guerre poure laou de la pai deviennet mon atles je san pé ma mé ancoli  dans des uatre qoins du mondes fa amel ser te mélodi qui pensait danses sur des mescages  te pe e jevides e dt enn merofa sans e de b de eureux
+40.00s - 60.00s: qe çacaenp  qu'il me arrive je t'aurais donner le sousie je s'étais pas sa ab vola tu mes cou de matun et il ira laqe donne paa maba que je guerie resan i se ma oce tre pas senblant je pracuserais mes
+60.00s - 80.00s: je bracuesrai mesph le flass san go  p pap i fo petit soldat e be nilan je qique qui que pos sable e emai e qe e mis  e se lemoi mons sonr ebonr de voi pi enmn binon e ou  smiim
+80.00s - 100.00s: psnn no de noe p     de e    reina onp
+100.00s - 120.00s: aa  le popoe po sannanpin et nousas qae fpl ou pour pour p
+120.00s - 140.00s: p ariva çavec a angrui de ces autres alau esugi segi dans les baques va lo matele laife exclusif de poetrope n

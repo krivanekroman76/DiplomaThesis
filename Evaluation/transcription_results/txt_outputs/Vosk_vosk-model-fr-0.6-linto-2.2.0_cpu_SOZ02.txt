@@ -1,0 +1,46 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+je ne suis bien que enfin mais moi je ne suis rien je pense ça c'est quand ils ont faim quand ils ont mal je réponds de rien bien depuis un an et dessins je pense que l'heure plus tard dans les en moi la vie est courte mais ça je perds tout moi que je considère tous ses crocs euh ouais ouais je perds du temps on doit avoir du temple de louxor en effet toutes les couleurs quand je l'ai dans mon cas seulement présente nous soigner leurs douleurs du temps pour le mieux du temple plat du temps du temple en plein tout en en plein temple photo hôtel hum hum dis que je suis plus trop dans la zone tu drink je sors je vois bien plus loin dans ma check-list pas je m'en parler rien turquie pour les miens je tue moi je fait du bien je dois faire le taf quand maintenant je viendrait éprouvé comme un homme on est côtés couleur de cordon longueur seulement à soigner la douleur se chargent du temps pour les biens du temple à en plein du temple plat tout en en plein temple on dit que le coeur sur la main ce soir on dit de moi que je on a fait voir de toutes les couleurs je porte dans mon coeur seulement après la douleur se charge du temps pour les biens du temple en plein temps du temps du temple temple en plein cœur vous dans mon cas pour les pas du tout en plus
+
+Timestamps:
+0.84s - 2.01s: je ne suis bien que
+3.31s - 11.28s: enfin mais moi je ne suis rien je pense ça c'est quand ils ont faim quand ils ont mal je réponds de rien bien
+12.54s - 14.46s: depuis un an et dessins
+14.88s - 16.23s: je pense que l'heure
+17.40s - 20.64s: plus tard dans les en moi la vie est courte
+21.08s - 21.90s: mais ça
+23.25s - 29.35s: je perds tout moi que je considère tous ses crocs euh ouais ouais
+30.63s - 31.49s: je perds du temps
+34.65s - 37.17s: on doit avoir du temple de louxor en effet
+37.68s - 38.52s: toutes les couleurs
+39.17s - 43.05s: quand je l'ai dans mon cas seulement présente nous soigner leurs douleurs
+43.86s - 46.56s: du temps pour le mieux du temple
+47.33s - 47.76s: plat
+48.57s - 50.10s: du temps du temple
+50.73s - 53.40s: en plein tout en en plein temple
+54.00s - 55.26s: photo hôtel
+55.92s - 58.47s: hum hum dis que je suis plus trop dans la zone
+59.10s - 60.24s: tu drink je sors
+61.62s - 62.40s: je vois bien plus loin
+63.12s - 66.03s: dans ma check-list pas je m'en parler
+67.32s - 68.37s: rien turquie
+69.09s - 72.39s: pour les miens je tue moi je fait du bien
+75.51s - 77.04s: je dois faire le taf quand maintenant
+79.84s - 81.78s: je viendrait éprouvé comme un homme
+82.35s - 83.64s: on est côtés
+83.76s - 88.08s: couleur de cordon longueur seulement à soigner
+88.17s - 93.69s: la douleur se chargent du temps pour les biens du temple à en plein
+95.09s - 96.03s: du temple
+96.81s - 99.33s: plat tout en en plein temple
+100.65s - 102.90s: on dit que le coeur sur la main
+107.76s - 108.18s: ce soir
+109.68s - 110.88s: on dit de moi que je
+118.26s - 120.33s: on a fait voir de toutes les couleurs
+120.96s - 123.02s: je porte dans mon coeur seulement après
+123.84s - 127.92s: la douleur se charge du temps pour les biens du temple
+128.82s - 131.70s: en plein temps du temps du temple
+132.24s - 132.85s: temple
+133.53s - 134.43s: en plein cœur
+136.54s - 136.65s: vous
+137.16s - 137.85s: dans mon cas
+139.71s - 140.25s: pour les
+141.36s - 143.76s: pas du tout en plus

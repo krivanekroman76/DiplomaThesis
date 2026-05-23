@@ -1,0 +1,29 @@
+Transcription (Model: vosk-model-fr-0.22):
+j'ai rien vu pourtant je ne dis rien de peut-être que je m'en souviens plus bien que joomla je perds de vue dedans roberge je n'ai pas connu mon grand-père dans un musée le grand frère et moi ça me rend viaire sujet exemplaire si je ne le suis pas veuillez m'excuser mon exemple mon père mais le temps est contre nous abuser j'ai plus comment faire plus je vieillis plus je réfléchis je veux pas commenter la vie est ainsi je vois beaucoup de signes j'ai rien vu base rendu dans l'oise en somme parle d'un cheveu blanc j'ai rien vu j'ai rien lu j'ai rien vu à peine cligner des yeux déjà en émoi les jours passent comme des heures et les années comme des mois je vois un moment mets-le dans la vallée et dans un moment je me dis suis-je exemplaire si je ne le suis pas veuillez m'excuser mon exemple mon père mais le temps est contre nous abuser chez plus grande envers plus je vieillis plus je réfléchis je veux pas comment la vie est ainsi je vois beaucoup de signes j'ai rien base de tu es dans l'oise ça me parle d'un cheveu blanc j'ai rien vu j'ai rien vu passer longueur dans l'oise je me sens menacé par cheveux blancs j'ai rien vu j'ai rien vu le temps est précieux mon petit ne sois pas pressé prends le temps d'apprécier parce qu'on finira tous aux cieux tuer le temps et des yeux dinosaure va presser le temps d'apprécier parce qu'on finira tous aux yeux tu verras tu es géré basé dans l'oise ça me va dans cheveux blancs j'ai rien vu j'ai rien vu passer dans l'oise nous sommes or le dans cheveux blancs j'ai rien vu j'ai rien vu
+
+Timestamps:
+0.00s - 7.89s: j'ai rien vu pourtant je ne dis rien de peut-être que je m'en souviens plus bien que joomla je perds de vue dedans
+8.25s - 28.32s: roberge je n'ai pas connu mon grand-père dans un musée le grand frère et moi ça me rend viaire sujet exemplaire si je ne le suis pas veuillez m'excuser mon exemple mon père mais le temps est contre nous abuser j'ai plus comment faire plus je vieillis plus je réfléchis je veux pas commenter la vie est
+28.32s - 31.35s: ainsi je vois beaucoup de signes j'ai rien vu base
+32.94s - 34.32s: rendu dans l'oise
+35.04s - 35.97s: en somme
+36.96s - 39.93s: parle d'un cheveu blanc j'ai rien vu
+41.97s - 42.99s: j'ai rien lu
+43.98s - 53.49s: j'ai rien vu à peine cligner des yeux déjà en émoi les jours passent comme des heures et les années comme des mois je vois un moment
+54.42s - 74.16s: mets-le dans la vallée et dans un moment je me dis suis-je exemplaire si je ne le suis pas veuillez m'excuser mon exemple mon père mais le temps est contre nous abuser chez plus grande envers plus je vieillis plus je réfléchis je veux pas comment la vie est ainsi je vois beaucoup de signes j'ai rien
+74.46s - 75.24s: base de
+76.93s - 78.09s: tu es dans l'oise
+80.13s - 84.78s: ça me parle d'un cheveu blanc j'ai rien vu
+86.43s - 88.20s: j'ai rien vu passer
+89.52s - 91.02s: longueur dans l'oise
+92.76s - 97.77s: je me sens menacé par cheveux blancs j'ai rien vu
+99.69s - 100.68s: j'ai rien vu
+101.61s - 110.76s: le temps est précieux mon petit ne sois pas pressé prends le temps d'apprécier parce qu'on finira tous aux cieux tuer le temps et des yeux
+111.39s - 120.84s: dinosaure va presser le temps d'apprécier parce qu'on finira tous aux yeux tu verras tu es géré basé dans l'oise
+121.44s - 123.03s: ça me va
+123.18s - 125.79s: dans cheveux blancs j'ai rien vu
+127.89s - 129.66s: j'ai rien vu passer
+131.10s - 131.91s: dans l'oise
+132.96s - 133.83s: nous sommes
+134.88s - 137.82s: or le dans cheveux blancs j'ai rien vu
+140.07s - 141.10s: j'ai rien vu

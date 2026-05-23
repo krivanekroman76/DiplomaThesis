@@ -1,0 +1,27 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+on ne se connait pas mais je voulais vous dire merci si vous saviez combien vous avez changé ma vie sans vraiment savoir vous avez fait de la manger moi qui ne croyais plus en moi et en venir combien de ai-je tout foutre en l'air je n avais plus la force et l'envie d'aller faire ma guerre de plus le souffle pour faire tourner la roue jusqu au jour où le destin vous a mis sur ma route oui c'est hum hum euh grâce à ma flamme s'est allumée e demain tous on ne se connaît pas mais vous m'avez tellement appris vos sourires vos larmes la vie au combat motta appris à encaisser les coups et votre persévérance me remettre debout on retrouve le gamin va alors on appris ce qu'est vraiment être un humain euh vous êtes second souffle qui me fait tourner la roue si le destin de vous à avons mis sur ma route ben euh grâce à c'est à lunettes e pas la la la la la la la la la je ne veux pas vous déranger ni vous embarrasser j'avais tellement besoin de vos mots héros et de lui dire merci ces mots vous sont adressés peut-être qu'ils feront les faits que vous avez eu sur ma vie on a tous un jour eu ce moment et croisés le temps une histoire tous merci
+
+Timestamps:
+0.09s - 14.40s: on ne se connait pas mais je voulais vous dire merci si vous saviez combien vous avez changé ma vie sans vraiment savoir vous avez fait de la manger moi qui ne croyais plus en moi et en venir combien de ai-je
+15.00s - 16.05s: tout foutre en l'air
+16.56s - 19.65s: je n avais plus la force et l'envie d'aller faire ma guerre
+20.16s - 26.70s: de plus le souffle pour faire tourner la roue jusqu au jour où le destin vous a mis sur ma route oui c'est
+29.73s - 35.46s: hum hum euh grâce à ma flamme s'est allumée e
+37.74s - 38.07s: demain
+46.10s - 46.43s: tous
+49.44s - 52.26s: on ne se connaît pas mais vous m'avez tellement appris
+52.89s - 54.20s: vos sourires vos larmes
+54.72s - 61.59s: la vie au combat motta appris à encaisser les coups et votre persévérance me remettre debout
+62.70s - 72.42s: on retrouve le gamin va alors on appris ce qu'est vraiment être un humain euh vous êtes second souffle qui me fait tourner la roue
+72.99s - 75.72s: si le destin de vous à avons mis sur ma route
+78.39s - 80.67s: ben euh grâce à
+82.29s - 84.36s: c'est à lunettes e
+89.07s - 89.25s: pas
+96.06s - 100.51s: la la la la la la
+101.71s - 104.78s: la la la
+107.67s - 116.79s: je ne veux pas vous déranger ni vous embarrasser j'avais tellement besoin de vos mots héros et de lui dire merci ces mots vous sont adressés
+117.36s - 124.59s: peut-être qu'ils feront les faits que vous avez eu sur ma vie on a tous un jour eu ce moment et croisés
+126.90s - 127.24s: le temps
+129.87s - 130.26s: une histoire
+132.40s - 132.74s: tous
+135.39s - 136.05s: merci

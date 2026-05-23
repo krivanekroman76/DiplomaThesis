@@ -1,0 +1,40 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+tout le monde me regarde le paysage l'odeur les gens trouvent ça me charment ma grand-mère me dit alpha bienvenue chez toi la fille du voisin aimerait se fiancer aux filles non c'est jolie maria maria je te connais interne un tas ce soir je suis invité à manger chez ma tata a genoux autour d'un plat c'est ça bienvenue chez moi là où les gens partagent tout c'était endormis tous ensemble jusqu'au soir bienvenue chez moi là où les gens partagent tout c'est ensemble du matin jusqu'au soir soit-il karlsson y a b mais quand en fin sous emboîter ado maroc a des maya dit dis donc bienvenue chez moi là où les gens partagent tout même pas tu où dormir tous ensemble du matin jusqu'au soir bien là où les gens partagent c'est ensemble du matin jusqu'au soir je suis chez moi je suis chez moi je suis chez moi je suis chez moi chez moi moi là où les gens partagent tous le même toit chez moi homer rentre toujours ensemble du matin jusqu'au soir la je partage même c'est mes héros tous ensemble du matin jusqu'au soir français d'origine guinéenne fière de mes origines fier de mon pays force continent africain le message reste le même je suis chez moi je suis un être humain comme toi éternellement insatisfait
+
+Timestamps:
+0.36s - 12.18s: tout le monde me regarde le paysage l'odeur les gens trouvent ça me charment ma grand-mère me dit alpha bienvenue chez toi la fille du voisin aimerait se fiancer aux filles
+12.27s - 16.53s: non c'est jolie maria maria je te connais
+17.52s - 18.93s: interne un tas
+19.71s - 22.74s: ce soir je suis invité à manger chez ma tata
+23.28s - 25.11s: a genoux autour d'un plat c'est ça
+28.53s - 31.17s: bienvenue chez moi là où les gens partagent tout
+32.46s - 33.93s: c'était endormis
+35.07s - 35.77s: tous ensemble
+36.51s - 37.32s: jusqu'au soir
+40.08s - 42.93s: bienvenue chez moi là où les gens partagent tout
+45.03s - 45.36s: c'est
+48.83s - 50.91s: ensemble du matin jusqu'au soir
+56.03s - 56.46s: soit-il
+57.09s - 58.14s: karlsson y a
+59.70s - 59.91s: b
+60.81s - 62.49s: mais quand en fin
+63.30s - 64.38s: sous
+68.60s - 70.86s: emboîter ado maroc a des
+72.38s - 72.90s: maya
+73.92s - 74.43s: dit
+75.87s - 79.47s: dis donc
+80.64s - 85.95s: bienvenue chez moi là où les gens partagent tout même pas tu où dormir
+87.09s - 89.46s: tous ensemble du matin jusqu'au soir
+92.07s - 92.37s: bien
+94.05s - 95.33s: là où les gens partagent
+97.62s - 97.98s: c'est
+101.13s - 103.02s: ensemble du matin jusqu'au soir
+105.87s - 111.51s: je suis chez moi je suis chez moi je suis chez moi je suis chez moi
+112.23s - 112.92s: chez moi
+113.52s - 117.78s: moi là où les gens partagent tous le même toit chez moi
+119.43s - 120.15s: homer rentre
+122.20s - 124.44s: toujours ensemble du matin jusqu'au soir
+128.51s - 128.75s: la
+129.12s - 133.74s: je partage même c'est mes héros
+135.21s - 137.46s: tous ensemble du matin jusqu'au soir
+140.37s - 151.56s: français d'origine guinéenne fière de mes origines fier de mon pays force continent africain le message reste le même je suis chez moi je suis un être humain comme toi éternellement insatisfait

@@ -539,65 +539,68 @@ class TranscriptionEvaluator:
                 )
 
             plt.tight_layout()
-            plt.savefig(self.plots_dir / "RTF_Comparison.png", dpi=300)
+            plt.savefig(self.plots_dir / "Trans_RTF_Comparison.png", dpi=300)
             plt.close()
             
-            wer_cols = [f'Tier{i}_WER' for i in range(1, 6)]
-            cer_cols = [f'Tier{i}_CER' for i in range(1, 6)]
+            # =====================================================================
+            # SINGLE TIER SELECTION & Y-AXIS SYNC FOR WER/CER
+            # =====================================================================
+            # For French Rap, Tier 4 (Acoustic Robust) is ideal. 
+            # It strips accents and splits apostrophes/hyphens, preventing models 
+            # from being penalized for orthographic differences of the same sounds.
+            target_tier = 4
             
-            df_wer_melt = pd.melt(summary, id_vars=['System'], value_vars=wer_cols, var_name='Tier', value_name='WER')
-            df_wer_melt['WER'] = df_wer_melt['WER'] * 100
-            df_wer_melt['Tier'] = df_wer_melt['Tier'].str.replace('_WER', '')
+            # Extract the specific tier data and convert to percentages
+            summary['WER_Plot'] = summary[f'Tier{target_tier}_WER'] * 100
+            summary['CER_Plot'] = summary[f'Tier{target_tier}_CER'] * 100
             
-            df_cer_melt = pd.melt(summary, id_vars=['System'], value_vars=cer_cols, var_name='Tier', value_name='CER')
-            df_cer_melt['CER'] = df_cer_melt['CER'] * 100
-            df_cer_melt['Tier'] = df_cer_melt['Tier'].str.replace('_CER', '')
-
+            # Calculate global maximum across BOTH WER and CER to sync the y-axis
+            global_max_err = max(summary['WER_Plot'].max(), summary['CER_Plot'].max())
+            shared_y_limit = global_max_err * 1.15
+            
             # --- WER Plot ---
-            plt.figure(figsize=(14, 7)) # Slightly wider to accommodate 5 tiers per model
-            ax_wer = sns.barplot(data=df_wer_melt, x='System', y='WER', hue='Tier', palette="rocket")
+            plt.figure(figsize=(10, 6))
+            ax_wer = sns.barplot(data=summary, x='System', y='WER_Plot', palette="rocket")
             
-            plt.title("Mean Word Error Rate (WER) Across 5 Normalization Tiers", fontsize=14, pad=15, weight='bold')
+            plt.title(f"Mean Word Error Rate (WER) - Tier {target_tier} (Acoustic Robust)", fontsize=14, pad=15, weight='bold')
             plt.ylabel("WER (%)", fontsize=12, labelpad=10)
             plt.xlabel("Evaluated Models", fontsize=12, labelpad=10)
             plt.xticks(rotation=45, ha="right")
-            plt.legend(title="Cleaning Tier", frameon=True)
             
-            # Headroom and Labels (Smaller font for grouped bars to prevent overlap)
-            ax_wer.set_ylim(0, df_wer_melt['WER'].max() * 1.15)
+            # Apply the shared Y-axis limit
+            ax_wer.set_ylim(0, shared_y_limit)
             for container in getattr(ax_wer, 'containers', []):
                 ax_wer.bar_label(
-                    container, fmt='%.1f', padding=3, weight='bold', fontsize=8,
-                    bbox=dict(facecolor='white', edgecolor='none', pad=1.0, alpha=0.9)
+                    container, fmt='%.1f', padding=3, weight='bold', fontsize=11,
+                    bbox=dict(facecolor='white', edgecolor='none', pad=1.5, alpha=0.9)
                 )
 
             plt.tight_layout()
-            plt.savefig(self.plots_dir / "WER_Tiers_Comparison.png", dpi=300)
+            plt.savefig(self.plots_dir / f"WER_Tier{target_tier}_Comparison.png", dpi=300)
             plt.close()
             
             # --- CER Plot ---
-            plt.figure(figsize=(14, 7))
-            ax_cer = sns.barplot(data=df_cer_melt, x='System', y='CER', hue='Tier', palette="mako")
+            plt.figure(figsize=(10, 6))
+            ax_cer = sns.barplot(data=summary, x='System', y='CER_Plot', palette="mako")
             
-            plt.title("Mean Character Error Rate (CER) Across 5 Normalization Tiers", fontsize=14, pad=15, weight='bold')
+            plt.title(f"Mean Character Error Rate (CER) - Tier {target_tier} (Acoustic Robust)", fontsize=14, pad=15, weight='bold')
             plt.ylabel("CER (%)", fontsize=12, labelpad=10)
             plt.xlabel("Evaluated Models", fontsize=12, labelpad=10)
             plt.xticks(rotation=45, ha="right")
-            plt.legend(title="Cleaning Tier", frameon=True)
             
-            # Headroom and Labels
-            ax_cer.set_ylim(0, df_cer_melt['CER'].max() * 1.15)
+            # Apply the shared Y-axis limit
+            ax_cer.set_ylim(0, shared_y_limit)
             for container in getattr(ax_cer, 'containers', []):
                 ax_cer.bar_label(
-                    container, fmt='%.1f', padding=3, weight='bold', fontsize=8,
-                    bbox=dict(facecolor='white', edgecolor='none', pad=1.0, alpha=0.9)
+                    container, fmt='%.1f', padding=3, weight='bold', fontsize=11,
+                    bbox=dict(facecolor='white', edgecolor='none', pad=1.5, alpha=0.9)
                 )
 
             plt.tight_layout()
-            plt.savefig(self.plots_dir / "CER_Tiers_Comparison.png", dpi=300)
+            plt.savefig(self.plots_dir / f"CER_Tier{target_tier}_Comparison.png", dpi=300)
             plt.close()
             
-            print(f"[+] Saved RTF, WER, and CER graphs to {self.plots_dir}/")
+            print(f"[+] Saved RTF, WER, and CER graphs (synced y-axis) to {self.plots_dir}/")
             
         print("\n--- EVALUATION COMPLETE ---")
 

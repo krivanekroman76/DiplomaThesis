@@ -1,0 +1,40 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+es ce que la surprendre c'est comme ça qu'on se rencontrera justement quand ça ne mange pas on sait très bien dans ce plat imagine toi toi imagine ta vie dans ces pays où les hommes politiques sont entrés la liberté d'expression est une conspiration ou le dollar si vous venez avec des canons ou on peut mourir d'une simple fièvre où les épidémies se promènent sans laisse vraiment tenir sous la canicule de ces pays pendant deux mois tu bronzes eux toute l'année imagine ta vie sans eau potable une douche les jours de pluie pas de bouffe mis sur la table imagine toi dans un hôpital avec une maladie incurable maladie qui tue pas magento enfermés comme pas chacun pousse comment magalie debout dans le bus maintenant et avant d'insulter elle avait réfléchit dorénavant quand on rentre on ne réalise pas comme ça pas on sait très bien dans ce plat imagine toi je ferme les yeux imagine toi quelque part en afrique dans un village bâti de terre sous un soleil de plomb imagine l'air chaud et lourd cette étendue désertique ce maigre troupeau de charme le bateau imagine cette longue marche que tu dois accomplir afin que tes bêtes puissent pas de se rafraîchir on a fait un voleur de bétail la kalachnikov qui tire sans réfléchir les machines madagascar et ses montagnes d'ordures imagine t'as huit ans chaussures imagine tes mains dans le dos pour un bout de pain mais tu t'y habitues imagine paris et son périphérique quelque part sous un pont pas loin du trafic imagine pas tout un désastre le camp contre le froid luttant contre la maintenant imagine toi dans ta voiture bloquée dans les embouteillages il y a l'homme sont lentement de sa couverture lors m'a-t-on dit ça dis-moi ce que tu ressens le regarder tu autrement avant d'insulter la vie réfléchit dorénavant concernant trente-deux quand ça bouge pas on sait très bien non ce plat la machine toi car machines poisson la musique la santé abîmés par les trois huit des allers-retours aux assedic à magento un sens cette réussite on galère juste le smic prisonnier de cette tour de bug machine constance n'aille pas moi ça c'est ça c'est pour me que autres ne connaissent pas machine un tout ça c'est pour sa relation je plus pardon pour les jours où je me plains des que moi mon est pas plus loin pardon pour toutes ces fois où j'ai grossi mes problèmes pour toutes ces fois où j'ai fais tourner le monde sur moi voilà ta place dans s'il verra plus tard les consoles trente-deux ça bouge pas on sait très bien ce qui se passe ce plat une fois sarah records
+
+Timestamps:
+0.48s - 3.51s: es ce que la surprendre
+4.39s - 10.41s: c'est comme ça qu'on se rencontrera justement quand ça ne mange pas on sait très bien
+11.91s - 12.63s: dans ce plat
+15.63s - 17.85s: imagine toi toi
+20.44s - 33.54s: imagine ta vie dans ces pays où les hommes politiques sont entrés la liberté d'expression est une conspiration ou le dollar si vous venez avec des canons ou on peut mourir d'une simple fièvre où les épidémies se promènent sans laisse
+34.11s - 38.71s: vraiment tenir sous la canicule de ces pays pendant deux mois tu bronzes eux toute l'année
+39.75s - 51.78s: imagine ta vie sans eau potable une douche les jours de pluie pas de bouffe mis sur la table imagine toi dans un hôpital avec une maladie incurable maladie qui tue pas magento enfermés comme pas chacun pousse
+52.44s - 53.94s: comment magalie debout dans le bus
+54.65s - 58.50s: maintenant et avant d'insulter elle avait réfléchit dorénavant
+59.21s - 61.14s: quand on rentre on ne réalise pas comme ça
+61.80s - 63.54s: pas on sait très bien
+65.07s - 66.27s: dans ce plat
+69.09s - 70.26s: imagine toi
+71.79s - 88.47s: je ferme les yeux imagine toi quelque part en afrique dans un village bâti de terre sous un soleil de plomb imagine l'air chaud et lourd cette étendue désertique ce maigre troupeau de charme le bateau imagine cette longue marche que tu dois accomplir afin que tes bêtes puissent pas de se rafraîchir
+89.41s - 93.06s: on a fait un voleur de bétail la kalachnikov qui tire sans réfléchir
+93.60s - 97.02s: les machines madagascar et ses montagnes d'ordures imagine t'as huit ans
+97.68s - 99.93s: chaussures imagine tes mains dans le dos
+100.56s - 109.53s: pour un bout de pain mais tu t'y habitues imagine paris et son périphérique quelque part sous un pont pas loin du trafic imagine pas tout un désastre
+110.01s - 126.15s: le camp contre le froid luttant contre la maintenant imagine toi dans ta voiture bloquée dans les embouteillages il y a l'homme sont lentement de sa couverture lors m'a-t-on dit ça dis-moi ce que tu ressens le regarder tu autrement
+126.73s - 129.39s: avant d'insulter la vie réfléchit dorénavant
+130.98s - 131.97s: concernant trente-deux
+132.34s - 134.16s: quand ça bouge pas
+135.60s - 136.32s: on sait très bien
+137.69s - 139.02s: non ce plat
+140.19s - 143.04s: la machine toi
+146.25s - 161.95s: car machines poisson la musique la santé abîmés par les trois huit des allers-retours aux assedic à magento un sens cette réussite on galère juste le smic prisonnier de cette tour de bug machine constance n'aille pas moi ça c'est ça c'est pour me que autres ne connaissent pas machine un
+162.48s - 165.84s: tout ça c'est pour sa relation je plus pardon
+165.93s - 174.93s: pour les jours où je me plains des que moi mon est pas plus loin pardon pour toutes ces fois où j'ai grossi mes problèmes pour toutes ces fois où j'ai fais tourner le monde sur moi
+177.15s - 177.48s: voilà
+178.68s - 179.50s: ta place dans
+181.95s - 184.06s: s'il verra plus tard les consoles trente-deux
+184.80s - 186.30s: ça bouge pas
+187.77s - 189.12s: on sait très bien ce qui se passe
+190.17s - 191.16s: ce plat
+194.46s - 195.18s: une fois
+199.86s - 200.58s: sarah records

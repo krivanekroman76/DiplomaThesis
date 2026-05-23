@@ -1,0 +1,37 @@
+Transcription (Model: vosk-model-fr-0.22):
+tout va bien ma vue d'un mur comme c'est beau je me mais tout va bien dormir dormir quand tout va bien ma vie dormir c'est vrai que je ne cours plus mais ailleurs d'autres ont reçu des mails me nourrir tu mets ailleurs d'autres ne connaissent que la femme mais je sais que tu voudrais faire plus ailleurs d'autant plus vrai qu'on fait des allers retours d'autres n'ont pas les moyens de se soigner dans des moments ne pleure pas tout va c'est quand même super fort tout va bien tamura je ne saurais pas autour revue c'est de dormir plus cordoba vue d'un mur que je bois moi mes potes mais ailleurs noms les deux c'est vrai que j'ai raté quelques cours mais ailleurs trêve de faire des tu devrais être chez moi à la maison notre but tu n'est pas mon cas d'autres n'ont pas la force que tu as eu donc maman ne pleure pas bob m'a vue d'un mur me dis pas quoi mais tout va bien hurrah je ne serai pas baver t'auras envie de dormir cordova ma vie est un mur je t'adresse ces quelques mots comme un pansement une pomme pour te remercier de cet amour dont je plus doux m'encourage tu es mon intraveineuse avec ton avis est un miracle mais devant ces malheureux c'est ce qui manque moment-là pour le moment moment monument aux morts non
+
+Timestamps:
+0.08s - 2.91s: tout va bien ma vue d'un mur
+3.60s - 4.29s: comme c'est beau
+4.68s - 7.44s: je me mais tout va bien
+8.61s - 23.55s: dormir dormir quand tout va bien ma vie dormir c'est vrai que je ne cours plus mais ailleurs d'autres ont reçu des mails me nourrir
+24.45s - 38.10s: tu mets ailleurs d'autres ne connaissent que la femme mais je sais que tu voudrais faire plus ailleurs d'autant plus vrai qu'on fait des allers retours
+39.12s - 47.91s: d'autres n'ont pas les moyens de se soigner dans des moments ne pleure pas tout va
+48.99s - 52.47s: c'est quand même super fort
+54.08s - 55.26s: tout va bien
+56.46s - 59.76s: tamura je ne saurais pas
+61.01s - 61.92s: autour
+62.64s - 63.24s: revue
+64.44s - 65.70s: c'est de dormir
+66.24s - 67.95s: plus cordoba
+68.88s - 70.44s: vue d'un mur
+71.67s - 77.40s: que je bois moi mes potes mais ailleurs noms les deux
+77.79s - 81.60s: c'est vrai que j'ai raté quelques cours mais ailleurs
+82.11s - 88.20s: trêve de faire des tu devrais être chez moi à la maison
+89.16s - 90.12s: notre but
+91.35s - 93.57s: tu n'est pas mon cas
+94.50s - 97.92s: d'autres n'ont pas la force que tu as eu
+98.37s - 102.30s: donc maman ne pleure pas
+103.02s - 106.08s: bob m'a vue d'un mur
+106.89s - 108.15s: me dis pas quoi
+109.59s - 110.98s: mais tout va bien
+112.29s - 115.89s: hurrah je ne serai pas baver
+116.43s - 121.35s: t'auras envie de dormir
+122.55s - 123.57s: cordova
+124.23s - 143.16s: ma vie est un mur je t'adresse ces quelques mots comme un pansement une pomme pour te remercier de cet amour dont je plus doux m'encourage tu es mon intraveineuse avec ton avis est un miracle mais devant ces malheureux
+143.76s - 146.55s: c'est ce qui manque moment-là
+147.12s - 147.90s: pour le moment
+149.54s - 150.30s: moment
+153.12s - 155.10s: monument aux morts
+155.76s - 156.36s: non

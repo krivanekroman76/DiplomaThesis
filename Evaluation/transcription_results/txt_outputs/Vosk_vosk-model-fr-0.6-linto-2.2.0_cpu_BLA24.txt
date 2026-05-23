@@ -1,0 +1,29 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+moi je n ai jamais grandi mais j ai la force d'un homme pour chez nous dit dieu merci parce que c'est lui qui donne ou quand j'y arrive je snipe ils veulent connaître ma théorie mon avis si tu savais on écouterait pas aller on dit la insatisfait jiang ville moi qui loin du rêve américain mais tout ce que je l l'ai mérité quoi la beauté tu sais il faut être endurant la dieu issu d'une famille nombreuse on fait comme on peut car l'avis est trompeuse on veut pas on a peur de la je suis ton opposée la groupie là elle fait la je n ai rien vu proposer je ne veux pas trop causer je représentant de l ouest calmement courbé mamadou et même amadou il faut de tout pour faire un monde mais je suis parti de rien pour me faire un mp non tu sais dans la vie faut être durant la blaise pas de concurrent et il te faut de l'endurance comme si la police te cherche comment vite comme ça va être un prophète un tout petit commun usain bolt ne peut rien voisins il ic ou tu ressembles au burundi c'est une faux tu fais le gamin tu sais dans la vie vont être endurant je n'ai pas de concurrent je dois dire la tu sais dans la vie faut être endurant la dublin pas de concurrent
+
+Timestamps:
+12.36s - 22.26s: moi je n ai jamais grandi mais j ai la force d'un homme pour chez nous dit dieu merci parce que c'est lui qui donne ou quand j'y arrive je snipe
+22.80s - 28.50s: ils veulent connaître ma théorie mon avis si tu savais on écouterait pas aller on dit
+29.67s - 31.83s: la insatisfait jiang ville
+31.98s - 36.93s: moi qui loin du rêve américain mais tout ce que je l l'ai mérité
+44.77s - 44.92s: quoi
+53.58s - 54.24s: la beauté
+61.95s - 62.58s: tu sais
+63.60s - 66.39s: il faut être endurant la dieu
+68.94s - 72.60s: issu d'une famille nombreuse on fait comme on peut car l'avis est trompeuse
+73.47s - 78.09s: on veut pas on a peur de la je suis ton opposée la groupie là elle fait la
+79.38s - 80.85s: je n ai rien vu proposer
+81.72s - 85.14s: je ne veux pas trop causer je représentant de l ouest calmement courbé
+86.43s - 93.72s: mamadou et même amadou il faut de tout pour faire un monde mais je suis parti de rien pour me faire un mp
+102.99s - 103.13s: non
+119.09s - 120.98s: tu sais dans la vie faut être
+121.20s - 122.04s: durant la
+123.15s - 123.63s: blaise
+124.74s - 131.67s: pas de concurrent et il te faut de l'endurance comme si la police te cherche comment vite comme ça va être un prophète un tout petit commun
+133.68s - 137.49s: usain bolt ne peut rien voisins il ic ou tu ressembles au burundi
+138.00s - 139.62s: c'est une faux tu fais le gamin
+142.50s - 146.97s: tu sais dans la vie vont être endurant je n'ai pas de concurrent
+147.60s - 150.39s: je dois dire
+157.36s - 157.51s: la
+165.84s - 170.46s: tu sais dans la vie faut être endurant la dublin
+171.48s - 172.53s: pas de concurrent

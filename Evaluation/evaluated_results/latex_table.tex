@@ -1,0 +1,26 @@
+\begin{table}[htbp]
+\centering
+\caption{Comprehensive separation benchmark. Quality metrics remain consistent across hardware architectures, while Real-Time Factor (RTF) highlights computational efficiency.}
+\label{tab:separation_results}
+% --- THESE TWO LINES PREVENT THE TABLE FROM CLIPPING ---
+\setlength{\tabcolsep}{3.5pt}
+\footnotesize
+% -------------------------------------------------------
+\begin{tabular}{llrrrrrrrrrr}
+\hline
+\textbf{Tool} & \textbf{Model} & \multicolumn{2}{c}{\textbf{RTF}} & \multicolumn{2}{c}{\textbf{SDR}} & \multicolumn{2}{c}{\textbf{SIR}} & \multicolumn{2}{c}{\textbf{SAR}} & \multicolumn{2}{c}{\textbf{ISR}} \\ 
+\hline
+ & & \textbf{CPU} & \textbf{GPU} & \textbf{Voc.} & \textbf{Ins.} & \textbf{Voc.} & \textbf{Ins.} & \textbf{Voc.} & \textbf{Ins.} & \textbf{Voc.} & \textbf{Ins.} \\ 
+\hline
+Demucs & htdemucs & 3.04 & 0.10 & 7.90 & 14.81 & 18.76 & 22.38 & 8.09 & 15.73 & 14.80 & 24.69 \\
+ & mdx & 2.80 & 0.26 & 7.31 & 12.92 & 17.75 & 20.64 & 7.56 & 14.12 & 13.44 & 22.92 \\
+ & mdx\_extra & 3.17 & 0.27 & \textbf{8.91} & \textbf{15.96} & \textbf{19.89} & \textbf{23.28} & \textbf{9.16} & \textbf{16.94} & \textbf{16.31} & \textbf{26.34} \\
+\hline
+OpenUnmix & umx & 0.33 & 0.04 & 5.42 & 12.89 & 13.44 & 19.46 & 5.81 & 13.99 & 12.35 & 22.66 \\
+ & umxhq & 0.37 & \textbf{0.04} & 5.24 & 12.62 & 12.97 & 19.40 & 5.98 & 14.03 & 12.32 & 22.14 \\
+ & umxl & 0.99 & 0.05 & 6.45 & 13.67 & 14.77 & 22.49 & 6.69 & 14.50 & 15.40 & 22.87 \\
+\hline
+Spleeter & 2stems & \textbf{0.19} & - & 6.13 & 12.24 & 16.07 & 19.25 & 6.17 & 13.86 & 11.97 & 21.51 \\
+\hline
+\end{tabular}
+\end{table}

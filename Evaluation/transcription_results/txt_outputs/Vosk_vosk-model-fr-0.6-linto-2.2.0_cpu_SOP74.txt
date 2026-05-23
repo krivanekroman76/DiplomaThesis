@@ -1,0 +1,28 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+bien un train connais-tu mon histoire et je posais mon premier couplet sur un poste cassette l'époque où pour être critique t'étais pas obligé d'avoir vendu des packs barrettes la casquette de travers le jean au ras des fesses toutes tes ex externe même le casque sur mes oreilles certain les railleries sur ma dégaine sur ma manière de mars lema manière de tout faire à l'américaine c'est peut-être différent j'avais fait le topo qui comprenait mon amour pour ce qu'on appelle le hip-hop tu pouvais me trouver au fond d'un bus en train d'écrire les poches pleines de rimes n'a pas empêché ou cuir au fond de la classe en train donnera aux flics à cause de toutes ces nuits blanches à noircir pas grave si je l'ai fait je l'ai craché combien de micro ouvert cette les de cette partie maintenant on fait quartier les fondations de se signaler sur mon sein elle ajoute on payera les berce et je suis je fais mais accueil prêt à changer passionnée de rythmes et de mélodies à qui on fait croire que rêver été interdit je fais la plume et la voix de ceux qu'on oublie de ces quartiers où des familles ont laissé à l'agonie un fils d'immigré assis sur des chaises qui combat les forces avec sa cosmopolite amis je fais la fierté d'une génération lorsque on me voit sur un fauteuil en prime à la télévision une jeunesse à l'abandon victime de ces politiques et de leurs discours de division je fais la fois la folie et la raison le faire défenseur des valeurs de mon éducation je le fais plus clairs sur leurs pieds sans jamais changer la couleur de montagne de mes idées je fais ni politique ni un caïd moi je sais merci déjà mais à quel prix a change les tout est bon dans mon passe donc je sais où reçu un instant merci déjà fait à mon sens je
+
+Timestamps:
+0.00s - 14.25s: bien un train connais-tu mon histoire et je posais mon premier couplet sur un poste cassette l'époque où pour être critique t'étais pas obligé d'avoir vendu des packs barrettes la casquette de travers le jean au ras des fesses toutes tes ex externe même le casque sur mes oreilles certain
+14.55s - 33.93s: les railleries sur ma dégaine sur ma manière de mars lema manière de tout faire à l'américaine c'est peut-être différent j'avais fait le topo qui comprenait mon amour pour ce qu'on appelle le hip-hop tu pouvais me trouver au fond d'un bus en train d'écrire les poches pleines de rimes n'a pas empêché ou cuir au fond de la classe en train donnera aux flics à cause de toutes ces nuits blanches à noircir pas grave si je l'ai fait je l'ai craché
+34.08s - 35.67s: combien de micro ouvert cette les
+36.30s - 42.81s: de cette partie maintenant on fait quartier les fondations de se signaler sur mon sein elle ajoute on payera les berce et je suis
+46.92s - 47.31s: je fais
+53.60s - 53.94s: mais
+54.00s - 58.65s: accueil prêt à changer
+61.64s - 70.13s: passionnée de rythmes et de mélodies à qui on fait croire que rêver été interdit je fais la plume et la voix de ceux qu'on oublie de ces quartiers où des familles ont laissé à l'agonie
+70.95s - 79.74s: un fils d'immigré assis sur des chaises qui combat les forces avec sa cosmopolite amis je fais la fierté d'une génération lorsque on me voit sur un fauteuil en prime à la télévision
+80.85s - 89.88s: une jeunesse à l'abandon victime de ces politiques et de leurs discours de division je fais la fois la folie et la raison le faire défenseur des valeurs de mon éducation je le fais
+90.57s - 98.40s: plus clairs sur leurs pieds sans jamais changer la couleur de montagne de mes idées je fais ni politique ni un caïd moi je sais
+102.15s - 102.81s: merci
+105.60s - 105.96s: déjà
+109.80s - 111.12s: mais à quel prix
+111.87s - 112.77s: a
+114.21s - 114.86s: change les
+117.45s - 119.79s: tout est bon dans mon passe
+123.33s - 124.42s: donc je sais où
+127.71s - 128.07s: reçu
+131.02s - 131.61s: un instant
+138.63s - 139.53s: merci
+142.08s - 145.23s: déjà fait
+148.13s - 151.17s: à mon sens
+151.71s - 151.98s: je

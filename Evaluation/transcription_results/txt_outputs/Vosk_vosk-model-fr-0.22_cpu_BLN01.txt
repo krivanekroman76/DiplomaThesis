@@ -1,0 +1,33 @@
+Transcription (Model: vosk-model-fr-0.22):
+tout le monde me regarde le paysage l'odeur les gens tout ça me charme ma grand-mère me dit alpha le bienvenu chez toi la vidéo voisin aimerait sophie on s'est faufilé non c'est joli mariam n'a rien je te connais comme idée de ma terre natale dalle ce soir je suis invité à manger chez ma tata à genoux autour d'un plat et sa ma table hey bienvenue chez moi là où les gens partagent tous de même pas si tu vas dormir tous ensemble du matin jusqu'au soir dans la joie bienvenue j'ai la les jambes même toi c'est beau de les rendre nous ensemble des humains jusqu'au soir pour un canadien quand solide garçons et un agenda à câliner quand dans un moment fort caractère ou un maigre gain quant à emboîter les ados manga des ballets maya demanda des cadets des nomades allez danger bienvenue chez moi là où les gens partagent tous le même plan ci-dessus vous dormez et rentre nous ensemble du matin jusqu'au soir dans la joie vient le génois là où les gens partagent des même bras saisissez vos données nous ensemble du matin jusqu'au soir dans la joie je suis chez moi je suis chez moi je suis chez moi je suis chez moi bienvenue chez moi chez moi j'aime là où les gens partagent tous le même toit moi j'ai vu des égos dehors mais rentre chez moi j'ai deux ensembles du matin jusqu'au soir dans la joie là où les gens partagent même toi c'est et rendre raison tous ensemble demain jusqu'au soir dans la joie d'origine guinéenne fière de mes origines fier de mon pays fort ce continent africain le message reste le même je suis chez moi je suis un être humain comme toi éternellement insatisfait
+
+Timestamps:
+0.33s - 20.16s: tout le monde me regarde le paysage l'odeur les gens tout ça me charme ma grand-mère me dit alpha le bienvenu chez toi la vidéo voisin aimerait sophie on s'est faufilé non c'est joli mariam n'a rien je te connais comme idée de ma terre natale dalle ce soir
+20.19s - 34.08s: je suis invité à manger chez ma tata à genoux autour d'un plat et sa ma table hey bienvenue chez moi là où les gens partagent tous de même pas si tu vas dormir
+35.04s - 37.41s: tous ensemble du matin jusqu'au soir
+38.45s - 42.33s: dans la joie bienvenue j'ai la les jambes
+43.26s - 43.92s: même toi
+45.03s - 47.01s: c'est beau de les rendre
+48.60s - 50.94s: nous ensemble des humains jusqu'au soir
+53.67s - 55.11s: pour un canadien
+55.80s - 56.52s: quand solide
+57.12s - 63.03s: garçons et un agenda à câliner quand dans un moment fort caractère
+63.60s - 66.12s: ou un maigre gain
+67.71s - 75.21s: quant à emboîter les ados manga des ballets maya demanda des cadets
+75.80s - 78.15s: des nomades allez
+78.86s - 79.71s: danger
+80.52s - 86.40s: bienvenue chez moi là où les gens partagent tous le même plan ci-dessus vous dormez et rentre
+87.12s - 89.43s: nous ensemble du matin jusqu'au soir
+90.45s - 93.27s: dans la joie vient le génois
+94.02s - 96.48s: là où les gens partagent des même bras
+97.62s - 99.15s: saisissez vos données
+100.89s - 103.08s: nous ensemble du matin jusqu'au soir
+104.28s - 116.79s: dans la joie je suis chez moi je suis chez moi je suis chez moi je suis chez moi bienvenue chez moi chez moi j'aime là où les gens partagent tous le même toit
+117.39s - 124.41s: moi j'ai vu des égos dehors mais rentre chez moi j'ai deux ensembles du matin jusqu'au soir
+125.58s - 126.54s: dans la joie
+128.49s - 129.78s: là où les gens partagent
+130.26s - 130.89s: même toi
+132.03s - 134.43s: c'est et rendre raison
+135.18s - 137.58s: tous ensemble demain jusqu'au soir
+138.60s - 140.04s: dans la joie
+140.85s - 151.59s: d'origine guinéenne fière de mes origines fier de mon pays fort ce continent africain le message reste le même je suis chez moi je suis un être humain comme toi éternellement insatisfait

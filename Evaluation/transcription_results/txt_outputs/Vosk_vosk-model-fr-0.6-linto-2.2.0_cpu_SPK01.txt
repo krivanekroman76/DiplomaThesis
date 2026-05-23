@@ -1,0 +1,59 @@
+Transcription (Model: vosk-model-fr-0.6-linto-2.2.0):
+ah alléluia alléluia ya herman hansen prend baba au sens où elle a je suis toujours resté le même je suis toujours resté le mais je suis toujours resté franc oui comme ma première va-t'en au dessus de la mêlée je ne sais pas moi que je devrais en laisser mais bon je ne sais quelle est dressé quand je serai dans la d non ne pas faire autrement je ne sais pas faire doucement je les ai notre taille normale auto-école et jamal tu hérité de la baraque mon voisin zinédine à la baraque à une décennie d'être coderre tournera la gareth bale mais bon leur donne elle a tourné quand on balaie nos derniers chez nous je vais pas tourner la page jamais été plutôt que permet le je laisse les gens depuis tellement d'années qu'il n'arrive plus à suivre donc obligé ce soir dès lors expliquer ce qui leur arrive zozo ont comme diego dans la bombe comme ça avance lorsque en ph on rentré dans la les dents a on continue dans la va pas anodin on va rentrer dans la je que dans la bijouterie nous trouvons pour ajuster le point fort tu peux méchant méchant méchant commencer jour chicago peloton tous les jours je pas tellement qu'on joue toujours ton son propos c'est quoi ton nom ce que tu fous je comprends a on a maman entre alors en oh ont comme django dans la bombe comme ça avance pas anodin lorsque en ph viens rentrons dans la les la a on continue dans la bon ben on verra dans la qui en plus sort ou le bord bon bah merci merci merci sors ou pas bon bon merci merci merci un entre bahamas alors on zozo tout comme diego dans la bombe on est comme ça avance pas anodin lorsque en plein rentrez dans la halle et la a comme tu l'as pas anodin la la la la
+
+Timestamps:
+0.05s - 2.15s: ah alléluia alléluia
+2.19s - 2.82s: ya
+4.32s - 6.42s: herman hansen prend baba
+8.29s - 9.60s: au sens où elle a
+12.49s - 18.36s: je suis toujours resté le même je suis toujours resté le mais je suis toujours resté franc oui comme ma première
+19.80s - 21.72s: va-t'en au dessus de la mêlée je ne sais pas moi
+22.32s - 25.65s: que je devrais en laisser mais bon je ne sais quelle est dressé quand je serai dans la d
+26.85s - 29.82s: non ne pas faire autrement je ne sais pas faire doucement
+30.60s - 33.12s: je les ai notre taille normale auto-école et jamal
+34.17s - 40.35s: tu hérité de la baraque mon voisin zinédine à la baraque à une décennie d'être coderre tournera la gareth bale
+41.16s - 53.85s: mais bon leur donne elle a tourné quand on balaie nos derniers chez nous je vais pas tourner la page jamais été plutôt que permet le je laisse les gens depuis tellement d'années qu'il n'arrive plus à suivre donc obligé ce soir dès lors expliquer ce qui leur arrive
+54.81s - 58.32s: zozo ont comme diego dans la bombe
+60.42s - 61.11s: comme ça avance
+61.80s - 62.67s: lorsque en ph
+64.02s - 64.80s: on rentré
+64.89s - 66.12s: dans la les dents
+67.11s - 68.58s: a
+70.08s - 72.18s: on continue dans la
+73.98s - 74.88s: va pas anodin
+75.96s - 77.36s: on va rentrer dans la
+80.94s - 82.17s: je que dans la bijouterie
+84.57s - 87.09s: nous trouvons pour ajuster le point fort tu peux
+88.65s - 93.84s: méchant méchant méchant commencer jour chicago peloton tous les jours je pas tellement qu'on joue toujours ton
+96.36s - 97.05s: son propos
+99.68s - 101.31s: c'est quoi ton nom
+103.29s - 106.16s: ce que tu fous
+107.28s - 107.94s: je comprends
+109.50s - 109.92s: a
+112.40s - 112.98s: on a
+115.95s - 116.55s: maman
+118.11s - 121.13s: entre alors en
+122.88s - 126.21s: oh ont comme django dans la bombe
+127.74s - 129.99s: comme ça avance pas anodin lorsque en ph
+131.37s - 132.00s: viens rentrons
+132.06s - 133.32s: dans la les la
+134.41s - 135.75s: a
+137.25s - 139.35s: on continue dans la
+139.51s - 143.46s: bon ben on verra
+143.76s - 144.36s: dans la
+148.20s - 150.48s: qui en plus sort ou le bord
+153.15s - 154.74s: bon bah merci
+156.15s - 158.31s: merci merci
+162.99s - 164.70s: sors ou pas
+167.37s - 168.96s: bon bon merci
+171.83s - 172.78s: merci merci
+176.61s - 177.00s: un
+178.41s - 178.68s: entre
+183.00s - 183.45s: bahamas
+186.17s - 188.33s: alors on
+189.84s - 190.74s: zozo
+191.28s - 196.54s: tout comme diego dans la bombe on est comme ça avance pas anodin lorsque en plein
+197.34s - 199.05s: rentrez dans la halle et la
+200.16s - 201.29s: a
+203.79s - 206.97s: comme tu l'as pas anodin
+209.24s - 210.93s: la la la la

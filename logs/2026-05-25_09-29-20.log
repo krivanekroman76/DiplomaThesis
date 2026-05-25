@@ -1,0 +1,131 @@
+2026-05-25 09:29:20,662 [INFO] App Started - Logging to logs\2026-05-25_09-29-20.log
+2026-05-25 09:32:58,149 [INFO] Demucs 4.0.1 (Hybrid Transformer) initialized.
+2026-05-25 09:32:59,959 [INFO] [Demucs] Model native segment limit: 7.8
+2026-05-25 09:32:59,959 [INFO] [Demucs] Attempting cuda | Segment: 7
+2026-05-25 09:32:59,960 [INFO] Duration passed: 0
+2026-05-25 09:33:00,785 [INFO] Selected model is a bag of 1 models. You will see that many progress bars per track.
+2026-05-25 09:33:00,796 [INFO] Separated tracks will be stored in C:\Users\kriva\AppData\Local\Temp\demucs_v4_9o9u_syz\htdemucs
+2026-05-25 09:33:00,797 [INFO] Separating track D:\DiplomaThesis\example_input_output\input\BLA01.mp3
+2026-05-25 09:33:43,139 [INFO] [Demucs] Model native segment limit: 7.8
+2026-05-25 09:33:43,139 [INFO] [Demucs] Attempting cuda | Segment: 7
+2026-05-25 09:33:43,140 [INFO] Duration passed: 0
+2026-05-25 09:33:43,645 [INFO] Selected model is a bag of 1 models. You will see that many progress bars per track.
+2026-05-25 09:33:43,652 [INFO] Separated tracks will be stored in C:\Users\kriva\AppData\Local\Temp\demucs_v4_n_hwpzxa\htdemucs
+2026-05-25 09:33:43,653 [INFO] Separating track D:\DiplomaThesis\example_input_output\input\Soprano - Musica.mp3
+2026-05-25 09:35:51,716 [INFO] Duration passed: 38
+2026-05-25 09:37:34,173 [ERROR] [00:00.000 --> 00:03.500]  Ceci est pour les gens qui me dévisagent, comme si j'étais un trafic et que j'avais des nibards,
+2026-05-25 09:37:34,175 [ERROR] [00:03.500 --> 00:06.500]  de corps de neige, bon coup pour le mitard, avec un poster au mur de Marilyn Nicar.
+2026-05-25 09:37:34,184 [ERROR] [00:06.500 --> 00:10.000]  Je vous l'ai dit, les gens me regardent bizarre, désolé mais je n'ai pas l'humour de bigard,
+2026-05-25 09:37:34,188 [ERROR] [00:10.000 --> 00:13.000]  et Monsieur Jack me dit que je suis minable, que pour m'en sortir, il faudrait un miracle.
+2026-05-25 09:37:34,195 [ERROR] [00:13.000 --> 00:16.000]  Il fallait bien qu'on apprenne à Bicraft, l'un de nos pays, là où ça mitraille.
+2026-05-25 09:37:34,200 [ERROR] [00:16.000 --> 00:19.500]  Je peux foutre où est donc ton ornicard, je veux juste savoir où est l'or du roi.
+2026-05-25 09:37:34,206 [ERROR] [00:19.500 --> 00:23.000]  Alors la famille dit moi, on dit quoi, potica rien de fait, juste on y croit.
+2026-05-25 09:38:12,153 [ERROR] [00:23.000 --> 00:23.720]  On y croit.
+2026-05-25 09:38:12,156 [ERROR] [00:26.100 --> 00:27.220]  Tout le monde dit black.
+2026-05-25 09:38:12,159 [ERROR] [00:27.740 --> 00:28.900]  Tout le monde dit black.
+2026-05-25 09:38:12,163 [ERROR] [00:29.420 --> 00:30.460]  Tout le monde dit black.
+2026-05-25 09:38:12,168 [ERROR] [00:30.540 --> 00:32.160]  J'ai dit tout le monde dit black.
+2026-05-25 09:38:12,171 [ERROR] [00:32.680 --> 00:33.780]  Tout le monde voit black.
+2026-05-25 09:38:12,174 [ERROR] [00:34.340 --> 00:35.520]  Tout le monde voit black.
+2026-05-25 09:38:12,178 [ERROR] [00:36.020 --> 00:37.060]  Tout le monde voit black.
+2026-05-25 09:38:12,181 [ERROR] [00:37.160 --> 00:38.760]  J'ai dit tout le monde voit black.
+2026-05-25 09:38:25,378 [INFO] Duration passed: 38
+2026-05-25 09:38:37,224 [INFO] Duration passed: 38
+2026-05-25 09:39:09,524 [INFO] Duration passed: 38
+2026-05-25 09:41:08,215 [INFO] Duration passed: 38
+2026-05-25 09:41:08,463 [ERROR] Detecting language using up to the first 30 seconds. Use `--language` to specify the language
+2026-05-25 09:41:14,212 [ERROR] Detected language: French
+2026-05-25 09:42:36,042 [ERROR] [00:00.000 --> 00:02.920]  Ceci c'est pour les gens qui me dévisagent, comme si j'étais un trape et que j'avais des nibards,
+2026-05-25 09:42:36,046 [ERROR] [00:02.980 --> 00:05.920]  le genre de nec, bon coup pour le mitard, avec un poster au mur de Marine en nica.
+2026-05-25 09:42:36,049 [ERROR] [00:06.140 --> 00:09.320]  Je vous les dis, les gens me regardent bizarre, désolé mais je n'ai pas l'humour de bigard,
+2026-05-25 09:42:36,052 [ERROR] [00:09.380 --> 00:12.520]  et monsieur Jack me dit que je suis minable, que pour m'en sortir il faudrait un mirage.
+2026-05-25 09:42:36,080 [ERROR] [00:12.760 --> 00:15.620]  Il fallait bien qu'on apprenne à Bicraft, l'un de nos pays, là où ça mitraille,
+2026-05-25 09:42:36,083 [ERROR] [00:15.640 --> 00:18.840]  je peux foutre où est donc ton ornica, je veux juste savoir où est l'or du ouah.
+2026-05-25 09:42:36,085 [ERROR] [00:19.160 --> 00:23.040]  Alors la famille dit moi on dit quoi, au tic à rien tu fais juste on y croit, on y croit.
+2026-05-25 09:42:36,094 [ERROR] [00:25.240 --> 00:28.520]  Tout le monde dit blague, blague, tout le monde dit blague, blague,
+2026-05-25 09:43:09,280 [ERROR] [00:28.520 --> 00:31.360]  Tout le monde dit Black, hein, j'ai dit tout le monde dit Black
+2026-05-25 09:43:09,283 [ERROR] [00:31.360 --> 00:31.800]  Black
+2026-05-25 09:43:09,286 [ERROR] [00:31.800 --> 00:32.980]  Tout le monde voit Black
+2026-05-25 09:43:09,291 [ERROR] [00:32.980 --> 00:33.440]  Black
+2026-05-25 09:43:09,295 [ERROR] [00:33.440 --> 00:34.740]  Tout le monde voit Black
+2026-05-25 09:43:09,298 [ERROR] [00:34.740 --> 00:35.020]  Black
+2026-05-25 09:43:09,301 [ERROR] [00:35.020 --> 00:37.980]  Tout le monde voit Black, hein, j'ai dit tout le monde voit Black
+2026-05-25 09:47:24,606 [INFO] [INFO] Switched to 'input'. Cleared inactive models.
+2026-05-25 09:47:34,880 [INFO] [Demucs] Model native segment limit: 7.8
+2026-05-25 09:47:34,901 [INFO] [Demucs] Attempting cuda | Segment: 7
+2026-05-25 09:47:34,902 [INFO] Duration passed: 0
+2026-05-25 09:47:35,476 [INFO] Selected model is a bag of 1 models. You will see that many progress bars per track.
+2026-05-25 09:47:35,484 [INFO] Separated tracks will be stored in C:\Users\kriva\AppData\Local\Temp\demucs_v4_62fxpxc9\htdemucs
+2026-05-25 09:47:35,485 [INFO] Separating track D:\DiplomaThesis\example_input_output\input\BLA01.mp3
+2026-05-25 09:48:09,005 [INFO] Duration passed: 38
+2026-05-25 09:49:07,419 [ERROR] [00:00.000 --> 00:29.980]  Sous-titres par Jérémy Diaz
+2026-05-25 09:49:38,548 [ERROR] [00:30.000 --> 00:32.000]  Tout le monde dit Black, hein j'ai dit Tout le monde dit Black
+2026-05-25 09:49:38,550 [ERROR] [00:32.000 --> 00:32.500]  Black
+2026-05-25 09:49:38,553 [ERROR] [00:32.500 --> 00:33.500]  Tout le monde voit Black
+2026-05-25 09:49:38,556 [ERROR] [00:33.500 --> 00:34.000]  Black
+2026-05-25 09:49:38,559 [ERROR] [00:34.000 --> 00:35.000]  Tout le monde voit Black
+2026-05-25 09:49:38,564 [ERROR] [00:35.000 --> 00:35.500]  Black
+2026-05-25 09:49:38,568 [ERROR] [00:35.500 --> 00:38.500]  Tout le monde voit Black, hein j'ai dit Tout le monde voit Black
+2026-05-25 09:49:55,603 [INFO] Duration passed: 170
+2026-05-25 09:51:17,222 [ERROR] [00:00.000 --> 00:02.760]  Mineur, on flirte avec la folie, qu'est-ce qu'on viendra plus tard ?
+2026-05-25 09:51:17,225 [ERROR] [00:02.760 --> 00:05.560]  Je sais pas trop, j'voulais des milliers, juste briller dans le noir.
+2026-05-25 09:51:17,232 [ERROR] [00:05.560 --> 00:08.360]  Maman veut pas qu'j'traîne le soir, elle dit qu'y a trop de démons.
+2026-05-25 09:51:17,241 [ERROR] [00:08.360 --> 00:11.200]  Un cœur endurci par la rue, mais adouci par les mots.
+2026-05-25 09:51:17,317 [ERROR] [00:11.200 --> 00:13.760]  La música nous éloignera de tout ça.
+2026-05-25 09:51:17,389 [ERROR] [00:13.760 --> 00:16.720]  J'ai rêvé d'être Zidane, marqué début, d'me voir un poster.
+2026-05-25 09:51:17,416 [ERROR] [00:16.720 --> 00:19.400]  Mais on choisit pas, c'est le bon Dieu qui l'a décidé.
+2026-05-25 09:51:17,425 [ERROR] [00:19.400 --> 00:22.280]  Jusqu'à moi, c'est Léa, c'est le même quotidien, everyday.
+2026-05-25 09:51:17,429 [ERROR] [00:22.280 --> 00:23.080]  Yeah yeah yeah.
+2026-05-25 09:51:17,433 [ERROR] [00:23.080 --> 00:25.520]  Pardon, pardon, je sais qu'tu rêvais mieux pour moi,
+2026-05-25 09:52:09,031 [ERROR] [00:25.520 --> 00:28.420]  Mais la reste, le haut, le fond, le fond de moi, j'avais mal
+2026-05-25 09:52:09,036 [ERROR] [00:28.420 --> 00:31.740]  Et comme j'avais mal, j'écrivais que la vérité, la vérité
+2026-05-25 09:52:09,042 [ERROR] [00:31.740 --> 00:34.820]  Me fera quitter les bords de ma cité, ah ouais
+2026-05-25 09:52:09,047 [ERROR] [00:34.820 --> 00:37.580]  Je voulais le monde et moi sortir dans la musique
+2026-05-25 09:52:09,050 [ERROR] [00:37.580 --> 00:40.200]  Et j'ai réussi maintenant, elle est fière
+2026-05-25 09:52:09,055 [ERROR] [00:40.200 --> 00:42.520]  Et le film aurait pu finir tragiquement
+2026-05-25 09:52:09,060 [ERROR] [00:43.120 --> 00:45.520]  Une vie d'artiste, une vie de criminel
+2026-05-25 09:52:09,067 [ERROR] [00:46.120 --> 00:48.520]  Je voulais le monde sortir dans la musique
+2026-05-25 09:52:09,071 [ERROR] [00:48.520 --> 00:51.240]  Et j'ai réussi maintenant, elle est fière
+2026-05-25 09:52:09,077 [ERROR] [00:51.240 --> 00:53.820]  Et le film aurait pu finir tragiquement
+2026-05-25 09:53:17,260 [ERROR] [00:53.820 --> 00:57.020]  Une vie d'artiste, une vie criminelle
+2026-05-25 09:53:17,263 [ERROR] [00:57.020 --> 01:00.540]  Je suis pas devenu riche, moi, pour ressembler au riche, non
+2026-05-25 09:53:17,265 [ERROR] [01:00.540 --> 01:03.280]  Sorti de la niche, nous, sans crier à Rakh Krishna
+2026-05-25 09:53:17,270 [ERROR] [01:03.280 --> 01:06.220]  On a connu la déchmane, la rue et ses pièges, man
+2026-05-25 09:53:17,272 [ERROR] [01:06.220 --> 01:09.120]  On n'y ressort plus marqué que le visage de Jean-Luc Kretschmann
+2026-05-25 09:53:17,282 [ERROR] [01:09.120 --> 01:12.080]  Pour bien nous conduire, on avait déjà plus de pointe
+2026-05-25 09:53:17,285 [ERROR] [01:12.080 --> 01:14.660]  Je m'appris la musique était la sortie de ce rempoint
+2026-05-25 09:53:17,289 [ERROR] [01:14.660 --> 01:17.460]  Combien de cul-de-sac la musique m'a évité
+2026-05-25 09:53:17,300 [ERROR] [01:17.460 --> 01:20.440]  Regarde le destin de deux phénix, c'est terminé
+2026-05-25 09:53:17,311 [ERROR] [01:20.440 --> 01:23.520]  Pardon, pardon, je sais que tu rêvais mieux pour moi
+2026-05-25 09:54:17,454 [ERROR] [01:23.520 --> 01:26.460]  Mais la hesse, le hall, faut confondre, moi j'avais mal
+2026-05-25 09:54:17,457 [ERROR] [01:26.460 --> 01:29.080]  Et comme j'avais mal, j'écrivais que la vérité
+2026-05-25 09:54:17,460 [ERROR] [01:29.080 --> 01:32.120]  La vérité me fera quitter le banc de la cité
+2026-05-25 09:54:17,462 [ERROR] [01:32.120 --> 01:35.680]  Je voulais le monde et moi sortir dans la musique
+2026-05-25 09:54:17,465 [ERROR] [01:35.680 --> 01:38.320]  Et j'ai réussi maintenant, elle est fière
+2026-05-25 09:54:17,469 [ERROR] [01:38.320 --> 01:41.100]  Et le film aurait pu finir au tragique
+2026-05-25 09:54:17,472 [ERROR] [01:41.100 --> 01:43.520]  Moi une vie d'artiste, une vie de tribunaire
+2026-05-25 09:54:17,475 [ERROR] [01:44.560 --> 01:47.020]  Je voulais le monde et moi sortir dans la musique
+2026-05-25 09:54:17,478 [ERROR] [01:47.020 --> 01:49.680]  Et j'ai réussi maintenant, elle est fière
+2026-05-25 09:54:17,481 [ERROR] [01:49.680 --> 01:52.120]  Et le film aurait pu finir au tragique
+2026-05-25 09:55:19,253 [ERROR] [01:52.120 --> 01:55.080]  Une vie d'artiste, une vie de criminel
+2026-05-25 09:55:19,254 [ERROR] [01:55.080 --> 02:02.960]  La musique à la musique, à mon échappatoire
+2026-05-25 09:55:19,256 [ERROR] [02:02.960 --> 02:06.320]  Ma vraie raison médicale, pour sécher les bancs de l'école de la rue
+2026-05-25 09:55:19,258 [ERROR] [02:06.320 --> 02:08.300]  C'est radical, je la remercierai jamais
+2026-05-25 09:55:19,261 [ERROR] [02:08.300 --> 02:10.900]  Assez d'avoir mis de l'espoir dans les yeux de la maman
+2026-05-25 09:55:19,264 [ERROR] [02:10.900 --> 02:12.440]  Qui me voyait dans la coca
+2026-05-25 09:55:19,267 [ERROR] [02:12.440 --> 02:14.540]  J'ai coupable à la part, on vous l'embrasse
+2026-05-25 09:55:19,270 [ERROR] [02:14.540 --> 02:16.520]  C'est un grand bassin, la nuit je m'entends trop tard
+2026-05-25 09:55:19,272 [ERROR] [02:16.520 --> 02:19.340]  Je sais qu'ils peuvent arriver le matin, je remercie tout ça
+2026-05-25 09:55:19,275 [ERROR] [02:19.340 --> 02:21.320]  C'est derrière moi, si tu savais comment
+2026-05-25 09:56:11,758 [ERROR] [02:21.320 --> 02:24.200]  La musique a pu sauver toute une vie en galère
+2026-05-25 09:56:11,761 [ERROR] [02:24.200 --> 02:24.720]  Ah ouais
+2026-05-25 09:56:11,764 [ERROR] [02:24.720 --> 02:27.300]  Je voulais le monde et moi sortir dans la musique
+2026-05-25 09:56:11,767 [ERROR] [02:27.300 --> 02:30.220]  Et j'ai réussi maintenant, elle est fière
+2026-05-25 09:56:11,770 [ERROR] [02:30.220 --> 02:32.860]  Et le film aurait pu finir tragiquement
+2026-05-25 09:56:11,774 [ERROR] [02:32.860 --> 02:35.600]  Une vie d'artiste, une vie de criminel
+2026-05-25 09:56:11,777 [ERROR] [02:35.600 --> 02:38.660]  Je voulais le monde et moi sortir dans la musique
+2026-05-25 09:56:11,780 [ERROR] [02:38.660 --> 02:41.560]  Et j'ai réussi maintenant, elle est fière
+2026-05-25 09:56:11,784 [ERROR] [02:41.560 --> 02:44.120]  Et le film aurait pu finir tragiquement
+2026-05-25 09:56:11,787 [ERROR] [02:44.120 --> 02:47.260]  Une vie d'artiste, une vie de criminel
+2026-05-25 09:56:11,790 [ERROR] [02:47.260 --> 02:50.080]  Une vie d'artiste, une vie de criminel
+2026-05-25 09:58:38,461 [INFO] Duration passed: 151

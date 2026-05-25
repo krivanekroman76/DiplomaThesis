@@ -1,0 +1,47 @@
+Transcription (Model: medium):
+ Tout le monde me regarde, le paysage, l'odeur, les jantes, ou ça me charme. Ma grand-mère me dit alpha t'es le bienvenu chez toi. La fille du voisin aimerait se fiancer, faut financer. Jolie Mariam, Mariam, je te connais comme si t'étais maternatale. Ce soir je suis invité à manger chez ma tata, à genoux autour d'un plat, c'est samatable. Aïe aïe aïe Bienvenue chez moi Là où les gens partagent tous le même poids Si tu sais pas où dormir entre soi Tous ensemble du matin jusqu'au soir Et dans la joie Bienvenue chez moi Là où les gens partagent tous le même poids Noooon Si tu sais pas où dormir entre soi Tous ensemble du matin jusqu'au soir Et dans la joie Où est Kanage Il est à la table même toi si tu sais pas où dormir entre soi tous ensemble du matin jusqu'au soir et dans la joie bienvenue chez moi là où les gens partagent tous le même toi si tu sais pas où dormir entre soi tous ensemble du matin jusqu'au soir et dans la joie je suis chez moi je suis chez moi je Je suis chez moi, je suis chez moi Bienvenue chez moi, chez moi, chez moi Là où les gens partagent tous le même toit Chez moi, chez moi, chez moi Si tu sais pas où dormir entre soi Chez moi, chez moi, chez moi Tous ensemble du matin jusqu'au soir Chez moi et dans la joie Bienvenue chez moi, là où les gens partagent tous le même toit Non Si tu sais pas où dormir entre soi Non Tous ensemble du matin jusqu'au soir dans la joie ! Français d'origine guinéenne, fier de mes origines, fier de mon pays, force au continent africain, le message reste le même, je suis chez moi, je suis un être humain comme toi, éternellement insatisfait !
+
+Timestamps:
+0.00s - 7.86s: Tout le monde me regarde, le paysage, l'odeur, les jantes, ou ça me charme. Ma grand-mère me dit alpha t'es le bienvenu chez toi.
+8.00s - 12.56s: La fille du voisin aimerait se fiancer, faut financer.
+13.50s - 18.00s: Jolie Mariam, Mariam, je te connais comme si t'étais maternatale.
+19.36s - 25.48s: Ce soir je suis invité à manger chez ma tata, à genoux autour d'un plat, c'est samatable.
+25.48s - 27.48s: Aïe aïe aïe
+27.48s - 29.48s: Bienvenue chez moi
+29.48s - 31.48s: Là où les gens partagent tous le même poids
+31.48s - 33.48s: Si tu sais pas où dormir entre soi
+33.48s - 35.48s: Tous ensemble du matin jusqu'au soir
+35.48s - 37.48s: Et dans la joie
+37.48s - 39.48s: Bienvenue chez moi
+39.48s - 41.48s: Là où les gens partagent tous le même poids
+41.48s - 43.48s: Noooon
+43.48s - 45.48s: Si tu sais pas où dormir entre soi
+45.48s - 47.48s: Tous ensemble du matin jusqu'au soir
+47.48s - 49.48s: Et dans la joie
+49.48s - 51.48s: Où est Kanage
+51.48s - 53.48s: Il est à la table
+83.48s - 91.08s: même toi si tu sais pas où dormir entre soi tous ensemble du matin jusqu'au soir et dans la joie
+91.08s - 99.52s: bienvenue chez moi là où les gens partagent tous le même toi si tu sais pas où dormir entre
+99.52s - 109.00s: soi tous ensemble du matin jusqu'au soir et dans la joie je suis chez moi je suis chez moi je
+109.00s - 111.60s: Je suis chez moi, je suis chez moi
+111.60s - 114.48s: Bienvenue chez moi, chez moi, chez moi
+114.48s - 116.96s: Là où les gens partagent tous le même toit
+116.96s - 118.40s: Chez moi, chez moi, chez moi
+118.40s - 120.88s: Si tu sais pas où dormir entre soi
+120.88s - 122.40s: Chez moi, chez moi, chez moi
+122.40s - 124.88s: Tous ensemble du matin jusqu'au soir
+124.88s - 127.12s: Chez moi et dans la joie
+127.12s - 131.04s: Bienvenue chez moi, là où les gens partagent tous le même toit
+131.04s - 132.04s: Non
+132.04s - 134.64s: Si tu sais pas où dormir entre soi
+134.64s - 135.28s: Non
+135.28s - 138.40s: Tous ensemble du matin jusqu'au soir
+138.40s - 140.40s: dans la joie !
+140.40s - 142.40s: Français d'origine guinéenne,
+142.40s - 143.40s: fier de mes origines,
+143.40s - 144.40s: fier de mon pays,
+144.40s - 146.40s: force au continent africain,
+146.40s - 147.40s: le message reste le même,
+147.40s - 148.40s: je suis chez moi,
+148.40s - 150.40s: je suis un être humain comme toi,
+150.40s - 152.40s: éternellement insatisfait !

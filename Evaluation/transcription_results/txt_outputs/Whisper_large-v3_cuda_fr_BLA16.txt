@@ -1,0 +1,49 @@
+Transcription (Model: large-v3):
+ Sur ma route oui, il y a eu du move oui, de l'aventure dans le movie, une vie de route. Sur ma route oui, je n'compte plus les soucis, de quoi devenir fou oui, une vie de route. Sur ma route oui, il y a eu du move oui, de l'aventure dans le movie, une vie de route. Sur ma route oui, je n'compte plus les soucis, de quoi devenir fou oui, une vie de route. Sur ma route, j'ai eu des moments de doute, je marchais sans savoir vers où, j'étais têtu rien à foutre. Sur ma route, j'avais pas de bagage en soute, et dans ma poche pas un sou, juste la famille entre nous. Sur ma route, y'a eu un tas de bouchons, la vérité j'ai souvent trébuché. Est-ce que tu sais que quand tu touches le fond, il y a peu de gens chez qui tu peux te réfugier ? Tu peux compter que sur tes chers parents parce que les amis disparaissent un par un Oui il m'arrive d'avoir le front au sol parce que Dieu est grand et on est seul en meurtre Sur ma route oui, il y a eu du move oui, de l'aventure dans le movie Une vie de route Sur ma route oui, j'en compte plus les sous, c'est de pas devenir fou oui Une vie de route Sur ma route Sur ma route Sur ma route Sur ma route Sur ma route, on m'a fait des coups en douce L'impression qu'mon cœur en souffre Mais j'suis sous anesthésie Sur mon chemin, j'ai croisé pas mal d'anciens Ils m'parlaient du lendemain Et que tout allait si vite Ne me parle pas de nostalgie Parce que j't'avoue que mon cœur est trop fragile J'suis comme un pirate naufragé Oui mon équipage est plus qu'un dommagé Je sèche mes larmes, j'baisse les armes J'veux même plus savoir pourquoi ils m'testent les autres S'il y a plus rien à prendre, je sais qu'il m'reste une chose Et ma route elle est trop longue pour le temps de faire une pause Sur ma route, oui, il y a eu du mouv' oui, de l'aventure dans l'mov' et une vie de route Sur ma route, oui, je n'compte plus les soucis, de quoi devenir fou oui, une vie de route Sur ma route, sur ma route, sur ma route, sur ma route, sur ma route, sur ma route Une vie de route sur ma route J'en compte plus les soucis de pas devenir fou Une vie de route sur ma route Il y a eu du mouv' de l'aventure dans le mouv' Une vie de route sur ma route J'en compte plus les soucis de pas devenir fou Une vie de route sur ma route Sur ma route Sur ma route Sur ma route
+
+Timestamps:
+0.00s - 6.96s: Sur ma route oui, il y a eu du move oui, de l'aventure dans le movie, une vie de route.
+6.96s - 13.84s: Sur ma route oui, je n'compte plus les soucis, de quoi devenir fou oui, une vie de route.
+13.84s - 20.80s: Sur ma route oui, il y a eu du move oui, de l'aventure dans le movie, une vie de route.
+20.80s - 27.68s: Sur ma route oui, je n'compte plus les soucis, de quoi devenir fou oui, une vie de route.
+27.68s - 40.56s: Sur ma route, j'ai eu des moments de doute, je marchais sans savoir vers où, j'étais têtu rien à foutre.
+40.92s - 47.76s: Sur ma route, j'avais pas de bagage en soute, et dans ma poche pas un sou, juste la famille entre nous.
+48.04s - 51.30s: Sur ma route, y'a eu un tas de bouchons, la vérité j'ai souvent trébuché.
+51.66s - 55.48s: Est-ce que tu sais que quand tu touches le fond, il y a peu de gens chez qui tu peux te réfugier ?
+55.48s - 59.00s: Tu peux compter que sur tes chers parents parce que les amis disparaissent un par un
+59.00s - 62.50s: Oui il m'arrive d'avoir le front au sol parce que Dieu est grand et on est seul en meurtre
+62.50s - 67.46s: Sur ma route oui, il y a eu du move oui, de l'aventure dans le movie
+67.46s - 69.12s: Une vie de route
+69.12s - 74.62s: Sur ma route oui, j'en compte plus les sous, c'est de pas devenir fou oui
+74.62s - 76.12s: Une vie de route
+76.12s - 77.76s: Sur ma route
+77.76s - 80.22s: Sur ma route
+80.22s - 81.90s: Sur ma route
+81.90s - 83.22s: Sur ma route
+83.22s - 86.08s: Sur ma route, on m'a fait des coups en douce
+86.08s - 88.00s: L'impression qu'mon cœur en souffre
+88.00s - 90.38s: Mais j'suis sous anesthésie
+90.38s - 93.44s: Sur mon chemin, j'ai croisé pas mal d'anciens
+93.44s - 95.34s: Ils m'parlaient du lendemain
+95.34s - 97.74s: Et que tout allait si vite
+97.74s - 99.36s: Ne me parle pas de nostalgie
+99.36s - 101.10s: Parce que j't'avoue que mon cœur est trop fragile
+101.10s - 103.02s: J'suis comme un pirate naufragé
+103.02s - 104.94s: Oui mon équipage est plus qu'un dommagé
+104.94s - 106.98s: Je sèche mes larmes, j'baisse les armes
+106.98s - 108.86s: J'veux même plus savoir pourquoi ils m'testent les autres
+108.86s - 110.76s: S'il y a plus rien à prendre, je sais qu'il m'reste une chose
+110.76s - 112.48s: Et ma route elle est trop longue pour le temps de faire une pause
+112.48s - 119.08s: Sur ma route, oui, il y a eu du mouv' oui, de l'aventure dans l'mov' et une vie de route
+119.08s - 126.08s: Sur ma route, oui, je n'compte plus les soucis, de quoi devenir fou oui, une vie de route
+126.08s - 136.58s: Sur ma route, sur ma route, sur ma route, sur ma route, sur ma route, sur ma route
+136.58s - 141.24s: Une vie de route sur ma route
+141.24s - 145.00s: J'en compte plus les soucis de pas devenir fou
+145.00s - 148.26s: Une vie de route sur ma route
+148.26s - 152.22s: Il y a eu du mouv' de l'aventure dans le mouv'
+152.54s - 154.94s: Une vie de route sur ma route
+154.94s - 158.86s: J'en compte plus les soucis de pas devenir fou
+158.86s - 162.22s: Une vie de route sur ma route
+162.22s - 165.00s: Sur ma route
+165.00s - 166.40s: Sur ma route
+166.40s - 168.86s: Sur ma route

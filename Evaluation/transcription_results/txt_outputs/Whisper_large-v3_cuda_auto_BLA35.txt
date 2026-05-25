@@ -1,0 +1,62 @@
+Transcription (Model: large-v3):
+ Assez, assez, assez, assez Et si mes envies m'ont souvent menotté Elles m'ont tant apporté Des rêves à ma portée Et je me sens libre quand j'arrête de douter Mon ambition plantée Des fruits à récolter Oui, oui, le monde est vaste Mon ambition n'est pas néfaste Tout paraît grand quand t'es en bas Seul mon cœur ne me ment pas Non, huit vies ne suffisent pas J'serais immortel si j'avais l'choix J'aime profiter, ne te trompe pas Je n'suis qu'un homme, je suis comme toi Éternel insatisfait J'ressens vite qu'on ne peut combler J'ai jamais assez Éternel insatisfait Je suis avide d'amour à donner Assez, assez, assez Jamais assez, assez, assez Oh oh oh, assez, assez, assez Jamais assez, assez, assez Et je me sens vivre dès que j'atteins mon but Mes désirs se disputent, j'sais bien que le vice tue Et pour ma famille, j'me battrai comme une brute Sans eux je ne suis plus qu'un gosse qui s'est perdu Je viens de loin, comprends pourquoi J'ai cette soif qui ne part pas Jamais assez tout pour là-bas Changer les choses avec ma voix Et oui j'donnerai tout pour ça Mais quand on aime on ne compte pas On veut toujours ce qu'on a pas Pendant que le temps file entre nos doigts Éternel insatisfait J'ressens vite qu'on ne peut combler J'ai jamais assez Éternel insatisfait Je suis avide d'amour agonné Assez, assez, assez Jamais assez, assez Assez, oh oh oh Assez, assez, assez Jamais assez, assez, assez Éternel, insatisfait J'ressens un vide qu'on ne peut combler J'ai jamais assez, éternel, insatisfait Je suis avide d'amour à donner Assez, assez, assez J'en ai jamais assez Assez, assez, assez Assez, assez, assez, assez J'en ai jamais assez, j'en ai jamais assez J'en ai jamais assez, j'en ai jamais assez Assez, j'en ai jamais assez, j'en ai jamais assez Assez
+
+Timestamps:
+0.00s - 3.30s: Assez, assez, assez, assez
+3.30s - 6.86s: Et si mes envies m'ont souvent menotté
+6.86s - 8.72s: Elles m'ont tant apporté
+8.72s - 10.82s: Des rêves à ma portée
+10.82s - 14.18s: Et je me sens libre quand j'arrête de douter
+14.18s - 16.08s: Mon ambition plantée
+16.08s - 18.38s: Des fruits à récolter
+18.38s - 20.68s: Oui, oui, le monde est vaste
+20.68s - 22.78s: Mon ambition n'est pas néfaste
+22.78s - 24.48s: Tout paraît grand quand t'es en bas
+24.48s - 26.30s: Seul mon cœur ne me ment pas
+26.30s - 28.14s: Non, huit vies ne suffisent pas
+28.14s - 30.12s: J'serais immortel si j'avais l'choix
+30.12s - 32.16s: J'aime profiter, ne te trompe pas
+32.16s - 34.24s: Je n'suis qu'un homme, je suis comme toi
+34.24s - 36.82s: Éternel insatisfait
+36.82s - 39.96s: J'ressens vite qu'on ne peut combler
+39.96s - 41.42s: J'ai jamais assez
+41.42s - 44.08s: Éternel insatisfait
+44.08s - 47.02s: Je suis avide d'amour à donner
+47.02s - 50.84s: Assez, assez, assez
+50.84s - 54.66s: Jamais assez, assez, assez
+54.66s - 58.36s: Oh oh oh, assez, assez, assez
+58.36s - 62.24s: Jamais assez, assez, assez
+62.24s - 65.70s: Et je me sens vivre dès que j'atteins mon but
+65.70s - 69.86s: Mes désirs se disputent, j'sais bien que le vice tue
+69.86s - 73.38s: Et pour ma famille, j'me battrai comme une brute
+73.38s - 77.52s: Sans eux je ne suis plus qu'un gosse qui s'est perdu
+77.52s - 80.16s: Je viens de loin, comprends pourquoi
+80.16s - 82.18s: J'ai cette soif qui ne part pas
+82.18s - 83.96s: Jamais assez tout pour là-bas
+83.96s - 86.04s: Changer les choses avec ma voix
+86.04s - 87.88s: Et oui j'donnerai tout pour ça
+87.88s - 89.96s: Mais quand on aime on ne compte pas
+89.96s - 91.94s: On veut toujours ce qu'on a pas
+91.94s - 94.28s: Pendant que le temps file entre nos doigts
+94.28s - 96.92s: Éternel insatisfait
+96.92s - 100.08s: J'ressens vite qu'on ne peut combler
+100.08s - 101.52s: J'ai jamais assez
+101.52s - 104.16s: Éternel insatisfait
+104.16s - 107.38s: Je suis avide d'amour agonné
+107.38s - 110.94s: Assez, assez, assez
+110.94s - 113.74s: Jamais assez, assez
+113.74s - 115.88s: Assez, oh oh oh
+115.88s - 118.50s: Assez, assez, assez
+118.50s - 122.36s: Jamais assez, assez, assez
+122.36s - 125.04s: Éternel, insatisfait
+125.04s - 128.18s: J'ressens un vide qu'on ne peut combler
+128.18s - 132.32s: J'ai jamais assez, éternel, insatisfait
+132.32s - 135.42s: Je suis avide d'amour à donner
+135.42s - 138.96s: Assez, assez, assez
+138.96s - 140.52s: J'en ai jamais assez
+140.52s - 143.20s: Assez, assez, assez
+143.20s - 147.20s: Assez, assez, assez, assez
+147.20s - 150.74s: J'en ai jamais assez, j'en ai jamais assez
+150.74s - 154.98s: J'en ai jamais assez, j'en ai jamais assez
+154.98s - 160.36s: Assez, j'en ai jamais assez, j'en ai jamais assez
+160.36s - 161.58s: Assez

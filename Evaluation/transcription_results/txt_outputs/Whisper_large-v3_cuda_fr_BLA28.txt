@@ -1,0 +1,64 @@
+Transcription (Model: large-v3):
+ Je la veux pour moi, je la veux pour me marier. J'suis tombé l'ova, j'vais sauter les barrières. L'homme il est comme ça, il surveille pas ses arrières. Oui l'homme il est comme ça, peu importe la manière. Mais je ne le semble pas, y'a trop de semblables et ça me rend pas d'amour. Faut que j'fasse mon choix, que je ne me trompe pas, que j'fasse les choses par amour. J'pourrais changer sa vie mais comment lui dire ? Je la vois, elle me voit pas, j'suis bon qu'à fuir. J'irai jusqu'à m'inventer une vie, lui mentir Juste parce qu'elle est beautiful Oh, beautiful Parce qu'elle est beautiful Oh, beautiful Je l'expire dans mes beautifuls Oh, beautiful Parce qu'elle est beautiful Oh, beautiful Je ne suis pas son genre Parce que j'ai pas le physique J'attendrai mon jour Mais pour l'instant je me désiste Et si elle crie au secours, j'arrive comme un missile Oui quand on aime on souffre, on en devient agressif Je ne comprends pas, la plupart des hommes veulent juste passer une nuit Je ne suis pas comme ça, moi si elle me suit je lui promets le paradis Je pourrais changer sa vie mais comment lui dire Je la vois, elle me voit pas, je suis bon qu'à fuir J'irai jusqu'à m'inventer une vie, lui mentir Juste parce qu'elle est beautiful Oh, beautiful Parce qu'elle est beautiful Oh, beautiful Je l'ai surnommée beautiful Oh, beautiful Parce qu'elle est beautiful Oh, beautiful Parce qu'elle est beautiful Beautiful Je l'ai surnommée beautiful Beautiful Parce qu'elle est beautiful Elle me fait tourner en rouge, je suis à deux doigts d'abandonner Elle ne sait pas que pour elle je suis prêt à tout donner Juste parce qu'elle est beautiful Parce qu'elle est beautiful Parce qu'elle est beautiful Parce qu'elle est beautiful Je l'ai sûre de me beautiful Parce qu'elle est beautiful Elle est beautiful Elle est beautiful Oh beautiful Je l'ai sûre de me beautiful Oh beautiful Oh beautiful Parce qu'elle est beautiful Je l'ai sûre de me beautiful Parce qu'elle est beautiful Je l'ai sûre de me beautiful C'est un honneur de vivre au Nouveau-Nouveau !
+
+Timestamps:
+0.00s - 3.12s: Je la veux pour moi, je la veux pour me marier.
+3.12s - 6.32s: J'suis tombé l'ova, j'vais sauter les barrières.
+6.32s - 9.52s: L'homme il est comme ça, il surveille pas ses arrières.
+9.52s - 12.72s: Oui l'homme il est comme ça, peu importe la manière.
+12.72s - 16.68s: Mais je ne le semble pas, y'a trop de semblables et ça me rend pas d'amour.
+16.68s - 20.36s: Faut que j'fasse mon choix, que je ne me trompe pas, que j'fasse les choses par amour.
+20.36s - 23.88s: J'pourrais changer sa vie mais comment lui dire ?
+23.88s - 27.80s: Je la vois, elle me voit pas, j'suis bon qu'à fuir.
+27.80s - 31.92s: J'irai jusqu'à m'inventer une vie, lui mentir
+31.92s - 34.92s: Juste parce qu'elle est beautiful
+34.92s - 36.84s: Oh, beautiful
+36.84s - 38.94s: Parce qu'elle est beautiful
+38.94s - 41.00s: Oh, beautiful
+41.00s - 42.80s: Je l'expire dans mes beautifuls
+44.04s - 45.14s: Oh, beautiful
+45.14s - 47.28s: Parce qu'elle est beautiful
+47.28s - 48.80s: Oh, beautiful
+49.36s - 51.88s: Je ne suis pas son genre
+51.88s - 53.56s: Parce que j'ai pas le physique
+53.56s - 55.56s: J'attendrai mon jour
+55.56s - 56.80s: Mais pour l'instant je me désiste
+56.80s - 61.34s: Et si elle crie au secours, j'arrive comme un missile
+61.34s - 64.62s: Oui quand on aime on souffre, on en devient agressif
+64.62s - 68.68s: Je ne comprends pas, la plupart des hommes veulent juste passer une nuit
+68.68s - 72.60s: Je ne suis pas comme ça, moi si elle me suit je lui promets le paradis
+72.60s - 76.36s: Je pourrais changer sa vie mais comment lui dire
+76.36s - 79.86s: Je la vois, elle me voit pas, je suis bon qu'à fuir
+79.86s - 84.60s: J'irai jusqu'à m'inventer une vie, lui mentir
+84.60s - 87.82s: Juste parce qu'elle est beautiful
+87.82s - 89.76s: Oh, beautiful
+89.76s - 91.98s: Parce qu'elle est beautiful
+91.98s - 94.06s: Oh, beautiful
+94.06s - 96.10s: Je l'ai surnommée beautiful
+96.10s - 98.22s: Oh, beautiful
+98.22s - 100.32s: Parce qu'elle est beautiful
+100.32s - 102.42s: Oh, beautiful
+102.42s - 104.52s: Parce qu'elle est beautiful
+104.52s - 105.56s: Beautiful
+105.56s - 108.66s: Je l'ai surnommée beautiful
+108.66s - 109.74s: Beautiful
+109.74s - 112.68s: Parce qu'elle est beautiful
+112.68s - 124.40s: Elle me fait tourner en rouge, je suis à deux doigts d'abandonner
+124.40s - 130.70s: Elle ne sait pas que pour elle je suis prêt à tout donner
+130.70s - 134.42s: Juste parce qu'elle est beautiful
+134.42s - 136.48s: Parce qu'elle est beautiful
+136.48s - 138.48s: Parce qu'elle est beautiful
+138.48s - 140.48s: Parce qu'elle est beautiful
+140.48s - 142.48s: Je l'ai sûre de me beautiful
+142.48s - 144.48s: Parce qu'elle est beautiful
+144.48s - 146.48s: Elle est beautiful
+146.48s - 148.48s: Elle est beautiful
+148.48s - 150.48s: Oh beautiful
+150.48s - 152.48s: Je l'ai sûre de me beautiful
+152.48s - 154.48s: Oh beautiful
+154.48s - 156.48s: Oh beautiful
+156.48s - 158.48s: Parce qu'elle est beautiful
+158.48s - 160.48s: Je l'ai sûre de me beautiful
+160.48s - 162.48s: Parce qu'elle est beautiful
+162.48s - 164.48s: Je l'ai sûre de me beautiful
+164.48s - 166.48s: C'est un honneur de vivre au Nouveau-Nouveau !

@@ -1,0 +1,62 @@
+Transcription (Model: large-v3):
+ J'ai rien vu, pourtant j'suis net, j'ai rien vu Peut-être que j'm'en souviens plus Bien que j'suis là, je perdure Oh j'suis perdu Dans ma gamberge, je n'ai pas connu mon grand-père Dans ma famille, j'suis le grand-frère Et le grand-dior, moi ça me rend fier Suis-je exemplaire ? Si je ne le suis pas, veuillez m'excuser Mon exemple, mon père Mais le temps est contre nous, abusé J'sais plus comment faire Plus je vieillis, plus j'refléchis J'veux pas commentaire La vie est ainsi, je vois beaucoup de signes J'ai rien vu passer Oh non Ton quai dans l'passé Oh Sans menacer Par le temps Cheveux blancs J'ai rien vu passer Oh J'ai rien vu passer J'ai rien vu A peine cligné des yeux Déjà un mini-mois Les jours passent comme des heures Et les années comme des mois Je vois maman vieillir Mais le temps l'embellit Et dans ces moments j'me dis Suis-je exemplaire ? Si je ne le suis pas, veuillez m'excuser Mon exemple, mon père Mais le temps est contre nous, abusé J'sais plus comment faire Plus je vieillis, plus j'refléchis J'veux pas commentaire La vie est ainsi, je vois beaucoup de signes J'ai rien vu passer Un, deux Toquer dans l'passé Un, deux J'me sens menacé Par le temps, cheveux blancs J'ai rien vu passer Un, deux J'ai rien vu passer, bloqué dans le passé, j'me sens menacé, par le temps, cheveux blancs, j'ai rien vu passer, j'ai rien vu passer. Le temps est précieux, mon petit ne sois pas pressé, prends le temps d'apprécier, parce qu'on finira tous au cieux, tu verras le temps est précieux. Mon petit ne sois pas pressé, prends le temps d'apprécier Parce qu'on finira tous au cieux, tu verras, tu verras J'ai rien vu passer, dans l'passé, sans menacer Par le temps, cheveux blancs, j'ai rien vu passer J'ai rien vu passer, bloqué dans l'passé J'me sens menacé, par le temps, cheveux blancs, j'ai rien vu passer J'ai rien vu passer
+
+Timestamps:
+0.00s - 2.64s: J'ai rien vu, pourtant j'suis net, j'ai rien vu
+2.64s - 4.70s: Peut-être que j'm'en souviens plus
+4.70s - 6.64s: Bien que j'suis là, je perdure
+6.64s - 7.54s: Oh j'suis perdu
+7.54s - 10.68s: Dans ma gamberge, je n'ai pas connu mon grand-père
+10.68s - 12.58s: Dans ma famille, j'suis le grand-frère
+12.58s - 14.38s: Et le grand-dior, moi ça me rend fier
+14.38s - 16.30s: Suis-je exemplaire ?
+16.30s - 18.14s: Si je ne le suis pas, veuillez m'excuser
+18.14s - 20.04s: Mon exemple, mon père
+20.04s - 22.02s: Mais le temps est contre nous, abusé
+22.02s - 23.98s: J'sais plus comment faire
+23.98s - 26.00s: Plus je vieillis, plus j'refléchis
+26.00s - 27.76s: J'veux pas commentaire
+27.76s - 29.78s: La vie est ainsi, je vois beaucoup de signes
+29.78s - 31.52s: J'ai rien vu passer
+31.52s - 32.90s: Oh non
+32.90s - 34.62s: Ton quai dans l'passé
+34.62s - 35.20s: Oh
+35.20s - 36.62s: Sans menacer
+36.62s - 37.72s: Par le temps
+37.72s - 38.96s: Cheveux blancs
+38.96s - 40.42s: J'ai rien vu passer
+40.42s - 41.46s: Oh
+41.46s - 43.48s: J'ai rien vu passer
+43.48s - 44.80s: J'ai rien vu
+44.80s - 46.56s: A peine cligné des yeux
+46.56s - 48.54s: Déjà un mini-mois
+48.54s - 50.26s: Les jours passent comme des heures
+50.26s - 52.20s: Et les années comme des mois
+52.20s - 54.08s: Je vois maman vieillir
+54.08s - 56.10s: Mais le temps l'embellit
+56.10s - 57.98s: Et dans ces moments j'me dis
+57.98s - 59.92s: Suis-je exemplaire ?
+59.92s - 61.78s: Si je ne le suis pas, veuillez m'excuser
+61.78s - 63.70s: Mon exemple, mon père
+63.70s - 65.68s: Mais le temps est contre nous, abusé
+65.68s - 67.62s: J'sais plus comment faire
+67.62s - 69.64s: Plus je vieillis, plus j'refléchis
+69.64s - 71.44s: J'veux pas commentaire
+71.44s - 73.44s: La vie est ainsi, je vois beaucoup de signes
+73.44s - 75.16s: J'ai rien vu passer
+75.16s - 76.64s: Un, deux
+76.64s - 78.38s: Toquer dans l'passé
+78.38s - 79.82s: Un, deux
+79.82s - 81.62s: J'me sens menacé
+81.62s - 83.80s: Par le temps, cheveux blancs
+83.80s - 85.44s: J'ai rien vu passer
+85.44s - 86.42s: Un, deux
+86.42s - 101.18s: J'ai rien vu passer, bloqué dans le passé, j'me sens menacé, par le temps, cheveux blancs, j'ai rien vu passer, j'ai rien vu passer.
+101.70s - 110.68s: Le temps est précieux, mon petit ne sois pas pressé, prends le temps d'apprécier, parce qu'on finira tous au cieux, tu verras le temps est précieux.
+110.68s - 114.36s: Mon petit ne sois pas pressé, prends le temps d'apprécier
+114.36s - 118.30s: Parce qu'on finira tous au cieux, tu verras, tu verras
+118.30s - 122.56s: J'ai rien vu passer, dans l'passé, sans menacer
+122.56s - 126.50s: Par le temps, cheveux blancs, j'ai rien vu passer
+126.50s - 132.24s: J'ai rien vu passer, bloqué dans l'passé
+132.24s - 138.46s: J'me sens menacé, par le temps, cheveux blancs, j'ai rien vu passer
+138.46s - 141.54s: J'ai rien vu passer

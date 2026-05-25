@@ -1,0 +1,72 @@
+Transcription (Model: medium):
+ Parle-moi, parle-moi, j'ai tant de choses à te dire. Aide-moi, aide-moi à ne pas souffrir. La première fois que je l'ai vu, j'avoue que je suis resté bête. J'ai ma propre version de l'histoire de la belle et la bête. Je sais, je pourrais passer pour un négros fragile. Je lui ai fait croire que c'est moi, j'ai rendu Paris magique. J'avais pas un sentiment, mais beaucoup de sentiments. Des problèmes qui s'empilent, un parcours qui en dit long. Je voyais en elle celle qui allait faire de moi un homme Un georde Casanova du ghetto qui fait le love Parfois j'ai du mentir, faire le dur à cuir Et chaque fois j'étais en tort, je crois qu'elle endure J'parle mal et je m'énerve parce que je suis réservé J'vois pas ce qu'elle veut dire et j'm'emport Parle-moi, parle-moi, j'ai tant de choses à te dire Aide-moi, aide-moi, à ne pas souffrir Aime-moi, aime-moi, j'ai tant de choses à t'offrir Toi et moi, toi et moi, on va s'en sortir Au-delà des maux, de tous nos défauts Que prend les pommes et de haut, c'est du temps qu'il nous faut Au-delà des maux, de tous nos défauts Que prend les pommes et de haut, c'est du temps qu'il nous faut Je suis peut-être habité, ou peut-être habitué Il faut que je change, elle va me buter, elle va me quitter On a du mal à communiquer, je suis complètement niqué Elle ne sait pas que je suis encore pique et je pourrais pas l'expliquer La vérité est un goût amer, le rêve n'est pas bleu Je dessine l'avenir en couleur sur un petit tableau J'aimerais tellement lui dire des choses mais l'orgueil veut pas Bien sûr l'amour ça rend aveugle, y'a des choses que je vois pas On a passé le stade des disquettes J'peux plus faire ça parce que mon fils guette On résout pas tout sur un week-end Mais si tu veux tout savoir, oui j't'aime Parle-moi, parle-moi J'ai tant de choses à te dire Aide-moi, aide-moi à ne pas souffrir Aime-moi, aime-moi j'ai tant de choses à t'offrir Toi et moi, toi et moi on va s'en sortir Au-delà des mots, des poules aux défauts Quand on est tombé de haut, c'est vite qu'il nous faut Au delà des mots, de nous on est faux. Retrainer tant pis le haut, c'est des temps qui nous forment. Parle-moi, parle-moi. Mais j'ai pourtant tout donné, même si j'ai déconné. Oui sans toi je suis paumé, je n'ai trouvé le sommeil. Je parle en langage codé, je ne suis plus moi-même. Parle-moi, parle-moi. Mais j'ai pourtant tout donné, même si j'ai déconné. Oui sans toi je suis paumé, je n'ai trouvé le sommeil. Je parle en langage codé, Déjeuner suis plus moi-même Au-delà des mots De tout nos défauts Quand on est tombé de haut C'est dit tant qu'il nous faut Au-delà des mots De tout nos défauts Quand on est tombé de haut C'est dit tant qu'il nous faut Au-delà des mots De tout nos défauts Quand on est tombé de haut De tout nos défauts Parle-moi, parle-moi, j'ai tant de choses à te dire
+
+Timestamps:
+0.00s - 9.50s: Parle-moi, parle-moi, j'ai tant de choses à te dire. Aide-moi, aide-moi à ne pas souffrir.
+9.50s - 15.10s: La première fois que je l'ai vu, j'avoue que je suis resté bête. J'ai ma propre version de l'histoire de la belle et la bête.
+15.10s - 20.20s: Je sais, je pourrais passer pour un négros fragile. Je lui ai fait croire que c'est moi, j'ai rendu Paris magique.
+20.20s - 25.50s: J'avais pas un sentiment, mais beaucoup de sentiments. Des problèmes qui s'empilent, un parcours qui en dit long.
+25.50s - 27.96s: Je voyais en elle celle qui allait faire de moi un homme
+27.96s - 30.60s: Un georde Casanova du ghetto qui fait le love
+30.60s - 32.84s: Parfois j'ai du mentir, faire le dur à cuir
+32.84s - 35.18s: Et chaque fois j'étais en tort, je crois qu'elle endure
+35.18s - 37.80s: J'parle mal et je m'énerve parce que je suis réservé
+37.80s - 39.92s: J'vois pas ce qu'elle veut dire et j'm'emport
+39.92s - 45.08s: Parle-moi, parle-moi, j'ai tant de choses à te dire
+45.08s - 49.76s: Aide-moi, aide-moi, à ne pas souffrir
+49.76s - 54.96s: Aime-moi, aime-moi, j'ai tant de choses à t'offrir
+54.96s - 59.80s: Toi et moi, toi et moi, on va s'en sortir
+59.80s - 64.80s: Au-delà des maux, de tous nos défauts
+64.80s - 70.12s: Que prend les pommes et de haut, c'est du temps qu'il nous faut
+70.12s - 74.68s: Au-delà des maux, de tous nos défauts
+74.68s - 80.12s: Que prend les pommes et de haut, c'est du temps qu'il nous faut
+80.12s - 82.16s: Je suis peut-être habité, ou peut-être habitué
+82.16s - 84.76s: Il faut que je change, elle va me buter, elle va me quitter
+84.76s - 87.20s: On a du mal à communiquer, je suis complètement niqué
+87.20s - 89.80s: Elle ne sait pas que je suis encore pique et je pourrais pas l'expliquer
+89.80s - 92.40s: La vérité est un goût amer, le rêve n'est pas bleu
+92.40s - 95.04s: Je dessine l'avenir en couleur sur un petit tableau
+95.04s - 97.60s: J'aimerais tellement lui dire des choses mais l'orgueil veut pas
+97.60s - 100.20s: Bien sûr l'amour ça rend aveugle, y'a des choses que je vois pas
+100.20s - 102.68s: On a passé le stade des disquettes
+102.68s - 105.36s: J'peux plus faire ça parce que mon fils guette
+105.36s - 107.96s: On résout pas tout sur un week-end
+107.96s - 110.48s: Mais si tu veux tout savoir, oui j't'aime
+110.48s - 113.04s: Parle-moi, parle-moi
+113.04s - 115.52s: J'ai tant de choses à te dire
+115.52s - 120.24s: Aide-moi, aide-moi à ne pas souffrir
+120.24s - 125.44s: Aime-moi, aime-moi j'ai tant de choses à t'offrir
+125.44s - 130.32s: Toi et moi, toi et moi on va s'en sortir
+130.32s - 135.28s: Au-delà des mots, des poules aux défauts
+135.28s - 140.64s: Quand on est tombé de haut, c'est vite qu'il nous faut
+140.64s - 143.00s: Au delà des mots,
+143.00s - 145.48s: de nous on est faux.
+145.48s - 148.12s: Retrainer tant pis le haut,
+148.12s - 151.12s: c'est des temps qui nous forment.
+151.12s - 153.52s: Parle-moi, parle-moi.
+153.52s - 154.80s: Mais j'ai pourtant tout donné,
+154.80s - 156.08s: même si j'ai déconné.
+156.08s - 157.36s: Oui sans toi je suis paumé,
+157.36s - 158.68s: je n'ai trouvé le sommeil.
+158.68s - 159.92s: Je parle en langage codé,
+159.92s - 161.48s: je ne suis plus moi-même.
+161.48s - 163.84s: Parle-moi, parle-moi.
+163.84s - 165.08s: Mais j'ai pourtant tout donné,
+165.08s - 166.40s: même si j'ai déconné.
+166.40s - 167.68s: Oui sans toi je suis paumé,
+167.68s - 169.00s: je n'ai trouvé le sommeil.
+169.00s - 170.28s: Je parle en langage codé,
+170.28s - 171.48s: Déjeuner suis plus moi-même
+171.48s - 173.98s: Au-delà des mots
+173.98s - 175.78s: De tout nos défauts
+175.78s - 177.88s: Quand on est tombé de haut
+177.88s - 180.18s: C'est dit tant qu'il nous faut
+180.18s - 181.58s: Au-delà des mots
+181.58s - 183.58s: De tout nos défauts
+183.58s - 186.28s: Quand on est tombé de haut
+186.28s - 188.78s: C'est dit tant qu'il nous faut
+188.78s - 191.28s: Au-delà des mots
+191.28s - 193.68s: De tout nos défauts
+193.68s - 195.88s: Quand on est tombé de haut
+195.88s - 198.28s: De tout nos défauts
+198.28s - 203.28s: Parle-moi, parle-moi, j'ai tant de choses à te dire

@@ -1,16 +1,23 @@
 \begin{table}[hbt!]
 \centering
-\caption{Mean WER and CER Across 5 Normalization Tiers}
+\caption{Mean WER and CER Across 5 Normalization Tiers (Worst-case text-type)}
 \resizebox{\textwidth}{!}{
-\begin{tabular}{ll|c|ccccc|ccccc}
+\begin{tabular}{ll|ccccc|ccccc}
 \toprule
- & & & \multicolumn{5}{c|}{\textbf{WER (\%)}} & \multicolumn{5}{c}{\textbf{CER (\%)}} \\
-\textbf{Tool} & \textbf{Model} & \textbf{Type} & T1 & T2 & T3 & T4 & T5 & T1 & T2 & T3 & T4 & T5 \\
+ & & \multicolumn{5}{c|}{\textbf{WER (\%)}} & \multicolumn{5}{c}{\textbf{CER (\%)}} \\
+\textbf{Tool} & \textbf{Model (Lang)} & T1 & T2 & T3 & T4 & T5 & T1 & T2 & T3 & T4 & T5 \\
 \midrule
-Vosk & vosk-model-fr-0.22 & Uni & 62.70 & 59.20 & 57.18 & 56.85 & 58.52 & 41.93 & 40.71 & 40.04 & 39.47 & 39.66 \\
-Vosk & vosk-model-fr-0.6-linto-2.2.0 & Uni & 64.48 & 61.21 & 58.98 & 58.71 & 60.68 & 45.29 & 44.09 & 43.48 & 43.04 & 43.14 \\
-Wav2Vec2 & facebook/wav2vec2-large-xlsr-53-french & Uni & 75.09 & 73.03 & 70.74 & 70.23 & 71.99 & 43.15 & 42.05 & 41.54 & 40.82 & 40.78 \\
-Wav2Vec2 & jonatasgrosman/wav2vec2-large-xlsr-53-french & Uni & 77.17 & 75.30 & 74.58 & 74.20 & 73.72 & 45.82 & 44.77 & 44.24 & 43.37 & 43.11 \\
+Vosk & vosk-model-fr-0.22 (default) & 62.70 & 59.20 & 57.18 & 56.85 & 58.52 & 41.93 & 40.71 & 40.04 & 39.47 & 39.66 \\
+Vosk & vosk-model-fr-0.6-linto-2.2.0 (default) & 64.48 & 61.21 & 58.98 & 58.71 & 60.68 & 45.29 & 44.09 & 43.48 & 43.04 & 43.14 \\
+Wav2Vec2 & facebook/wav2vec2-large-xlsr-53-french (default) & 76.18 & 73.20 & 70.52 & 70.14 & 72.58 & 43.35 & 41.16 & 40.44 & 39.73 & 39.58 \\
+Wav2Vec2 & facebook/wav2vec2-large-xlsr-53-french (default) & 75.09 & 73.03 & 70.74 & 70.23 & 71.99 & 43.15 & 42.05 & 41.54 & 40.82 & 40.78 \\
+Wav2Vec2 & jonatasgrosman/wav2vec2-large-xlsr-53-french (default) & 80.33 & 77.89 & 76.94 & 76.64 & 76.57 & 48.34 & 46.49 & 45.80 & 45.03 & 44.58 \\
+Wav2Vec2 & jonatasgrosman/wav2vec2-large-xlsr-53-french (default) & 77.17 & 75.30 & 74.58 & 74.20 & 73.72 & 45.82 & 44.77 & 44.24 & 43.37 & 43.11 \\
+Whisper & large-v3 (fr) & 48.08 & 36.45 & 32.79 & 32.05 & 35.33 & 26.67 & 23.37 & 22.57 & 22.20 & 22.67 \\
+Whisper & large-v3 (auto) & 38.98 & 29.45 & 24.97 & 24.48 & 28.76 & 19.14 & 16.94 & 16.13 & 15.85 & 16.50 \\
+Whisper & large-v3 (fr) & 40.84 & 30.17 & 26.35 & 25.93 & 29.55 & 21.34 & 18.81 & 18.08 & 17.81 & 18.35 \\
+Whisper & medium (fr) & 57.66 & 45.67 & 40.93 & 40.00 & 44.18 & 31.27 & 27.97 & 27.13 & 26.64 & 27.20 \\
+Whisper & medium (fr) & 54.57 & 47.56 & 45.28 & 44.85 & 46.43 & 32.01 & 30.10 & 29.40 & 28.98 & 29.23 \\
 \bottomrule
 \end{tabular}
 }

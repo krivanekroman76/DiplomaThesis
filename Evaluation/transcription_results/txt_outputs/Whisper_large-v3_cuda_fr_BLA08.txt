@@ -1,0 +1,27 @@
+Transcription (Model: large-v3):
+ J'ai l'impression d'avoir échoué, ne venez pas me dire que je suis doué. C'est comment, explique-moi, qu'est-ce que j'ai raté ? Ne me dis pas que la vie m'a appris qu'à rapper. J'écris des pages, mais y'en a aucune de tournée. Perçu à dire que tout ça n'est pas vraiment fait pour moi. Je me laisse guider. S'il est écrit que je dois prendre un mur, je pourrais pas l'esquiver. Merci pour le soutien, mais quand ça n'allait pas, t'étais pas là. Harry, je me souviens. Je t'en veux même pas. Je m'en fous que tu m'aimes ou que tu m'aimes pas. Moi, je me préférais avant quand. Moi et mon petit dégo, on voulait juste avancer. Aujourd'hui on a grandi et il m'arrive de me regarder et de me dire Wesh tu te prends pour qui ? Pensez J'ai l'impression d'avoir échoué Ne venez pas me dire que je suis doué J'ai l'impression d'avoir échoué Ne venez pas me dire que je suis doué C'est comment ? Explique-moi, qu'est-ce que j'ai raté ? Ne me dis pas que la vie m'a appris qu'à rapper C'est comment ? Explique-moi, qu'est-ce que j'ai raté ? Ne me dis pas que la vie m'a appris qu'à rapper.
+
+Timestamps:
+0.00s - 10.72s: J'ai l'impression d'avoir échoué, ne venez pas me dire que je suis doué.
+10.72s - 23.84s: C'est comment, explique-moi, qu'est-ce que j'ai raté ? Ne me dis pas que la vie m'a appris qu'à rapper.
+23.84s - 26.80s: J'écris des pages, mais y'en a aucune de tournée.
+27.24s - 29.74s: Perçu à dire que tout ça n'est pas vraiment fait pour moi.
+30.46s - 31.44s: Je me laisse guider.
+31.78s - 34.56s: S'il est écrit que je dois prendre un mur, je pourrais pas l'esquiver.
+35.54s - 38.98s: Merci pour le soutien, mais quand ça n'allait pas, t'étais pas là.
+39.16s - 40.18s: Harry, je me souviens.
+40.98s - 42.04s: Je t'en veux même pas.
+42.72s - 44.74s: Je m'en fous que tu m'aimes ou que tu m'aimes pas.
+44.96s - 46.70s: Moi, je me préférais avant quand.
+47.00s - 49.86s: Moi et mon petit dégo, on voulait juste avancer.
+49.86s - 54.92s: Aujourd'hui on a grandi et il m'arrive de me regarder et de me dire
+54.92s - 56.36s: Wesh tu te prends pour qui ?
+56.36s - 56.88s: Pensez
+56.88s - 59.44s: J'ai l'impression d'avoir échoué
+59.44s - 62.34s: Ne venez pas me dire que je suis doué
+62.34s - 65.22s: J'ai l'impression d'avoir échoué
+65.22s - 67.84s: Ne venez pas me dire que je suis doué
+67.84s - 71.36s: C'est comment ? Explique-moi, qu'est-ce que j'ai raté ?
+71.36s - 74.32s: Ne me dis pas que la vie m'a appris qu'à rapper
+74.32s - 77.86s: C'est comment ? Explique-moi, qu'est-ce que j'ai raté ?
+77.86s - 80.84s: Ne me dis pas que la vie m'a appris qu'à rapper.

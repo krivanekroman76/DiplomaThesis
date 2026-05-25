@@ -1,0 +1,62 @@
+Transcription (Model: large-v3):
+ Et si le monde pouvait se mettre sur pause, oui juste le temps de le repeindre en rose. Ouais si le monde pouvait se mettre sur pause, j'aurais aimé revivre certaines choses. J'repense au beau vieux temps, j'ai trop de souvenirs, le temps c'est pas d'l'argent surtout dans mes souvenirs. Trop rêveux, je me rappelle qu'on était tous ensemble frère. Souviens-toi de ce qu'on s'était dit, à l'époque où c'était nous les petits. Trop d'images en tête, j'suis trop nostalgique Viens on fait une pause, trop de souvenirs Viens on refait le monde, trop de souvenirs Viens on refait le monde, trop de souvenirs Viens on refait le monde, trop de souvenirs Viens on refait le monde Ce soir ou demain quand tu veux oui on remet ça Ce soir ou demain quand tu veux oui on remet ça C'est ce soir ou demain, grand-déveux, oui on remet ça C'est ce soir ou demain, grand-déveux, oui on remet ça Les fêtes du quartier, les bar-bac d'été Là-bas qui nous guettaient, maman qui s'inquiétait Pac-Pac était pété, le lendemain regretté Les meufs c'était pas ça, j'avoue j'étais pas stable Ça fumait le popo, toi tu connais pas ça Laisse-moi te raconter, y'avait zéro calcul Ça savait pas compter, mais ça se l'a raconté Frère laisse tomber, haha On avait un dream, un peu comme Biggie Tu ne nous voyais pas, nous dans l'après-midi Ambiance nocturne, l'époque section On attend que la roue tourne, on se pose des questions 98, coupe du monde Je voulais déjà prendre méga pour qu'on se coupe du monde Le temps est passé, ça fait plus de 10 ans Les visages sont marqués mais j'ai la même vision Souviens-toi de ce qu'on s'était dit A l'époque où c'était nous les petits Trop d'images en tête, je suis trop nostalgique Viens on fait une pause, trop de souvenirs Viens on refait le monde, trop de souvenirs Si on refait le monde Trop de souvenirs Si on refait le monde Trop de souvenirs Trop de souvenirs Si on refait le monde Ce soir ou demain quand tu veux oui on remet ça Ce soir ou demain quand tu veux oui on remet ça Ce soir ou demain quand tu veux oui on remet ça Ce soir ou demain quand tu veux oui on remet ça Ce soir ou demain Ce soir ou demain Ce soir ou demain Quand tu veux, oui on remet ça Trop de souvenirs, si on refait le monde Trop de souvenirs, si on refait le monde Trop de souvenirs, si on refait le monde Trop de souvenirs, si on refait le monde Ce soir ou demain, quand tu veux, oui on remet ça Ce soir ou demain, quand tu veux, oui on remet ça Et ce soir ou demain quand on devait, oui on remet ça Et ce soir ou demain quand on devait, oui on remet ça
+
+Timestamps:
+0.00s - 4.64s: Et si le monde pouvait se mettre sur pause, oui juste le temps de le repeindre en rose.
+4.64s - 9.56s: Ouais si le monde pouvait se mettre sur pause, j'aurais aimé revivre certaines choses.
+9.56s - 15.36s: J'repense au beau vieux temps, j'ai trop de souvenirs, le temps c'est pas d'l'argent surtout dans mes souvenirs.
+15.36s - 19.20s: Trop rêveux, je me rappelle qu'on était tous ensemble frère.
+19.20s - 25.60s: Souviens-toi de ce qu'on s'était dit, à l'époque où c'était nous les petits.
+25.60s - 29.16s: Trop d'images en tête, j'suis trop nostalgique
+29.16s - 31.76s: Viens on fait une pause, trop de souvenirs
+31.76s - 34.56s: Viens on refait le monde, trop de souvenirs
+34.56s - 37.68s: Viens on refait le monde, trop de souvenirs
+37.68s - 40.48s: Viens on refait le monde, trop de souvenirs
+40.48s - 43.00s: Viens on refait le monde
+43.00s - 47.32s: Ce soir ou demain quand tu veux oui on remet ça
+47.32s - 51.36s: Ce soir ou demain quand tu veux oui on remet ça
+51.36s - 55.10s: C'est ce soir ou demain, grand-déveux, oui on remet ça
+55.10s - 59.40s: C'est ce soir ou demain, grand-déveux, oui on remet ça
+59.40s - 61.54s: Les fêtes du quartier, les bar-bac d'été
+61.54s - 63.66s: Là-bas qui nous guettaient, maman qui s'inquiétait
+63.66s - 65.88s: Pac-Pac était pété, le lendemain regretté
+65.88s - 68.04s: Les meufs c'était pas ça, j'avoue j'étais pas stable
+68.04s - 70.18s: Ça fumait le popo, toi tu connais pas ça
+70.18s - 72.24s: Laisse-moi te raconter, y'avait zéro calcul
+72.24s - 74.44s: Ça savait pas compter, mais ça se l'a raconté
+74.44s - 76.08s: Frère laisse tomber, haha
+76.08s - 78.28s: On avait un dream, un peu comme Biggie
+78.28s - 80.36s: Tu ne nous voyais pas, nous dans l'après-midi
+80.36s - 82.46s: Ambiance nocturne, l'époque section
+82.46s - 84.68s: On attend que la roue tourne, on se pose des questions
+84.68s - 86.60s: 98, coupe du monde
+86.60s - 88.80s: Je voulais déjà prendre méga pour qu'on se coupe du monde
+88.80s - 91.12s: Le temps est passé, ça fait plus de 10 ans
+91.12s - 93.28s: Les visages sont marqués mais j'ai la même vision
+93.28s - 96.78s: Souviens-toi de ce qu'on s'était dit
+96.78s - 99.68s: A l'époque où c'était nous les petits
+99.68s - 103.38s: Trop d'images en tête, je suis trop nostalgique
+103.38s - 106.72s: Viens on fait une pause, trop de souvenirs
+106.72s - 109.46s: Viens on refait le monde, trop de souvenirs
+109.46s - 111.30s: Si on refait le monde
+111.30s - 112.54s: Trop de souvenirs
+112.54s - 114.58s: Si on refait le monde
+114.58s - 115.28s: Trop de souvenirs
+115.28s - 116.00s: Trop de souvenirs
+116.00s - 117.34s: Si on refait le monde
+117.34s - 121.64s: Ce soir ou demain quand tu veux oui on remet ça
+121.64s - 125.98s: Ce soir ou demain quand tu veux oui on remet ça
+125.98s - 130.26s: Ce soir ou demain quand tu veux oui on remet ça
+130.26s - 134.52s: Ce soir ou demain quand tu veux oui on remet ça
+134.52s - 137.58s: Ce soir ou demain
+137.58s - 140.96s: Ce soir ou demain
+140.96s - 143.96s: Ce soir ou demain
+143.96s - 147.70s: Quand tu veux, oui on remet ça
+147.70s - 150.46s: Trop de souvenirs, si on refait le monde
+150.46s - 152.88s: Trop de souvenirs, si on refait le monde
+152.88s - 156.20s: Trop de souvenirs, si on refait le monde
+156.20s - 158.98s: Trop de souvenirs, si on refait le monde
+158.98s - 163.18s: Ce soir ou demain, quand tu veux, oui on remet ça
+163.18s - 167.48s: Ce soir ou demain, quand tu veux, oui on remet ça
+167.48s - 171.74s: Et ce soir ou demain quand on devait, oui on remet ça
+171.74s - 176.08s: Et ce soir ou demain quand on devait, oui on remet ça

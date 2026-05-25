@@ -574,6 +574,11 @@ class SeparationEvaluator:
         """
         Constructs and saves an academically polished bar chart comparing models.
         """
+        # Safety check: If the incoming DataFrame segment is empty, drop out early
+        if df.empty:
+            print(f"[!] Warning: No data available to plot for metric '{col}'. Skipping.")
+            return
+
         plt.figure(figsize=(10, 6))
         
         # Start with a clean white background, we will customize the grid manually
@@ -581,7 +586,22 @@ class SeparationEvaluator:
         df['Label'] = df['tool'] + "\n(" + df['model'] + ")"
         
         if include_hue:
-            ax = sns.barplot(data=df, x='Label', y=col, hue='device_type', palette="muted", ci=None)
+            # --- DEFENSIVE CASE NORMALIZATION ---
+            # This converts 'CPU'/'CUDA' or padded strings to clean lowercase 'cpu'/'cuda'
+            if 'device_type' in df.columns:
+                df['device_type'] = df['device_type'].astype(str).str.strip().str.lower()
+            
+            device_order = ['cpu', 'gpu cuda'] 
+            
+            ax = sns.barplot(
+                data=df, 
+                x='Label', 
+                y=col, 
+                hue='device_type', 
+                palette="muted", 
+                hue_order=device_order, 
+                ci=None
+            )
             ax.legend(title="Device Type", frameon=True, fontsize=10)
         else:
             ax = sns.barplot(data=df, x='Label', y=col, palette="muted", ci=None)
@@ -594,17 +614,19 @@ class SeparationEvaluator:
         if horizontal_line: 
             plt.axhline(1.0, color='red', linestyle='--', alpha=0.7)
             
-        # 1. Academic Headroom: Apply the override if provided, otherwise use local max
+        # Academic Headroom: Calculate local max safely
+        max_val = df[col].max()
+        if pd.isna(max_val) or max_val == 0:
+            max_val = 1.0  # Fallback to prevent limits crashing if data is missing
+            
         if y_max_override is not None:
             ax.set_ylim(0, y_max_override * 1.15)
         else:
-            max_val = df[col].max()
             ax.set_ylim(0, max_val * 1.15)
             
         # Bypass strict Pylance type stubs by accessing containers dynamically
         ax_containers = getattr(ax, 'containers', [])
         for container in ax_containers:
-            # 2. Placement: Let Matplotlib anchor it automatically to the top edge!
             ax.bar_label(
                 container, 
                 fmt='%.2f', 
@@ -619,11 +641,10 @@ class SeparationEvaluator:
         plt.title(title, fontsize=14, pad=15, weight='bold')
         plt.xlabel('Evaluated Models', fontsize=12, labelpad=10)
         
-        # 3. Dynamic Y-axis labeling
+        # Dynamic Y-axis labeling
         if col == 'rtf':
             y_label = "Real-Time Factor (RTF)"
         else:
-            # Replaces underscores with spaces, capitalizes words, and ensures SDR is uppercase
             clean_col = col.replace('_', ' ').title().replace('Sdr', 'SDR')
             y_label = f"{clean_col} (dB)"
             

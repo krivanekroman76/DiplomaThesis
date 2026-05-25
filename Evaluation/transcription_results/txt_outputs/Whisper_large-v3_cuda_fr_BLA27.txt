@@ -1,0 +1,64 @@
+Transcription (Model: large-v3):
+ Style & Pop music, Style & Pop music, On dit que je suis trop naïf, trop naïf, oh trop naïf, trop naïf Je ne peux pas te regarder galérer, je sais que mon entourage peut pas te blairer Certains disent que t'as un don pour flairer, mais j'ai des sentiments impossibles à enterrer La légende m'a dit que tu bouffes les hommes, je demande à voir mon cœur je l'ouvre, je te le donne Et puis même si je souffre, je suis love, peut-être qu'il faut que je redouble d'efforts Et pour le futur on verra, on verra J'serai toujours présent, ne t'en fais pas C'est peut-être mon plus grand défaut Mon défaut J'vais tout te donner si tu comptes sur moi C'est peut-être mon plus grand défaut Mon défaut J'me sens coupable si j'te le montre pas On dit que je suis trop naïf Trop naïf Oh trop naïf Trop naïf On dit que je suis trop naïf Trop naïf Oh trop naïf Trop naïf Personne ne peut comprendre notre union Je ne pourrai jamais leur décrire cette fusion Ils parlent tous, ils font tous des allusions Ils ne veulent pas que je prenne mes propres décisions Et même si ma famille me tourne le dos Je vais devoir leur faire comprendre pour de bon Je n'ai pas peur même si je tombe de haut Encore moins si je les vois me juger au nombre de fautes Et pour le futur on verra On verra Je serai toujours présent ne t'en fais pas C'est peut-être mon plus grand défaut Mon défaut Je vais tout te donner si tu comptes sur moi C'est peut-être mon plus grand défaut Oh mon défaut J'me sens coupable si j'te le montre pas On dit que je suis trop naïf Trop naïf Oh trop naïf Trop naïf On dit que je suis trop naïf Trop naïf Oh trop naïf Trop naïf C'est peut-être mon plus grand défaut Mon défaut J'fais tout te donner si tu comptes sur moi C'est peut-être mon plus grand défaut Oh mon défaut J'me sens coupable si j'te le montre pas On dit que je suis trop naïf Trop naïf Oh trop naïf Trop naïf On dit que je suis trop naïf, trop naïf Oh trop naïf, trop naïf
+
+Timestamps:
+0.00s - 14.56s: Style & Pop music,
+14.56s - 29.76s: Style & Pop music,
+29.76s - 34.32s: On dit que je suis trop naïf, trop naïf, oh trop naïf, trop naïf
+34.32s - 39.24s: Je ne peux pas te regarder galérer, je sais que mon entourage peut pas te blairer
+39.24s - 44.50s: Certains disent que t'as un don pour flairer, mais j'ai des sentiments impossibles à enterrer
+44.50s - 49.82s: La légende m'a dit que tu bouffes les hommes, je demande à voir mon cœur je l'ouvre, je te le donne
+49.82s - 54.86s: Et puis même si je souffre, je suis love, peut-être qu'il faut que je redouble d'efforts
+54.86s - 59.68s: Et pour le futur on verra, on verra
+59.76s - 62.28s: J'serai toujours présent, ne t'en fais pas
+62.28s - 64.64s: C'est peut-être mon plus grand défaut
+64.64s - 65.78s: Mon défaut
+65.78s - 67.84s: J'vais tout te donner si tu comptes sur moi
+67.84s - 69.82s: C'est peut-être mon plus grand défaut
+69.82s - 71.10s: Mon défaut
+71.10s - 73.18s: J'me sens coupable si j'te le montre pas
+73.18s - 75.02s: On dit que je suis trop naïf
+75.02s - 75.86s: Trop naïf
+75.86s - 77.06s: Oh trop naïf
+77.06s - 77.70s: Trop naïf
+77.70s - 78.76s: On dit que je suis trop naïf
+79.34s - 80.26s: Trop naïf
+80.26s - 80.76s: Oh trop naïf
+81.44s - 81.76s: Trop naïf
+82.36s - 84.54s: Personne ne peut comprendre notre union
+84.54s - 87.16s: Je ne pourrai jamais leur décrire cette fusion
+87.16s - 89.84s: Ils parlent tous, ils font tous des allusions
+89.84s - 92.56s: Ils ne veulent pas que je prenne mes propres décisions
+92.56s - 94.96s: Et même si ma famille me tourne le dos
+94.96s - 97.68s: Je vais devoir leur faire comprendre pour de bon
+97.68s - 100.28s: Je n'ai pas peur même si je tombe de haut
+100.28s - 103.16s: Encore moins si je les vois me juger au nombre de fautes
+103.16s - 105.44s: Et pour le futur on verra
+105.44s - 107.78s: On verra
+107.78s - 110.36s: Je serai toujours présent ne t'en fais pas
+110.36s - 112.52s: C'est peut-être mon plus grand défaut
+112.52s - 113.54s: Mon défaut
+113.54s - 115.72s: Je vais tout te donner si tu comptes sur moi
+115.72s - 117.66s: C'est peut-être mon plus grand défaut
+117.66s - 118.92s: Oh mon défaut
+118.92s - 121.04s: J'me sens coupable si j'te le montre pas
+121.04s - 122.88s: On dit que je suis trop naïf
+122.88s - 123.68s: Trop naïf
+123.68s - 124.88s: Oh trop naïf
+124.88s - 125.60s: Trop naïf
+125.60s - 127.20s: On dit que je suis trop naïf
+127.20s - 128.16s: Trop naïf
+128.16s - 128.72s: Oh trop naïf
+129.38s - 129.94s: Trop naïf
+129.94s - 131.88s: C'est peut-être mon plus grand défaut
+131.88s - 132.88s: Mon défaut
+132.88s - 135.08s: J'fais tout te donner si tu comptes sur moi
+135.08s - 137.00s: C'est peut-être mon plus grand défaut
+137.00s - 138.32s: Oh mon défaut
+138.32s - 140.40s: J'me sens coupable si j'te le montre pas
+140.40s - 142.08s: On dit que je suis trop naïf
+142.08s - 143.20s: Trop naïf
+143.20s - 143.72s: Oh trop naïf
+144.40s - 145.04s: Trop naïf
+145.04s - 147.58s: On dit que je suis trop naïf, trop naïf
+147.58s - 149.74s: Oh trop naïf, trop naïf

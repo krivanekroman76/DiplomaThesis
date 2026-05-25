@@ -1,0 +1,46 @@
+Transcription (Model: large-v3):
+ Moi je n'ai jamais grandi, mais j'ai la force d'un homme. Chez nous on dit Dieu merci, parce que c'est lui qui donne. Quand j'arrive je suis snipé, ils veulent connaître ma story. Mon ami si tu savais, t'écouterais pas les rondis. Éternel insatisfait, j'aime la vie laisse moi kiffer Loin du rêve américain, mais tout ce que j'ai je l'ai mérité Tu ne fais que courir après l'argent, tu ne fais que courir après les fans Tu n'as jamais le temps Le temps Courre comme Kéricou, le monde est petit comme un Kéricou Il faut cavaler comme un Kéricou, le dernier de comme un Kéricou Kéricou Courre comme Kéricou, le monde est petit comme un Kéricou Il faut cavaler comme un Kéricou Tu termines comme un tiricou, tiricou, gorgone, tiricou Ah, tu sais, dans la vie faut être endurant La force du bled fait que j'ai pas de concurrent Je suis issu d'une famille nombreuse, on fait comme on peut car la vie est trompeuse On veut pas ton besoin, on a peur de la faucheuse, je suis ton opposé La groupe, il a, elle fait la l'obese, mais je n'ai rien à lui proposer J'avance et je ne veux pas trop causer, je représente la prière de l'Ouest comme Mokobé Elle aimerait Mamadoué, mais Mamadou il est doué Faut de tout pour faire un monde, mais j'suis parti de rien pour me faire un nom Tu ne fais que courir après l'argent, tu ne fais que courir après les fans Tu n'as jamais le temps Le temps Courre comme Kirikou, le monde est petit comme un Kirikou Il faut cavaler comme un Kirikou, le dernier est comme un Kirikou Kirikou Courre comme Kirikou, le monde est petit comme un Kirikou Il faut cavaler comme un Kirikou Hum, déterminé comme un télé-cou, télé-cou, comme télé-cou Ah, tu sais, dans la vie faut être endurant La force du bled fait que j'ai pas de concurrent Il te faut de l'endurance comme Si la police te cherche, cours vite comme Ton ex veut t'appauver, toi tout petit comme Usain Bolt ne peut rien faire ça Easy coup, tu ressembles au petit T'as fait une faute, tu fais le mignon comme Ah, tu sais Dans la vie faut être endurant, je n'ai pas de concurrent, accroche-toi ! Courte comme Kéricou, le monde est petit comme un Kéricou, il faut cavaler comme un Kéricou, le dernier comme un Kéricou, Kéricou, courte comme Kéricou, le monde est petit comme un Kéricou, il faut cavaler comme un Kéricou, le dernier comme un Kéricou, Kéricou, courte comme Kéricou. Ah tu sais, dans la vie faut être endurant, la force du bled fait que j'ai pas de concurrent.
+
+Timestamps:
+0.00s - 20.00s: Moi je n'ai jamais grandi, mais j'ai la force d'un homme. Chez nous on dit Dieu merci, parce que c'est lui qui donne.
+20.00s - 28.00s: Quand j'arrive je suis snipé, ils veulent connaître ma story. Mon ami si tu savais, t'écouterais pas les rondis.
+28.00s - 32.68s: Éternel insatisfait, j'aime la vie laisse moi kiffer
+32.68s - 36.90s: Loin du rêve américain, mais tout ce que j'ai je l'ai mérité
+36.90s - 41.02s: Tu ne fais que courir après l'argent, tu ne fais que courir après les fans
+41.02s - 42.80s: Tu n'as jamais le temps
+42.80s - 43.62s: Le temps
+43.62s - 47.48s: Courre comme Kéricou, le monde est petit comme un Kéricou
+47.48s - 51.52s: Il faut cavaler comme un Kéricou, le dernier de comme un Kéricou
+51.52s - 52.24s: Kéricou
+52.24s - 55.14s: Courre comme Kéricou, le monde est petit comme un Kéricou
+55.14s - 56.92s: Il faut cavaler comme un Kéricou
+56.92s - 61.08s: Tu termines comme un tiricou, tiricou, gorgone, tiricou
+61.08s - 64.74s: Ah, tu sais, dans la vie faut être endurant
+64.74s - 68.74s: La force du bled fait que j'ai pas de concurrent
+68.74s - 72.58s: Je suis issu d'une famille nombreuse, on fait comme on peut car la vie est trompeuse
+72.58s - 76.58s: On veut pas ton besoin, on a peur de la faucheuse, je suis ton opposé
+76.58s - 80.84s: La groupe, il a, elle fait la l'obese, mais je n'ai rien à lui proposer
+80.84s - 85.10s: J'avance et je ne veux pas trop causer, je représente la prière de l'Ouest comme Mokobé
+85.10s - 89.56s: Elle aimerait Mamadoué, mais Mamadou il est doué
+89.56s - 93.70s: Faut de tout pour faire un monde, mais j'suis parti de rien pour me faire un nom
+93.70s - 97.78s: Tu ne fais que courir après l'argent, tu ne fais que courir après les fans
+97.78s - 99.64s: Tu n'as jamais le temps
+99.64s - 100.44s: Le temps
+100.44s - 104.50s: Courre comme Kirikou, le monde est petit comme un Kirikou
+104.50s - 108.46s: Il faut cavaler comme un Kirikou, le dernier est comme un Kirikou
+108.46s - 109.20s: Kirikou
+109.20s - 112.12s: Courre comme Kirikou, le monde est petit comme un Kirikou
+112.12s - 114.00s: Il faut cavaler comme un Kirikou
+114.00s - 118.08s: Hum, déterminé comme un télé-cou, télé-cou, comme télé-cou
+118.08s - 121.52s: Ah, tu sais, dans la vie faut être endurant
+121.52s - 125.60s: La force du bled fait que j'ai pas de concurrent
+125.60s - 127.24s: Il te faut de l'endurance comme
+127.24s - 129.44s: Si la police te cherche, cours vite comme
+129.44s - 131.60s: Ton ex veut t'appauver, toi tout petit comme
+131.60s - 135.34s: Usain Bolt ne peut rien faire ça
+135.34s - 137.42s: Easy coup, tu ressembles au petit
+137.42s - 139.54s: T'as fait une faute, tu fais le mignon comme
+139.54s - 143.08s: Ah, tu sais
+143.08s - 148.36s: Dans la vie faut être endurant, je n'ai pas de concurrent, accroche-toi !
+148.36s - 164.82s: Courte comme Kéricou, le monde est petit comme un Kéricou, il faut cavaler comme un Kéricou, le dernier comme un Kéricou, Kéricou, courte comme Kéricou, le monde est petit comme un Kéricou, il faut cavaler comme un Kéricou, le dernier comme un Kéricou, Kéricou, courte comme Kéricou.
+164.82s - 172.32s: Ah tu sais, dans la vie faut être endurant, la force du bled fait que j'ai pas de concurrent.

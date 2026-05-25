@@ -1,0 +1,34 @@
+Transcription (Model: large-v3):
+ Papa je ne trouve pas le sommeil, je me suis couché après le soleil J'aimerais que tu me racontes une histoire, quand tu n'es pas là je me sens bizarre Dehors j'ai vu un monsieur par terre, comme s'il n'avait pas de maison Je croyais que le monde il était parfait, rassure-moi dis-moi que j'ai raison J'aime pas la télé que tu regardes, la dame qui parle elle ne rigole pas Je l'entends parler pendant mon repas, mais moi je veux rêver je veux être Pogba Parle-moi des merveilles de ce monde avant que je ferme les yeux, papa Parle-moi des merveilles de ce monde Fais-moi rêver Fais-moi rêver Fais-moi rêver Mon fils demain y'a école Et faut que tu sois en forme le matin quand le réveil sonne Papa n'est jamais très loin J'serai toujours là pour toi maman en étais moi Oui y'a des gens qui n'ont pas d'maison T'as d'la chance faut qu'ils sachent d'ailleurs Non le monde n'est pas parfait Mais on compte sur vous car demain faudra l'rendre meilleur Tu peux être qui tu veux Vers tes rêves faut courir Ouais tu sais tout peut changer, et même la dame de la télé peut sourire Tu nous feras découvrir les merveilles de ce monde, j'espère mon fils Je compte sur toi pour demain, tu le sais Fais-moi rêver, fais-moi rêver, fais-moi rêver Cosmap du monde, je veux rêver pour oublier les cosmaps du monde Rêver pour oublier les cosmaps du monde Je veux rêver pour oublier les cosmaps du monde J'ai rêvé pour oublier les cauchemars du monde, je veux rêver pour oublier les cauchemars du monde J'ai rêvé pour oublier les cauchemars du monde, je veux rêver pour oublier les cauchemars du monde
+
+Timestamps:
+0.00s - 3.82s: Papa je ne trouve pas le sommeil, je me suis couché après le soleil
+3.82s - 7.84s: J'aimerais que tu me racontes une histoire, quand tu n'es pas là je me sens bizarre
+7.84s - 11.48s: Dehors j'ai vu un monsieur par terre, comme s'il n'avait pas de maison
+11.48s - 15.32s: Je croyais que le monde il était parfait, rassure-moi dis-moi que j'ai raison
+15.32s - 19.48s: J'aime pas la télé que tu regardes, la dame qui parle elle ne rigole pas
+19.48s - 23.90s: Je l'entends parler pendant mon repas, mais moi je veux rêver je veux être Pogba
+23.90s - 27.96s: Parle-moi des merveilles de ce monde avant que je ferme les yeux, papa
+27.96s - 30.62s: Parle-moi des merveilles de ce monde
+30.62s - 32.48s: Fais-moi rêver
+32.48s - 35.24s: Fais-moi rêver
+35.24s - 37.14s: Fais-moi rêver
+37.14s - 38.56s: Mon fils demain y'a école
+38.56s - 40.94s: Et faut que tu sois en forme le matin quand le réveil sonne
+40.94s - 42.32s: Papa n'est jamais très loin
+42.32s - 44.70s: J'serai toujours là pour toi maman en étais moi
+44.70s - 46.74s: Oui y'a des gens qui n'ont pas d'maison
+46.74s - 49.02s: T'as d'la chance faut qu'ils sachent d'ailleurs
+49.02s - 50.64s: Non le monde n'est pas parfait
+50.64s - 53.22s: Mais on compte sur vous car demain faudra l'rendre meilleur
+53.22s - 55.18s: Tu peux être qui tu veux
+55.18s - 57.02s: Vers tes rêves faut courir
+57.96s - 62.26s: Ouais tu sais tout peut changer, et même la dame de la télé peut sourire
+62.26s - 66.68s: Tu nous feras découvrir les merveilles de ce monde, j'espère mon fils
+66.68s - 69.40s: Je compte sur toi pour demain, tu le sais
+69.40s - 75.60s: Fais-moi rêver, fais-moi rêver, fais-moi rêver
+75.60s - 79.08s: Cosmap du monde, je veux rêver pour oublier les cosmaps du monde
+79.08s - 81.34s: Rêver pour oublier les cosmaps du monde
+81.34s - 83.70s: Je veux rêver pour oublier les cosmaps du monde
+83.70s - 88.20s: J'ai rêvé pour oublier les cauchemars du monde, je veux rêver pour oublier les cauchemars du monde
+88.20s - 92.76s: J'ai rêvé pour oublier les cauchemars du monde, je veux rêver pour oublier les cauchemars du monde

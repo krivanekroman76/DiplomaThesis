@@ -1,0 +1,69 @@
+Transcription (Model: large-v3):
+ C'est le problème ! Calmez-vous ! Calme-toi, tais-toi, y a les keufs devant, va jamais passer, taisez-vous ! Vous voulez partir en vacances ou pas ? Oui ! Bah voilà ! Voilà ! Les policiers nous laissent pas passer parce qu'on est pas beaux ? Mais non, t'inquiète, t'inquiète, on est beaux, on est stylés, on est tous ensemble. Ça va aller, ça va le faire, ok ? Tout le monde se calme, ça va le faire. Monsieur. Bonjour monsieur. Fais identité là, rapidement s'il vous plaît. Alpha. Dialo. Alpha dialo. Meta, alpha, omega, izi, nef, deux, ouloulou ! Un certain Alpha Diallo, 9D c'est la championne, 9.3 c'est la championne, pa pa pa pa ! Monsieur, je suis moniteur de colonie en fait. Je ne veux pas savoir, je vous dis que vous avez un point. Bah tu dis Charo, bah tu dis Charo, appelez-moi quelqu'un là. Parce que, oui. Ouloulou, Ouloulou. Monsieur, vous m'écoutez ? Monsieur, monsieur ? Il transforme en Pokémon ou quoi ? Tout le monde me regarde, à travers mon énoscent je pense qu'il me charme. Ma maîtresse d'école m'a dit que j'étais chez moi. Mais mon papa lui pourtant se met fidèle Est-elle fidèle ? La France est belle Mais elle me regarde de haut comme la tour Eiffel Mes parents m'ont pas mis au monde pour toucher les Z J'ai vu que Marion m'a tweeté de quoi elle se mêle Je sais qu'elle m'aime Je suis français Ils veulent pas que Marianne soit ma fiancée Peut-être parce qu'ils me trouvent trop foncé Laisse-moi juste l'inviter à danser Je vais l'ambiancer Je suis français Ils veulent pas que Marianne soit ma fiancée Non ! Peut-être parce qu'ils me trouvent trop foncé Laisse-moi juste l'inviter à danser Je vais l'ambiancer Et je t'ai pas dit ? J'ai une astuce pour moins payer d'impôts Ouais, enfin une combine quoi Non mais je peux pas tout le temps parler là mais ouais J'paye mes impôts moi J'pensais pas que l'amour pouvait être un combat A la base je voulais juste lui rendre un hommage Je suis tiraillé comme mon grand-père, ils le savent C'est dommage Jolie Marianne Marianne Je préfère ne rien voir comme Amadou et Marianne Marianne Je t'invite à manger un bon mafé de chez ma tata Je sais qu'un jour tu me déclareras ta flamme Aïe aïe aïe Je suis français Ils veulent pas que Marianne soit ma fiancée Peut-être parce qu'ils me trouvent trop foncé Laisse-moi juste l'inviter à danser J'vais l'ambiancer Je suis français Ils veulent pas que Marianne soit ma fiancée Peut-être parce qu'ils me trouvent
+
+Timestamps:
+0.00s - 4.58s: C'est le problème ! Calmez-vous ! Calme-toi, tais-toi, y a les keufs devant, va jamais passer, taisez-vous !
+4.58s - 6.00s: Vous voulez partir en vacances ou pas ?
+6.00s - 6.76s: Oui !
+6.76s - 7.66s: Bah voilà ! Voilà !
+7.66s - 10.00s: Les policiers nous laissent pas passer parce qu'on est pas beaux ?
+10.00s - 13.84s: Mais non, t'inquiète, t'inquiète, on est beaux, on est stylés, on est tous ensemble.
+13.84s - 16.66s: Ça va aller, ça va le faire, ok ? Tout le monde se calme, ça va le faire.
+16.66s - 17.30s: Monsieur.
+17.30s - 18.12s: Bonjour monsieur.
+18.12s - 20.16s: Fais identité là, rapidement s'il vous plaît.
+20.16s - 20.84s: Alpha.
+20.84s - 21.24s: Dialo.
+21.24s - 22.00s: Alpha dialo.
+22.00s - 25.62s: Meta, alpha, omega, izi, nef, deux, ouloulou !
+25.62s - 31.62s: Un certain Alpha Diallo, 9D c'est la championne, 9.3 c'est la championne, pa pa pa pa !
+31.62s - 33.34s: Monsieur, je suis moniteur de colonie en fait.
+33.36s - 35.28s: Je ne veux pas savoir, je vous dis que vous avez un point.
+35.58s - 39.00s: Bah tu dis Charo, bah tu dis Charo, appelez-moi quelqu'un là.
+39.12s - 40.10s: Parce que, oui.
+40.32s - 42.08s: Ouloulou, Ouloulou.
+42.18s - 44.34s: Monsieur, vous m'écoutez ? Monsieur, monsieur ?
+44.34s - 46.12s: Il transforme en Pokémon ou quoi ?
+46.12s - 50.74s: Tout le monde me regarde, à travers mon énoscent je pense qu'il me charme.
+50.74s - 53.68s: Ma maîtresse d'école m'a dit que j'étais chez moi.
+53.68s - 56.82s: Mais mon papa lui pourtant se met fidèle
+56.82s - 58.94s: Est-elle fidèle ?
+58.94s - 60.20s: La France est belle
+60.20s - 63.94s: Mais elle me regarde de haut comme la tour Eiffel
+63.94s - 67.64s: Mes parents m'ont pas mis au monde pour toucher les Z
+67.64s - 71.90s: J'ai vu que Marion m'a tweeté de quoi elle se mêle
+71.90s - 73.82s: Je sais qu'elle m'aime
+73.82s - 75.04s: Je suis français
+75.04s - 77.66s: Ils veulent pas que Marianne soit ma fiancée
+77.66s - 80.12s: Peut-être parce qu'ils me trouvent trop foncé
+80.12s - 83.08s: Laisse-moi juste l'inviter à danser
+83.08s - 85.08s: Je vais l'ambiancer
+85.08s - 87.08s: Je suis français
+87.08s - 89.08s: Ils veulent pas que Marianne soit ma fiancée
+89.08s - 91.08s: Non !
+91.08s - 93.08s: Peut-être parce qu'ils me trouvent trop foncé
+93.08s - 96.08s: Laisse-moi juste l'inviter à danser
+96.08s - 98.08s: Je vais l'ambiancer
+98.08s - 101.08s: Et je t'ai pas dit ? J'ai une astuce pour moins payer d'impôts
+101.08s - 103.08s: Ouais, enfin une combine quoi
+103.08s - 105.08s: Non mais je peux pas tout le temps parler là mais ouais
+105.08s - 107.08s: J'paye mes impôts moi
+107.08s - 110.08s: J'pensais pas que l'amour pouvait être un combat
+110.08s - 113.22s: A la base je voulais juste lui rendre un hommage
+113.22s - 116.08s: Je suis tiraillé comme mon grand-père, ils le savent
+116.70s - 118.34s: C'est dommage
+118.34s - 119.92s: Jolie Marianne
+119.92s - 121.02s: Marianne
+121.02s - 123.90s: Je préfère ne rien voir comme Amadou et Marianne
+123.90s - 124.08s: Marianne
+124.68s - 127.08s: Je t'invite à manger un bon mafé de chez ma tata
+127.62s - 131.42s: Je sais qu'un jour tu me déclareras ta flamme
+131.42s - 132.96s: Aïe aïe aïe
+132.96s - 134.10s: Je suis français
+134.10s - 136.08s: Ils veulent pas que Marianne soit ma fiancée
+136.74s - 139.16s: Peut-être parce qu'ils me trouvent trop foncé
+139.16s - 142.10s: Laisse-moi juste l'inviter à danser
+142.10s - 144.02s: J'vais l'ambiancer
+144.02s - 145.66s: Je suis français
+145.66s - 148.80s: Ils veulent pas que Marianne soit ma fiancée
+148.80s - 151.00s: Peut-être parce qu'ils me trouvent

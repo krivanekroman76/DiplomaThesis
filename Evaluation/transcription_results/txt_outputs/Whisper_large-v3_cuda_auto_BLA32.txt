@@ -1,0 +1,76 @@
+Transcription (Model: large-v3):
+ Je suis sur la route des princes mais bon y'a rien de charmant La hesse me fait mal à la tête y'a pas de médicament Je travaille pour manger tard le soir je fais mal à mes ligaments Mon fils ne baise jamais les bras c'est ce que me dit maman On fait avec, je marche avec peu d'affaires Mon frère si tu savais, j'aimerais que tout s'arrête Bah ouais, sur la route j'ai calé Plus d'essence plus rien j'ai Tout donné pour que maman puisse manger J'veux devenir un prince, peu importe ce qu'il pense Hier soir j'en ai rêvé, j'voulais pas m'reveiller J'aimerais rouler vite sur la route, mais il y a des trous sur le goudron Papa n'a plus vraiment de souffle, à mon tour de père j'n'ai plus dix ans Oui je rêve de toucher le sommet, chez moi y'a pas de building Si tu vois que je brise c'est juste le soleil, personne ne connait ma vie Je suis sur la route du prince mais pour y'a rien de charmant La hesse me fait mal à la tête y'a pas de médicament Je travaille pour manger tard le soir je fais mal à mes ligaments Mon fils ne pèse jamais les bras c'est ce que me dit maman On fait avec, je marche avec le tableau Mon père si tu savais, j'aimerais que tout s'arrête Les miennes ont misé sur moi mais j'ai peur de nous noyer On m'a dit de partir loin d'ici Mes amis s'éloignent, les rues en témoignent Le nord nous a séduits, ici les rêves s'épuisent J'aurais aimé marcher sans doute J'ai trébuché sur mes illusions Chaque jour que Dieu fait, maman souffre A mon tour de gérer la maison Oui, je rêve de toucher le sommet Chez moi y'a pas de building Si tu vois que je brise, c'est juste le soleil Personne ne connaît ma vie Je suis sur la route du prince Mais bon y'a rien de charmant La hesse me fait mal à la tête Y'a pas de médicament Je travaille pour manger tard le soir Je fais mal à mes ligaments Mon fils ne fait jamais les bras C'est ce que me dit maman On fait avec Je marche avec peu d'affaires Mon frère si tu savais J'aimerais que tout s'arrête On fait avec C'est Dieu qui donne et c'est lui qui reprend Ça ira mieux demain Je marche avec peu d'affaires Je me suis interdit d'abandonner tant que je l'aimais demain Mon frère si tu savais C'est Dieu qui donne et c'est lui qui reprend Ça ira mieux demain J'aimerais que tout s'arrête Et c'est pour ça que sur la route des princes On chante le même refrain Je suis sur la route des princes mais bon y'a rien de charmant La haise me fait mal à la tête y'a pas de médicaments Travaille pour manger d'un de soin je fais mal à mes ligaments Mon fils ne fait jamais les bras c'est ce que me dit maman On fait avec J'marche avec peu d'aberts Mon frère si tu savais J'aimerais que tout s'arrête La route des princes, Conakry On a tous une route des princes Un but à atteindre Des rêves Force à toute l'Afrique Force au monde Yeah Éternellement insatisfait
+
+Timestamps:
+0.00s - 2.44s: Je suis sur la route des princes mais bon y'a rien de charmant
+2.44s - 4.96s: La hesse me fait mal à la tête y'a pas de médicament
+4.96s - 7.58s: Je travaille pour manger tard le soir je fais mal à mes ligaments
+7.58s - 10.22s: Mon fils ne baise jamais les bras c'est ce que me dit maman
+10.22s - 14.32s: On fait avec, je marche avec peu d'affaires
+14.32s - 19.72s: Mon frère si tu savais, j'aimerais que tout s'arrête
+19.72s - 23.50s: Bah ouais, sur la route j'ai calé
+23.50s - 25.58s: Plus d'essence plus rien j'ai
+25.58s - 28.14s: Tout donné pour que maman puisse manger
+28.14s - 32.30s: J'veux devenir un prince, peu importe ce qu'il pense
+32.30s - 36.78s: Hier soir j'en ai rêvé, j'voulais pas m'reveiller
+36.78s - 41.94s: J'aimerais rouler vite sur la route, mais il y a des trous sur le goudron
+41.94s - 46.70s: Papa n'a plus vraiment de souffle, à mon tour de père j'n'ai plus dix ans
+46.70s - 51.04s: Oui je rêve de toucher le sommet, chez moi y'a pas de building
+51.04s - 56.14s: Si tu vois que je brise c'est juste le soleil, personne ne connait ma vie
+56.14s - 59.44s: Je suis sur la route du prince mais pour y'a rien de charmant
+59.44s - 61.96s: La hesse me fait mal à la tête y'a pas de médicament
+61.96s - 64.58s: Je travaille pour manger tard le soir je fais mal à mes ligaments
+64.58s - 67.22s: Mon fils ne pèse jamais les bras c'est ce que me dit maman
+67.22s - 71.34s: On fait avec, je marche avec le tableau
+71.34s - 76.74s: Mon père si tu savais, j'aimerais que tout s'arrête
+76.74s - 82.52s: Les miennes ont misé sur moi mais j'ai peur de nous noyer
+82.52s - 85.12s: On m'a dit de partir loin d'ici
+85.12s - 88.74s: Mes amis s'éloignent, les rues en témoignent
+88.74s - 93.44s: Le nord nous a séduits, ici les rêves s'épuisent
+93.44s - 95.84s: J'aurais aimé marcher sans doute
+95.84s - 98.16s: J'ai trébuché sur mes illusions
+98.16s - 100.66s: Chaque jour que Dieu fait, maman souffre
+100.66s - 102.78s: A mon tour de gérer la maison
+102.78s - 105.52s: Oui, je rêve de toucher le sommet
+105.52s - 107.20s: Chez moi y'a pas de building
+107.20s - 110.54s: Si tu vois que je brise, c'est juste le soleil
+110.54s - 112.84s: Personne ne connaît ma vie
+112.84s - 114.48s: Je suis sur la route du prince
+114.48s - 115.66s: Mais bon y'a rien de charmant
+115.66s - 117.02s: La hesse me fait mal à la tête
+117.02s - 118.18s: Y'a pas de médicament
+118.18s - 119.60s: Je travaille pour manger tard le soir
+119.60s - 120.78s: Je fais mal à mes ligaments
+120.78s - 122.30s: Mon fils ne fait jamais les bras
+122.30s - 123.44s: C'est ce que me dit maman
+123.44s - 124.90s: On fait avec
+124.90s - 127.52s: Je marche avec peu d'affaires
+127.52s - 130.06s: Mon frère si tu savais
+130.06s - 132.94s: J'aimerais que tout s'arrête
+132.94s - 135.30s: On fait avec
+135.30s - 137.20s: C'est Dieu qui donne et c'est lui qui reprend
+137.20s - 138.46s: Ça ira mieux demain
+138.46s - 140.50s: Je marche avec peu d'affaires
+140.50s - 143.72s: Je me suis interdit d'abandonner tant que je l'aimais demain
+143.72s - 145.64s: Mon frère si tu savais
+145.64s - 147.66s: C'est Dieu qui donne et c'est lui qui reprend
+147.66s - 148.92s: Ça ira mieux demain
+148.92s - 150.94s: J'aimerais que tout s'arrête
+150.94s - 152.88s: Et c'est pour ça que sur la route des princes
+152.88s - 154.20s: On chante le même refrain
+154.20s - 157.12s: Je suis sur la route des princes mais bon y'a rien de charmant
+157.12s - 159.66s: La haise me fait mal à la tête y'a pas de médicaments
+159.66s - 162.24s: Travaille pour manger d'un de soin je fais mal à mes ligaments
+162.24s - 164.90s: Mon fils ne fait jamais les bras c'est ce que me dit maman
+164.90s - 166.40s: On fait avec
+166.40s - 169.22s: J'marche avec peu d'aberts
+169.22s - 171.54s: Mon frère si tu savais
+171.54s - 174.38s: J'aimerais que tout s'arrête
+174.38s - 176.82s: La route des princes, Conakry
+176.82s - 178.38s: On a tous une route des princes
+178.38s - 179.50s: Un but à atteindre
+179.50s - 180.12s: Des rêves
+180.12s - 181.24s: Force à toute l'Afrique
+181.24s - 182.02s: Force au monde
+182.02s - 182.46s: Yeah
+182.46s - 183.94s: Éternellement insatisfait

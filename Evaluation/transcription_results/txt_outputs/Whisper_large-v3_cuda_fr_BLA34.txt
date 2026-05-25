@@ -1,0 +1,62 @@
+Transcription (Model: large-v3):
+ Allô ? Allô ? Ici Black, vous me recevez ? Destination La Planète Terre en vue. Localisation Paris. Non ? Marcel ? Allô ? Vous me recevez ? La boîte est pleine. Allô ? La boîte est pleine. Nom du club. Nom du club. Excuse-moi, je n'ai pas ton temps Je suis vrai, je ne fais pas semblant Je me fous de quelle elle m'entend Mes frères attendent depuis longtemps Aïe ! Qui pose les bouteilles ? Ah ah ah y'a pas d'oseille Ah ah ah y'a pas d'oseille Qui est dans le carré vip ? Qui est dans le carré vip ? Toi tu ne rentres que si je t'invite Et si je t'invite t'as rirou l'injoint Qui est venu en équipe ? Qui est venu en équipe ? A ma table y'a tout le tchicard On est en équipe Qui s'est fait recaler ? Ne vous en faites pas on va tous finir dans un putain d'after Dans mon palais Je n'ai pas ton temps Je suis vrai je ne fais pas semblant Je me fous de quel est mon temps Mes frères attendent depuis longtemps Tout le monde ! Tchachachacha Tchachachacha Tchachachacha Tchachachacha Tchachachacha Tchachachacha Tchachachacha Qui se lève à 6 du mat ? Qui se lève à 6 du mat ? Dis-toi au serveur qui remet des bouteilles Et au patron du club qu'on ferme la boîte Qui est venu soulever ? Qui est venu faire du sale ? Qui est venu tout seul ? On va goûter le sol Qui connait la dernière choré ? Qui ? Qui connait la dernière choré ? On fait une ronde si tu danses le pas Mettant sur le tec pour décorer Qui est venu saper ? Oui ! Qui est venu saper ? De toute façon nous on oublie rien On a tous les dossiers, on a tous l'appel Excuse moi je n'ai pas ton temps Je suis vrai je ne fais pas semblant Je me fous de quelle est le montant Mes frères attendent depuis longtemps Tout le monde ! Mission accomplie ! Mission accomplie ! Les terriens sont vraiment très particuliers ! LG, retour ! Black M, dit Black M ! LG, retour ! Retour !
+
+Timestamps:
+0.00s - 11.68s: Allô ? Allô ? Ici Black, vous me recevez ? Destination La Planète Terre en vue. Localisation Paris.
+11.68s - 24.72s: Non ? Marcel ? Allô ? Vous me recevez ? La boîte est pleine. Allô ? La boîte est pleine. Nom du club. Nom du club.
+24.72s - 27.48s: Excuse-moi, je n'ai pas ton temps
+27.48s - 31.16s: Je suis vrai, je ne fais pas semblant
+31.16s - 34.82s: Je me fous de quelle elle m'entend
+34.82s - 38.40s: Mes frères attendent depuis longtemps
+38.40s - 40.22s: Aïe !
+70.22s - 72.22s: Qui pose les bouteilles ?
+72.22s - 74.22s: Ah ah ah y'a pas d'oseille
+74.22s - 76.22s: Ah ah ah y'a pas d'oseille
+76.22s - 78.22s: Qui est dans le carré vip ?
+78.22s - 80.22s: Qui est dans le carré vip ?
+80.22s - 82.22s: Toi tu ne rentres que si je t'invite
+82.22s - 84.22s: Et si je t'invite t'as rirou l'injoint
+84.22s - 86.22s: Qui est venu en équipe ?
+86.22s - 88.22s: Qui est venu en équipe ?
+88.22s - 90.22s: A ma table y'a tout le tchicard
+90.22s - 92.22s: On est en équipe
+92.22s - 94.22s: Qui s'est fait recaler ?
+94.22s - 96.22s: Ne vous en faites pas on va tous finir dans un putain d'after
+96.22s - 98.22s: Dans mon palais
+98.22s - 100.22s: Je n'ai pas ton temps
+100.22s - 103.22s: Je suis vrai je ne fais pas semblant
+104.22s - 107.22s: Je me fous de quel est mon temps
+108.22s - 111.22s: Mes frères attendent depuis longtemps
+112.22s - 113.22s: Tout le monde !
+128.22s - 130.22s: Tchachachacha
+130.22s - 132.22s: Tchachachacha
+132.22s - 134.22s: Tchachachacha
+134.22s - 136.22s: Tchachachacha
+136.22s - 138.22s: Tchachachacha
+138.22s - 140.22s: Tchachachacha
+140.22s - 142.22s: Tchachachacha
+142.22s - 144.22s: Qui se lève à 6 du mat ?
+144.22s - 146.22s: Qui se lève à 6 du mat ?
+146.22s - 148.22s: Dis-toi au serveur qui remet des bouteilles
+148.22s - 150.22s: Et au patron du club qu'on ferme la boîte
+150.22s - 152.22s: Qui est venu soulever ?
+152.22s - 154.22s: Qui est venu faire du sale ?
+154.22s - 156.22s: Qui est venu tout seul ?
+156.22s - 157.50s: On va goûter le sol
+157.50s - 158.90s: Qui connait la dernière choré ?
+158.90s - 159.40s: Qui ?
+159.40s - 160.74s: Qui connait la dernière choré ?
+160.74s - 162.40s: On fait une ronde si tu danses le pas
+162.40s - 164.40s: Mettant sur le tec pour décorer
+164.40s - 165.90s: Qui est venu saper ?
+165.90s - 166.40s: Oui !
+166.40s - 167.78s: Qui est venu saper ?
+167.78s - 169.50s: De toute façon nous on oublie rien
+169.50s - 171.34s: On a tous les dossiers, on a tous l'appel
+171.34s - 173.34s: Excuse moi je n'ai pas ton temps
+173.34s - 176.90s: Je suis vrai je ne fais pas semblant
+176.90s - 180.58s: Je me fous de quelle est le montant
+180.58s - 184.34s: Mes frères attendent depuis longtemps
+184.34s - 214.32s: Tout le monde !
+214.34s - 223.34s: Mission accomplie ! Mission accomplie ! Les terriens sont vraiment très particuliers !
+223.34s - 229.34s: LG, retour ! Black M, dit Black M ! LG, retour ! Retour !

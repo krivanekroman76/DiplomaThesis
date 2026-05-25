@@ -1,0 +1,43 @@
+2026-05-24 20:19:04,515 [INFO] App Started - Logging to logs\2026-05-24_20-19-04.log
+2026-05-24 20:19:05,821 [ERROR] Exception in Tkinter callback
+2026-05-24 20:19:05,847 [ERROR] Traceback (most recent call last):
+2026-05-24 20:19:05,848 [ERROR] File "C:\Users\kriva\AppData\Local\Programs\Python\Python3913\lib\tkinter\__init__.py", line 1892, in __call__
+2026-05-24 20:19:05,848 [ERROR] return self.func(*args)
+2026-05-24 20:19:05,848 [ERROR] File "C:\Users\kriva\AppData\Local\Programs\Python\Python3913\lib\tkinter\__init__.py", line 814, in callit
+2026-05-24 20:19:05,849 [ERROR] func(*args)
+2026-05-24 20:19:05,849 [ERROR] File "d:\DiplomaThesis\separation_app.py", line 1767, in create_settings_tab
+2026-05-24 20:19:05,849 [ERROR] if self.auto_flush_memory: self.flush_switch.select()
+2026-05-24 20:19:05,850 [ERROR] File "D:\DiplomaThesis\.venv\lib\site-packages\customtkinter\windows\widgets\ctk_switch.py", line 419, in select
+2026-05-24 20:19:05,850 [ERROR] self._draw(no_color_updates=True)
+2026-05-24 20:19:05,850 [ERROR] File "D:\DiplomaThesis\.venv\lib\site-packages\customtkinter\windows\widgets\ctk_switch.py", line 204, in _draw
+2026-05-24 20:19:05,851 [ERROR] requires_recoloring = self._draw_engine.draw_rounded_slider_with_border_and_button(self._apply_widget_scaling(self._switch_width),
+2026-05-24 20:19:05,851 [ERROR] File "D:\DiplomaThesis\.venv\lib\site-packages\customtkinter\windows\widgets\core_rendering\draw_engine.py", line 900, in draw_rounded_slider_with_border_and_button
+2026-05-24 20:19:05,851 [ERROR] return self.__draw_rounded_slider_with_border_and_button_font_shapes(width, height, corner_radius, border_width, inner_corner_radius,
+2026-05-24 20:19:05,852 [ERROR] File "D:\DiplomaThesis\.venv\lib\site-packages\customtkinter\windows\widgets\core_rendering\draw_engine.py", line 946, in __draw_rounded_slider_with_border_and_button_font_shapes
+2026-05-24 20:19:05,852 [ERROR] requires_recoloring = self.__draw_rounded_progress_bar_with_border_font_shapes(width, height, corner_radius, border_width, inner_corner_radius,
+2026-05-24 20:19:05,852 [ERROR] File "D:\DiplomaThesis\.venv\lib\site-packages\customtkinter\windows\widgets\core_rendering\draw_engine.py", line 801, in __draw_rounded_progress_bar_with_border_font_shapes
+2026-05-24 20:19:05,852 [ERROR] requires_recoloring_2 = self.__draw_rounded_rect_with_border_font_shapes(width, height, corner_radius, border_width, inner_corner_radius,
+2026-05-24 20:19:05,853 [ERROR] File "D:\DiplomaThesis\.venv\lib\site-packages\customtkinter\windows\widgets\core_rendering\draw_engine.py", line 226, in __draw_rounded_rect_with_border_font_shapes
+2026-05-24 20:19:05,853 [ERROR] self._canvas.coords("border_oval_1_b", corner_radius, corner_radius, corner_radius)
+2026-05-24 20:19:05,853 [ERROR] File "D:\DiplomaThesis\.venv\lib\site-packages\customtkinter\windows\widgets\core_rendering\ctk_canvas.py", line 87, in coords
+2026-05-24 20:19:05,853 [ERROR] super().coords(coords_id, *args[:2])
+2026-05-24 20:19:05,853 [ERROR] File "C:\Users\kriva\AppData\Local\Programs\Python\Python3913\lib\tkinter\__init__.py", line 2766, in coords
+2026-05-24 20:19:05,854 [ERROR] self.tk.call((self._w, 'coords') + args))]
+2026-05-24 20:19:05,854 [ERROR] KeyboardInterrupt
+2026-05-24 20:22:01,760 [INFO] Duration passed: 0
+2026-05-24 20:22:01,823 [INFO] Spleeter: Initializing AI engine model weights for Soprano - Musica...
+2026-05-24 20:22:02,218 [INFO] spleeter processing: API active
+2026-05-24 20:22:51,528 [INFO] Duration passed: 0
+2026-05-24 20:22:51,535 [INFO] Spleeter: Initializing AI engine model weights for Soprano - Musica...
+2026-05-24 20:22:51,652 [INFO] spleeter processing: API active
+2026-05-24 20:24:04,058 [INFO] Demucs 4.0.1 (Hybrid Transformer) initialized.
+2026-05-24 20:24:06,068 [INFO] [Demucs] Model native segment limit: 7.8
+2026-05-24 20:24:06,068 [INFO] [Demucs] Attempting cpu | Segment: 7
+2026-05-24 20:24:06,069 [INFO] Duration passed: 0
+2026-05-24 20:24:06,561 [INFO] Selected model is a bag of 1 models. You will see that many progress bars per track.
+2026-05-24 20:24:06,568 [INFO] Separated tracks will be stored in C:\Users\kriva\AppData\Local\Temp\demucs_v4_d6xe0gmw\htdemucs
+2026-05-24 20:24:06,570 [INFO] Separating track D:\DiplomaThesis_Electronic_Attachment\example_input_output\input\Soprano - Musica.mp3
+2026-05-24 20:24:16,161 [ERROR] The cache for model files in Transformers v4.22.0 has been updated. Migrating your old cache. This is a one-time only operation. You can interrupt this and resume the migration later on by calling `transformers.utils.move_cache()`.
+2026-05-24 20:24:16,162 [INFO] 0it [00:00, ?it/s]
+2026-05-24 20:24:16,162 [ERROR] [A
+2026-05-24 20:24:16,162 [INFO] 0it [00:00, ?it/s]

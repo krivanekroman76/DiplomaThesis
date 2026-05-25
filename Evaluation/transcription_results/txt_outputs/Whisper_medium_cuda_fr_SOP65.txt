@@ -1,0 +1,58 @@
+Transcription (Model: medium):
+ Oui tout va bien, ma vie est un miracle Même si parfois j'ai mal Mais tout va bien, ma vie est un miracle De dormir cette nuit Car tout va bien, ma vie est un miracle C'est vrai que je ne cours plus Mais ailleurs d'autres courent sur des mines Je me nourris avec ses tubes Mais ailleurs, d'autres ne connaissent que la famine Je sais que tu voudrais faire plus Ailleurs, d'autres non plus C'est vrai qu'on fait des allers-retours Ailleurs, d'autres n'ont pas les moyens de se soigner Donc... Maman ne pleure pas Tout va bien Ma vie est un miracle même si parfois j'ai mal mais tout va bien ma vie est un miracle je ne souris pas par des billes non tout va bien ma vie est un miracle essaie de dormir cette nuit car tout va bien ma vie est un miracle c'est vrai que je bois moins mes potes mais ailleurs n'ont que la solitude c'est vrai que j'ai raté quelques cours Mais ailleurs, d'autres rêvent de faire des études C'est vrai que j'suis moins à la maison Ailleurs, notre vie me sous-intestine pas mon cas Ailleurs, d'autres n'ont pas la force que tu me livres Donc, maman ne pleure pas Oui tout va bien, ma vie est un miracle Même si parfois j'ai mal Mais tout va bien Ma vie est un miracle Je ne souris pas par des billes Tout va bien Ma vie est un miracle Essayez de dormir cette nuit Car tout va bien Ma vie est un miracle Je t'ai adressé quelques mots Comme un pansement inepomade Pour te remercier de cet amour Dont je puise tout mon courage Tu es mon intraveineuse Avec toi la vie est un miracle Mais te voir c'est malheureuse C'est ce qui me rend vraiment malade Vraiment malade Maman La vie est un miracle Maman
+
+Timestamps:
+0.00s - 6.04s: Oui tout va bien, ma vie est un miracle Même si parfois j'ai mal
+6.04s - 12.00s: Mais tout va bien, ma vie est un miracle De dormir cette nuit
+12.00s - 18.48s: Car tout va bien, ma vie est un miracle C'est vrai que je ne cours plus
+18.48s - 22.32s: Mais ailleurs d'autres courent sur des mines
+22.32s - 25.32s: Je me nourris avec ses tubes
+25.32s - 30.02s: Mais ailleurs, d'autres ne connaissent que la famine
+30.02s - 33.32s: Je sais que tu voudrais faire plus
+33.32s - 35.32s: Ailleurs, d'autres non plus
+35.32s - 38.12s: C'est vrai qu'on fait des allers-retours
+38.12s - 42.92s: Ailleurs, d'autres n'ont pas les moyens de se soigner
+42.92s - 44.42s: Donc...
+44.42s - 47.12s: Maman ne pleure pas
+47.12s - 48.52s: Tout va bien
+48.52s - 51.12s: Ma vie est un miracle
+51.12s - 53.64s: même si parfois j'ai mal
+53.64s - 55.64s: mais tout va bien
+55.64s - 58.44s: ma vie est un miracle
+58.44s - 60.84s: je ne souris pas par des billes
+60.84s - 62.56s: non tout va bien
+62.56s - 64.28s: ma vie est un miracle
+64.28s - 66.84s: essaie de dormir cette nuit
+66.84s - 68.52s: car tout va bien
+68.52s - 70.84s: ma vie est un miracle
+70.84s - 74.08s: c'est vrai que je bois moins mes potes
+74.08s - 75.16s: mais ailleurs
+75.16s - 77.68s: n'ont que la solitude
+77.68s - 80.56s: c'est vrai que j'ai raté quelques cours
+80.56s - 85.16s: Mais ailleurs, d'autres rêvent de faire des études
+85.16s - 88.36s: C'est vrai que j'suis moins à la maison
+88.36s - 93.56s: Ailleurs, notre vie me sous-intestine pas mon cas
+93.56s - 98.26s: Ailleurs, d'autres n'ont pas la force que tu me livres
+98.26s - 102.56s: Donc, maman ne pleure pas
+102.56s - 106.86s: Oui tout va bien, ma vie est un miracle
+106.86s - 109.36s: Même si parfois j'ai mal
+109.36s - 110.86s: Mais tout va bien
+110.86s - 113.86s: Ma vie est un miracle
+113.86s - 116.36s: Je ne souris pas par des billes
+116.36s - 117.36s: Tout va bien
+117.36s - 119.86s: Ma vie est un miracle
+119.86s - 122.36s: Essayez de dormir cette nuit
+122.36s - 123.86s: Car tout va bien
+123.86s - 126.36s: Ma vie est un miracle
+126.36s - 128.36s: Je t'ai adressé quelques mots
+128.36s - 130.86s: Comme un pansement inepomade
+130.86s - 133.86s: Pour te remercier de cet amour
+133.86s - 135.86s: Dont je puise tout mon courage
+135.86s - 138.30s: Tu es mon intraveineuse
+138.30s - 140.70s: Avec toi la vie est un miracle
+140.70s - 143.50s: Mais te voir c'est malheureuse
+143.50s - 147.10s: C'est ce qui me rend vraiment malade
+147.10s - 148.94s: Vraiment malade
+148.94s - 150.18s: Maman
+150.18s - 153.06s: La vie est un miracle
+153.06s - 157.26s: Maman

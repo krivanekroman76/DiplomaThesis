@@ -1,0 +1,64 @@
+Transcription (Model: large-v3):
+ Style de chanson en français, transcription, ponctuation. Style de chanson en français, transcription, ponctuation. Pour oublier, je suis obligé de me forcer à faire la fête Ou alors je pense à la fin du mois, la date de ce bout du chèque Pour oublier, je fume de l'herbe, je frappe quand j'ai les nerfs Perdu dans mes rêves, je suis devenu grave téméraire Je regarde ma mère, sourire aux lèvres Cette femme me fait oublier que sur terre c'est la merde Comment oublier hier, si aujourd'hui j'ai mal En plus de ça, demain c'est loin, c'est quoi le but au final ? Pour oublier, je chante Moi je veux juste m'évader Pour un petit temps tout effacer Pour oublier, je chante Moi je veux oublier M'évader, je veux tout effacer Je pense à ceux qui sont partis Que le temps emporte Ainsi qu'à tous les martyrs Du vice de notre époque Et à ceux dont la fatigue A usé le corps Et en voyant leur sourire Tu sens qu'ils sont plus forts Pour oublier ils chantaient Je les ai vus dès 6 ans Avec des problèmes de santé suffis de grosses décisions Lui aussi chantait dans son 10 mètres carré Alors qu'il plaidait non coupable comme nous le disait Karim Chantonne sur un chemin où le diable te guide, te kidnappe, te brise Tu le vis mal, tu frises la folie, ouais t'oublies les stigmates, les cris Pour oublier je chante, toi nous vieux je rap mes tirs Pour oublier je chante Moi je veux juste m'évader, pour un petit temps tout effacer Pour oublier je chante Moi je veux oublier, m'évader, je veux tout effacer Parce que je veux juste vivre les problèmes Je ne veux plus de problèmes Parce que je veux juste vivre les problèmes Je ne veux plus de problèmes Ma vie elle est instable comme l'état du gombo Ça me fait du bien de me chier là comme les mecs de Kingston Ma vie elle est instable comme l'état du gombo Ça me fait du bien de me chier là comme les mecs de Kingston Pour oublier je chante Moi je veux juste m'évader Pour un petit temps tout effacer Pour oublier je chante Moi je veux oublier, m'évader Je veux tout effacer Pour tous les proches que j'ai perdu en cours de route Les durs moments où solo, j'ai failli devenir fou Moi je veux juste m'évader, pour un petit temps tout est passé La foi où mon pays d'origine a connu un coup d'état Mes acous n'avaient pas d'armée, ils étaient prêts à se péter Moi je veux oublier, m'évader, je me doute et pas, c'est La guerre, la crise, j'ai peur, je suis triste, l'argent y'a pas Normalise au tout prix, j'en pleure, je brille, mon dieu aide-moi Je me doute et pas, c'est J'ai mal, j'ai faim, on tue les miens, la lèpre me rouge, j'ai plus mes mains, eux ils violent nos femmes, nos filles et moi, je veux tout effacer. Enfants soldats, peu importe le pouvoir, l'homme est tout petit et Dieu est grand, pour oublier qu'on souffre, au lieu de pleurer on chante, Big Black M.
+
+Timestamps:
+0.00s - 29.98s: Style de chanson en français, transcription, ponctuation. Style de chanson en français, transcription, ponctuation.
+30.00s - 33.48s: Pour oublier, je suis obligé de me forcer à faire la fête
+33.48s - 35.84s: Ou alors je pense à la fin du mois, la date de ce bout du chèque
+35.84s - 38.24s: Pour oublier, je fume de l'herbe, je frappe quand j'ai les nerfs
+38.24s - 40.40s: Perdu dans mes rêves, je suis devenu grave téméraire
+40.40s - 42.30s: Je regarde ma mère, sourire aux lèvres
+42.30s - 44.60s: Cette femme me fait oublier que sur terre c'est la merde
+44.60s - 46.90s: Comment oublier hier, si aujourd'hui j'ai mal
+46.90s - 49.24s: En plus de ça, demain c'est loin, c'est quoi le but au final ?
+49.24s - 49.72s: Pour oublier, je chante
+49.72s - 52.46s: Moi je veux juste m'évader
+52.46s - 54.64s: Pour un petit temps tout effacer
+54.64s - 55.84s: Pour oublier, je chante
+55.84s - 59.62s: Moi je veux oublier
+59.62s - 62.14s: M'évader, je veux tout effacer
+62.14s - 63.84s: Je pense à ceux qui sont partis
+63.84s - 65.82s: Que le temps emporte
+65.82s - 68.12s: Ainsi qu'à tous les martyrs
+68.12s - 69.68s: Du vice de notre époque
+69.68s - 71.94s: Et à ceux dont la fatigue
+71.94s - 74.06s: A usé le corps
+74.06s - 76.08s: Et en voyant leur sourire
+76.08s - 77.94s: Tu sens qu'ils sont plus forts
+77.94s - 80.14s: Pour oublier ils chantaient
+80.14s - 81.20s: Je les ai vus dès 6 ans
+81.20s - 83.58s: Avec des problèmes de santé suffis de grosses décisions
+83.58s - 85.92s: Lui aussi chantait dans son 10 mètres carré
+85.92s - 88.28s: Alors qu'il plaidait non coupable comme nous le disait Karim
+88.28s - 91.82s: Chantonne sur un chemin où le diable te guide, te kidnappe, te brise
+91.82s - 95.34s: Tu le vis mal, tu frises la folie, ouais t'oublies les stigmates, les cris
+95.34s - 97.68s: Pour oublier je chante, toi nous vieux je rap mes tirs
+97.68s - 98.30s: Pour oublier je chante
+98.30s - 102.80s: Moi je veux juste m'évader, pour un petit temps tout effacer
+102.80s - 104.02s: Pour oublier je chante
+104.02s - 109.76s: Moi je veux oublier, m'évader, je veux tout effacer
+109.76s - 111.70s: Parce que je veux juste vivre les problèmes
+111.70s - 113.92s: Je ne veux plus de problèmes
+113.92s - 116.26s: Parce que je veux juste vivre les problèmes
+116.26s - 118.72s: Je ne veux plus de problèmes
+118.72s - 121.80s: Ma vie elle est instable comme l'état du gombo
+121.80s - 124.10s: Ça me fait du bien de me chier là comme les mecs de Kingston
+124.10s - 126.54s: Ma vie elle est instable comme l'état du gombo
+126.54s - 128.98s: Ça me fait du bien de me chier là comme les mecs de Kingston
+128.98s - 130.02s: Pour oublier je chante
+130.02s - 133.94s: Moi je veux juste m'évader
+133.94s - 136.16s: Pour un petit temps tout effacer
+136.16s - 137.92s: Pour oublier je chante
+137.92s - 141.98s: Moi je veux oublier, m'évader
+141.98s - 143.58s: Je veux tout effacer
+143.58s - 146.78s: Pour tous les proches que j'ai perdu en cours de route
+146.78s - 149.08s: Les durs moments où solo, j'ai failli devenir fou
+149.08s - 153.04s: Moi je veux juste m'évader, pour un petit temps tout est passé
+153.04s - 155.74s: La foi où mon pays d'origine a connu un coup d'état
+155.74s - 158.08s: Mes acous n'avaient pas d'armée, ils étaient prêts à se péter
+158.08s - 161.78s: Moi je veux oublier, m'évader, je me doute et pas, c'est
+161.78s - 166.22s: La guerre, la crise, j'ai peur, je suis triste, l'argent y'a pas
+166.22s - 169.72s: Normalise au tout prix, j'en pleure, je brille, mon dieu aide-moi
+169.72s - 171.76s: Je me doute et pas, c'est
+171.76s - 180.36s: J'ai mal, j'ai faim, on tue les miens, la lèpre me rouge, j'ai plus mes mains, eux ils violent nos femmes, nos filles et moi, je veux tout effacer.
+181.38s - 189.32s: Enfants soldats, peu importe le pouvoir, l'homme est tout petit et Dieu est grand, pour oublier qu'on souffre, au lieu de pleurer on chante, Big Black M.

@@ -1,0 +1,88 @@
+2026-05-24 21:50:12,982 [INFO] App Started - Logging to logs\2026-05-24_21-50-12.log
+2026-05-24 21:51:19,472 [INFO] Demucs 4.0.1 (Hybrid Transformer) initialized.
+2026-05-24 21:51:19,971 [INFO] [Demucs] Model native segment limit: 7.8
+2026-05-24 21:51:19,972 [INFO] [Demucs] Attempting cuda | Segment: 7
+2026-05-24 21:51:19,972 [INFO] Duration passed: 0
+2026-05-24 21:51:20,629 [INFO] Selected model is a bag of 1 models. You will see that many progress bars per track.
+2026-05-24 21:51:20,635 [INFO] Separated tracks will be stored in C:\Users\kriva\AppData\Local\Temp\demucs_v4_28dkqdkp\htdemucs
+2026-05-24 21:51:20,636 [INFO] Separating track D:\DiplomaThesis_Electronic_Attachment\example_input_output\input\Soprano - Musica.mp3
+2026-05-24 21:52:15,384 [INFO] OpenUnmix Initialized (Adaptive Hybrid Mode)
+2026-05-24 21:52:15,384 [INFO] Duration passed: 0
+2026-05-24 21:52:51,511 [INFO] Duration passed: 0
+2026-05-24 21:53:10,973 [INFO] [Demucs] Model native segment limit: 7.8
+2026-05-24 21:53:10,973 [INFO] [Demucs] Attempting cuda | Segment: 7
+2026-05-24 21:53:10,974 [INFO] Duration passed: 0
+2026-05-24 21:53:11,449 [INFO] Selected model is a bag of 1 models. You will see that many progress bars per track.
+2026-05-24 21:53:11,455 [INFO] Separated tracks will be stored in C:\Users\kriva\AppData\Local\Temp\demucs_v4_56qt09vs\htdemucs
+2026-05-24 21:53:11,456 [INFO] Separating track D:\DiplomaThesis_Electronic_Attachment\example_input_output\input\Soprano - Musica.mp3
+2026-05-24 21:53:33,034 [ERROR] Non-memory error in Demucs: Invalid combination of format, subtype and endian
+2026-05-24 21:53:33,034 [ERROR] Demucs exhausted all fallback strategies. Final error: Invalid combination of format, subtype and endian
+2026-05-24 21:53:33,034 [ERROR] Separation logic returned failure for: Soprano - Musica
+2026-05-24 21:53:39,271 [INFO] [Demucs] Model native segment limit: 7.8
+2026-05-24 21:53:39,271 [INFO] [Demucs] Attempting cuda | Segment: 7
+2026-05-24 21:53:39,271 [INFO] Duration passed: 0
+2026-05-24 21:53:39,733 [INFO] Selected model is a bag of 1 models. You will see that many progress bars per track.
+2026-05-24 21:53:39,740 [INFO] Separated tracks will be stored in C:\Users\kriva\AppData\Local\Temp\demucs_v4_zeukuptt\htdemucs
+2026-05-24 21:53:39,740 [INFO] Separating track D:\DiplomaThesis_Electronic_Attachment\example_input_output\input\Soprano - Musica.mp3
+2026-05-24 21:54:01,559 [ERROR] Non-memory error in Demucs: Invalid combination of format, subtype and endian
+2026-05-24 21:54:01,559 [ERROR] Demucs exhausted all fallback strategies. Final error: Invalid combination of format, subtype and endian
+2026-05-24 21:54:01,559 [ERROR] Separation logic returned failure for: Soprano - Musica
+2026-05-24 21:54:09,529 [INFO] Duration passed: 0
+2026-05-24 21:54:09,531 [INFO] Spleeter: Initializing AI engine model weights for Soprano - Musica...
+2026-05-24 21:54:09,584 [INFO] spleeter processing: API active
+2026-05-24 21:55:07,007 [INFO] Duration passed: 170
+2026-05-24 21:57:30,352 [INFO] Duration passed: 156
+2026-05-24 21:57:31,438 [ERROR] config.json: 0.00B [00:00, ?B/s]
+2026-05-24 21:57:31,440 [ERROR] config.json: 1.29kB [00:00, 1.29MB/s]
+2026-05-24 22:00:12,749 [INFO] Duration passed: 154
+2026-05-24 22:02:52,916 [ERROR] [00:00.000 --> 00:02.760]  Mineur, on flirte avec la folie, qu'est-ce qu'on tiendra plus tard ?
+2026-05-24 22:02:52,926 [ERROR] [00:02.760 --> 00:05.560]  Je sais pas trop, j'voulais démêler, juste briller dans le noir.
+2026-05-24 22:02:52,959 [ERROR] [00:05.560 --> 00:08.360]  Maman veut pas qu'j'traîne le soir, arrête d'y qu'y a trop de démons.
+2026-05-24 22:02:52,987 [ERROR] [00:08.360 --> 00:11.200]  Un cœur endurci par la rumeur, adouci par les mots.
+2026-05-24 22:02:53,012 [ERROR] [00:11.200 --> 00:13.760]  La música nous éloignera de tout ça.
+2026-05-24 22:02:53,020 [ERROR] [00:13.760 --> 00:16.720]  J'ai rêvé d'être Zidane, marqué début de me voir en poster.
+2026-05-24 22:02:53,026 [ERROR] [00:16.720 --> 00:19.400]  Mais on choisit pas, c'est le bon Dieu qui l'a décidé.
+2026-05-24 22:02:53,032 [ERROR] [00:19.400 --> 00:22.280]  Jusqu'à moi, c'est Léa, c'est le même quotidien every day.
+2026-05-24 22:02:53,035 [ERROR] [00:22.280 --> 00:23.080]  Yeah yeah yeah.
+2026-05-24 22:02:53,039 [ERROR] [00:23.080 --> 00:25.520]  Pardon, pardon, je sais que tu rêvais mieux pour moi.
+2026-05-24 22:02:53,042 [ERROR] [00:25.520 --> 00:27.600]  Mais là reste le haut, le fond, le fond de moi.
+2026-05-24 22:04:22,663 [ERROR] [00:27.600 --> 00:34.140]  J'avais mal et comme j'avais mal, j'écrivais que la vérité, la vérité me fera quitter les bords de moi si pire.
+2026-05-24 22:04:22,666 [ERROR] [00:34.960 --> 00:39.980]  Vous voulez le monde et moi sortir dans la musique, et j'ai réussi maintenant à être fier.
+2026-05-24 22:04:22,668 [ERROR] [00:40.800 --> 00:45.800]  Et le film aurait pu finir tragiquement, une vie d'artiste, une vie de criminel.
+2026-05-24 22:04:22,670 [ERROR] [00:46.220 --> 00:49.400]  Je suis pas devenu riche, moi, pour ressembler au riche, non.
+2026-05-24 22:04:22,672 [ERROR] [00:49.660 --> 00:52.240]  Sorti de la niche, nous, sans crier à Rakhish, non.
+2026-05-24 22:04:22,674 [ERROR] [00:52.320 --> 00:55.100]  On a connu la déch' man, la rue et ses pièges, man.
+2026-05-24 22:05:38,861 [ERROR] [00:55.100 --> 00:57.980]  On n'y ressort plus marqué que le visage de Jean-Luc Reichman
+2026-05-24 22:05:38,863 [ERROR] [00:57.980 --> 01:00.760]  Pour bien nous conduire, on avait déjà plus de points
+2026-05-24 22:05:38,865 [ERROR] [01:00.760 --> 01:03.560]  Je me suis la musique et c'est la sortie de ce rempoint
+2026-05-24 22:05:38,867 [ERROR] [01:03.560 --> 01:06.320]  Combien de cul-de-sac la musique m'a évité
+2026-05-24 22:05:38,869 [ERROR] [01:06.320 --> 01:09.260]  Regarde le destin de deux phénix, c'est terminé
+2026-05-24 22:05:38,872 [ERROR] [01:09.260 --> 01:12.420]  Pardon, pardon, j'ai que tu rêvais mieux pour moi
+2026-05-24 22:05:38,874 [ERROR] [01:12.420 --> 01:15.340]  Mais la hesse, le hall, faut confondre, moi j'avais mal
+2026-05-24 22:05:38,876 [ERROR] [01:15.340 --> 01:17.960]  Et comme j'avais mal, j'écrivais que la vérité
+2026-05-24 22:05:38,878 [ERROR] [01:17.960 --> 01:20.980]  La vérité me fera quitter le vent de la cité
+2026-05-24 22:05:38,881 [ERROR] [01:20.980 --> 01:24.460]  Je voulais l'amendement satire dans la musique
+2026-05-24 22:06:41,859 [ERROR] [01:24.460 --> 01:27.540]  J'ai réussi maintenant, elle est fière
+2026-05-24 22:06:41,861 [ERROR] [01:27.540 --> 01:29.460]  Le film aurait pu finir tragiquement
+2026-05-24 22:06:41,862 [ERROR] [01:30.100 --> 01:32.460]  Une vie d'artiste, une vie de criminel
+2026-05-24 22:06:41,864 [ERROR] [01:33.180 --> 01:35.400]  Je voulais le monde et m'en sortir dans la pub
+2026-05-24 22:06:41,866 [ERROR] [01:35.400 --> 01:37.200]  J'ai réussi maintenant, elle est fière
+2026-05-24 22:06:41,868 [ERROR] [01:37.200 --> 01:40.460]  Tragiquement, une vie d'artiste, une vie de criminel
+2026-05-24 22:06:41,871 [ERROR] [01:41.180 --> 01:48.720]  La musique, la musique, à mon échappatoire
+2026-05-24 22:06:41,873 [ERROR] [01:48.720 --> 01:50.960]  Ma vraie raison médicale, pour sécher les bandes
+2026-05-24 22:06:41,875 [ERROR] [01:50.960 --> 01:52.720]  L'école de la rue, c'est radical
+2026-05-24 22:08:19,920 [ERROR] [01:52.720 --> 01:58.180]  Je la remercierai jamais assez d'avoir mis de l'espoir dans les yeux de la maman qui me voyait dans la coca
+2026-05-24 22:08:19,929 [ERROR] [01:58.180 --> 02:01.140]  J'ai coupable à la barre, on voulait embrasser dans le grand bassin
+2026-05-24 22:08:19,933 [ERROR] [02:01.140 --> 02:03.940]  La nuit je m'endors trop tard, je sais qu'il peut arriver le matin
+2026-05-24 22:08:19,936 [ERROR] [02:03.940 --> 02:05.980]  Dieu merci tout ça, c'est derrière moi
+2026-05-24 22:08:19,939 [ERROR] [02:05.980 --> 02:10.460]  Si tu savais comment la musique t'a peu sauvé toute une nuit, panque ta lèvre, ah ouais
+2026-05-24 22:08:19,942 [ERROR] [02:10.460 --> 02:13.080]  Je voulais le monde et moi sortir dans la musique
+2026-05-24 22:08:19,945 [ERROR] [02:13.080 --> 02:15.980]  Et j'ai réussi maintenant, elle est fière
+2026-05-24 22:08:19,948 [ERROR] [02:15.980 --> 02:21.340]  Et le film aurait pu finir tragiquement, une vie d'artiste, une vie de criminel
+2026-05-24 22:08:59,052 [ERROR] [02:21.340 --> 02:23.960]  Voulait le monde et m'en sortir dans la mule
+2026-05-24 22:08:59,055 [ERROR] [02:23.960 --> 02:26.840]  Et j'ai réussi maintenant, elle est fière
+2026-05-24 22:08:59,058 [ERROR] [02:26.840 --> 02:29.180]  Et le film aurait pu venir tragiquement
+2026-05-24 22:08:59,061 [ERROR] [02:29.180 --> 02:31.620]  Une vie d'artiste, une vie de...
+2026-05-24 22:08:59,065 [ERROR] [02:31.620 --> 02:34.400]  Une vie d'artiste, une vie de...
+2026-05-24 22:09:06,089 [INFO] [INFO] Switched to 'trans_out'. Cleared inactive models.
+2026-05-24 22:09:08,698 [INFO] [INFO] Switched to 'settings'. Cleared inactive models.

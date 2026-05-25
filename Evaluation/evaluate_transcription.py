@@ -49,7 +49,6 @@ import unicodedata
 import difflib
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
-
 import torch
 import pandas as pd
 import numpy as np
@@ -416,11 +415,20 @@ class TranscriptionEvaluator:
                             if cache_file.exists() and not self.args.clean_run:
                                 raw_out = cache_file.read_text(encoding="utf-8")
                                 if self.args.debug: logger.debug(f"  [Cache Hit] Track: {track_path.stem}")
+                                
+                                # CRITICAL FIX: Recover the old RTF value from the loaded CSV so it doesn't overwrite with 0.0
+                                for m in all_metrics:
+                                    if (m.get('tool') == tool_name and 
+                                        m.get('model') == model_name and 
+                                        m.get('song') == track_path.stem and 
+                                        m.get('device') == device):
+                                        rtf = m.get('rtf', 0.0)
+                                        break
                             else:
                                 start_t = time.time()
                                 success, _ = transcriber.transcribe(
                                     audio_path=str(track_path), output_path=str(cache_file), 
-                                    model_name=model_name, device_choice=device, 
+                                    model_name=model_name, device_choice=device,
                                     **({"language": lang} if lang else {})
                                 )
                                 elapsed_transcription = time.time() - start_t
@@ -487,57 +495,89 @@ class TranscriptionEvaluator:
             
         df = pd.read_csv(self.csv_path)
         
-        agg_dict = {'rtf': 'mean'}
-        for i in range(1, 6):
-            agg_dict[f'Tier{i}_WER'] = 'mean'
-            agg_dict[f'Tier{i}_CER'] = 'mean'
-            
-        summary = df.groupby(['tool', 'model', 'text_type']).agg(agg_dict).reset_index()
+        try:
+            df = df.rename(columns={
+                df.columns[2]: 'language',
+                df.columns[4]: 'audio_id'
+            })
+        except IndexError:
+            print("[!] Error: The CSV does not have enough columns.")
+            return
+
+        # Fill missing language entries (like Wav2Vec2's empty fields) with a fallback string
+        df['language'] = df['language'].fillna('default')
+        
+        # 1. Non-Zero Checking (Ignoring 0.0 values across metrics)
+        numeric_cols = ['rtf'] + [f'Tier{i}_WER' for i in range(1, 6)] + [f'Tier{i}_CER' for i in range(1, 6)]
+        df[numeric_cols] = df[numeric_cols].replace(0.0, np.nan)
+        
+        # 2. Collapse text_types by taking the worst case (max) per unique song/language combo
+        df_collapsed = df.groupby(['tool', 'model', 'device', 'language', 'audio_id'])[numeric_cols].max().reset_index()
+        
+        # 3. Calculate the true mean across all songs for each tool, model, device, and language
+        summary = df_collapsed.groupby(['tool', 'model', 'device', 'language'])[numeric_cols].mean().reset_index()
+        
+        # Output to JSON
         summary.to_json(self.json_path, orient='records', indent=4)
         
-        # 3. Generate LaTeX Table
+        # 4. Generate LaTeX Table (Including language indicator next to the model name)
         with open(self.latex_path, 'w', encoding='utf-8') as f:
             f.write("\\begin{table}[hbt!]\n\\centering\n")
-            f.write("\\caption{Mean WER and CER Across 5 Normalization Tiers}\n")
+            f.write("\\caption{Mean WER and CER Across 5 Normalization Tiers (Worst-case text-type)}\n")
             f.write("\\resizebox{\\textwidth}{!}{\n")
-            f.write("\\begin{tabular}{ll|c|ccccc|ccccc}\n\\toprule\n")
-            f.write(" & & & \\multicolumn{5}{c|}{\\textbf{WER (\\%)}} & \\multicolumn{5}{c}{\\textbf{CER (\\%)}} \\\\\n")
-            f.write("\\textbf{Tool} & \\textbf{Model} & \\textbf{Type} & T1 & T2 & T3 & T4 & T5 & T1 & T2 & T3 & T4 & T5 \\\\\n\\midrule\n")
+            f.write("\\begin{tabular}{ll|ccccc|ccccc}\n\\toprule\n")
+            f.write(" & & \\multicolumn{5}{c|}{\\textbf{WER (\\%)}} & \\multicolumn{5}{c}{\\textbf{CER (\\%)}} \\\\\n")
+            f.write("\\textbf{Tool} & \\textbf{Model (Lang)} & T1 & T2 & T3 & T4 & T5 & T1 & T2 & T3 & T4 & T5 \\\\\n\\midrule\n")
             
             for _, row_data in summary.iterrows():
-                wer_vals = [f"{row_data[f'Tier{i}_WER']*100:.2f}" for i in range(1, 6)]
-                cer_vals = [f"{row_data[f'Tier{i}_CER']*100:.2f}" for i in range(1, 6)]
-                type_short = "Uni" if row_data['text_type'] == "unified" else ("Cont" if row_data['text_type'] == "continuous" else "Time")
+                wer_vals = [f"{row_data[f'Tier{i}_WER']*100:.2f}" if pd.notna(row_data[f'Tier{i}_WER']) else "N/A" for i in range(1, 6)]
+                cer_vals = [f"{row_data[f'Tier{i}_CER']*100:.2f}" if pd.notna(row_data[f'Tier{i}_CER']) else "N/A" for i in range(1, 6)]
                 
-                f.write(f"{row_data['tool']} & {row_data['model']} & {type_short} & " + " & ".join(wer_vals) + " & " + " & ".join(cer_vals) + " \\\\\n")
+                # Dynamic model display name to differentiate Whisper (auto) from Whisper (fr)
+                model_display = f"{row_data['model']} ({row_data['language']})"
+                
+                f.write(f"{row_data['tool']} & {model_display} & " + " & ".join(wer_vals) + " & " + " & ".join(cer_vals) + " \\\\\n")
                 
             f.write("\\bottomrule\n\\end{tabular}\n}\n\\end{table}\n")
             
         print(f"\n[+] Saved LaTeX table to {self.latex_path}")
 
-        # 4. Generate Graphs
+        # 5. Generate Graphs
         if PLOTTING_AVAILABLE and plt is not None and sns is not None:
             sns.set_theme(style="whitegrid")
             
-            summary['System'] = summary['tool'] + "\n(" + summary['model'] + ")\n" + summary['text_type']
+            # --- CUSTOM X-AXIS LABEL FORMATTING (Updated to feature the language tag) ---
+            def format_system_name(tool, model, language):
+                if '/' in model:
+                    model_display = model.replace('/', '/\n', 1)
+                else:
+                    model_display = model
+                
+                if "wav2vec2" in model_display.lower() and len(model_display) > 20:
+                    model_display = model_display.replace("-large-", "-large-\n")
+                
+                # Appends [fr] or [auto] as a clean label subtitle
+                return f"{tool}\n({model_display})\n[{language}]"
             
-            # --- RTF Plot ---
-            plt.figure(figsize=(10, 6))
-            ax = sns.barplot(data=summary, x='System', y='rtf', palette="viridis")
+            summary['System'] = summary.apply(lambda row: format_system_name(row['tool'], row['model'], row['language']), axis=1)
             
-            plt.title("Mean Real-Time Factor (RTF) per Model", fontsize=14, pad=15, weight='bold')
+            # --- RTF Plot (CPU vs GPU split, grouped by System/Language) ---
+            plt.figure(figsize=(13, 6)) # Bumped slightly wider to accommodate extra language bars
+            ax = sns.barplot(data=summary, x='System', y='rtf', hue='device', palette="muted", ci=None)
+            
+            plt.title("Mean Real-Time Factor (RTF) per Model & Language (CPU vs. GPU)", fontsize=14, pad=15, weight='bold')
             plt.ylabel("RTF (Lower is faster)", fontsize=12, labelpad=10)
-            plt.xlabel("Evaluated Models", fontsize=12, labelpad=10)
+            plt.xlabel("Evaluated Systems", fontsize=12, labelpad=10)
             plt.xticks(rotation=45, ha="right")
             
-            # Headroom and Labels
             ax.set_ylim(0, summary['rtf'].max() * 1.15)
             for container in getattr(ax, 'containers', []):
                 ax.bar_label(
-                    container, fmt='%.2f', padding=3, weight='bold', fontsize=11,
+                    container, fmt='%.2f', padding=3, weight='bold', fontsize=10,
                     bbox=dict(facecolor='white', edgecolor='none', pad=1.5, alpha=0.9)
                 )
 
+            plt.legend(title='Hardware')
             plt.tight_layout()
             plt.savefig(self.plots_dir / "Trans_RTF_Comparison.png", dpi=300)
             plt.close()
@@ -545,29 +585,23 @@ class TranscriptionEvaluator:
             # =====================================================================
             # SINGLE TIER SELECTION & Y-AXIS SYNC FOR WER/CER
             # =====================================================================
-            # For French Rap, Tier 4 (Acoustic Robust) is ideal. 
-            # It strips accents and splits apostrophes/hyphens, preventing models 
-            # from being penalized for orthographic differences of the same sounds.
             target_tier = 4
             
-            # Extract the specific tier data and convert to percentages
             summary['WER_Plot'] = summary[f'Tier{target_tier}_WER'] * 100
             summary['CER_Plot'] = summary[f'Tier{target_tier}_CER'] * 100
             
-            # Calculate global maximum across BOTH WER and CER to sync the y-axis
             global_max_err = max(summary['WER_Plot'].max(), summary['CER_Plot'].max())
             shared_y_limit = global_max_err * 1.15
             
-            # --- WER Plot ---
-            plt.figure(figsize=(10, 6))
-            ax_wer = sns.barplot(data=summary, x='System', y='WER_Plot', palette="rocket")
+            # --- WER Plot (Now splits out auto vs fr along the X-axis) ---
+            plt.figure(figsize=(11, 6))
+            ax_wer = sns.barplot(data=summary, x='System', y='WER_Plot', palette="muted", ci=None)
             
             plt.title(f"Mean Word Error Rate (WER) - Tier {target_tier} (Acoustic Robust)", fontsize=14, pad=15, weight='bold')
             plt.ylabel("WER (%)", fontsize=12, labelpad=10)
-            plt.xlabel("Evaluated Models", fontsize=12, labelpad=10)
+            plt.xlabel("Evaluated Systems", fontsize=12, labelpad=10)
             plt.xticks(rotation=45, ha="right")
             
-            # Apply the shared Y-axis limit
             ax_wer.set_ylim(0, shared_y_limit)
             for container in getattr(ax_wer, 'containers', []):
                 ax_wer.bar_label(
@@ -579,16 +613,15 @@ class TranscriptionEvaluator:
             plt.savefig(self.plots_dir / f"WER_Tier{target_tier}_Comparison.png", dpi=300)
             plt.close()
             
-            # --- CER Plot ---
-            plt.figure(figsize=(10, 6))
-            ax_cer = sns.barplot(data=summary, x='System', y='CER_Plot', palette="mako")
+            # --- CER Plot (Now splits out auto vs fr along the X-axis) ---
+            plt.figure(figsize=(11, 6))
+            ax_cer = sns.barplot(data=summary, x='System', y='CER_Plot', palette="muted", ci=None)
             
             plt.title(f"Mean Character Error Rate (CER) - Tier {target_tier} (Acoustic Robust)", fontsize=14, pad=15, weight='bold')
             plt.ylabel("CER (%)", fontsize=12, labelpad=10)
-            plt.xlabel("Evaluated Models", fontsize=12, labelpad=10)
+            plt.xlabel("Evaluated Systems", fontsize=12, labelpad=10)
             plt.xticks(rotation=45, ha="right")
             
-            # Apply the shared Y-axis limit
             ax_cer.set_ylim(0, shared_y_limit)
             for container in getattr(ax_cer, 'containers', []):
                 ax_cer.bar_label(
@@ -600,7 +633,7 @@ class TranscriptionEvaluator:
             plt.savefig(self.plots_dir / f"CER_Tier{target_tier}_Comparison.png", dpi=300)
             plt.close()
             
-            print(f"[+] Saved RTF, WER, and CER graphs (synced y-axis) to {self.plots_dir}/")
+            print(f"[+] Saved RTF, WER, and CER graphs with language isolation to {self.plots_dir}/")
             
         print("\n--- EVALUATION COMPLETE ---")
 
@@ -641,6 +674,6 @@ if __name__ == "__main__":
         print("\n[*] Skipping separation phase (--run_separation flag not passed). Assuming vocals are already in the separated directory.")
     if not args.skip_transcription:
         evaluator.run_evaluation_pipeline()
-        evaluator.generate_summaries()
     else:
         print("\n[*] Skipping transcription evaluation phase (--skip_transcription flag passed).")
+    evaluator.generate_summaries()

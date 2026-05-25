@@ -1,0 +1,31 @@
+2026-05-25 07:24:11,641 [INFO] App Started - Logging to logs\2026-05-25_07-24-11.log
+2026-05-25 07:24:38,887 [INFO] Duration passed: 0
+2026-05-25 07:24:38,907 [INFO] Spleeter: Initializing AI engine model weights for BLA01...
+2026-05-25 07:24:39,057 [INFO] spleeter processing: API active
+2026-05-25 07:25:06,141 [INFO] OpenUnmix Initialized (Adaptive Hybrid Mode)
+2026-05-25 07:25:06,143 [INFO] Duration passed: 0
+2026-05-25 07:27:34,677 [INFO] Demucs 4.0.1 (Hybrid Transformer) initialized.
+2026-05-25 07:27:35,243 [INFO] [Demucs] Model native segment limit: 7.8
+2026-05-25 07:27:35,243 [INFO] [Demucs] Attempting cpu | Segment: 7
+2026-05-25 07:27:35,244 [INFO] Duration passed: 0
+2026-05-25 07:27:35,685 [INFO] Selected model is a bag of 1 models. You will see that many progress bars per track.
+2026-05-25 07:27:35,692 [INFO] Separated tracks will be stored in C:\Users\kriva\AppData\Local\Temp\demucs_v4_jic75u5x\htdemucs
+2026-05-25 07:27:35,693 [INFO] Separating track D:\DiplomaThesis_Electronic_Attachment\example_input_output\input\BLA01.mp3
+2026-05-25 07:34:48,421 [INFO] [INFO] Switched to 'trans_out'. Cleared inactive models.
+2026-05-25 07:35:04,660 [INFO] Duration passed: 39
+2026-05-25 07:36:35,301 [INFO] Duration passed: 38
+2026-05-25 07:37:36,631 [INFO] Duration passed: 38
+2026-05-25 07:40:19,199 [ERROR] [00:00.000 --> 00:02.960]  Ceci c'est pour les gens qui me dévisent, ah, comme si j'étais un trafic et j'avais des nibards,
+2026-05-25 07:40:19,208 [ERROR] [00:02.960 --> 00:06.280]  de corps de neige, bon coup pour le mitard, avec un poster au mur de Marin Ornicar.
+2026-05-25 07:40:19,213 [ERROR] [00:06.280 --> 00:09.360]  Je vous les dis, les gens me regardent bizarre, désolé mais je n'ai pas l'humour de bigard,
+2026-05-25 07:40:19,216 [ERROR] [00:09.360 --> 00:12.720]  et Monsieur Jack me dit que je suis minable, que pour m'en sortir, il faudrait un mirail.
+2026-05-25 07:40:19,218 [ERROR] [00:12.720 --> 00:15.560]  Qui parle et bien qu'on apprenne à Bicraft, l'un de nos pays, là où ça mitraille.
+2026-05-25 07:40:19,221 [ERROR] [00:15.560 --> 00:19.080]  Je peux foutre où est Don Don, ornicard, je veux juste savoir où est l'or du ouah.
+2026-05-25 07:40:19,223 [ERROR] [00:19.080 --> 00:23.080]  Alors la famille dit moi, on dit quoi, potica rien ne fait, juste on y croit, on y croit.
+2026-05-25 07:41:35,417 [ERROR] [00:23.080 --> 00:25.360]  On y croit, on dit croit, on y croit
+2026-05-25 07:41:35,420 [ERROR] [00:25.360 --> 00:26.920]  Tout le monde dit black, black
+2026-05-25 07:41:35,422 [ERROR] [00:26.920 --> 00:28.540]  Tout le monde dit black, black
+2026-05-25 07:41:35,424 [ERROR] [00:28.540 --> 00:31.780]  Tout le monde dit black, hein j'ai dit tout le monde dit black, black
+2026-05-25 07:41:35,427 [ERROR] [00:31.780 --> 00:33.460]  Tout le monde voit black, black
+2026-05-25 07:41:35,430 [ERROR] [00:33.460 --> 00:35.140]  Tout le monde voit black, black
+2026-05-25 07:41:35,432 [ERROR] [00:35.140 --> 00:37.980]  Tout le monde voit black, hein j'ai dit tout le monde voit black

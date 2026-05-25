@@ -1,0 +1,47 @@
+Transcription (Model: medium):
+ Prends-toi le prou et dis-moi si t'es encore vivant. Lève bien le pouce car t'es encore vivant. Es-tu conscient de la chance que t'as ? D'autres l'ont pas. Tant qu'il y a de la vie, il y a de l'espoir. Tant qu'il y a de la vie, on peut réécrire son histoire. On peut enrichir sa mémoire de souvenirs impérissables. Dans la vie, perdre n'est pas une maladie incurable. Bien sûr qu'on mérite le meilleur. Combien ont déjà surmonté leurs douleurs, leurs frayeurs, leurs erreurs, leurs renkeurs ou leurs grosses défaites ? Combien de rêves inanimés ont réussi à se faire greffer un cœur Des fleurs fan, mais d'autres poussent Même après les flammes, des faux héros poussent Aucune limite n'est infranchissable Les vrais super héros n'ont pas tous une cape Souffrir, je sais ce que c'est Qui vit avec des fantômes qui m'ont enputé les bras de Morphée Un passé que le temps ne soignera jamais Un passé que le temps ne me remboursera jamais J'avais mal à la vie, à la moitié cette soirée ou les veines j'ai voulu me couper mais heureusement que je n'ai rien fait car je n'aurais jamais vécu tous ces rêves éveillés, nan je n'aurais jamais rencontré Alexia donc je n'aurais jamais eu mes enfants Inaïa, Lenny et Luna, nan je n'aurais jamais vu la fierté dans les yeux de papa je n'aurais jamais vu le vrai sourire de maman, nan je n'aurais jamais eu cet tas de fou rires avec mes frères Zach, Diego, Saki et Naïm, nan même si si elle me manque je n'aurais jamais vu la réussite de chaque membre de la psychiatre, nan J'n'aurais jamais vu mon rêve exaucé Jamais vu ces millions de personnes chanter mes couplets, na J'n'aurais jamais eu les meilleurs amis du monde On aurait jamais vécu ce concert au stade Vélodrome Voilà pourquoi cet album Pour crier que l'avenir ne promet pas la souffrance éternelle Crie-le à tout le monde Tout est possible tant que la mort ne t'a pas pris dans ses ailes Prends ce disque comme un ami Avec lui danses, chantes, pleures, rires vite Enfin mis en solo entre amis Mais vie, vie, restons présents avant que tout s'enfuit Le climat du monde n'est pas ensoleillé Donc c'est à nous de briller Arroses ta chance et vie, car nous sommes tous des Phoenix
+
+Timestamps:
+0.00s - 3.00s: Prends-toi le prou et dis-moi si t'es encore vivant.
+3.00s - 5.00s: Lève bien le pouce car t'es encore vivant.
+5.00s - 7.00s: Es-tu conscient de la chance que t'as ?
+7.00s - 8.00s: D'autres l'ont pas.
+8.00s - 10.00s: Tant qu'il y a de la vie, il y a de l'espoir.
+10.00s - 14.00s: Tant qu'il y a de la vie, on peut réécrire son histoire.
+14.00s - 18.00s: On peut enrichir sa mémoire de souvenirs impérissables.
+18.00s - 21.00s: Dans la vie, perdre n'est pas une maladie incurable.
+21.00s - 23.00s: Bien sûr qu'on mérite le meilleur.
+23.00s - 28.00s: Combien ont déjà surmonté leurs douleurs, leurs frayeurs, leurs erreurs, leurs renkeurs ou leurs grosses défaites ?
+28.00s - 32.00s: Combien de rêves inanimés ont réussi à se faire greffer un cœur
+32.00s - 34.00s: Des fleurs fan, mais d'autres poussent
+34.00s - 37.00s: Même après les flammes, des faux héros poussent
+37.00s - 40.00s: Aucune limite n'est infranchissable
+40.00s - 42.00s: Les vrais super héros n'ont pas tous une cape
+42.00s - 44.00s: Souffrir, je sais ce que c'est
+44.00s - 47.00s: Qui vit avec des fantômes qui m'ont enputé les bras de Morphée
+47.00s - 50.00s: Un passé que le temps ne soignera jamais
+50.00s - 53.00s: Un passé que le temps ne me remboursera jamais
+53.00s - 56.00s: J'avais mal à la vie, à la moitié cette soirée
+56.00s - 60.16s: ou les veines j'ai voulu me couper mais heureusement que je n'ai rien fait
+60.16s - 63.76s: car je n'aurais jamais vécu tous ces rêves éveillés, nan
+63.76s - 67.32s: je n'aurais jamais rencontré Alexia donc je n'aurais jamais eu mes enfants
+67.32s - 68.96s: Inaïa, Lenny et Luna, nan
+68.96s - 71.68s: je n'aurais jamais vu la fierté dans les yeux de papa
+71.68s - 74.36s: je n'aurais jamais vu le vrai sourire de maman, nan
+74.36s - 79.68s: je n'aurais jamais eu cet tas de fou rires avec mes frères Zach, Diego, Saki et Naïm, nan
+79.68s - 81.44s: même si si elle me manque
+81.44s - 85.12s: je n'aurais jamais vu la réussite de chaque membre de la psychiatre, nan
+85.12s - 87.12s: J'n'aurais jamais vu mon rêve exaucé
+87.12s - 90.48s: Jamais vu ces millions de personnes chanter mes couplets, na
+90.48s - 92.76s: J'n'aurais jamais eu les meilleurs amis du monde
+92.76s - 95.84s: On aurait jamais vécu ce concert au stade Vélodrome
+95.84s - 97.64s: Voilà pourquoi cet album
+97.64s - 101.12s: Pour crier que l'avenir ne promet pas la souffrance éternelle
+101.12s - 102.88s: Crie-le à tout le monde
+102.88s - 106.36s: Tout est possible tant que la mort ne t'a pas pris dans ses ailes
+106.36s - 107.88s: Prends ce disque comme un ami
+107.88s - 111.00s: Avec lui danses, chantes, pleures, rires vite
+111.00s - 113.12s: Enfin mis en solo entre amis
+113.12s - 116.56s: Mais vie, vie, restons présents avant que tout s'enfuit
+116.56s - 120.92s: Le climat du monde n'est pas ensoleillé Donc c'est à nous de briller
+120.92s - 124.84s: Arroses ta chance et vie, car nous sommes tous des Phoenix

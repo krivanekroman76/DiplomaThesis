@@ -1,0 +1,10 @@
+2026-05-24 23:04:07,041 [INFO] App Started - Logging to logs\2026-05-24_23-04-06.log
+2026-05-24 23:05:05,641 [INFO] Demucs 4.0.1 (Hybrid Transformer) initialized.
+2026-05-24 23:05:07,060 [INFO] [Demucs] Model native segment limit: 7.8
+2026-05-24 23:05:07,061 [INFO] [Demucs] Attempting cuda | Segment: 7
+2026-05-24 23:05:07,061 [INFO] Duration passed: 0
+2026-05-24 23:05:07,664 [INFO] Selected model is a bag of 1 models. You will see that many progress bars per track.
+2026-05-24 23:05:07,670 [INFO] Separated tracks will be stored in C:\Users\kriva\AppData\Local\Temp\demucs_v4_rgdwban9\htdemucs
+2026-05-24 23:05:07,670 [INFO] Separating track D:\DiplomaThesis_Electronic_Attachment\example_input_output\input\Soprano - Musica.mp3
+2026-05-25 07:00:45,390 [INFO] OpenUnmix Initialized (Adaptive Hybrid Mode)
+2026-05-25 07:00:45,392 [INFO] Duration passed: 0

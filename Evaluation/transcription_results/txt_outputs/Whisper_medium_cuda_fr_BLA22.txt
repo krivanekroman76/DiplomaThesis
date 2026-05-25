@@ -1,0 +1,62 @@
+Transcription (Model: medium):
+ Pas de problème, calmez-vous. Calme-toi, tais-toi, y'a les keufs devant, on va jamais passer, taisez-vous. Vous voulez partir en vacances ou pas ? Oui ! Bah voilà ! Voilà ! Le policier nous laisse pas passer parce qu'on est pas beaux ? Mais non t'inquiètes, t'inquiètes, on est beaux, on est stylés, on est tous ensemble. Ça va aller, ça va le faire, ok ? Tout le monde se calme, ça va le faire. Merci. Bonjour monsieur. Pèse identité là, rapidement s'il vous plaît. Alpha. Dialo. Alpha, dialo. Beta, alpha, omega, easy, 9, 2, ouloulou ! Un certain AlphaDialo, AlphaDialo, 9T c'est la championne de cycle, 9T c'est la championne de cycle, pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa Mais fidèle, est-elle fidèle ? La France est belle, est belle Même regarde haut comme la tour Eiffel Eiffel Mes parents m'ont pas mis en monde pour toucher les Z Les Z J'ai vu que Marion m'a tweeté de quoi elle se mêle Je sais qu'elle m'aime Je suis français Il vaut le pas que Marion soit ma fiancée Peut-être parce qu'il me trouve trop foncé Laisse-moi juste l'inviter à danser J'vais l'ambiancer Je suis français Ouh ! Ils veulent pas que Marienne soit ma fiancée Non ! Peut-être parce qu'ils me trouvent trop foncé Ouh ! Laisse-moi juste l'inviter à danser Je vais l'ambiancer Et j't'ai pas dit ? J'ai une astuce pour moins payer d'impôts Ouais Pas une combi, non Non mais j'peux pas tout le temps parler là mais euh... J'paye mes impôts moi J'pensais pas que l'amour pouvait être un combat A la base j'voulais juste lui rendre un hommage Je suis tiraillé comme mon grand-père, ils le savent, c'est dommage Jolie Marianne Marianne Je préfère ne rien voir comme Amadou et Marianne Marianne Je t'invite à manger un bon muffin de chez ma tata Je sais qu'un jour tu me déclareras ta flamme Aïe aïe aïe Je suis français Ils veulent pas que Marianne soit ma fiancée Peut-être parce qu'il me trouve trop foncé Laisse-moi juste l'inviter à danser J'vais l'ambiancéééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé
+
+Timestamps:
+0.00s - 4.50s: Pas de problème, calmez-vous. Calme-toi, tais-toi, y'a les keufs devant, on va jamais passer, taisez-vous.
+4.50s - 6.00s: Vous voulez partir en vacances ou pas ?
+6.00s - 6.50s: Oui !
+6.50s - 7.00s: Bah voilà !
+7.00s - 7.50s: Voilà !
+7.50s - 10.00s: Le policier nous laisse pas passer parce qu'on est pas beaux ?
+10.00s - 14.00s: Mais non t'inquiètes, t'inquiètes, on est beaux, on est stylés, on est tous ensemble.
+14.00s - 16.50s: Ça va aller, ça va le faire, ok ? Tout le monde se calme, ça va le faire.
+16.50s - 17.00s: Merci.
+17.00s - 18.00s: Bonjour monsieur.
+18.00s - 20.00s: Pèse identité là, rapidement s'il vous plaît.
+20.00s - 20.50s: Alpha.
+20.50s - 21.00s: Dialo.
+21.00s - 22.00s: Alpha, dialo.
+22.00s - 25.50s: Beta, alpha, omega, easy, 9, 2, ouloulou !
+25.50s - 55.50s: Un certain AlphaDialo, AlphaDialo, 9T c'est la championne de cycle, 9T c'est la championne de cycle, pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa pa
+55.50s - 58.78s: Mais fidèle, est-elle fidèle ?
+58.78s - 61.22s: La France est belle, est belle
+61.22s - 63.98s: Même regarde haut comme la tour Eiffel
+63.98s - 64.98s: Eiffel
+64.98s - 67.78s: Mes parents m'ont pas mis en monde pour toucher les Z
+67.78s - 68.78s: Les Z
+68.78s - 72.02s: J'ai vu que Marion m'a tweeté de quoi elle se mêle
+72.02s - 73.90s: Je sais qu'elle m'aime
+73.90s - 75.30s: Je suis français
+75.30s - 77.86s: Il vaut le pas que Marion soit ma fiancée
+77.86s - 80.34s: Peut-être parce qu'il me trouve trop foncé
+80.34s - 83.42s: Laisse-moi juste l'inviter à danser
+83.42s - 85.30s: J'vais l'ambiancer
+85.30s - 86.70s: Je suis français
+86.70s - 87.20s: Ouh !
+87.20s - 89.70s: Ils veulent pas que Marienne soit ma fiancée
+89.70s - 90.70s: Non !
+90.70s - 93.20s: Peut-être parce qu'ils me trouvent trop foncé
+93.20s - 93.80s: Ouh !
+93.80s - 96.90s: Laisse-moi juste l'inviter à danser
+96.90s - 99.00s: Je vais l'ambiancer
+99.00s - 99.70s: Et j't'ai pas dit ?
+99.70s - 101.20s: J'ai une astuce pour moins payer d'impôts
+101.20s - 101.70s: Ouais
+101.70s - 103.30s: Pas une combi, non
+103.30s - 105.70s: Non mais j'peux pas tout le temps parler là mais euh...
+105.70s - 107.50s: J'paye mes impôts moi
+107.50s - 110.40s: J'pensais pas que l'amour pouvait être un combat
+110.40s - 113.30s: A la base j'voulais juste lui rendre un hommage
+113.30s - 118.42s: Je suis tiraillé comme mon grand-père, ils le savent, c'est dommage
+118.42s - 119.90s: Jolie Marianne
+119.90s - 120.90s: Marianne
+120.90s - 123.86s: Je préfère ne rien voir comme Amadou et Marianne
+123.86s - 124.70s: Marianne
+124.70s - 127.82s: Je t'invite à manger un bon muffin de chez ma tata
+127.82s - 131.50s: Je sais qu'un jour tu me déclareras ta flamme
+131.50s - 133.02s: Aïe aïe aïe
+133.02s - 134.38s: Je suis français
+134.38s - 136.90s: Ils veulent pas que Marianne soit ma fiancée
+136.90s - 139.38s: Peut-être parce qu'il me trouve trop foncé
+139.38s - 142.46s: Laisse-moi juste l'inviter à danser
+142.46s - 151.03s: J'vais l'ambiancéééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé

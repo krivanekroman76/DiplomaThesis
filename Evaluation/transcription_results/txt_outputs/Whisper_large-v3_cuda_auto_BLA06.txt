@@ -1,0 +1,59 @@
+Transcription (Model: large-v3):
+ Oui j'ai du mal à reconnaître mes erreurs, je sais, ne m'en veux pas car j'ai du mal à m'exprimer, mais j'essaye, c'est tout moi, c'est tout moi. Oui j'ai du mal à reconnaître mes erreurs, je sais, ne m'en veux pas car j'ai du mal à m'exprimer, mais j'essaye, c'est tout moi, c'est tout moi. Je suis plus le même, oui je sais, mais comment te dire que je t'aime, est-ce que tu sais ? Je me regarde, je me fais de la peine, je sais c'est triste à dire, je me regarde et j'ai la haine, j'aimerais disparaître. Quand je pense à nos débuts, c'est là que je me dis Franchement, je suis trop débile, mais l'acte est fait Je crois pas qu'il faut t'avouer et pardonner Oh no, je m'en veux, ouais, parce que je vois que t'as mal Tu me diras, c'est facile d'en faire une chanson Je te répondrai, c'est difficile de vivre dans le mensonge Et tous ces gens autour qui ne font que parler Seuls nos cœurs pourront leur dire qu'on est bien plus que mariés Oui, j'ai du mal à reconnaître mes erreurs, je sais Ne m'en veux pas car j'ai du mal à m'exprimer Mais j'essaye, c'est tout moi, c'est tout moi Oui j'ai du mal à reconnaître mes erreurs, je sais, ne m'en veux pas car j'ai du mal à m'exprimer Mais j'essaye, c'est tout moi, c'est tout moi Y'a ceux qui veulent une vie de rêve et celles qui rêvent d'une vie où jamais l'amour crève Mais ça c'est pas possible, j'crois que tout tient qu'à un fil tant que j'serai pas posé Et écoute, pour une fois que je suis grave plausible en ce qui concerne cette flamme Que t'as tenté d'éteindre avec tes larmes, arrête, je te le répète, tu t'fais du mal Et moi, j'veux juste récupérer ma femme, top Oui, je suis pas parfait, l'homme modèle n'existe pas chez les mortels Serais-je maudit ? Je n'en sais rien mais je sais que sans toi C'est comme si je vivais dans notre belle maison mais sans toi Oui, j'ai du mal à reconnaître mes erreurs, je sais, ne m'en veux pas Car j'ai du mal à m'exprimer mais j'essaye, c'est tout moi, c'est tout moi Oui, j'ai du mal à reconnaître mes erreurs, je sais, ne m'en veux pas Car j'ai du mal à m'exprimer mais j'essaye, c'est tout moi, c'est tout moi Du mal à tourner la page comme si la plume qu'il a écrite pesait plus d'une tonne Et vous arrêtez là, je me fous de buzzer Le cœur plus gros que les yeux, oui J'ai menti mesdames, messieurs, je brûle des étapes A force de jouer avec le feu, à force de jouer Des personnages, je suis devenu fou, et toi Ma chérie, oh pardonne-moi, je sais que Je l'emporterai pas au paradis Tout simplement parce que je suis un homme et pas un ange Laisse-moi me faire du mal Je vais te venger, et on dit que l'amour Est aveugle, c'est peut-être pour ça qu'on a Du mal à se retrouver, pardonne-moi mais Je n'ai pas su trouver mieux, on se regarde plus Dans les yeux, je prie Dieu pour qu'on finisse Cette vie à deux, les mains vers les cieux Pardonne-moi mais je n'ai pas su trouver mieux On se regarde plus dans les yeux Je prie Dieu pour qu'on finisse cette vie à deux Les mains vers les cieux Oui j'ai du mal à reconnaître mes erreurs, je sais Ne m'en veux pas car j'ai du mal à m'exprimer Mais j'essaye, c'est tout moi, c'est tout moi Oui j'ai du mal à reconnaître mes erreurs, je sais Ne m'en veux pas car j'ai du mal à m'exprimer Mais j'essaye, c'est tout moi, c'est tout moi
+
+Timestamps:
+0.00s - 6.86s: Oui j'ai du mal à reconnaître mes erreurs, je sais, ne m'en veux pas car j'ai du mal à m'exprimer, mais j'essaye, c'est tout moi, c'est tout moi.
+7.10s - 14.06s: Oui j'ai du mal à reconnaître mes erreurs, je sais, ne m'en veux pas car j'ai du mal à m'exprimer, mais j'essaye, c'est tout moi, c'est tout moi.
+14.40s - 18.88s: Je suis plus le même, oui je sais, mais comment te dire que je t'aime, est-ce que tu sais ?
+18.88s - 24.16s: Je me regarde, je me fais de la peine, je sais c'est triste à dire, je me regarde et j'ai la haine, j'aimerais disparaître.
+24.16s - 26.66s: Quand je pense à nos débuts, c'est là que je me dis
+26.66s - 29.38s: Franchement, je suis trop débile, mais l'acte est fait
+29.38s - 32.08s: Je crois pas qu'il faut t'avouer et pardonner
+32.08s - 34.82s: Oh no, je m'en veux, ouais, parce que je vois que t'as mal
+34.82s - 37.70s: Tu me diras, c'est facile d'en faire une chanson
+37.70s - 40.46s: Je te répondrai, c'est difficile de vivre dans le mensonge
+40.46s - 43.00s: Et tous ces gens autour qui ne font que parler
+43.00s - 45.90s: Seuls nos cœurs pourront leur dire qu'on est bien plus que mariés
+45.90s - 48.82s: Oui, j'ai du mal à reconnaître mes erreurs, je sais
+48.82s - 50.84s: Ne m'en veux pas car j'ai du mal à m'exprimer
+50.84s - 53.12s: Mais j'essaye, c'est tout moi, c'est tout moi
+53.12s - 57.98s: Oui j'ai du mal à reconnaître mes erreurs, je sais, ne m'en veux pas car j'ai du mal à m'exprimer
+57.98s - 60.20s: Mais j'essaye, c'est tout moi, c'est tout moi
+60.20s - 64.36s: Y'a ceux qui veulent une vie de rêve et celles qui rêvent d'une vie où jamais l'amour crève
+64.36s - 68.18s: Mais ça c'est pas possible, j'crois que tout tient qu'à un fil tant que j'serai pas posé
+68.18s - 72.78s: Et écoute, pour une fois que je suis grave plausible en ce qui concerne cette flamme
+72.78s - 76.94s: Que t'as tenté d'éteindre avec tes larmes, arrête, je te le répète, tu t'fais du mal
+76.94s - 79.60s: Et moi, j'veux juste récupérer ma femme, top
+79.60s - 83.94s: Oui, je suis pas parfait, l'homme modèle n'existe pas chez les mortels
+83.94s - 87.52s: Serais-je maudit ? Je n'en sais rien mais je sais que sans toi
+87.52s - 90.20s: C'est comme si je vivais dans notre belle maison mais sans toi
+90.20s - 93.74s: Oui, j'ai du mal à reconnaître mes erreurs, je sais, ne m'en veux pas
+93.74s - 97.24s: Car j'ai du mal à m'exprimer mais j'essaye, c'est tout moi, c'est tout moi
+97.24s - 100.82s: Oui, j'ai du mal à reconnaître mes erreurs, je sais, ne m'en veux pas
+100.82s - 104.32s: Car j'ai du mal à m'exprimer mais j'essaye, c'est tout moi, c'est tout moi
+104.32s - 108.58s: Du mal à tourner la page comme si la plume qu'il a écrite pesait plus d'une tonne
+108.58s - 110.40s: Et vous arrêtez là, je me fous de buzzer
+110.40s - 112.12s: Le cœur plus gros que les yeux, oui
+112.12s - 114.54s: J'ai menti mesdames, messieurs, je brûle des étapes
+114.54s - 116.68s: A force de jouer avec le feu, à force de jouer
+116.68s - 118.60s: Des personnages, je suis devenu fou, et toi
+118.60s - 120.68s: Ma chérie, oh pardonne-moi, je sais que
+120.68s - 122.58s: Je l'emporterai pas au paradis
+122.58s - 125.08s: Tout simplement parce que je suis un homme et pas un ange
+125.08s - 126.76s: Laisse-moi me faire du mal
+126.76s - 128.86s: Je vais te venger, et on dit que l'amour
+128.86s - 130.76s: Est aveugle, c'est peut-être pour ça qu'on a
+130.76s - 132.62s: Du mal à se retrouver, pardonne-moi mais
+132.62s - 134.58s: Je n'ai pas su trouver mieux, on se regarde plus
+134.58s - 136.56s: Dans les yeux, je prie Dieu pour qu'on finisse
+136.56s - 138.42s: Cette vie à deux, les mains vers les cieux
+138.42s - 140.36s: Pardonne-moi mais je n'ai pas su trouver mieux
+140.36s - 141.98s: On se regarde plus dans les yeux
+141.98s - 144.28s: Je prie Dieu pour qu'on finisse cette vie à deux
+144.28s - 145.48s: Les mains vers les cieux
+145.48s - 148.10s: Oui j'ai du mal à reconnaître mes erreurs, je sais
+148.10s - 150.14s: Ne m'en veux pas car j'ai du mal à m'exprimer
+150.14s - 152.38s: Mais j'essaye, c'est tout moi, c'est tout moi
+152.38s - 155.20s: Oui j'ai du mal à reconnaître mes erreurs, je sais
+155.20s - 157.24s: Ne m'en veux pas car j'ai du mal à m'exprimer
+157.24s - 159.62s: Mais j'essaye, c'est tout moi, c'est tout moi

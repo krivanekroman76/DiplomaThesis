@@ -1,0 +1,65 @@
+Transcription (Model: large-v3):
+ Les gens me regardent bizarre, les gens me regardent bizarre, les gens me regardent bizarre, si j'ai fait du mal dites moi, les gens me regardent bizarre, et j'ai tellement peur au final. Les gens me regardent bizarre, comme si j'étais coupable, les gens me regardent bizarre, eh, ils m'entendent mais ne m'écoutent pas. Les gens me regardent bizarre, si j'ai fait du mal dites-moi Les gens me regardent bizarre, j'ai tellement peur au final Parce que je ne marche pas, je roule pourtant le coeur en paix Je me sens marcher dessus comme si je rampais Je suis dévote sauf que je ne marche plus c'est tout Je suis ce qu'on appelle un obèse en surpoids On se moque de moi et ma démarche une fois sur trois A chaque rentrée de classe j'ai l'impression que le monde s'écroule Les regards sont durs alors je baisse constamment le mien Je bise les murs, quand y'a personne je m'en frotte les mains Et je me dis, c'est peut-être ma faute Je ne peux m'en prendre qu'à moi-même si c'est ma faute Et pour moi que Dieu me pardonne, oui c'est ma faute Seulement j'ai pas les bonnes paroles et je ne comprends toujours pas pourquoi Les gens me regardent bizarre, comme si j'étais coupable Les gens me regardent bizarre, ils m'entendent mais ne m'écoutent pas Les gens me regardent bizarre, si j'ai fait du mal dites-moi Les gens me regardent bizarre Et j'ai tellement peur au final J'ai la taille d'un enfant de 7 ans Etant plus jeune j'attendais que mon corps s'étende Quand je fais les cours je demande de l'aide au plus grand Pas le choix c'est trop haut et puis j'ai plus le temps J'ai pris de l'âge je m'assume totalement J'ai une femme en or c'est bon je me tue plus au calment Et c'est fou comment les gens nous poussent à devenir fous Je suis sur mes gardes, je me demande pas de pas calculer Vos regards sont des coups de poignard J'suis différent, j'vais assumer Un peu comme si j'étais un bagnat Et je me dis que ça fait mal Quand tu vois que personne t'écoute, oui ça fait mal Oui, parfois le monde me dégoûte, j'ai tellement mal Au point de ne plus sentir les coups Et je ne comprends toujours pas pourquoi Les gens me regardent bizarre Comme si j'étais coupable Les gens me regardent bizarre Ils m'entendent mais ne m'écoutent pas Les gens me regardent bizarre Si j'ai fait du mal, dites-moi Les gens me regardent bizarre J'ai tellement peur au final Tu sais je suis pas si différent J'ai un cœur comme toi Non tu ne peux pas me comprendre Je suis dans un réel combat Tu sais je suis pas si différent J'ai un cœur comme toi Non tu ne peux pas me comprendre Je suis dans un réel combat Les gens me regardent bizarre Comme si j'étais coupable Les gens me regardent bizarre Ils m'entendent mais ne m'écoutent pas Les gens me regardent bizarre Si j'ai fait du mal dites-moi Les gens me regardent bizarre J'ai tellement peur au final
+
+Timestamps:
+0.00s - 14.40s: Les gens me regardent bizarre, les gens me regardent bizarre, les gens me regardent bizarre, si j'ai fait du mal dites moi, les gens me regardent bizarre, et j'ai tellement peur au final.
+14.40s - 23.44s: Les gens me regardent bizarre, comme si j'étais coupable, les gens me regardent bizarre, eh, ils m'entendent mais ne m'écoutent pas.
+23.44s - 27.74s: Les gens me regardent bizarre, si j'ai fait du mal dites-moi
+27.74s - 32.34s: Les gens me regardent bizarre, j'ai tellement peur au final
+32.34s - 35.06s: Parce que je ne marche pas, je roule pourtant le coeur en paix
+35.06s - 37.76s: Je me sens marcher dessus comme si je rampais
+37.76s - 40.62s: Je suis dévote sauf que je ne marche plus c'est tout
+40.62s - 43.40s: Je suis ce qu'on appelle un obèse en surpoids
+43.40s - 46.10s: On se moque de moi et ma démarche une fois sur trois
+46.10s - 49.08s: A chaque rentrée de classe j'ai l'impression que le monde s'écroule
+49.08s - 52.84s: Les regards sont durs alors je baisse constamment le mien
+52.84s - 56.82s: Je bise les murs, quand y'a personne je m'en frotte les mains
+56.82s - 58.90s: Et je me dis, c'est peut-être ma faute
+58.90s - 61.56s: Je ne peux m'en prendre qu'à moi-même si c'est ma faute
+61.56s - 64.22s: Et pour moi que Dieu me pardonne, oui c'est ma faute
+64.22s - 68.00s: Seulement j'ai pas les bonnes paroles et je ne comprends toujours pas pourquoi
+68.00s - 71.78s: Les gens me regardent bizarre, comme si j'étais coupable
+71.78s - 76.22s: Les gens me regardent bizarre, ils m'entendent mais ne m'écoutent pas
+76.22s - 80.50s: Les gens me regardent bizarre, si j'ai fait du mal dites-moi
+80.50s - 82.58s: Les gens me regardent bizarre
+82.58s - 85.30s: Et j'ai tellement peur au final
+85.30s - 88.08s: J'ai la taille d'un enfant de 7 ans
+88.08s - 90.80s: Etant plus jeune j'attendais que mon corps s'étende
+90.80s - 93.44s: Quand je fais les cours je demande de l'aide au plus grand
+93.44s - 96.08s: Pas le choix c'est trop haut et puis j'ai plus le temps
+96.08s - 98.04s: J'ai pris de l'âge je m'assume totalement
+98.04s - 100.88s: J'ai une femme en or c'est bon je me tue plus au calment
+100.88s - 104.30s: Et c'est fou comment les gens nous poussent à devenir fous
+104.30s - 107.40s: Je suis sur mes gardes, je me demande pas de pas calculer
+107.40s - 110.04s: Vos regards sont des coups de poignard
+110.04s - 112.34s: J'suis différent, j'vais assumer
+112.34s - 114.46s: Un peu comme si j'étais un bagnat
+114.46s - 116.60s: Et je me dis que ça fait mal
+116.60s - 119.14s: Quand tu vois que personne t'écoute, oui ça fait mal
+119.14s - 121.80s: Oui, parfois le monde me dégoûte, j'ai tellement mal
+121.80s - 123.62s: Au point de ne plus sentir les coups
+123.62s - 125.56s: Et je ne comprends toujours pas pourquoi
+125.56s - 127.02s: Les gens me regardent bizarre
+127.02s - 129.30s: Comme si j'étais coupable
+129.30s - 131.06s: Les gens me regardent bizarre
+131.06s - 133.76s: Ils m'entendent mais ne m'écoutent pas
+133.76s - 135.52s: Les gens me regardent bizarre
+135.52s - 138.06s: Si j'ai fait du mal, dites-moi
+138.06s - 140.12s: Les gens me regardent bizarre
+140.12s - 142.82s: J'ai tellement peur au final
+142.82s - 144.24s: Tu sais je suis pas si différent
+144.24s - 145.90s: J'ai un cœur comme toi
+145.90s - 147.76s: Non tu ne peux pas me comprendre
+147.76s - 149.40s: Je suis dans un réel combat
+149.40s - 151.08s: Tu sais je suis pas si différent
+151.08s - 153.56s: J'ai un cœur comme toi
+153.56s - 156.26s: Non tu ne peux pas me comprendre
+156.26s - 158.84s: Je suis dans un réel combat
+158.84s - 161.56s: Les gens me regardent bizarre
+161.56s - 163.76s: Comme si j'étais coupable
+163.76s - 165.60s: Les gens me regardent bizarre
+165.60s - 168.32s: Ils m'entendent mais ne m'écoutent pas
+168.32s - 170.54s: Les gens me regardent bizarre
+170.54s - 173.24s: Si j'ai fait du mal dites-moi
+173.24s - 175.26s: Les gens me regardent bizarre
+175.26s - 177.86s: J'ai tellement peur au final

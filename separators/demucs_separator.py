@@ -75,6 +75,7 @@ class DemucsSeparator:
                  progress_callback=None, **kwargs) -> Tuple[bool, Optional[str], Optional[str]]:
         
         target_device = resolve_torch_device(device_choice.upper(), return_string=True)
+        #logging.debug(f"Wanted ")
         user_segment = kwargs.get('segment')
 
         # --- FUTURE-PROOF METADATA QUERY ---

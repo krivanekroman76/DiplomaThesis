@@ -1,0 +1,36 @@
+Transcription (Model: large-v3):
+ J'ai l'impression d'avoir échoué Ne venez pas me dire que je suis doué J'ai l'impression d'avoir échoué Ne venez pas me dire que je suis doué C'est comment ? Explique-moi, qu'est-ce que j'ai raté ? Ne me dis pas que la vie m'a appris qu'à raper C'est comment ? Explique-moi, qu'est-ce que j'ai raté ? Ne me dis pas que la vie m'a appris qu'à raper J'écris des pages, mais y'en a aucune de tournée Perçu à dire que tout ça n'est pas vraiment fait pour moi Je me laisse guider S'il est écrit que je dois prendre un mur Je pourrais pas l'esquiver Merci pour le soutien Mais quand ça n'allait pas, t'étais pas là Harry, je me souviens Je t'en veux même pas Je m'en fous que tu m'aimes ou que tu m'aimes pas Moi je me préférais avant quand Moi et mon petit égo, on voulait juste avancer Aujourd'hui on a grandi Et il m'arrive de me regarder et de me dire Wesh tu te prends pour qui ? Pensez J'ai l'impression d'avoir échoué Ne venez pas me dire que je suis doué J'ai l'impression d'avoir échoué Ne venez pas me dire que je suis doué C'est comment, explique-moi, qu'est-ce que j'ai raté Ne me dis pas que la vie m'a appris qu'à rapper C'est comment, explique-moi, qu'est-ce que j'ai raté Ne me dis pas que la vie m'a appris qu'à rapper
+
+Timestamps:
+0.00s - 1.90s: J'ai l'impression d'avoir échoué
+1.90s - 4.80s: Ne venez pas me dire que je suis doué
+4.80s - 7.76s: J'ai l'impression d'avoir échoué
+7.76s - 10.54s: Ne venez pas me dire que je suis doué
+10.54s - 14.06s: C'est comment ? Explique-moi, qu'est-ce que j'ai raté ?
+14.06s - 17.04s: Ne me dis pas que la vie m'a appris qu'à raper
+17.04s - 20.56s: C'est comment ? Explique-moi, qu'est-ce que j'ai raté ?
+20.56s - 23.60s: Ne me dis pas que la vie m'a appris qu'à raper
+23.60s - 26.82s: J'écris des pages, mais y'en a aucune de tournée
+26.82s - 29.72s: Perçu à dire que tout ça n'est pas vraiment fait pour moi
+29.72s - 31.44s: Je me laisse guider
+31.44s - 33.12s: S'il est écrit que je dois prendre un mur
+33.12s - 34.56s: Je pourrais pas l'esquiver
+34.56s - 36.92s: Merci pour le soutien
+36.92s - 39.00s: Mais quand ça n'allait pas, t'étais pas là
+39.00s - 40.20s: Harry, je me souviens
+40.20s - 42.06s: Je t'en veux même pas
+42.06s - 44.80s: Je m'en fous que tu m'aimes ou que tu m'aimes pas
+44.80s - 46.72s: Moi je me préférais avant quand
+46.72s - 49.92s: Moi et mon petit égo, on voulait juste avancer
+49.92s - 52.82s: Aujourd'hui on a grandi
+52.82s - 54.92s: Et il m'arrive de me regarder et de me dire
+54.92s - 56.36s: Wesh tu te prends pour qui ?
+56.36s - 56.90s: Pensez
+56.90s - 59.44s: J'ai l'impression d'avoir échoué
+59.44s - 62.34s: Ne venez pas me dire que je suis doué
+62.34s - 65.24s: J'ai l'impression d'avoir échoué
+65.24s - 67.86s: Ne venez pas me dire que je suis doué
+67.86s - 71.12s: C'est comment, explique-moi, qu'est-ce que j'ai raté
+71.12s - 74.32s: Ne me dis pas que la vie m'a appris qu'à rapper
+74.32s - 77.64s: C'est comment, explique-moi, qu'est-ce que j'ai raté
+77.64s - 80.86s: Ne me dis pas que la vie m'a appris qu'à rapper

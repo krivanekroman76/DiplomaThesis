@@ -1,6 +1,9 @@
 # Diploma thesis: Audio Separation & Transcription Tool
 
 [![Project Status](https://img.shields.io/badge/Status-Work%20in%20Progress-yellow)](#TODO)
+[![Project Status](https://img.shields.io/badge/Status-Paused-orange)](#Support)
+[![Project Status](https://img.shields.io/badge/Status-Unmaintained-red)](#Support)
+[![Project Status](https://img.shields.io/badge/Status-Completed-success)](#Support)
 
 A desktop application for separating audio files into vocals and instrumentals using AI-powered tools (Spleeter, Demucs, and OpenUnmix). Furthermore, it supports advanced speech-to-text transcription using multiple tools (Whisper, Wav2Vec2, Vosk) with speaker diarization support (Vosk). Built with Python and CustomTkinter for a modern GUI.
 
@@ -29,7 +32,7 @@ A desktop application for separating audio files into vocals and instrumentals u
 * **Real-time Progress Tracking**: Modal progress window with detailed step-by-step logging, error catching, and safe cancellation support.
 * **Cross-Platform Compatibility**: Works natively on Windows, macOS, and Linux.
 
-![Input Tab](screenshots/Input.png)
+![Input Tab](screenshots/input_tab.png)
 
 ## Installation
 
@@ -128,34 +131,34 @@ This will tell `pip` to download the standard CPU version of PyTorch instead, sa
 ## 📸 Screenshots & Features
 
 ### Welcome Tutorial Screen
-![Welcome Screen](screenshots/welcome.png)
+![Welcome Screen](screenshots/welcome_tutorial.png)
 
 *A built-in interactive Welcome Tutorial highlights key UI elements to help new users get started instantly.*
 
 ### Main Interface (Input & Separation Menu)
-![Input Tab](screenshots/Input.png)
+![Input Tab](screenshots/input_tab.png)
 
 *The modern interface featuring the Input tab. Manage files with interactive inline controls (Play, Info, Delete) and configure your output using the dynamic Separation Menu.*
 
 ### Audio Inspector
-![Audio Inspector](screenshots/Information.png)
+![Audio Inspector](screenshots/inspector.png)
 
 *Clicking the 'i' (Information) button on any track opens the Audio Inspector. Easily view track metadata and use the "Sync" buttons to match your output settings to the original file perfectly.*
 
 ### Dynamic Separation Settings
-![Demucs Options](screenshots/demucs_mp3.png) 
-![Demucs Options WAV](screenshots/demucs_wav.png) 
-![OpenUnmix Models](screenshots/OpenUnmix_models.png)
-![Spleeter Options](screenshots/mp3.png) 
+![Spleeter Options](screenshots/flac.png) 
+![Demucs Options](screenshots/demucs.png) 
+![OpenUnmix Models](screenshots/OpenUnmix.png)
+
 
 *The Separation Menu adapts based on the selected AI tool (Spleeter, Demucs, OpenUnmix), offering granular control over formats (MP3, WAV, FLAC), bitrates, shifts, and specific model selection.*
 
 ### Output Management & Transcription
-![Separation Output](screenshots/separation_output_tab.png)
+![Separation Output](screenshots/sep_output_tab.png)
 
 *The Separated Output tab neatly organizes generated Vocals and Instrumentals. Select isolated tracks here and use the right-hand Transcription Menu (Whisper, Wav2Vec2, Vosk) to generate text.*
 
-![Transcription Output](screenshots/transcription_output_tab.png)
+![Transcription Output](screenshots/trans_output_tab.png)
 
 *A dedicated tab for managing, viewing, and opening your generated transcriptions.*
 
@@ -165,34 +168,37 @@ This will tell `pip` to download the standard CPU version of PyTorch instead, sa
 *Customize your experience: toggle Dark/Light mode, change the UI color theme, adjust scaling, and manage default directories or offline AI models.*
 
 ### Real-Time Progress
-![Progress Status Modal](screenshots/modal.png) ![Progress Status Load](screenshots/progress_transcription_load.png) 
-![Progress Status Loading](screenshots/modal_progress.png) ![Progress Status Transcription](screenshots/progress_transcription.png) 
-![Progress Status Done](screenshots/modal_done.png) ![Progress Status Transcription 2](screenshots/progress_transcription2.png) 
-![Progress Status Flush](screenshots/modal_flush.png)
+**Separation Processing:**
+![Separation Initial](screenshots/demucs_initial.png) ![Separation Progress](screenshots/demucs_progress.png) ![Separation Complete](screenshots/demucs_progress2.png)
+
+**Transcription Processing:**
+![Transcription Preprocessing](screenshots/trans_preprocesing.png) ![Transcription Whisper](screenshots/whisper_progress.png) ![Transcription Whisper 2](screenshots/whisper_progress2.png) 
+
+![Transcription Vosk](screenshots/Vosk_progress.png) ![Transcription Vosk 2](screenshots/Vosk_progress2.png)
 
 *Keep track of heavy AI processing with real-time status updates, modal windows, and progress bars directly at the bottom of the window.*
 
 ### Completion Window
 ![Batch Window](screenshots/Batch_info.png) 
-![Batch Window](screenshots/Batch_info_transcription.png)
+![Batch Processing Status](screenshots/progress_batch.png)
 
 *Non-blocking pop-up windows informing the user of the names of the output files and the success count.*
 
 ## TODO 
-![Project Status](https://img.shields.io/badge/Status-Work%20in%20Progress-yellow)
+![Project Status](https://img.shields.io/badge/Status-In%20Progress-blue)
 
-This project is actively developed. Planned features and fixes include:
+This project is actively developed. Current status and planned features:
 
-* [ ] SDR evaluation of tools on provided dataset.
-* [x] Transcription tool repair.
-* [x] Add support for batch processing multiple songs at once.
-* [x] Implement transcription options (second choice: Vosk, Wav2Vec2).
-* [x] Improve error handling and logging for separation failures.
-* [ ] Optimize performance for large files (e.g., GPU acceleration for Whisper/Separation).
-* [ ] Cross-platform testing and packaging (e.g., via PyInstaller).
-* [ ] Documentation: Add more detailed guides and API references for custom separators. Proper credits for used libraries.
+* ✅ SDR evaluation of tools on provided dataset.
+* ✅ Transcription tool repair.
+* ✅ Add support for batch processing multiple songs at once.
+* ✅ Implement transcription options (second choice: Vosk, Wav2Vec2).
+* ✅ Improve error handling and logging for separation failures.
+* ✅ Optimize performance for large files (e.g., GPU acceleration for Whisper/Separation).
+* ☐ Cross-platform testing and packaging (e.g., via PyInstaller).
+* ☐ Documentation: Add more detailed guides and API references for custom separators. Proper credits for used libraries.
 
-Feel free to suggest features via issues!
+Feel free to suggest features via issues or by emailing me!
 
 ## License
 
@@ -212,8 +218,9 @@ This project is licensed under the MIT License - see the LICENSE file for deta
 
 ## Support
 
+If you encounter issues, check the console output or log file for errors or open a GitHub issue. 
 
-If you encounter issues, check the console output for errors or open a GitHub issue. For questions, reach out via \[ 240642@vut.cz \].
+For questions, reach out via \[ krivanekroman76@gmail.com\].
 
 
 

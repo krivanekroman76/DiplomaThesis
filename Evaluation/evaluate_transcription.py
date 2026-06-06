@@ -563,21 +563,54 @@ class TranscriptionEvaluator:
             
             # --- RTF Plot (CPU vs GPU split, grouped by System/Language) ---
             plt.figure(figsize=(13, 6)) # Bumped slightly wider to accommodate extra language bars
-            ax = sns.barplot(data=summary, x='System', y='rtf', hue='device', palette="muted", ci=None)
             
-            plt.title("Mean Real-Time Factor (RTF) per Model & Language (CPU vs. GPU)", fontsize=14, pad=15, weight='bold')
-            plt.ylabel("RTF (Lower is faster)", fontsize=12, labelpad=10)
+            # 1. Normalize the device names for the legend
+            summary['device_clean'] = summary['device'].astype(str).str.lower().replace({
+                'cuda': 'gpu cuda',
+                'gpu': 'gpu cuda'
+            })
+            
+            # 2. Explicit color mapping to match the Separation graphs (Blue/Orange)
+            device_colors = {
+                'cpu': '#4C72B0',        # Muted Blue
+                'gpu cuda': '#DD8452'    # Muted Orange
+            }
+            
+            ax = sns.barplot(
+                data=summary, 
+                x='System', 
+                y='rtf', 
+                hue='device_clean', 
+                palette=device_colors,
+                hue_order=['cpu', 'gpu cuda'],
+                ci=None
+            )
+            
+            # 3. Refine the Grid: Place lines behind bars
+            ax.set_axisbelow(True)
+            ax.yaxis.grid(True, color='gray', linestyle='--', alpha=0.3)
+            ax.xaxis.grid(False)
+            
+            # 4. Add the red horizontal threshold line at Y = 1.0 (Real Time)
+            plt.axhline(1.0, color='red', linestyle='--', alpha=0.7)
+            
+            # 5. Update Titles and Labels to match
+            plt.title("RTF (Lower is Better)", fontsize=14, pad=15, weight='bold')
+            plt.ylabel("Real-Time Factor (RTF)", fontsize=12, labelpad=10)
             plt.xlabel("Evaluated Systems", fontsize=12, labelpad=10)
             plt.xticks(rotation=45, ha="right")
             
             ax.set_ylim(0, summary['rtf'].max() * 1.15)
+            
             for container in getattr(ax, 'containers', []):
                 ax.bar_label(
                     container, fmt='%.2f', padding=3, weight='bold', fontsize=10,
                     bbox=dict(facecolor='white', edgecolor='none', pad=1.5, alpha=0.9)
                 )
 
-            plt.legend(title='Hardware')
+            # 6. Update Legend Title and position
+            plt.legend(title='Device Type', loc='upper left')
+            
             plt.tight_layout()
             plt.savefig(self.plots_dir / "Trans_RTF_Comparison.png", dpi=300)
             plt.close()
